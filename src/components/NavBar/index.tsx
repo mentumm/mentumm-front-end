@@ -5,7 +5,7 @@ import logo from "./logo.png";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
-    position: "fixed",
+    position: "sticky",
     display: "flex",
     backgroundColor: "black",
     flexFlow: "row nowrap",

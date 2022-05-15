@@ -7,22 +7,18 @@ import RegisterAction from "../../components/RegisterAction";
 const useStyles = createUseStyles({
   root: {
     position: "relative",
-    flexDirection: "column",
     width: "100%",
+    textAlign: "center",
+  },
+  parentColumn: {
+    display: "inline-block",
+    width: "80%",
+    paddingTop: "8vh",
   },
   container: {
     position: "relative",
     display: "flex",
     flexDirection: "row",
-    width: "100%",
-  },
-  containerPadding: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "row",
-    width: "100%",
-    gap: "-100px",
-    paddingTop: "8vh",
   },
 });
 
@@ -30,22 +26,23 @@ const Login: React.FC = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <div className={classes.containerPadding}>
-        <Container maxW="md" py={{ base: "12", md: "24" }}>
-          <Stack spacing="8">
-            <Heading textAlign="center">Growth Portal Login</Heading>
-          </Stack>
-        </Container>
-      </div>
-      <div className={classes.container}>
-        <LoginForm />
-        <div style={{ paddingTop: "80px" }}>
-          <Center height="350px">
-            <Divider orientation="vertical" />
-          </Center>
+      <div className={classes.parentColumn}>
+        <div className={classes.container}>
+          <Container maxW="md" py={{ base: "12", md: "24" }}>
+            <Stack spacing="8">
+              <Heading textAlign="center">Growth Portal Login</Heading>
+            </Stack>
+          </Container>
         </div>
-
-        <RegisterAction />
+        <div className={classes.container}>
+          <LoginForm />
+          <div style={{ paddingTop: "80px" }}>
+            <Center height="350px">
+              <Divider orientation="vertical" />
+            </Center>
+          </div>
+          <RegisterAction />
+        </div>
       </div>
     </div>
   );

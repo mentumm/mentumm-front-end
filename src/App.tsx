@@ -1,8 +1,9 @@
 import React from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AppContainer from "./components/AppContainer";
 import NavBar from "./components/NavBar";
+import CoachSearch from "./views/CoachSearch";
 import Login from "./views/Login";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
@@ -16,14 +17,17 @@ function App() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Router>
-        <NavBar />
-        <AppContainer>
-          <Login />
-        </AppContainer>
-      </Router>
-    </div>
+    <AppContainer>
+      <BrowserRouter>
+        <div className={classes.root}>
+          <NavBar />
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/search" element={<CoachSearch />} />
+          </Routes>
+        </div>
+      </BrowserRouter>
+    </AppContainer>
   );
 }
 
