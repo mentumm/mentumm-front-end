@@ -13,7 +13,6 @@ const useStyles = createUseStyles({
   parentColumn: {
     display: "inline-block",
     width: "80%",
-    paddingTop: "8vh",
   },
   container: {
     position: "relative",
