@@ -66,8 +66,10 @@ const CoachSearch: React.FC = () => {
   };
 
   useEffect(() => {
-    loadTags();
-  }, []);
+    if (!coachTags) {
+      loadTags();
+    }
+  }, [coachTags]);
 
   return (
     <div className={classes.root}>
@@ -92,7 +94,7 @@ const CoachSearch: React.FC = () => {
                 perspective.
               </Text>
               <Select placeholder="Choose a topic">
-                {coachTags
+                {coachTags && coachTags.length
                   ? coachTags.map((tag) => (
                       <option value={tag.slug} key={tag.id}>
                         {tag.name}
