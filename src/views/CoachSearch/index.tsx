@@ -2,6 +2,7 @@ import { Heading, Select, Stack, Text } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
+import { useNavigate } from "react-router";
 import design from "./design.png";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
@@ -52,6 +53,11 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 const CoachSearch: React.FC = () => {
   const classes = useStyles();
   const [coachTags, setCoachTags] = useState(null);
+  const navigate = useNavigate();
+
+  const selectTag = (e) => {
+    navigate(`/coaches/${e.target.value}`);
+  };
 
   const loadTags = async () => {
     try {
@@ -93,7 +99,10 @@ const CoachSearch: React.FC = () => {
                 give you the ability to get private feedback, mentorship, and
                 perspective.
               </Text>
-              <Select placeholder="Choose a topic">
+              <Select
+                placeholder="Choose a topic"
+                onChange={(e) => selectTag(e)}
+              >
                 {coachTags && coachTags.length
                   ? coachTags.map((tag) => (
                       <option value={tag.slug} key={tag.id}>
