@@ -3,6 +3,7 @@ import React from "react";
 import { createUseStyles } from "react-jss";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import RegisterAction from "../../components/RegisterAction";
+import { CurrentUserLoginProps } from "../../types";
 
 const useStyles = createUseStyles({
   root: {
@@ -21,8 +22,9 @@ const useStyles = createUseStyles({
   },
 });
 
-const Login: React.FC = () => {
+const Login: React.FC<CurrentUserLoginProps> = (props) => {
   const classes = useStyles();
+
   return (
     <div className={classes.root}>
       <div className={classes.parentColumn}>
@@ -34,7 +36,10 @@ const Login: React.FC = () => {
           </Container>
         </div>
         <div className={classes.container}>
-          <LoginForm />
+          <LoginForm
+            currentUser={props.currentUser}
+            setCurrentUser={props.setCurrentUser}
+          />
           <div style={{ paddingTop: "80px" }}>
             <Center height="350px">
               <Divider orientation="vertical" />
