@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { useNavigate } from "react-router";
+import { CurrentUserProps } from "../../types";
 import design from "./design.png";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
@@ -48,9 +49,12 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   margin: {
     marginBottom: "16px",
   },
+  capitalize: {
+    textTransform: "capitalize",
+  },
 }));
 
-const CoachSearch: React.FC = () => {
+const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const classes = useStyles();
   const [coachTags, setCoachTags] = useState(null);
   const navigate = useNavigate();
@@ -82,8 +86,8 @@ const CoachSearch: React.FC = () => {
       <div className={classes.column}>
         <div className={classes.heading}>
           <Stack spacing="6" style={{ marginBottom: "100px" }}>
-            <Heading as="h2" size="xl">
-              Welcome Back [first name]
+            <Heading as="h2" size="xl" className={classes.capitalize}>
+              {`Welcome Back ${currentUser.name}`}
             </Heading>
           </Stack>
         </div>
