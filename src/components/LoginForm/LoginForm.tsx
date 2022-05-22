@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Checkbox,
   Container,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   HStack,
@@ -11,8 +12,71 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { CurrentUserLoginProps } from "../../types";
+import axios from "axios";
 
-const LoginForm: React.FC = () => {
+const NODE_API = process.env.REACT_APP_NODE_API;
+
+const LoginForm: React.FC<CurrentUserLoginProps> = (props) => {
+  const { setCurrentUser } = props;
+  const [email, setEmail] = useState<string>(null);
+  const [password, setPassword] = useState<string>(null);
+  const [emailError, setEmailError] = useState<boolean>(false);
+  const [passwordError, setPasswordError] = useState<boolean>(false);
+
+  const validateEmail = () => {
+    if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    }
+    return false;
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    setEmailError(e.target.value === "");
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setPasswordError(e.target.value === "");
+  };
+
+  const login = async (userEmail: string, userPassword: string) => {
+    setEmailError(!email || email === "" || !validateEmail());
+    setPasswordError(!password || password === "");
+
+    if (
+      !userEmail ||
+      userEmail === "" ||
+      userPassword === "" ||
+      !userPassword
+    ) {
+      return;
+    }
+
+    try {
+      console.log(userEmail, userPassword);
+      const loginUser = await axios.post(`${NODE_API}/v1/user/login`, {
+        email: userEmail,
+        password: userPassword,
+      });
+
+      if (!loginUser) {
+        console.log("something went wrong");
+      }
+
+      if (loginUser.data.message === "Username or Password does not match") {
+        setEmailError(true);
+        setPasswordError(true);
+        return;
+      }
+
+      setCurrentUser(loginUser.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Container maxW="md" py={{ base: "12", md: "24" }}>
       <Stack spacing="8">
@@ -31,23 +95,33 @@ const LoginForm: React.FC = () => {
         </Stack>
         <Stack spacing="6">
           <Stack spacing="-px">
-            <FormControl id="email">
+            <FormControl id="email" isInvalid={emailError}>
               <FormLabel srOnly>Email address</FormLabel>
               <Input
                 name="email"
                 type="email"
                 placeholder="Email"
                 roundedBottom="0"
+                onChange={handleEmailChange}
               />
+              {!emailError ? null : (
+                <FormErrorMessage style={{ marginBottom: "6px" }}>
+                  Email is required.
+                </FormErrorMessage>
+              )}
             </FormControl>
-            <FormControl id="password">
+            <FormControl id="password" isInvalid={passwordError}>
               <FormLabel srOnly>Password</FormLabel>
               <Input
                 name="password"
                 type="password"
                 placeholder="Password"
                 roundedTop="0"
+                onChange={handlePasswordChange}
               />
+              {!passwordError ? null : (
+                <FormErrorMessage>Password is required.</FormErrorMessage>
+              )}
             </FormControl>
           </Stack>
           <HStack justify="space-between">
@@ -57,7 +131,11 @@ const LoginForm: React.FC = () => {
             </Button>
           </HStack>
           <Stack spacing="4">
-            <Button colorScheme="blue" variant="solid">
+            <Button
+              colorScheme="blue"
+              variant="solid"
+              onClick={() => login(email, password)}
+            >
               Sign in
             </Button>
           </Stack>

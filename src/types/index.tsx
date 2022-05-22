@@ -4,6 +4,10 @@ export interface AppContainerProps {
   children: ReactNode;
 }
 
+export interface CurrentUserProps {
+  currentUser: CurrentUser;
+}
+
 export interface CoachProps {
   coachInfo: CoachType;
 }
@@ -27,4 +31,17 @@ export interface CoachSkills {
   name: string;
   description: string;
   slug: string;
+}
+
+export interface CurrentUser {
+  id: number;
+  name: string;
+  email: string;
+  employer_id: number;
+  last_sign_in?: Date;
+}
+
+export interface CurrentUserLoginProps {
+  currentUser: CurrentUser;
+  setCurrentUser: (currentUser: CurrentUser) => void;
 }
