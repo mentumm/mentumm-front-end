@@ -41,7 +41,7 @@ export interface CurrentUser {
   last_sign_in?: Date;
 }
 
-export interface CurrentUserLoginProps {
+export interface UserLoginProps {
   currentUser: CurrentUser;
   setCurrentUser: (currentUser: CurrentUser) => void;
 }

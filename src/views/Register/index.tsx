@@ -1,8 +1,7 @@
 import { Center, Container, Divider, Heading, Stack } from "@chakra-ui/react";
 import React from "react";
 import { createUseStyles } from "react-jss";
-import LoginForm from "../../components/LoginForm";
-import RegisterAction from "../../components/RegisterAction";
+import RegisterForm from "../../components/RegisterForm";
 import { UserLoginProps } from "../../types";
 
 const useStyles = createUseStyles({
@@ -22,7 +21,7 @@ const useStyles = createUseStyles({
   },
 });
 
-const Login: React.FC<UserLoginProps> = (props) => {
+const Register: React.FC<UserLoginProps> = (props) => {
   const classes = useStyles();
 
   return (
@@ -31,25 +30,24 @@ const Login: React.FC<UserLoginProps> = (props) => {
         <div className={classes.container}>
           <Container maxW="md" py={{ base: "12", md: "24" }}>
             <Stack spacing="8">
-              <Heading textAlign="center">Growth Portal Login</Heading>
+              <Heading textAlign="center">Growth Portal Sign Up</Heading>
             </Stack>
           </Container>
         </div>
         <div className={classes.container}>
-          <LoginForm
-            currentUser={props.currentUser}
-            setCurrentUser={props.setCurrentUser}
-          />
           <div style={{ paddingTop: "80px" }}>
             <Center height="350px">
               <Divider orientation="vertical" />
             </Center>
           </div>
-          <RegisterAction />
+          <RegisterForm
+            currentUser={props.currentUser}
+            setCurrentUser={props.setCurrentUser}
+          />
         </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default Register;
