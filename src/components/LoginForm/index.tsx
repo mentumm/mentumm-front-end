@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react";
 import { CurrentUserLoginProps } from "../../types";
 import axios from "axios";
+import { useCookies } from "react-cookie";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
@@ -23,6 +24,7 @@ const LoginForm: React.FC<CurrentUserLoginProps> = (props) => {
   const [password, setPassword] = useState<string>(null);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
+  const [cookies, setCookie] = useCookies(["growth_10"]);
 
   const validateEmail = () => {
     if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -72,6 +74,12 @@ const LoginForm: React.FC<CurrentUserLoginProps> = (props) => {
       }
 
       setCurrentUser(loginUser.data);
+      setCookie("growth_10", loginUser.data, {
+        path: "/",
+        secure: true,
+        expires: new Date(Date.now() + 3600 * 1000 * 48),
+        sameSite: true,
+      });
     } catch (error) {
       console.log(error);
     }
