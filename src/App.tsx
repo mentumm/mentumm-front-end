@@ -9,6 +9,7 @@ import { CurrentUser } from "./types";
 import CoachResults from "./views/CoachResults";
 import CoachSearch from "./views/CoachSearch";
 import Login from "./views/Login";
+import Register from "./views/Register";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -65,6 +66,19 @@ function App() {
               <SignInWrapper currentUser={currentUser}>
                 <CoachResults />
               </SignInWrapper>
+            }
+          />
+          <Route
+            path="/sign-up"
+            element={
+              !currentUser || !cookies.growth_10 ? (
+                <Register
+                  setCurrentUser={setCurrentUser}
+                  currentUser={currentUser}
+                />
+              ) : (
+                <Navigate to="/search" replace />
+              )
             }
           />
         </Routes>

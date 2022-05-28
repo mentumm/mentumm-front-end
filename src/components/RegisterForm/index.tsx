@@ -18,12 +18,16 @@ import { useCookies } from "react-cookie";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
-const LoginForm: React.FC<UserLoginProps> = (props) => {
+const RegisterForm: React.FC<UserLoginProps> = (props) => {
   const { setCurrentUser } = props;
   const [email, setEmail] = useState<string>(null);
   const [password, setPassword] = useState<string>(null);
+  const [userName, setUserName] = useState<string>(null);
+  const [inviteCode, setInviteCode] = useState<string>(null);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
+  const [userNameError, setUserNameError] = useState<boolean>(false);
+  const [inviteCodeError, setInviteCodeError] = useState<boolean>(false);
   const [, setCookie] = useCookies(["growth_10"]);
 
   const validateEmail = () => {
@@ -43,38 +47,62 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
     setPasswordError(e.target.value === "");
   };
 
-  const login = async (userEmail: string, userPassword: string) => {
+  const handleUserNameChange = (e) => {
+    setUserName(e.target.value);
+    setUserNameError(e.target.value === "");
+  };
+
+  const handleInviteCodeChange = (e) => {
+    setInviteCode(e.target.value);
+    setInviteCodeError(e.target.value === "");
+  };
+
+  const login = async () => {
     setEmailError(!email || email === "" || !validateEmail());
     setPasswordError(!password || password === "");
+    setInviteCodeError(!inviteCode || inviteCode === "");
+    setUserNameError(!userName || userName === "");
 
     if (
-      !userEmail ||
-      userEmail === "" ||
-      userPassword === "" ||
-      !userPassword
+      !email ||
+      email === "" ||
+      password === "" ||
+      !password ||
+      userName === "" ||
+      !userName ||
+      inviteCode === "" ||
+      !inviteCode
     ) {
       return;
     }
 
     try {
-      const loginUser = await axios.post(`${NODE_API}/v1/user/login`, {
-        email: userEmail,
-        password: userPassword,
+      const createUser = await axios.post(`${NODE_API}/v1/user/register`, {
+        email: email,
+        password: password,
+        invite_code: inviteCode,
+        name: userName,
       });
 
-      if (!loginUser) {
+      if (!createUser) {
         console.log("something went wrong");
         throw Error("Unable to login");
       }
 
-      if (loginUser.data.message === "Username or Password does not match") {
-        setEmailError(true);
-        setPasswordError(true);
-        return;
+      switch (createUser.data.message) {
+        case "User email address is already being used":
+          setEmailError(true);
+          return;
+        case "Invitation Code not found!":
+          setInviteCodeError(true);
+          return;
+        case "Invalid Invite Code!":
+          setInviteCodeError(true);
+          return;
       }
 
-      setCurrentUser(loginUser.data);
-      setCookie("growth_10", loginUser.data, {
+      setCurrentUser(createUser.data[0]);
+      setCookie("growth_10", createUser.data[0], {
         path: "/",
         secure: true,
         expires: new Date(Date.now() + 3600 * 1000 * 48),
@@ -86,12 +114,12 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
   };
 
   return (
-    <Container maxW="md" py={{ base: "12", md: "24" }}>
+    <Container maxW="md" py={{ base: "8", md: "8" }}>
       <Stack spacing="8">
         <Stack spacing="6">
           <Stack spacing={{ base: "2", md: "3" }} textAlign="left">
             <Heading size="lg" textAlign="left">
-              Registered Members
+              New Members
             </Heading>
             <HStack spacing="1" justify="center">
               <Text>
@@ -103,6 +131,20 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
         </Stack>
         <Stack spacing="6">
           <Stack spacing="-px">
+            <FormControl id="fullName" isInvalid={userNameError}>
+              <FormLabel srOnly>Full Name</FormLabel>
+              <Input
+                name="name"
+                placeholder="Your Name"
+                roundedBottom="0"
+                onChange={handleUserNameChange}
+              />
+              {!userNameError ? null : (
+                <FormErrorMessage style={{ marginBottom: "6px" }}>
+                  Your name is required.
+                </FormErrorMessage>
+              )}
+            </FormControl>
             <FormControl id="email" isInvalid={emailError}>
               <FormLabel srOnly>Email address</FormLabel>
               <Input
@@ -110,11 +152,12 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
                 type="email"
                 placeholder="Email"
                 roundedBottom="0"
+                roundedTop="0"
                 onChange={handleEmailChange}
               />
               {!emailError ? null : (
                 <FormErrorMessage style={{ marginBottom: "6px" }}>
-                  Email is required.
+                  Something went wrong with your email address.
                 </FormErrorMessage>
               )}
             </FormControl>
@@ -125,26 +168,32 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
                 type="password"
                 placeholder="Password"
                 roundedTop="0"
+                roundedBottom="0"
                 onChange={handlePasswordChange}
               />
               {!passwordError ? null : (
                 <FormErrorMessage>Password is required.</FormErrorMessage>
               )}
             </FormControl>
+            <FormControl id="invite-code" isInvalid={inviteCodeError}>
+              <FormLabel srOnly>Invitation Code</FormLabel>
+              <Input
+                name="invite"
+                placeholder="Invitation Code"
+                roundedTop="0"
+                onChange={handleInviteCodeChange}
+              />
+              {!inviteCodeError ? null : (
+                <FormErrorMessage style={{ marginBottom: "6px" }}>
+                  Something went wrong with your invitation code.
+                </FormErrorMessage>
+              )}
+            </FormControl>
           </Stack>
-          <HStack justify="space-between">
-            <Checkbox defaultIsChecked>Remember me</Checkbox>
-            <Button variant="link" colorScheme="blue" size="sm">
-              Forgot password
-            </Button>
-          </HStack>
+
           <Stack spacing="4">
-            <Button
-              colorScheme="blue"
-              variant="solid"
-              onClick={() => login(email, password)}
-            >
-              Sign in
+            <Button colorScheme="blue" variant="solid" onClick={() => login()}>
+              Register
             </Button>
           </Stack>
         </Stack>
@@ -153,4 +202,4 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
