@@ -24,7 +24,7 @@ const LoginForm: React.FC<CurrentUserLoginProps> = (props) => {
   const [password, setPassword] = useState<string>(null);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
-  const [cookies, setCookie] = useCookies(["growth_10"]);
+  const [, setCookie] = useCookies(["growth_10"]);
 
   const validateEmail = () => {
     if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -57,7 +57,6 @@ const LoginForm: React.FC<CurrentUserLoginProps> = (props) => {
     }
 
     try {
-      console.log(userEmail, userPassword);
       const loginUser = await axios.post(`${NODE_API}/v1/user/login`, {
         email: userEmail,
         password: userPassword,
@@ -65,6 +64,7 @@ const LoginForm: React.FC<CurrentUserLoginProps> = (props) => {
 
       if (!loginUser) {
         console.log("something went wrong");
+        throw Error("Unable to login");
       }
 
       if (loginUser.data.message === "Username or Password does not match") {

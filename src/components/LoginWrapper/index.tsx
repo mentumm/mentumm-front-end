@@ -9,7 +9,7 @@ type SignInProps = {
 };
 
 const SignInWrapper: React.FC<SignInProps> = ({ children, currentUser }) => {
-  const [cookies, setCookies] = useCookies(["growth_10"]);
+  const [cookies] = useCookies(["growth_10"]);
 
   return !currentUser && !cookies.growth_10 ? (
     <Navigate replace to="/" />

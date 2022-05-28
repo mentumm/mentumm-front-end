@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { createUseStyles, DefaultTheme } from "react-jss";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import AppContainer from "./components/AppContainer";
 import SignInWrapper from "./components/LoginWrapper";
 import NavBar from "./components/NavBar";
@@ -19,18 +19,11 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 
 function App() {
   const classes = useStyles();
-  // const demoState = {
-  //   id: 1,
-  //   name: "string",
-  //   email: "string",
-  //   employer_id: 1,
-  // };
   const [currentUser, setCurrentUser] = useState<CurrentUser>(null);
-  const [cookies, setCookie] = useCookies(["growth_10"]);
+  const [cookies] = useCookies(["growth_10"]);
 
   useEffect(() => {
     if (cookies.growth_10) {
-      console.log("user cookie found");
       setCurrentUser({
         id: cookies.growth_10.id,
         name: cookies.growth_10.name,
@@ -62,7 +55,6 @@ function App() {
             path="/search"
             element={
               <SignInWrapper currentUser={currentUser}>
-                {/* <CoachSearch currentUser={currentUser} /> */}
                 <CoachSearch currentUser={currentUser} />
               </SignInWrapper>
             }
