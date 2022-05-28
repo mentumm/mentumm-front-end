@@ -7,14 +7,8 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useNavigate } from "react-router";
 
 const RegisterAction: React.FC = () => {
-  const navigate = useNavigate();
-  const handleSignUp = () => {
-    navigate("/sign-up");
-  };
-
   return (
     <Container maxW="md" py={{ base: "12", md: "24" }}>
       <Stack spacing="8">
@@ -32,11 +26,7 @@ const RegisterAction: React.FC = () => {
           </Stack>
         </Stack>
         <Stack spacing="6">
-          <Button
-            colorScheme="blue"
-            variant="solid"
-            onClick={() => handleSignUp()}
-          >
+          <Button colorScheme="blue" variant="solid">
             Sign Up
           </Button>
         </Stack>
