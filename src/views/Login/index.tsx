@@ -1,7 +1,7 @@
 import { Center, Container, Divider, Heading, Stack } from "@chakra-ui/react";
 import React from "react";
 import { createUseStyles } from "react-jss";
-import LoginForm from "../../components/LoginForm/LoginForm";
+import LoginForm from "../../components/LoginForm";
 import RegisterAction from "../../components/RegisterAction";
 import { CurrentUserLoginProps } from "../../types";
 

@@ -87,7 +87,7 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
         <div className={classes.heading}>
           <Stack spacing="6" style={{ marginBottom: "100px" }}>
             <Heading as="h2" size="xl" className={classes.capitalize}>
-              {`Welcome Back ${currentUser.name}`}
+              {`Welcome Back ${currentUser ? currentUser.name : null}`}
             </Heading>
           </Stack>
         </div>
