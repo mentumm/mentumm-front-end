@@ -1,4 +1,4 @@
-import { Center, Container, Divider, Heading, Stack } from "@chakra-ui/react";
+import { Container, Heading, Stack } from "@chakra-ui/react";
 import React from "react";
 import { createUseStyles } from "react-jss";
 import RegisterForm from "../../components/RegisterForm";
@@ -35,11 +35,6 @@ const Register: React.FC<UserLoginProps> = (props) => {
           </Container>
         </div>
         <div className={classes.container}>
-          <div style={{ paddingTop: "80px" }}>
-            <Center height="350px">
-              <Divider orientation="vertical" />
-            </Center>
-          </div>
           <RegisterForm
             currentUser={props.currentUser}
             setCurrentUser={props.setCurrentUser}
