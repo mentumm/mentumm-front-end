@@ -2,6 +2,7 @@ import { Heading } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
+import { Link } from "react-router-dom";
 import Coach from "../../components/Coach";
 import { CoachSkills, CoachType } from "../../types";
 
@@ -35,6 +36,10 @@ const CoachResults: React.FC = () => {
   const windowUrl = window.location.toString().toLowerCase();
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
   const [coaches, setCoaches] = useState<CoachType[] | null>(null);
+
+  const generateUrl = (coach: CoachType) => {
+    return coach.name.replace(/\W|_/g, "-").toLowerCase() + `-${coach.id}`;
+  };
 
   const pageHeading = () => {
     return coaches[0].skills.filter((tag: CoachSkills) => tag.slug === slug)[0]
@@ -72,8 +77,10 @@ const CoachResults: React.FC = () => {
       </div>
       <div className={classes.coaches}>
         {coaches && coaches.length ? (
-          coaches.map((coach: CoachType, index: number) => (
-            <Coach coachInfo={coach} key={index} />
+          coaches.map((coach: CoachType) => (
+            <Link to={`/coach/${generateUrl(coach)}`} key={coach.id}>
+              <Coach coachInfo={coach} />
+            </Link>
           ))
         ) : (
           <Heading as="h1" size="2xl">

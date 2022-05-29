@@ -6,6 +6,7 @@ import AppContainer from "./components/AppContainer";
 import SignInWrapper from "./components/LoginWrapper";
 import NavBar from "./components/NavBar";
 import { CurrentUser } from "./types";
+import CoachBio from "./views/CoachBio";
 import CoachResults from "./views/CoachResults";
 import CoachSearch from "./views/CoachSearch";
 import Login from "./views/Login";
@@ -65,6 +66,14 @@ function App() {
             element={
               <SignInWrapper currentUser={currentUser}>
                 <CoachResults />
+              </SignInWrapper>
+            }
+          />
+          <Route
+            path="/coach/:coach"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <CoachBio currentUser={currentUser} />
               </SignInWrapper>
             }
           />
