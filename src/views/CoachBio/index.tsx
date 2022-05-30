@@ -8,6 +8,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { PopupModal } from "react-calendly";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { CoachType, CurrentUserProps } from "../../types";
 
@@ -65,6 +66,7 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const classes = useStyles();
   const [coach, setCoach] = useState<CoachType>(null);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const windowUrl = window.location.toString().toLowerCase();
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
   const coachId = slug.split("-");
@@ -135,7 +137,18 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                 {coach ? coach.location : null}
               </div>
               <Stack spacing="6">
-                <Button colorScheme="blue" variant="solid">
+                <Button
+                  colorScheme="blue"
+                  variant="solid"
+                  onClick={() => setIsOpen(true)}
+                >
+                  <PopupModal
+                    // url="https://calendly.com/ryan-vaznis/30min"
+                    url={coach ? coach.booking_link : null}
+                    onModalClose={() => setIsOpen(false)}
+                    open={isOpen}
+                    rootElement={document.getElementById("root")}
+                  />
                   Book Time Slot
                 </Button>
               </Stack>
