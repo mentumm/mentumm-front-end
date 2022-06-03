@@ -1,70 +1,25 @@
 import {
+  AspectRatio,
+  Box,
   Button,
   Heading,
-  ListItem,
+  HStack,
+  Icon,
+  Image,
   Stack,
+  Tag,
   Text,
-  UnorderedList,
+  Wrap,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { PopupModal } from "react-calendly";
-import { createUseStyles, DefaultTheme } from "react-jss";
 import { CoachType, CurrentUserProps } from "../../types";
+import { GoGlobe } from "react-icons/go";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
-const useStyles = createUseStyles((theme: DefaultTheme) => ({
-  root: {
-    display: "flex",
-    width: "100%",
-  },
-  heading: {
-    margin: "30px 30px",
-  },
-  column: {
-    width: "100%",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  columnRow: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    width: "75%",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "24px",
-  },
-  box: {
-    position: "relative",
-    width: "50%",
-    padding: "12px",
-  },
-  image: {
-    position: "relative",
-    width: "75%",
-    margin: "0 auto",
-  },
-  margin: {
-    marginBottom: "16px",
-  },
-  capitalize: {
-    textTransform: "capitalize",
-  },
-  list: {
-    marginLeft: "15px",
-  },
-}));
-
 const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
-  const classes = useStyles();
   const [coach, setCoach] = useState<CoachType>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const windowUrl = window.location.toString().toLowerCase();
@@ -90,73 +45,61 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   }, [coach, coachId]);
 
   return (
-    <div className={classes.root}>
-      <div className={classes.column}>
-        <div className={classes.heading}>
-          <Stack spacing="6" style={{ marginBottom: "100px" }} />
-        </div>
-        <div className={classes.columnRow}>
-          <div className={classes.row}>
-            <div className={classes.box}>
-              {coach ? (
-                <img
-                  src={coach.photo_url}
-                  className={classes.image}
-                  alt="Coach Profile"
-                />
-              ) : null}
-            </div>
-            <div className={classes.box}>
-              <Heading as="h1" size="2xl" className={classes.margin}>
-                {coach ? coach.name : null}
-              </Heading>
-              <Text fontSize="large" className={classes.margin}>
-                {coach ? coach.bio : null}
-              </Text>
-              <Heading as="h5" size="md">
-                Skills
-              </Heading>
-
-              <div className={classes.list}>
-                <UnorderedList spacing={3}>
-                  {coach && coach.skills.length
-                    ? coach.skills.map((skill) => (
-                        <ListItem key={skill.id}>
-                          {/* <ListIcon /> */}
-                          {skill.name}
-                        </ListItem>
-                      ))
-                    : null}
-                </UnorderedList>
-                <ul className={classes.margin}></ul>
-              </div>
-              <Heading as="h5" size="md">
-                Location
-              </Heading>
-              <div className={classes.margin}>
-                {coach ? coach.location : null}
-              </div>
-              <Stack spacing="6">
-                <Button
-                  colorScheme="blue"
-                  variant="solid"
-                  onClick={() => setIsOpen(true)}
-                >
-                  <PopupModal
-                    // url="https://calendly.com/ryan-vaznis/30min"
-                    url={coach ? coach.booking_link : null}
-                    onModalClose={() => setIsOpen(false)}
-                    open={isOpen}
-                    rootElement={document.getElementById("root")}
-                  />
-                  Book Time Slot
-                </Button>
+    <Box
+      maxW="7xl"
+      mx="auto"
+      px={{ base: "4", md: "8", lg: "12" }}
+      py={{ base: "6", md: "8", lg: "12" }}
+    >
+      <Stack direction={{ base: "column", md: "row" }} spacing="16">
+        <Box flex="1">
+          <Stack spacing="8">
+            <AspectRatio ratio={3 / 4} maxH="500px">
+              <Image src={coach ? coach.photo_url : null} alt="Coach image" />
+            </AspectRatio>
+          </Stack>
+        </Box>
+        <Box maxW="sm">
+          <Stack spacing="8">
+            <Stack spacing="4">
+              <Stack>
+                <Heading size="2xl" fontWeight="bold">
+                  {coach ? coach.name : null}
+                </Heading>
+                <HStack fontSize="sm">
+                  <Icon as={GoGlobe} color="gray.500" />
+                  <Text>{coach ? coach.location : null}</Text>
+                </HStack>
               </Stack>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+              <Text color="black">{coach ? coach.bio : null}</Text>
+            </Stack>
+            <Stack spacing="4">
+              <Wrap shouldWrapChildren>
+                {coach && coach.skills.length
+                  ? coach.skills.map((skill) => (
+                      <Tag key={skill.id}>{skill.name}</Tag>
+                    ))
+                  : null}
+              </Wrap>
+            </Stack>
+            <Button
+              colorScheme="blue"
+              variant="solid"
+              onClick={() => setIsOpen(true)}
+            >
+              <PopupModal
+                // url="https://calendly.com/ryan-vaznis/30min"
+                url={coach ? coach.booking_link : null}
+                onModalClose={() => setIsOpen(false)}
+                open={isOpen}
+                rootElement={document.getElementById("root")}
+              />
+              Book Time Slot
+            </Button>
+          </Stack>
+        </Box>
+      </Stack>
+    </Box>
   );
 };
 
