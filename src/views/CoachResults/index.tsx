@@ -18,13 +18,13 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   coaches: {
     display: "flex",
     flexFlow: "row wrap",
-    width: "100%",
+    width: "95%",
     margin: "auto",
     justifyContent: "center",
     gap: "16px",
   },
   resultHeading: {
-    margin: "40px 80px",
+    margin: "40px 40px",
     flexFlow: "row ",
     width: "auto",
     justifyContent: "flex-start",
