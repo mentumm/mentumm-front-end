@@ -16,6 +16,7 @@ import React, { useEffect, useState } from "react";
 import { PopupModal } from "react-calendly";
 import { CoachType, CurrentUserProps } from "../../types";
 import { GoGlobe } from "react-icons/go";
+import { mixpanelEvent } from "../../helpers";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
@@ -35,7 +36,14 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
           },
         });
 
+        const coach: CoachType = singleCoach.data[0];
+
         setCoach(singleCoach.data[0]);
+        mixpanelEvent("Coach Bio Viewed", {
+          "Coach ID": coach.id,
+          "Coach Name": coach.name,
+          "Coach Skills": coach.skills.map((skill) => skill.name),
+        });
       } catch (error) {}
     };
 
@@ -85,7 +93,13 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
             <Button
               colorScheme="blue"
               variant="solid"
-              onClick={() => setIsOpen(true)}
+              onClick={() => {
+                mixpanelEvent("Clicked Book Coach", {
+                  "Coach Name": coach ? coach.name : null,
+                  "Coach ID": coach ? coach.id : null,
+                });
+                setIsOpen(true);
+              }}
             >
               <PopupModal
                 // url="https://calendly.com/ryan-vaznis/30min"
