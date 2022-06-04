@@ -93,6 +93,9 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                 onModalClose={() => setIsOpen(false)}
                 open={isOpen}
                 rootElement={document.getElementById("root")}
+                utm={{
+                  utmSource: coach ? String(coach.id) : null,
+                }}
               />
               Book Time Slot
             </Button>
