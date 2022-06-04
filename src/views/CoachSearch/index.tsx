@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
+import { mixpanelEvent, mixpanelIdentify } from "../../helpers";
 import { CurrentUserProps } from "../../types";
 import design from "./design.png";
 
@@ -63,6 +64,12 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const [searchParams] = useSearchParams();
 
   const selectTag = (e) => {
+    mixpanelEvent("Searched For Tag", {
+      "User ID": currentUser ? currentUser.id : null,
+      "Tag Slug": e.target.value,
+      "Tag Name": e.target.options[e.target.selectedIndex].text,
+      "Tag ID": e.target.key,
+    });
     navigate(`/coaches/${e.target.value}`);
   };
 
@@ -87,6 +94,12 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
   }, [coachTags]);
 
   useEffect(() => {
+    if (currentUser) {
+      mixpanelIdentify(String(currentUser.id));
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
     const event_type_uuid = searchParams.get("event_type_uuid");
     const event_type_name = searchParams.get("event_type_name");
     const event_start_time = searchParams.get("event_start_time");
@@ -98,7 +111,7 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
 
     const bookCoach = async () => {
       try {
-        const booking = await axios.post(`${NODE_API}/v1/user/book-coach`, {
+        const bookedCoach = await axios.post(`${NODE_API}/v1/user/book-coach`, {
           user_id: currentUser.id,
           coach_id: utmSource,
           event_end_time,
@@ -110,7 +123,18 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
           invitee_uuid,
         });
 
-        if (booking) {
+        if (bookedCoach) {
+          mixpanelEvent("Coach Booked", {
+            "User ID": bookedCoach.data[0].user_id,
+            "Coach ID": bookedCoach.data[0].coach_id,
+            "Booking Email": bookedCoach.data[0].invitee_email,
+            Name: bookedCoach.data[0].invitee_full_name,
+            "Invitee UUID": bookedCoach.data[0].invitee_uuid,
+            "Event End Time": bookedCoach.data[0].event_end_time,
+            "Event Start Time": bookedCoach.data[0].event_start_time,
+            "Event Type Name": bookedCoach.data[0].event_type_name,
+            "Event Type UUID": bookedCoach.data[0].event_type_uuid,
+          });
           setCoachBooked(true);
         }
       } catch (error) {

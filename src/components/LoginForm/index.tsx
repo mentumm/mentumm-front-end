@@ -12,9 +12,10 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { UserLoginProps } from "../../types";
+import { CurrentUser, UserLoginProps } from "../../types";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { mixpanelEvent, mixpanelIdentify, mixpanelPeople } from "../../helpers";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
@@ -72,13 +73,25 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
         setPasswordError(true);
         return;
       }
+      const user: CurrentUser = loginUser.data;
 
-      setCurrentUser(loginUser.data);
-      setCookie("growth_10", loginUser.data, {
+      setCurrentUser(user);
+      setCookie("growth_10", user, {
         path: "/",
         secure: true,
         expires: new Date(Date.now() + 3600 * 1000 * 48),
         sameSite: true,
+      });
+      // identify connects mixpanel's uuid w/our user id to get any data
+      // that happened prior to login
+      mixpanelIdentify(String(user.id));
+      // set mixpanel profile, maybe this should be server side
+      mixpanelPeople(user);
+      mixpanelEvent("User Logged In", {
+        "User ID": user.id,
+        Name: user.name,
+        "Employer ID": user.employer_id,
+        Email: user.email,
       });
     } catch (error) {
       console.log(error);
