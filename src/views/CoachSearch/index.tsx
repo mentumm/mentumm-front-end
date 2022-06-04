@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { useNavigate } from "react-router";
+import { useSearchParams } from "react-router-dom";
 import { CurrentUserProps } from "../../types";
 import design from "./design.png";
 
@@ -57,13 +58,17 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const classes = useStyles();
   const [coachTags, setCoachTags] = useState(null);
+  const [coachBooked, setCoachBooked] = useState<boolean>(null);
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const selectTag = (e) => {
     navigate(`/coaches/${e.target.value}`);
   };
 
   const loadTags = async () => {
+    // for some reason this fails when redirected from calendly, not sure why
+    // doesn't impact anything but a message in console
     try {
       const tags = await axios.get(`${NODE_API}/v1/tags`);
 
@@ -80,6 +85,43 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
       loadTags();
     }
   }, [coachTags]);
+
+  useEffect(() => {
+    const event_type_uuid = searchParams.get("event_type_uuid");
+    const event_type_name = searchParams.get("event_type_name");
+    const event_start_time = searchParams.get("event_start_time");
+    const event_end_time = searchParams.get("event_end_time");
+    const invitee_uuid = searchParams.get("invitee_uuid");
+    const invitee_full_name = searchParams.get("invitee_full_name");
+    const invitee_email = searchParams.get("invitee_email");
+    const utmSource = searchParams.get("utm_source");
+
+    const bookCoach = async () => {
+      try {
+        const booking = await axios.post(`${NODE_API}/v1/user/book-coach`, {
+          user_id: currentUser.id,
+          coach_id: utmSource,
+          event_end_time,
+          event_start_time,
+          event_type_name,
+          event_type_uuid,
+          invitee_email,
+          invitee_full_name,
+          invitee_uuid,
+        });
+
+        if (booking) {
+          setCoachBooked(true);
+        }
+      } catch (error) {
+        throw new Error("Could not load Coach Tags!");
+      }
+    };
+
+    if (!coachBooked && invitee_email) {
+      bookCoach();
+    }
+  }, [searchParams, coachBooked, currentUser]);
 
   return (
     <div className={classes.root}>

@@ -1,7 +1,12 @@
-import { Heading } from "@chakra-ui/react";
+import { Box, HStack, Icon, Stack, Tag, Text, Wrap } from "@chakra-ui/react";
 import React from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { CoachProps } from "../../types";
+import { Card } from "./Card";
+import { CardContent } from "./CardContent";
+import { CardHeader } from "./CardHeader";
+import { UserAvatar } from "./UserAvatar";
+import { GoGlobe } from "react-icons/go";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -11,10 +16,7 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
     display: "flex",
   },
   coachCard: {
-    flex: "1 1 auto",
-    margin: "0.3em",
-    width: "30em",
-    height: "26em",
+    width: "35em",
   },
   coachImage: {
     maxWidth: "100%",
@@ -34,34 +36,40 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 
 const Coach: React.FC<CoachProps> = (props) => {
   const classes = useStyles();
-  const { name, skills } = props.coachInfo;
+  const { name, skills, location } = props.coachInfo;
   return (
     <div className={classes.root}>
-      <div className={classes.coach}>
-        <div className={classes.coachCard}>
-          <div className={classes.coachImage}>
-            <img
+      <Box as="section" py="6">
+        <Card>
+          <Stack
+            direction={{ base: "column", md: "row" }}
+            spacing={{ base: "4", md: "10" }}
+          >
+            <UserAvatar
+              name={name ? name : null}
               src="https://i.imgur.com/bojxiui.jpg"
-              alt="Jim Staring"
-              className={classes.coachImage}
+              isVerified
             />
-          </div>
-          <div className={classes.coachInfo}>
-            <Heading as="h4" size="lg">
-              {name ? name : null}
-            </Heading>
-            <div className={classes.coachTags}>
-              {skills
-                ? skills.map((tag, index) => (
-                    <Heading as="h6" size="sm" key={index}>
-                      {tag.name}
-                    </Heading>
-                  ))
-                : null}
-            </div>
-          </div>
-        </div>
-      </div>
+            <CardContent>
+              <CardHeader title={name ? name : null} />
+              <Stack mt="1">
+                <HStack fontSize="sm">
+                  <Icon as={GoGlobe} color="gray.500" />
+                  <Text>{location ? location : null}</Text>
+                </HStack>
+              </Stack>
+              <Text fontWeight="semibold" mt="8" mb="2">
+                Skills
+              </Text>
+              <Wrap shouldWrapChildren>
+                {skills
+                  ? skills.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>)
+                  : null}
+              </Wrap>
+            </CardContent>
+          </Stack>
+        </Card>
+      </Box>
     </div>
   );
 };
