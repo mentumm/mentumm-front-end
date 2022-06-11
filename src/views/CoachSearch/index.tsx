@@ -124,17 +124,6 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
         });
 
         if (bookedCoach) {
-          mixpanelEvent("Coach Booked", {
-            "User ID": bookedCoach.data[0].user_id,
-            "Coach ID": bookedCoach.data[0].coach_id,
-            "Booking Email": bookedCoach.data[0].invitee_email,
-            Name: bookedCoach.data[0].invitee_full_name,
-            "Invitee UUID": bookedCoach.data[0].invitee_uuid,
-            "Event End Time": bookedCoach.data[0].event_end_time,
-            "Event Start Time": bookedCoach.data[0].event_start_time,
-            "Event Type Name": bookedCoach.data[0].event_type_name,
-            "Event Type UUID": bookedCoach.data[0].event_type_uuid,
-          });
           setCoachBooked(true);
         }
       } catch (error) {
