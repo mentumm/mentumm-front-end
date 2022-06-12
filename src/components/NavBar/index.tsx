@@ -1,13 +1,13 @@
 import React from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { Link } from "react-router-dom";
-import logo from "./logo.png";
+import logo from "./m_logo.png";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
     position: "sticky",
     display: "flex",
-    backgroundColor: "black",
+    backgroundColor: "#2cbdbe",
     flexFlow: "row nowrap",
     width: "100%",
     height: "75px",
@@ -26,7 +26,7 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
     position: "relative",
     "& img": {
       position: "relative",
-      width: "60%",
+      width: "10%",
       height: "auto",
     },
   },
@@ -39,7 +39,7 @@ const NavBar: React.FC = () => {
       <div className={classes.container}>
         <div className={classes.logo}>
           <Link to="/">
-            <img src={logo} alt="Growth 10" role="banner" />
+            <img src={logo} alt="Momentum" role="banner" />
           </Link>
         </div>
       </div>

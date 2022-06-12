@@ -1,9 +1,10 @@
-import { Center, Container, Divider, Heading, Stack } from "@chakra-ui/react";
+import { Center, Container, Divider, Image } from "@chakra-ui/react";
 import React from "react";
 import { createUseStyles } from "react-jss";
 import LoginForm from "../../components/LoginForm";
 import RegisterAction from "../../components/RegisterAction";
 import { UserLoginProps } from "../../types";
+import landing_logo from "./landing_logo.png";
 
 const useStyles = createUseStyles({
   root: {
@@ -13,7 +14,7 @@ const useStyles = createUseStyles({
   },
   parentColumn: {
     display: "inline-block",
-    width: "80%",
+    width: "100%",
   },
   container: {
     position: "relative",
@@ -28,25 +29,26 @@ const Login: React.FC<UserLoginProps> = (props) => {
   return (
     <div className={classes.root}>
       <div className={classes.parentColumn}>
-        <div className={classes.container}>
-          <Container maxW="md" py={{ base: "12", md: "24" }}>
-            <Stack spacing="8">
-              <Heading textAlign="center">Growth Portal Login</Heading>
-            </Stack>
-          </Container>
+        <Container
+          paddingTop={{ base: "4", md: "8" }}
+          paddingBottom={{ base: "2", md: "6" }}
+        >
+          <Center>
+            <Image src={landing_logo} alt="Mentumm banner" maxW="md" />
+          </Center>
+        </Container>
+      </div>
+      <div className={classes.container}>
+        <LoginForm
+          currentUser={props.currentUser}
+          setCurrentUser={props.setCurrentUser}
+        />
+        <div style={{ paddingTop: "80px" }}>
+          <Center height="350px">
+            <Divider orientation="vertical" />
+          </Center>
         </div>
-        <div className={classes.container}>
-          <LoginForm
-            currentUser={props.currentUser}
-            setCurrentUser={props.setCurrentUser}
-          />
-          <div style={{ paddingTop: "80px" }}>
-            <Center height="350px">
-              <Divider orientation="vertical" />
-            </Center>
-          </div>
-          <RegisterAction />
-        </div>
+        <RegisterAction />
       </div>
     </div>
   );

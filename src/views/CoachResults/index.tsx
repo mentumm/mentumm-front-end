@@ -78,7 +78,7 @@ const CoachResults: React.FC = () => {
             : null}
         </Heading>
         <Text>
-          <Link color="teal.500" onClick={() => navigate(-1)}>
+          <Link color="#3168b2" onClick={() => navigate(-1)}>
             Back to Search
           </Link>
         </Text>
