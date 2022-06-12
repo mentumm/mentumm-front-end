@@ -43,7 +43,7 @@ const Login: React.FC<UserLoginProps> = (props) => {
           currentUser={props.currentUser}
           setCurrentUser={props.setCurrentUser}
         />
-        <div style={{ paddingTop: "80px" }}>
+        <div style={{ paddingTop: "20px" }}>
           <Center height="350px">
             <Divider orientation="vertical" />
           </Center>
