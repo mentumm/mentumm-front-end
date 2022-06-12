@@ -5,16 +5,16 @@ const customTheme = extendTheme({
     // change the colors here using material UI color scale
     // use in component with `colorScheme="brand"`
     brand: {
-      50: "#ece4ff",
-      100: "#c4b2ff",
-      200: "#9d80ff",
-      300: "#754dff",
-      400: "#4f1bfe",
-      500: "#0e0c0c",
-      600: "#262424",
-      700: "#1c0081",
-      800: "#262424",
-      900: "#060020",
+      50: "#ebf1f9",
+      100: "#c3d6ee",
+      200: "#9bbae3",
+      300: "#739ed8",
+      400: "#4b83cd",
+      500: "#3269b4",
+      600: "#27528c",
+      700: "#1c3a64",
+      800: "#11233c",
+      900: "#060c14",
     },
   },
 });

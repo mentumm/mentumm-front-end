@@ -99,18 +99,15 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
   };
 
   return (
-    <Container maxW="md" py={{ base: "12", md: "24" }}>
+    <Container maxW="md">
       <Stack spacing="8">
         <Stack spacing="6">
           <Stack spacing={{ base: "2", md: "3" }} textAlign="left">
             <Heading size="lg" textAlign="left">
               Registered Members
             </Heading>
-            <HStack spacing="1" justify="center">
-              <Text>
-                Harmonious colour themes have built up as the collection has
-                evolved
-              </Text>
+            <HStack spacing="1" justify="left">
+              <Text>Book your next coaching session!</Text>
             </HStack>
           </Stack>
         </Stack>
@@ -147,17 +144,17 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
           </Stack>
           <HStack justify="space-between">
             <Checkbox defaultIsChecked>Remember me</Checkbox>
-            <Button variant="link" colorScheme="blue" size="sm">
+            <Button variant="link" colorScheme="brand" size="sm">
               Forgot password
             </Button>
           </HStack>
           <Stack spacing="4">
             <Button
-              colorScheme="blue"
+              colorScheme="brand"
               variant="solid"
               onClick={() => login(email, password)}
             >
-              Sign in
+              Sign In
             </Button>
           </Stack>
         </Stack>

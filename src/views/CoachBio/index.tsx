@@ -90,7 +90,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
               <Text color="black">{coach ? coach.bio : null}</Text>
             </Stack>
             <Button
-              colorScheme="blue"
+              colorScheme="brand"
               variant="solid"
               onClick={() => {
                 mixpanelEvent("Clicked Book Coach", {
@@ -112,7 +112,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
               Book Your Coaching Session
             </Button>
             <Text>
-              <Link color="teal.500" onClick={() => navigate(-1)}>
+              <Link color="#3168b2" onClick={() => navigate(-1)}>
                 Back to Results
               </Link>
             </Text>
