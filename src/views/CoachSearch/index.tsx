@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import { mixpanelEvent, mixpanelIdentify } from "../../helpers";
 import { CurrentUserProps } from "../../types";
-import design from "./design.png";
+import welcome from "./welcome.png";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
@@ -142,7 +142,9 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
         <div className={classes.heading}>
           <Stack spacing="6" style={{ marginBottom: "100px" }}>
             <Heading as="h2" size="xl" className={classes.capitalize}>
-              {`Welcome Back ${currentUser ? currentUser.name : null}`}
+              {`Welcome Back ${
+                currentUser ? currentUser.name.split(" ")[0] : null
+              }!`}
             </Heading>
           </Stack>
         </div>
@@ -150,16 +152,16 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
           <div className={classes.row}>
             <div className={classes.box}>
               <Heading as="h1" size="2xl" className={classes.margin}>
-                Find your path foward
+                On-Demand Coaching, For You
               </Heading>
               <Text fontSize="large" className={classes.margin}>
-                Book an on-demand coaching session each month with a certified
-                executive coach. These sessions are completely confidential and
-                give you the ability to get private feedback, mentorship, and
-                perspective.
+                Pick how you want to get better, personally or professionally.
+                Choose the perfect coach to help you. Book a coaching session
+                that fits your schedule. Put in the work and become
+                extraordinary.
               </Text>
               <Select
-                placeholder="Choose a topic"
+                placeholder="In what area would you like to get better?"
                 onChange={(e) => selectTag(e)}
               >
                 {coachTags && coachTags.length
@@ -172,7 +174,7 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
               </Select>
             </div>
             <div className={classes.box}>
-              <img src={design} className={classes.image} alt="" />
+              <img src={welcome} className={classes.image} alt="" />
             </div>
           </div>
         </div>
