@@ -2,7 +2,7 @@ import { Heading, Link, Text } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
-import { Link as RouteLink } from "react-router-dom";
+import { Link as RouteLink, useNavigate } from "react-router-dom";
 import Coach from "../../components/Coach";
 import { CoachSkills, CoachType } from "../../types";
 
@@ -36,6 +36,7 @@ const CoachResults: React.FC = () => {
   const windowUrl = window.location.toString().toLowerCase();
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
   const [coaches, setCoaches] = useState<CoachType[] | null>(null);
+  const navigate = useNavigate();
 
   const generateUrl = (coach: CoachType) => {
     return coach.name.replace(/\W|_/g, "-").toLowerCase() + `-${coach.id}`;
@@ -77,7 +78,7 @@ const CoachResults: React.FC = () => {
             : null}
         </Heading>
         <Text>
-          <Link color="teal.500" href="/search">
+          <Link color="teal.500" onClick={() => navigate(-1)}>
             Back to Search
           </Link>
         </Text>

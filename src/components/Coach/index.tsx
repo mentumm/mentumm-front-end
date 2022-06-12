@@ -48,7 +48,6 @@ const Coach: React.FC<CoachProps> = (props) => {
             <UserAvatar
               name={name ? name : null}
               src="https://i.imgur.com/bojxiui.jpg"
-              isVerified
             />
             <CardContent>
               <CardHeader title={name ? name : null} />
