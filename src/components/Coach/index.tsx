@@ -59,7 +59,7 @@ const Coach: React.FC<CoachProps> = (props) => {
                 </HStack>
               </Stack>
               <Text fontWeight="semibold" mt="8" mb="2">
-                Skills
+                Expertise
               </Text>
               <Wrap shouldWrapChildren>
                 {skills
