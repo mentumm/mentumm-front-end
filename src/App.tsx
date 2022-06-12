@@ -38,7 +38,7 @@ function App() {
   return (
     <AppContainer>
       <div className={classes.root}>
-        <NavBar />
+        <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
         <Routes>
           <Route
             path="/"

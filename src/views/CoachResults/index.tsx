@@ -1,8 +1,8 @@
-import { Heading } from "@chakra-ui/react";
+import { Heading, Link, Text } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
-import { Link } from "react-router-dom";
+import { Link as RouteLink, useNavigate } from "react-router-dom";
 import Coach from "../../components/Coach";
 import { CoachSkills, CoachType } from "../../types";
 
@@ -36,6 +36,7 @@ const CoachResults: React.FC = () => {
   const windowUrl = window.location.toString().toLowerCase();
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
   const [coaches, setCoaches] = useState<CoachType[] | null>(null);
+  const navigate = useNavigate();
 
   const generateUrl = (coach: CoachType) => {
     return coach.name.replace(/\W|_/g, "-").toLowerCase() + `-${coach.id}`;
@@ -72,15 +73,22 @@ const CoachResults: React.FC = () => {
     <div className={classes.root}>
       <div className={classes.resultHeading}>
         <Heading as="h1" size="2xl">
-          {coaches && coaches.length ? "Results for " + pageHeading() : null}
+          {coaches && coaches.length
+            ? "Your Coaches for " + pageHeading()
+            : null}
         </Heading>
+        <Text>
+          <Link color="#3168b2" onClick={() => navigate(-1)}>
+            Back to Search
+          </Link>
+        </Text>
       </div>
       <div className={classes.coaches}>
         {coaches && coaches.length ? (
           coaches.map((coach: CoachType) => (
-            <Link to={`/coach/${generateUrl(coach)}`} key={coach.id}>
+            <RouteLink to={`/coach/${generateUrl(coach)}`} key={coach.id}>
               <Coach coachInfo={coach} />
-            </Link>
+            </RouteLink>
           ))
         ) : (
           <Heading as="h1" size="2xl">

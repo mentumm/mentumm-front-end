@@ -6,7 +6,7 @@ import { useNavigate } from "react-router";
 import { useSearchParams } from "react-router-dom";
 import { mixpanelEvent, mixpanelIdentify } from "../../helpers";
 import { CurrentUserProps } from "../../types";
-import design from "./design.png";
+import welcome from "./welcome.png";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
@@ -124,17 +124,6 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
         });
 
         if (bookedCoach) {
-          mixpanelEvent("Coach Booked", {
-            "User ID": bookedCoach.data[0].user_id,
-            "Coach ID": bookedCoach.data[0].coach_id,
-            "Booking Email": bookedCoach.data[0].invitee_email,
-            Name: bookedCoach.data[0].invitee_full_name,
-            "Invitee UUID": bookedCoach.data[0].invitee_uuid,
-            "Event End Time": bookedCoach.data[0].event_end_time,
-            "Event Start Time": bookedCoach.data[0].event_start_time,
-            "Event Type Name": bookedCoach.data[0].event_type_name,
-            "Event Type UUID": bookedCoach.data[0].event_type_uuid,
-          });
           setCoachBooked(true);
         }
       } catch (error) {
@@ -153,7 +142,9 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
         <div className={classes.heading}>
           <Stack spacing="6" style={{ marginBottom: "100px" }}>
             <Heading as="h2" size="xl" className={classes.capitalize}>
-              {`Welcome Back ${currentUser ? currentUser.name : null}`}
+              {`Welcome Back ${
+                currentUser ? currentUser.name.split(" ")[0] : null
+              }!`}
             </Heading>
           </Stack>
         </div>
@@ -161,16 +152,16 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
           <div className={classes.row}>
             <div className={classes.box}>
               <Heading as="h1" size="2xl" className={classes.margin}>
-                Find your path foward
+                On-Demand Coaching, For You
               </Heading>
               <Text fontSize="large" className={classes.margin}>
-                Book an on-demand coaching session each month with a certified
-                executive coach. These sessions are completely confidential and
-                give you the ability to get private feedback, mentorship, and
-                perspective.
+                Pick how you want to get better, personally or professionally.
+                Choose the perfect coach to help you. Book a coaching session
+                that fits your schedule. Put in the work and become
+                extraordinary.
               </Text>
               <Select
-                placeholder="Choose a topic"
+                placeholder="In what area would you like to get better?"
                 onChange={(e) => selectTag(e)}
               >
                 {coachTags && coachTags.length
@@ -183,7 +174,7 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
               </Select>
             </div>
             <div className={classes.box}>
-              <img src={design} className={classes.image} alt="" />
+              <img src={welcome} className={classes.image} alt="" />
             </div>
           </div>
         </div>

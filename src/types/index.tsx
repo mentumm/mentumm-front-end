@@ -45,3 +45,8 @@ export interface UserLoginProps {
   currentUser: CurrentUser;
   setCurrentUser: (currentUser: CurrentUser) => void;
 }
+
+export interface LocationState {
+  currentUser: CurrentUser;
+  coachTags: CoachSkills[];
+}

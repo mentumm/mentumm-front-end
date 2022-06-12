@@ -16,7 +16,7 @@ const RegisterAction: React.FC = () => {
   };
 
   return (
-    <Container maxW="md" py={{ base: "12", md: "24" }}>
+    <Container maxW="md">
       <Stack spacing="8">
         <Stack spacing="6">
           <Stack spacing={{ base: "2", md: "3" }} textAlign="left">
@@ -33,7 +33,7 @@ const RegisterAction: React.FC = () => {
         </Stack>
         <Stack spacing="6">
           <Button
-            colorScheme="blue"
+            colorScheme="brand"
             variant="solid"
             onClick={() => handleSignUp()}
           >

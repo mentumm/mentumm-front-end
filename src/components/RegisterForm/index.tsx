@@ -120,11 +120,8 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
             <Heading size="lg" textAlign="left">
               New Members
             </Heading>
-            <HStack spacing="1" justify="center">
-              <Text>
-                Harmonious colour themes have built up as the collection has
-                evolved
-              </Text>
+            <HStack spacing="1" justify="left">
+              <Text>Create your account to get started!</Text>
             </HStack>
           </Stack>
         </Stack>
@@ -191,7 +188,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
           </Stack>
 
           <Stack spacing="4">
-            <Button colorScheme="blue" variant="solid" onClick={() => login()}>
+            <Button colorScheme="brand" variant="solid" onClick={() => login()}>
               Register
             </Button>
           </Stack>

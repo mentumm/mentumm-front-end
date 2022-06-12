@@ -26,7 +26,7 @@ const RegisterAction: React.FC = () => {
           </Stack>
         </Stack>
         <Stack spacing="6">
-          <Button colorScheme="blue" variant="solid">
+          <Button colorScheme="brand" variant="solid">
             Sign Up
           </Button>
         </Stack>
