@@ -17,6 +17,7 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   },
   heading: {
     margin: "30px 30px",
+    marginBottom: "75px",
   },
   column: {
     width: "100%",
@@ -41,7 +42,7 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   box: {
     position: "relative",
     width: "50%",
-    padding: "12px",
+    padding: "6px",
   },
   image: {
     position: "relative",
@@ -140,7 +141,7 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
     <div className={classes.root}>
       <div className={classes.column}>
         <div className={classes.heading}>
-          <Stack spacing="6" style={{ marginBottom: "100px" }}>
+          <Stack spacing="6">
             <Heading as="h2" size="xl" className={classes.capitalize}>
               {`Welcome Back ${
                 currentUser ? currentUser.name.split(" ")[0] : null
