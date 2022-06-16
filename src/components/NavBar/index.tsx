@@ -17,21 +17,8 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
     justifyContent: "space-between",
     alignItems: "center",
   },
-  container: {
-    display: "flex",
-    position: "relative",
-    flexFlow: "row nowrap",
-    justifyContent: "space-between",
-    alignItems: "center",
-    width: "100%",
-  },
   logo: {
-    position: "relative",
-    "& img": {
-      position: "relative",
-      width: "10%",
-      height: "auto",
-    },
+    width: "5%",
   },
   logout: {
     color: "white",
@@ -51,19 +38,17 @@ const NavBar: React.FC<UserLoginProps> = (props) => {
   };
   return (
     <div className={classes.root}>
-      <div className={classes.container}>
-        <div className={classes.logo}>
-          <Link to="/">
-            <img src={logo} alt="Momentum" role="banner" />
+      <div className={classes.logo}>
+        <Link to="/">
+          <img src={logo} alt="Momentum" role="banner" />
+        </Link>
+      </div>
+      <div className={classes.logout}>
+        {currentUser ? (
+          <Link color="white" to="#" onClick={() => logout()}>
+            Logout
           </Link>
-        </div>
-        <div className={classes.logout}>
-          {currentUser ? (
-            <Link color="white" to="#" onClick={() => logout()}>
-              Logout
-            </Link>
-          ) : null}
-        </div>
+        ) : null}
       </div>
     </div>
   );
