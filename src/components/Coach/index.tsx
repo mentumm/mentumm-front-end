@@ -1,7 +1,7 @@
 import { Box, HStack, Icon, Stack, Tag, Text, Wrap } from "@chakra-ui/react";
 import React from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
-import { CoachProps } from "../../types";
+import { CoachProps, CoachSkills } from "../../types";
 import { Card } from "./Card";
 import { CardContent } from "./CardContent";
 import { CardHeader } from "./CardHeader";
@@ -37,6 +37,30 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 const Coach: React.FC<CoachProps> = (props) => {
   const classes = useStyles();
   const { name, skills, location, photo_url } = props.coachInfo;
+
+  const generateCoachTags = (tags: CoachSkills[]) => {
+    if (tags.length > 4) {
+      let trimmedTags = [];
+
+      const remainingTags = tags.filter(
+        (tag: CoachSkills) => tag.slug !== props.slug
+      );
+
+      // make sure to show the tag that the user searched for
+      trimmedTags.push(tags.find((tag) => tag.slug === props.slug));
+      remainingTags.slice(2, -1).map((tag) => trimmedTags.push(tag));
+      // the extra +3 more tag
+      trimmedTags.push({
+        id: Math.floor(Math.random() * (2000 - 1000) + 1000),
+        name: `+ ${tags.length - 4} more`,
+      });
+
+      return trimmedTags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>);
+    } else {
+      return tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>);
+    }
+  };
+
   return (
     <div className={classes.root}>
       <Box as="section" py="6">
@@ -65,9 +89,7 @@ const Coach: React.FC<CoachProps> = (props) => {
                 Expertise
               </Text>
               <Wrap shouldWrapChildren>
-                {skills
-                  ? skills.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>)
-                  : null}
+                {skills ? generateCoachTags(skills) : null}
               </Wrap>
             </CardContent>
           </Stack>

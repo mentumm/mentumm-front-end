@@ -87,7 +87,12 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                   <Icon as={GoGlobe} color="gray.500" />
                   <Text>{coach ? coach.location : null}</Text>
                   <Icon as={SiLinkedin} color="gray.500" />
-                  <Link href={coach ? coach.linkedin_url : "#"} isExternal>
+                  <Link
+                    href={
+                      coach && coach.linkedin_url ? coach.linkedin_url : "#"
+                    }
+                    isExternal
+                  >
                     {coach ? coach.name : null}
                   </Link>
                 </HStack>
