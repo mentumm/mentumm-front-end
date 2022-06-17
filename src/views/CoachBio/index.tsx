@@ -58,18 +58,23 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
 
   return (
     <Box
-      maxW="6xl"
+      maxW="5xl"
       mx="auto"
       px={{ base: "4", md: "8", lg: "12" }}
       py={{ base: "6", md: "8", lg: "12" }}
     >
-      <Stack direction={{ base: "column", md: "row" }} spacing="16">
+      <Stack direction={{ base: "column", md: "row" }}>
         <Box flex="1">
-          <Stack spacing="8">
-            <AspectRatio maxW="450px" ratio={1}>
-              <Image src={coach ? coach.photo_url : null} alt="Coach image" />
-            </AspectRatio>
-          </Stack>
+          <AspectRatio maxW="450px" ratio={1}>
+            <Image
+              src={
+                coach && coach.photo_url
+                  ? coach.photo_url
+                  : "https://mentumm.com/wp-content/uploads/2022/06/mentumm_profile.png"
+              }
+              alt="Coach image"
+            />
+          </AspectRatio>
         </Box>
         <Box maxW="sm">
           <Stack spacing="8">
