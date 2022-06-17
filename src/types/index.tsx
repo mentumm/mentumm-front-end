@@ -10,6 +10,7 @@ export interface CurrentUserProps {
 
 export interface CoachProps {
   coachInfo: CoachType;
+  slug: string;
 }
 
 export interface CoachType {

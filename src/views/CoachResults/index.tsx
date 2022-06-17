@@ -87,7 +87,7 @@ const CoachResults: React.FC = () => {
         {coaches && coaches.length ? (
           coaches.map((coach: CoachType) => (
             <RouteLink to={`/coach/${generateUrl(coach)}`} key={coach.id}>
-              <Coach coachInfo={coach} />
+              <Coach coachInfo={coach} slug={slug} />
             </RouteLink>
           ))
         ) : (
