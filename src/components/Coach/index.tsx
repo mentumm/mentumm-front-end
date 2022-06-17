@@ -36,7 +36,7 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 
 const Coach: React.FC<CoachProps> = (props) => {
   const classes = useStyles();
-  const { name, skills, location } = props.coachInfo;
+  const { name, skills, location, photo_url } = props.coachInfo;
   return (
     <div className={classes.root}>
       <Box as="section" py="6">
@@ -47,7 +47,11 @@ const Coach: React.FC<CoachProps> = (props) => {
           >
             <UserAvatar
               name={name ? name : null}
-              src="https://i.imgur.com/bojxiui.jpg"
+              src={
+                photo_url
+                  ? photo_url
+                  : "https://mentumm.com/wp-content/uploads/2022/06/mentumm_profile.png"
+              }
             />
             <CardContent>
               <CardHeader title={name ? name : null} />
