@@ -48,7 +48,7 @@ const Coach: React.FC<CoachProps> = (props) => {
 
       // make sure to show the tag that the user searched for
       trimmedTags.push(tags.find((tag) => tag.slug === props.slug));
-      remainingTags.slice(2, -1).map((tag) => trimmedTags.push(tag));
+      remainingTags.slice(0, 2).map((tag) => trimmedTags.push(tag));
       // the extra +3 more tag
       trimmedTags.push({
         id: Math.floor(Math.random() * (2000 - 1000) + 1000),
