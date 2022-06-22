@@ -1,8 +1,9 @@
-import { Container, Heading, Stack } from "@chakra-ui/react";
+import { Center, Container, Image } from "@chakra-ui/react";
 import React from "react";
 import { createUseStyles } from "react-jss";
 import RegisterForm from "../../components/RegisterForm";
 import { UserLoginProps } from "../../types";
+import landing_logo from "./landing_logo.png";
 
 const useStyles = createUseStyles({
   root: {
@@ -28,10 +29,10 @@ const Register: React.FC<UserLoginProps> = (props) => {
     <div className={classes.root}>
       <div className={classes.parentColumn}>
         <div className={classes.container}>
-          <Container maxW="md" py={{ base: "12", md: "24" }}>
-            <Stack spacing="8">
-              <Heading textAlign="center">Growth Portal Sign Up</Heading>
-            </Stack>
+          <Container maxW="md" py={{ md: "8" }}>
+            <Center>
+              <Image src={landing_logo} alt="Mentumm banner" maxW="md" />
+            </Center>
           </Container>
         </div>
         <div className={classes.container}>
