@@ -118,7 +118,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
         <Stack spacing="6">
           <Stack spacing={{ base: "2", md: "3" }} textAlign="left">
             <Heading size="lg" textAlign="left">
-              New Members
+              New Member Registration
             </Heading>
             <HStack spacing="1" justify="left">
               <Text>Create your account to get started!</Text>
