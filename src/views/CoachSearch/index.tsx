@@ -1,4 +1,13 @@
-import { Heading, Select, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Flex,
+  Heading,
+  Image,
+  Select,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
@@ -30,19 +39,6 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-  },
-  row: {
-    display: "flex",
-    flexDirection: "row",
-    width: "75%",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "24px",
-  },
-  box: {
-    position: "relative",
-    width: "50%",
-    padding: "6px",
   },
   image: {
     position: "relative",
@@ -149,36 +145,54 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
             </Heading>
           </Stack>
         </div>
-        <div className={classes.columnRow}>
-          <div className={classes.row}>
-            <div className={classes.box}>
-              <Heading as="h1" size="2xl" className={classes.margin}>
-                On-Demand Coaching, For You
-              </Heading>
-              <Text fontSize="large" className={classes.margin}>
-                Pick how you want to get better, personally or professionally.
-                Choose the perfect coach to help you. Book a coaching session
-                that fits your schedule. Put in the work and become
-                extraordinary.
-              </Text>
-              <Select
-                placeholder="In what area would you like to get better?"
-                onChange={(e) => selectTag(e)}
-              >
-                {coachTags && coachTags.length
-                  ? coachTags.map((tag) => (
-                      <option value={tag.slug} key={tag.id}>
-                        {tag.name}
-                      </option>
-                    ))
-                  : null}
-              </Select>
-            </div>
-            <div className={classes.box}>
-              <img src={welcome} className={classes.image} alt="" />
-            </div>
-          </div>
-        </div>
+        <Container maxW="100%">
+          <Flex
+            dir="row"
+            alignItems="center"
+            justifyContent="center"
+            gap={12}
+            direction={{ base: "column-reverse", md: "row" }}
+          >
+            <Stack
+              align={["center", "center", "flex-start", "flex-start"]}
+              alignItems="center"
+            >
+              <Box maxW="725px" position="relative">
+                <Heading as="h1" size="2xl" className={classes.margin}>
+                  On-Demand Coaching, For You
+                </Heading>
+                <Text fontSize="large" className={classes.margin}>
+                  Pick how you want to get better, personally or professionally.
+                  Choose the perfect coach to help you. Book a coaching session
+                  that fits your schedule. Put in the work and become
+                  extraordinary.
+                </Text>
+                <Select
+                  placeholder="In what area would you like to get better?"
+                  onChange={(e) => selectTag(e)}
+                >
+                  {coachTags && coachTags.length
+                    ? coachTags.map((tag) => (
+                        <option value={tag.slug} key={tag.id}>
+                          {tag.name}
+                        </option>
+                      ))
+                    : null}
+                </Select>
+              </Box>
+            </Stack>
+            <Stack>
+              <Box maxW="md">
+                <Image
+                  src={welcome}
+                  alt="Person Searching for a Coach"
+                  maxW={{ base: "100%", md: "85%", lg: "100%" }}
+                  objectFit="cover"
+                />
+              </Box>
+            </Stack>
+          </Flex>
+        </Container>
       </div>
     </div>
   );

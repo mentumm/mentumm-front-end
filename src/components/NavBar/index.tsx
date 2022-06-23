@@ -18,7 +18,7 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
     alignItems: "center",
   },
   logo: {
-    width: "5%",
+    width: "65px",
   },
   logout: {
     color: "white",
