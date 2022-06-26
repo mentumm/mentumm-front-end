@@ -11,9 +11,6 @@ import { useNavigate } from "react-router";
 
 const RegisterAction: React.FC = () => {
   const navigate = useNavigate();
-  const handleSignUp = () => {
-    navigate("/sign-up");
-  };
 
   return (
     <Container maxW="md">
@@ -35,7 +32,7 @@ const RegisterAction: React.FC = () => {
           <Button
             colorScheme="brand"
             variant="solid"
-            onClick={() => handleSignUp()}
+            onClick={() => navigate("/sign-up")}
           >
             Sign Up
           </Button>
