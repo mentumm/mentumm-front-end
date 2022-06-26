@@ -1,6 +1,15 @@
-import { Center, Container, Divider, Image } from "@chakra-ui/react";
+import {
+  Button,
+  Center,
+  Container,
+  Divider,
+  Hide,
+  Image,
+  Show,
+} from "@chakra-ui/react";
 import React from "react";
 import { createUseStyles } from "react-jss";
+import { useNavigate } from "react-router";
 import LoginForm from "../../components/LoginForm";
 import RegisterAction from "../../components/RegisterAction";
 import { UserLoginProps } from "../../types";
@@ -25,6 +34,7 @@ const useStyles = createUseStyles({
 
 const Login: React.FC<UserLoginProps> = (props) => {
   const classes = useStyles();
+  const navigate = useNavigate();
 
   return (
     <div className={classes.root}>
@@ -34,7 +44,11 @@ const Login: React.FC<UserLoginProps> = (props) => {
           paddingBottom={{ base: "2", md: "6" }}
         >
           <Center>
-            <Image src={landing_logo} alt="Mentumm banner" maxW="md" />
+            <Image
+              src={landing_logo}
+              alt="Mentumm banner"
+              w={{ base: "auto", lg: "500px" }}
+            />
           </Center>
         </Container>
       </div>
@@ -43,13 +57,28 @@ const Login: React.FC<UserLoginProps> = (props) => {
           currentUser={props.currentUser}
           setCurrentUser={props.setCurrentUser}
         />
-        <div style={{ paddingTop: "20px" }}>
-          <Center height="350px">
-            <Divider orientation="vertical" />
-          </Center>
-        </div>
-        <RegisterAction />
+        <Hide below="md">
+          <div style={{ paddingTop: "20px" }}>
+            <Center height="350px">
+              <Divider orientation="vertical" />
+            </Center>
+          </div>
+          <RegisterAction />
+        </Hide>
       </div>
+      <Show below="lg">
+        <Container paddingTop={{ base: "4" }}>
+          Not a current user?{" "}
+          <Button
+            variant="link"
+            colorScheme="brand"
+            size="sm"
+            onClick={() => navigate("/sign-up")}
+          >
+            Register now!
+          </Button>
+        </Container>
+      </Show>
     </div>
   );
 };
