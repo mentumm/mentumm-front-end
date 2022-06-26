@@ -21,11 +21,13 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
   const { setCurrentUser } = props;
   const [email, setEmail] = useState<string>(null);
   const [password, setPassword] = useState<string>(null);
-  const [userName, setUserName] = useState<string>(null);
+  const [userFirstName, setUserFirstName] = useState<string>(null);
+  const [userLastName, setUserLastName] = useState<string>(null);
   const [inviteCode, setInviteCode] = useState<string>(null);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
-  const [userNameError, setUserNameError] = useState<boolean>(false);
+  const [userFirstNameError, setUserFirstNameError] = useState<boolean>(false);
+  const [userLastNameError, setUserLastNameError] = useState<boolean>(false);
   const [inviteCodeError, setInviteCodeError] = useState<boolean>(false);
   const [, setCookie] = useCookies(["growth_10"]);
 
@@ -46,9 +48,14 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
     setPasswordError(e.target.value === "");
   };
 
-  const handleUserNameChange = (e) => {
-    setUserName(e.target.value);
-    setUserNameError(e.target.value === "");
+  const handleUserFirstNameChange = (e) => {
+    setUserFirstName(e.target.value);
+    setUserFirstNameError(e.target.value === "");
+  };
+
+  const handleUserLastNameChange = (e) => {
+    setUserLastName(e.target.value);
+    setUserLastNameError(e.target.value === "");
   };
 
   const handleInviteCodeChange = (e) => {
@@ -60,15 +67,18 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
     setEmailError(!email || email === "" || !validateEmail());
     setPasswordError(!password || password === "");
     setInviteCodeError(!inviteCode || inviteCode === "");
-    setUserNameError(!userName || userName === "");
+    setUserFirstNameError(!userFirstName || userFirstName === "");
+    setUserLastNameError(!userLastName || userLastName === "");
 
     if (
       !email ||
       email === "" ||
       password === "" ||
       !password ||
-      userName === "" ||
-      !userName ||
+      userFirstName === "" ||
+      !userFirstName ||
+      userLastName === "" ||
+      !userLastName ||
       inviteCode === "" ||
       !inviteCode
     ) {
@@ -80,7 +90,8 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
         email: email,
         password: password,
         invite_code: inviteCode,
-        name: userName,
+        first_name: userFirstName,
+        last_name: userLastName,
       });
 
       if (!createUser) {
@@ -127,17 +138,32 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
         </Stack>
         <Stack spacing="6">
           <Stack spacing="-px">
-            <FormControl id="fullName" isInvalid={userNameError}>
-              <FormLabel srOnly>Full Name</FormLabel>
+            <FormControl id="firstName" isInvalid={userFirstNameError}>
+              <FormLabel srOnly>First Name</FormLabel>
               <Input
-                name="name"
-                placeholder="Your Name"
+                name="first_name"
+                placeholder="First Name"
                 roundedBottom="0"
-                onChange={handleUserNameChange}
+                onChange={handleUserFirstNameChange}
               />
-              {!userNameError ? null : (
+              {!userFirstNameError ? null : (
                 <FormErrorMessage style={{ marginBottom: "6px" }}>
-                  Your name is required.
+                  Your first name is required.
+                </FormErrorMessage>
+              )}
+            </FormControl>
+            <FormControl id="lastName" isInvalid={userLastNameError}>
+              <FormLabel srOnly>Last Name</FormLabel>
+              <Input
+                name="last_name"
+                placeholder="Last Name"
+                roundedBottom="0"
+                roundedTop="0"
+                onChange={handleUserLastNameChange}
+              />
+              {!userLastNameError ? null : (
+                <FormErrorMessage style={{ marginBottom: "6px" }}>
+                  Your last name is required.
                 </FormErrorMessage>
               )}
             </FormControl>

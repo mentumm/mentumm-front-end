@@ -36,7 +36,8 @@ export interface CoachSkills {
 
 export interface CurrentUser {
   id: number;
-  name: string;
+  first_name: string;
+  last_name: string;
   email: string;
   employer_id: number;
   last_sign_in?: Date;
