@@ -18,7 +18,8 @@ export const mixpanelPeople = (user: CurrentUser) => {
     "User ID": user.id,
     Email: user.email,
     "Employer ID": user.employer_id,
-    Name: user.name,
+    "First Name": user.first_name,
+    "Last Name": user.last_name,
     "Last Sign In": user.last_sign_in,
   });
 };

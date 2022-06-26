@@ -74,7 +74,6 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
         return;
       }
       const user: CurrentUser = loginUser.data;
-
       setCurrentUser(user);
       setCookie("growth_10", user, {
         path: "/",
@@ -89,7 +88,8 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
       mixpanelPeople(user);
       mixpanelEvent("User Logged In", {
         "User ID": user.id,
-        Name: user.name,
+        "First Name": user.first_name,
+        "Last Name": user.last_name,
         "Employer ID": user.employer_id,
         Email: user.email,
       });
