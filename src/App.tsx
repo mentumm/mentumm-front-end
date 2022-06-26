@@ -28,7 +28,16 @@ function App() {
     if (cookies.growth_10) {
       setCurrentUser({
         id: cookies.growth_10.id,
-        name: cookies.growth_10.name,
+
+        // leaving backward compatibility for now
+        first_name: cookies.growth_10.name
+          ? cookies.growth_10.name.split(" ")[0]
+          : cookies.growth_10.first_name,
+        last_name: cookies.growth_10.name
+          ? cookies.growth_10.name.split(" ")[1]
+          : cookies.growth_10.last_name,
+        //
+
         email: cookies.growth_10.email,
         employer_id: cookies.growth_10.employer_id,
       });
