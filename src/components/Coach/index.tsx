@@ -12,26 +12,6 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
     display: "flex",
   },
-  coach: {
-    display: "flex",
-  },
-  coachCard: {
-    width: "35em",
-  },
-  coachImage: {
-    maxWidth: "100%",
-    objectFit: "cover",
-    marginBottom: "16px",
-  },
-  coachInfo: {
-    marginTop: "auto",
-  },
-  coachTags: {
-    display: "flex",
-    flexDirection: "row",
-    gap: "6px",
-    marginTop: "6px",
-  },
 }));
 
 const Coach: React.FC<CoachProps> = (props) => {
