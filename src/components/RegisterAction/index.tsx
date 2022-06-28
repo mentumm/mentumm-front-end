@@ -18,13 +18,10 @@ const RegisterAction: React.FC = () => {
         <Stack spacing="6">
           <Stack spacing={{ base: "2", md: "3" }} textAlign="left">
             <Heading size="lg" textAlign="left">
-              New Members
+              New Member Registration
             </Heading>
-            <HStack spacing="1" justify="center">
-              <Text>
-                By creating an Account on our service, you agree to subscribe to
-                newsletters, marketing or promotional materials.
-              </Text>
+            <HStack spacing="1" justify="left">
+              <Text>Create your account to get started!</Text>
             </HStack>
           </Stack>
         </Stack>
