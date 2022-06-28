@@ -79,7 +79,7 @@ const CoachResults: React.FC = () => {
         </Heading>
         <Text>
           <Link color="#3168b2" onClick={() => navigate(-1)}>
-            Back to Search
+            Back to Home
           </Link>
         </Text>
       </div>
