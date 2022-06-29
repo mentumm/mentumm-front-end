@@ -25,8 +25,8 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
     width: "100%",
   },
   heading: {
-    margin: "30px 30px",
-    marginBottom: "75px",
+    // margin: "30px 30px",
+    // marginBottom: "75px",
   },
   column: {
     width: "100%",
@@ -137,9 +137,15 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
     <div className={classes.root}>
       <div className={classes.column}>
         <div className={classes.heading}>
-          <Stack spacing="6">
+          <Stack
+            spacing={{ base: "0", sm: "6" }}
+            margin={{ base: "16px 16px", md: "30px 30px" }}
+            marginBottom={{ base: "0", md: "75" }}
+          >
             <Heading as="h2" size="xl" className={classes.capitalize}>
-              {`Welcome Back ${currentUser ? currentUser.first_name : null}!`}
+              {`Welcome Back, ${
+                currentUser ? `${currentUser.first_name}!` : null
+              }`}
             </Heading>
           </Stack>
         </div>
@@ -148,7 +154,7 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
             dir="row"
             alignItems="center"
             justifyContent="center"
-            gap={12}
+            gap={{ base: "0", md: "12" }}
             direction={{ base: "column-reverse", md: "row" }}
           >
             <Stack

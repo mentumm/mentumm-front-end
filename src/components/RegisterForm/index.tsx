@@ -124,7 +124,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
   };
 
   return (
-    <Container maxW="md" py={{ base: "8", md: "8" }}>
+    <Container maxW="md">
       <Stack spacing="8">
         <Stack spacing="6">
           <Stack spacing={{ base: "2", md: "3" }} textAlign="left">

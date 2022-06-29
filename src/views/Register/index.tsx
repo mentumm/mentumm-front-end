@@ -13,7 +13,6 @@ const useStyles = createUseStyles({
   },
   parentColumn: {
     display: "inline-block",
-    width: "80%",
   },
   container: {
     position: "relative",
@@ -29,9 +28,18 @@ const Register: React.FC<UserLoginProps> = (props) => {
     <div className={classes.root}>
       <div className={classes.parentColumn}>
         <div className={classes.container}>
-          <Container maxW="md" py={{ md: "8" }}>
+          <Container
+            maxW="md"
+            paddingTop={{ base: "4", md: "8" }}
+            paddingBottom={{ base: "2", md: "6" }}
+          >
             <Center>
-              <Image src={landing_logo} alt="Mentumm banner" maxW="md" />
+              <Image
+                src={landing_logo}
+                alt="Mentumm banner"
+                // maxW="md"
+                w={{ base: "auto", lg: "500px" }}
+              />
             </Center>
           </Container>
         </div>
