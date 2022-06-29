@@ -1,6 +1,15 @@
-import { Box, Container, Stack, Text } from "@chakra-ui/react";
+import {
+  Box,
+  ButtonGroup,
+  Container,
+  HStack,
+  IconButton,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import React from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
+import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -18,13 +27,16 @@ const Footer: React.FC = () => {
 
   return (
     <Box className={classes.root}>
-      <Container as="footer" role="contentinfo" py={{ base: "6", md: "25" }}>
-        <Stack spacing={{ base: "4", md: "5" }} alignItems="flex-start">
-          <Text fontSize="sm" color="white">
-            &copy; {new Date().getFullYear()} Mentumm. All rights reserved.
-          </Text>
-        </Stack>
-      </Container>
+      <HStack
+        color="white"
+        as="footer"
+        role="contentinfo"
+        py={{ base: "6", md: "25" }}
+      >
+        <Text fontSize="sm" color="subtle" px="12px">
+          &copy; {new Date().getFullYear()} Mentumm. All rights reserved.
+        </Text>
+      </HStack>
     </Box>
   );
 };
