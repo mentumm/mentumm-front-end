@@ -1,15 +1,6 @@
-import {
-  Box,
-  ButtonGroup,
-  Container,
-  HStack,
-  IconButton,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, HStack, Text } from "@chakra-ui/react";
 import React from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
-import { FaGithub, FaLinkedin, FaTwitter } from "react-icons/fa";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
