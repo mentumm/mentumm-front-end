@@ -7,7 +7,13 @@ const useStyles = createUseStyles({
     display: "flex",
     position: "relative",
     width: "100%",
-    minHeight: `100vh`,
+    flexDirection: "column",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    minHeight: "100vh",
+    padding: 0,
+    margin: 0,
+    paddingBottom: "125px",
   },
 });
 

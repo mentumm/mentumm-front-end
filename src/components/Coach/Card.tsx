@@ -5,7 +5,7 @@ export const Card = (props: BoxProps) => (
   <Box
     bg={useColorModeValue("white", "gray.700")}
     maxWidth="xl"
-    minWidth="xl"
+    minWidth={{ sm: "xl" }}
     mx="auto"
     minHeight="2xs"
     p={{ base: "6", md: "8" }}

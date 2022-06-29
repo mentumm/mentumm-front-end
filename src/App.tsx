@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { Routes, Route, Navigate } from "react-router-dom";
 import AppContainer from "./components/AppContainer";
+import Footer from "./components/Footer";
 import SignInWrapper from "./components/LoginWrapper";
 import NavBar from "./components/NavBar";
 import { CurrentUser } from "./types";
@@ -14,7 +15,6 @@ import Register from "./views/Register";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
-    position: "relative",
     width: "100%",
   },
 }));
@@ -100,6 +100,7 @@ function App() {
             }
           />
         </Routes>
+        <Footer />
       </div>
     </AppContainer>
   );
