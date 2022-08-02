@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import {
   Button,
+  Checkbox,
   Container,
   FormControl,
   FormErrorMessage,
@@ -8,6 +9,7 @@ import {
   Heading,
   HStack,
   Input,
+  Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -30,6 +32,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
   const [userLastNameError, setUserLastNameError] = useState<boolean>(false);
   const [inviteCodeError, setInviteCodeError] = useState<boolean>(false);
   const [, setCookie] = useCookies(["growth_10"]);
+  const [checkedTerms, setCheckedTerms] = useState<boolean>(false);
 
   const validateEmail = () => {
     if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -214,9 +217,31 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
           </Stack>
 
           <Stack spacing="4">
-            <Button colorScheme="brand" variant="solid" onClick={() => login()}>
+            <Button
+              colorScheme="brand"
+              variant="solid"
+              onClick={() => login()}
+              disabled={!checkedTerms}
+            >
               Register
             </Button>
+            <HStack>
+              <Checkbox
+                colorScheme="brand"
+                isRequired
+                onChange={() => setCheckedTerms(!checkedTerms)}
+              />
+              <Text>
+                I acknowledge mentumm's{" "}
+                <Link
+                  color="#3168b2"
+                  href="https://mentumm.com/coaching-terms-and-conditions/"
+                  isExternal
+                >
+                  Terms and Conditions
+                </Link>
+              </Text>
+            </HStack>
           </Stack>
         </Stack>
       </Stack>
