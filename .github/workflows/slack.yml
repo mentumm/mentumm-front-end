@@ -1,30 +1,16 @@
-name: Release to Slack
+name: Notify Slack on Release
+
 on:
-  push:
-    branches:
-      - main
+  release:
+    types:
+      - created
 
 jobs:
-  changelog:
-    name: Releasing to Slack
-    shell: bash
+  notify_slack:
+    runs-on: ubuntu-latest
+    name: Notify Slack on Release
     steps:
-     - name: Slack Release
-        # trick for multiline variables
-        run: |
-          changelog=$(head -100 HISTORY.md)
-          changelog="${changelog//'%'/'%25'}"
-          changelog="${changelog//$'\n'/'%0A'}"
-          changelog="${changelog//$'\r'/'%0D'}"
-          echo "::set-output name=changelog::$changelog"
-
-      - name: Get version
-        id: version
-        run: echo "::set-output name=version::${GITHUB_REF#refs/tags/}"
-
-      - name: Notify on Slack
-        uses: bloodyowl/slack-message-release-action@v1.1.5
+      - name: Notify Slack on Release
+        uses: instantish/notify-slack-on-release@1.0.0
         with:
-          version: ${{ steps.version.outputs.version }}
-          changelog: ${{ steps.changelog.outputs.changelog }}
           slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
