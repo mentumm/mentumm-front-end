@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/denvermullets/growth-front-end/compare/v1.1.0...v1.1.1) (2022-08-03)
+
+
+### Bug Fixes
+
+* **workflow:** fix slack notification workflow ([#68](https://github.com/denvermullets/growth-front-end/issues/68)) ([20c6abd](https://github.com/denvermullets/growth-front-end/commit/20c6abdfd242f3ba0a9c35e960ef3190367697c5))
+* **workflow:** try to update slack notifications ([#70](https://github.com/denvermullets/growth-front-end/issues/70)) ([e486764](https://github.com/denvermullets/growth-front-end/commit/e4867645f7aa54eea89492fd09ac8c5f80372c45))
+* **workflow:** update slack yml ([#69](https://github.com/denvermullets/growth-front-end/issues/69)) ([2d77786](https://github.com/denvermullets/growth-front-end/commit/2d77786efacbcd9d1cb5727284653913a429eec6))
+
 # [1.1.0](https://github.com/denvermullets/growth-front-end/compare/v1.0.0...v1.1.0) (2022-08-03)
 
 
