@@ -1,16 +1,21 @@
-name: Slackbot on release
+- name: Get changelog
+  id: changelog
+  shell: bash
+  # trick for multiline variables
+  run: |
+    changelog=$(head -100 HISTORY.md)
+    changelog="${changelog//'%'/'%25'}"
+    changelog="${changelog//$'\n'/'%0A'}"
+    changelog="${changelog//$'\r'/'%0D'}"
+    echo "::set-output name=changelog::$changelog"
 
-on:
-  release:
-    types:
-      - created
+- name: Get version
+  id: version
+  run: echo "::set-output name=version::${GITHUB_REF#refs/tags/}"
 
-jobs:
-  notify_slack:
-    runs-on: ubuntu-latest
-    name: Notify Slack on Release
-    steps:
-      - name: Notify Slack on Releases
-        uses: amendx/slackbot-release@1.0.0
-        with:
-          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+- name: Notify on Slack
+  uses: bloodyowl/slack-message-release-action@v1.1.5
+  with:
+    version: ${{ steps.version.outputs.version }}
+    changelog: ${{ steps.changelog.outputs.changelog }}
+    slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
