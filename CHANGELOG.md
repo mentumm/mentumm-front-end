@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/denvermullets/growth-front-end/compare/v1.0.0...v1.1.0) (2022-08-03)
+
+
+### Features
+
+* **workflow:** add slack webhook for release notifications ([#66](https://github.com/denvermullets/growth-front-end/issues/66)) ([03d076a](https://github.com/denvermullets/growth-front-end/commit/03d076ad5da0c0e9e4a8363cf1d30505d87162e2))
+
 # 1.0.0 (2022-08-03)
 
 
