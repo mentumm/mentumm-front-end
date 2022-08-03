@@ -1,21 +1,30 @@
-- name: Get changelog
-  id: changelog
-  shell: bash
-  # trick for multiline variables
-  run: |
-    changelog=$(head -100 HISTORY.md)
-    changelog="${changelog//'%'/'%25'}"
-    changelog="${changelog//$'\n'/'%0A'}"
-    changelog="${changelog//$'\r'/'%0D'}"
-    echo "::set-output name=changelog::$changelog"
+name: Release to Slack
+on:
+  push:
+    branches:
+      - main
 
-- name: Get version
-  id: version
-  run: echo "::set-output name=version::${GITHUB_REF#refs/tags/}"
+jobs:
+  changelog:
+    name: Releasing to Slack
+    shell: bash
+    steps:
+     - name: Slack Release
+        # trick for multiline variables
+        run: |
+          changelog=$(head -100 HISTORY.md)
+          changelog="${changelog//'%'/'%25'}"
+          changelog="${changelog//$'\n'/'%0A'}"
+          changelog="${changelog//$'\r'/'%0D'}"
+          echo "::set-output name=changelog::$changelog"
 
-- name: Notify on Slack
-  uses: bloodyowl/slack-message-release-action@v1.1.5
-  with:
-    version: ${{ steps.version.outputs.version }}
-    changelog: ${{ steps.changelog.outputs.changelog }}
-    slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: Get version
+        id: version
+        run: echo "::set-output name=version::${GITHUB_REF#refs/tags/}"
+
+      - name: Notify on Slack
+        uses: bloodyowl/slack-message-release-action@v1.1.5
+        with:
+          version: ${{ steps.version.outputs.version }}
+          changelog: ${{ steps.changelog.outputs.changelog }}
+          slack_webhook_url: ${{ secrets.SLACK_WEBHOOK_URL }}
