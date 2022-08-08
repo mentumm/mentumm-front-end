@@ -143,9 +143,7 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
             marginBottom={{ base: "0", md: "75" }}
           >
             <Heading as="h2" size="xl" className={classes.capitalize}>
-              {`Welcome Back, ${
-                currentUser ? `${currentUser.first_name}!` : null
-              }`}
+              {`Welcome, ${currentUser ? `${currentUser.first_name}!` : null}`}
             </Heading>
           </Stack>
         </div>
