@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
         py={{ base: "6", md: "25" }}
       >
         <Text fontSize="sm" color="subtle" px="12px">
-          &copy; {new Date().getFullYear()} Mentumm. All rights reserved.
+          &copy; {new Date().getFullYear()} mentumm. All rights reserved.
         </Text>
       </HStack>
     </Box>

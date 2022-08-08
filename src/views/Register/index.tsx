@@ -36,7 +36,7 @@ const Register: React.FC<UserLoginProps> = (props) => {
             <Center>
               <Image
                 src={landing_logo}
-                alt="Mentumm banner"
+                alt="mentumm banner"
                 // maxW="md"
                 w={{ base: "auto", lg: "500px" }}
               />
