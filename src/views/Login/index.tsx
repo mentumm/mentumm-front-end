@@ -46,7 +46,7 @@ const Login: React.FC<UserLoginProps> = (props) => {
           <Center>
             <Image
               src={landing_logo}
-              alt="Mentumm banner"
+              alt="mentumm banner"
               w={{ base: "auto", lg: "500px" }}
             />
           </Center>
