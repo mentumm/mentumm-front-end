@@ -92,7 +92,7 @@ const CoachResults: React.FC = () => {
           ))
         ) : (
           <Heading as="h1" size="2xl">
-            No results found
+            Searching
           </Heading>
         )}
       </div>
