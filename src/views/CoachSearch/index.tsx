@@ -159,9 +159,9 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
               align={["center", "center", "flex-start", "flex-start"]}
               alignItems="center"
             >
-              <Box maxW="725px" position="relative">
+              <Box maxW="750px" position="relative">
                 <Heading as="h1" size="2xl" className={classes.margin}>
-                  On-Demand Coaching, For You
+                  On-Demand Coaching, For You 😎
                 </Heading>
                 <Text fontSize="large" className={classes.margin}>
                   Pick how you want to get better, personally or professionally.
