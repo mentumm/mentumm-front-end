@@ -7,14 +7,22 @@ import {
   Icon,
   Image,
   Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Stack,
   Tag,
   Text,
+  useDisclosure,
   Wrap,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { PopupModal } from "react-calendly";
+import { InlineWidget } from "react-calendly";
 import { CoachType, CurrentUserProps } from "../../types";
 import { GoGlobe } from "react-icons/go";
 import { SiLinkedin } from "react-icons/si";
@@ -25,7 +33,7 @@ const NODE_API = process.env.REACT_APP_NODE_API;
 
 const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const [coach, setCoach] = useState<CoachType>(null);
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const windowUrl = window.location.toString().toLowerCase();
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
   const coachId = slug.split("-");
@@ -107,18 +115,26 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                   "Coach Name": coach ? coach.name : null,
                   "Coach ID": coach ? coach.id : null,
                 });
-                setIsOpen(true);
+                onOpen();
               }}
             >
-              <PopupModal
-                url={coach ? coach.booking_link : null}
-                onModalClose={() => setIsOpen(false)}
-                open={isOpen}
-                rootElement={document.getElementById("root")}
-                utm={{
-                  utmSource: coach ? String(coach.id) : null,
-                }}
-              />
+              <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
+                <ModalOverlay />
+                <ModalContent>
+                  <ModalHeader>
+                    Book your session {coach ? `with ${coach.name}` : null}
+                  </ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody>
+                    <InlineWidget url={coach ? coach.booking_link : null} />
+                  </ModalBody>
+                  <ModalFooter>
+                    <Button colorScheme="brand" mr={3} onClick={onClose}>
+                      Cancel
+                    </Button>
+                  </ModalFooter>
+                </ModalContent>
+              </Modal>
               Book Your Coaching Session
             </Button>
             <Text>
