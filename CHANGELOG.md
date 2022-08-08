@@ -1,3 +1,11 @@
+## [1.1.2](https://github.com/denvermullets/growth-front-end/compare/v1.1.1...v1.1.2) (2022-08-08)
+
+
+### Bug Fixes
+
+* **footer:** lowercase mentumm on footer, mtm-112 ([c20fd47](https://github.com/denvermullets/growth-front-end/commit/c20fd47b8dbb01673805d4adaac64471feb59e82))
+* **index:** lowercase mentumm, mtm-113 ([cd13834](https://github.com/denvermullets/growth-front-end/commit/cd1383482b355a7e0bfd3d1950726321241acef3))
+
 ## [1.1.1](https://github.com/denvermullets/growth-front-end/compare/v1.1.0...v1.1.1) (2022-08-03)
 
 
