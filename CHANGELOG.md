@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/denvermullets/growth-front-end/compare/v1.1.2...v1.1.3) (2022-08-11)
+
+
+### Bug Fixes
+
+* **coachBio:** update caldnely popup to allow backing out ([#72](https://github.com/denvermullets/growth-front-end/issues/72)) ([95e9810](https://github.com/denvermullets/growth-front-end/commit/95e9810584094164381f7b6a14ab61e8a1243e47))
+
 ## [1.1.2](https://github.com/denvermullets/growth-front-end/compare/v1.1.1...v1.1.2) (2022-08-08)
 
 
