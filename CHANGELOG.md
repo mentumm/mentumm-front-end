@@ -1,3 +1,10 @@
+## [1.1.4](https://github.com/denvermullets/mentumm-front-end/compare/v1.1.3...v1.1.4) (2022-08-25)
+
+
+### Bug Fixes
+
+* **calendly:** fix utmSource not carrying over ([#76](https://github.com/denvermullets/mentumm-front-end/issues/76)) ([15f7cdd](https://github.com/denvermullets/mentumm-front-end/commit/15f7cddaf40257d5c9337cf4c9e3ac2929b13b4d))
+
 ## [1.1.3](https://github.com/denvermullets/growth-front-end/compare/v1.1.2...v1.1.3) (2022-08-11)
 
 
