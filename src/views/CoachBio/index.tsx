@@ -126,7 +126,12 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                   </ModalHeader>
                   <ModalCloseButton />
                   <ModalBody>
-                    <InlineWidget url={coach ? coach.booking_link : null} />
+                    <InlineWidget
+                      url={coach ? coach.booking_link : null}
+                      utm={{
+                        utmSource: coach ? String(coach.id) : null,
+                      }}
+                    />
                   </ModalBody>
                   <ModalFooter>
                     <Button colorScheme="brand" mr={3} onClick={onClose}>
