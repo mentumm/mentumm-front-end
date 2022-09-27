@@ -98,7 +98,6 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
       });
 
       if (!createUser) {
-        console.log("something went wrong");
         throw Error("Unable to login");
       }
 

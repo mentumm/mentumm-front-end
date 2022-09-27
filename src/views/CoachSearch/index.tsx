@@ -72,7 +72,8 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
 
   const loadTags = async () => {
     // for some reason this fails when redirected from calendly, not sure why
-    // doesn't impact anything but a message in console
+    // doesn't impact anything but a message in console - hopefully we can refactor
+    // how calendly is being used in general
     try {
       const tags = await axios.get(`${NODE_API}/v1/tags`);
 
@@ -97,6 +98,7 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
   }, [currentUser]);
 
   useEffect(() => {
+    // these are for the calendly redirect url params
     const event_type_uuid = searchParams.get("event_type_uuid");
     const event_type_name = searchParams.get("event_type_name");
     const event_start_time = searchParams.get("event_start_time");

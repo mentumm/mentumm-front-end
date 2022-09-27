@@ -64,7 +64,6 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
       });
 
       if (!loginUser) {
-        console.log("something went wrong");
         throw Error("Unable to login");
       }
 
