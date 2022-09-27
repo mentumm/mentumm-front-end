@@ -28,12 +28,22 @@ import { GoGlobe } from "react-icons/go";
 import { SiLinkedin } from "react-icons/si";
 import { mixpanelEvent } from "../../helpers";
 import { useNavigate } from "react-router";
+import CoachReview from "../../CoachReview";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
 const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const [coach, setCoach] = useState<CoachType>(null);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: calendlyIsOpen,
+    onOpen: calendlyOnOpen,
+    onClose: calendlyOnClose,
+  } = useDisclosure();
+  const {
+    isOpen: isReviewOpen,
+    onOpen: onReviewOpen,
+    onClose: onReviewClose,
+  } = useDisclosure();
   const windowUrl = window.location.toString().toLowerCase();
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
   const coachId = slug.split("-");
@@ -56,7 +66,10 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
           "Coach Name": coach.name,
           "Coach Skills": coach.skills.map((skill) => skill.name),
         });
-      } catch (error) {}
+      } catch (error) {
+        console.log("Problem loading Coach Bio", error);
+        throw new Error(error);
+      }
     };
 
     if (!coach) {
@@ -107,41 +120,72 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
               </Stack>
               <Text color="black">{coach ? coach.bio : null}</Text>
             </Stack>
-            <Button
-              colorScheme="brand"
-              variant="solid"
-              onClick={() => {
-                mixpanelEvent("Clicked Book Coach", {
-                  "Coach Name": coach ? coach.name : null,
-                  "Coach ID": coach ? coach.id : null,
-                });
-                onOpen();
-              }}
-            >
-              <Modal isOpen={isOpen} onClose={onClose} isCentered size="xl">
-                <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>
-                    Book your session {coach ? `with ${coach.name}` : null}
-                  </ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    <InlineWidget
-                      url={coach ? coach.booking_link : null}
-                      utm={{
-                        utmSource: coach ? String(coach.id) : null,
-                      }}
-                    />
-                  </ModalBody>
-                  <ModalFooter>
-                    <Button colorScheme="brand" mr={3} onClick={onClose}>
-                      Cancel
-                    </Button>
-                  </ModalFooter>
-                </ModalContent>
-              </Modal>
-              Book Your Coaching Session
-            </Button>
+            <Stack spacing="4">
+              <Button
+                colorScheme="brand"
+                variant="solid"
+                onClick={() => {
+                  mixpanelEvent("Clicked Book Coach", {
+                    "Coach Name": coach ? coach.name : null,
+                    "Coach ID": coach ? coach.id : null,
+                  });
+                  calendlyOnOpen();
+                }}
+              >
+                <Modal
+                  isOpen={calendlyIsOpen}
+                  onClose={calendlyOnClose}
+                  isCentered
+                  size="xl"
+                >
+                  <ModalOverlay />
+                  <ModalContent>
+                    <ModalHeader>
+                      Book your session {coach ? `with ${coach.name}` : null}
+                    </ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                      <InlineWidget
+                        url={coach ? coach.booking_link : null}
+                        utm={{
+                          utmSource: coach ? String(coach.id) : null,
+                        }}
+                      />
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button
+                        colorScheme="brand"
+                        mr={3}
+                        onClick={calendlyOnClose}
+                      >
+                        Cancel
+                      </Button>
+                    </ModalFooter>
+                  </ModalContent>
+                </Modal>
+                Book Your Coaching Session
+              </Button>
+              <Button
+                colorScheme="brand"
+                variant="solid"
+                onClick={() => {
+                  // mixpanelEvent("Clicked Book Coach", {
+                  //   "Coach Name": coach ? coach.name : null,
+                  //   "Coach ID": coach ? coach.id : null,
+                  // });
+                  onReviewOpen();
+                }}
+              >
+                Leave a Review
+                <CoachReview
+                  isOpen={isReviewOpen}
+                  onOpen={onReviewOpen}
+                  onClose={onReviewClose}
+                  coach={coach}
+                  currentUser={currentUser}
+                />
+              </Button>
+            </Stack>
             <Text>
               <Link color="#3168b2" onClick={() => navigate(-1)}>
                 Back to Results
