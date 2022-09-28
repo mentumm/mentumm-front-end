@@ -1,73 +1,42 @@
 import {
   Box,
-  Container,
-  Flex,
   Heading,
-  Image,
-  Select,
+  ListItem,
   Stack,
-  Text,
+  UnorderedList,
 } from "@chakra-ui/react";
+
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { createUseStyles, DefaultTheme } from "react-jss";
-import { useNavigate } from "react-router";
-import { useSearchParams } from "react-router-dom";
+//import { createUseStyles, DefaultTheme } from "react-jss";
+import { Link, useSearchParams } from "react-router-dom";
+import PageWrapper from "../../components/PageWrapper";
 import { mixpanelEvent, mixpanelIdentify } from "../../helpers";
-import { CurrentUserProps } from "../../types";
-import welcome from "./welcome.png";
+import { CurrentUserProps, CoachTag } from "../../types";
+import BookingConfirmation from "../BookingConfirmation";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
-const useStyles = createUseStyles((theme: DefaultTheme) => ({
-  root: {
-    display: "flex",
-    width: "100%",
-  },
-  heading: {
-    // margin: "30px 30px",
-    // marginBottom: "75px",
-  },
-  column: {
-    width: "100%",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  columnRow: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    position: "relative",
-    width: "75%",
-    margin: "0 auto",
-  },
-  margin: {
-    marginBottom: "16px",
-  },
-  capitalize: {
-    textTransform: "capitalize",
-  },
-}));
+// const useStyles = createUseStyles((theme: DefaultTheme) => ({
+  
+// }));
+
+const CATEGORIES = ['Professional', 'Leadership', 'Personal'];
 
 const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
-  const classes = useStyles();
-  const [coachTags, setCoachTags] = useState(null);
+  //const classes = useStyles();
+  const [coachTags, setCoachTags] = useState<CoachTag[]>();
+  
   const [coachBooked, setCoachBooked] = useState<boolean>(null);
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
 
-  const selectTag = (e) => {
+  const selectTag = (t: CoachTag) => {
     mixpanelEvent("Searched For Tag", {
       "User ID": currentUser ? currentUser.id : null,
-      "Tag Slug": e.target.value,
-      "Tag Name": e.target.options[e.target.selectedIndex].text,
-      "Tag ID": e.target.key,
+      "Tag Slug": t.slug,
+      "Tag Name": t.name,
+      "Tag ID": t.id,
     });
-    navigate(`/coaches/${e.target.value}`);
   };
 
   const loadTags = async () => {
@@ -126,79 +95,35 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
           setCoachBooked(true);
         }
       } catch (error) {
-        throw new Error("Could not load Coach Tags!");
+        setCoachBooked(true);
+        throw new Error("Could not save booking!");
       }
     };
-
+    console.log(coachBooked, invitee_email)
     if (!coachBooked && invitee_email) {
       bookCoach();
+    } else if(!invitee_email) {
+      setCoachBooked(false);
     }
   }, [searchParams, coachBooked, currentUser]);
 
+  if(coachBooked) {
+    return <BookingConfirmation currentUser={currentUser} />
+  }
+
   return (
-    <div className={classes.root}>
-      <div className={classes.column}>
-        <div className={classes.heading}>
-          <Stack
-            spacing={{ base: "0", sm: "6" }}
-            margin={{ base: "16px 16px", md: "30px 30px" }}
-            marginBottom={{ base: "0", md: "75" }}
-          >
-            <Heading as="h2" size="xl" className={classes.capitalize}>
-              {`Welcome, ${currentUser ? `${currentUser.first_name}!` : null}`}
-            </Heading>
-          </Stack>
-        </div>
-        <Container maxW="100%">
-          <Flex
-            dir="row"
-            alignItems="center"
-            justifyContent="center"
-            gap={{ base: "0", md: "12" }}
-            direction={{ base: "column-reverse", md: "row" }}
-          >
-            <Stack
-              align={["center", "center", "flex-start", "flex-start"]}
-              alignItems="center"
-            >
-              <Box maxW="750px" position="relative">
-                <Heading as="h1" size="2xl" className={classes.margin}>
-                  On-Demand Coaching, For You 😎
-                </Heading>
-                <Text fontSize="large" className={classes.margin}>
-                  Pick how you want to get better, personally or professionally.
-                  Choose the perfect coach to help you. Book a coaching session
-                  that fits your schedule. Put in the work and become
-                  extraordinary.
-                </Text>
-                <Select
-                  placeholder="In what area would you like to get better?"
-                  onChange={(e) => selectTag(e)}
-                >
-                  {coachTags && coachTags.length
-                    ? coachTags.map((tag) => (
-                        <option value={tag.slug} key={tag.id}>
-                          {tag.name}
-                        </option>
-                      ))
-                    : null}
-                </Select>
-              </Box>
-            </Stack>
-            <Stack>
-              <Box maxW="md">
-                <Image
-                  src={welcome}
-                  alt="Person Searching for a Coach"
-                  maxW={{ base: "100%", md: "85%", lg: "100%" }}
-                  objectFit="cover"
-                />
-              </Box>
-            </Stack>
-          </Flex>
-        </Container>
-      </div>
-    </div>
+    <PageWrapper title="Pick a Topic">
+      <Stack direction="row" gap="100px" pl={2}>
+        {CATEGORIES.map(c => (
+          <Box key={c}>
+            <Heading as="h2" size="md" mb={3}>{c}</Heading>
+            <UnorderedList>
+              {!!coachTags && coachTags.filter(t => t.category === c).sort((a,b) => a.name.localeCompare(b.name)).map(t => <Link key={t.id} to={`/coaches/${t.slug}`} onClick={() => selectTag(t)} ><ListItem mb={2} _hover={{color: '#5DBABD', fontWeight: 'bold'}}>{t.name}</ListItem></Link>)}
+            </UnorderedList>
+          </Box>
+        ))}
+      </Stack>
+    </PageWrapper>
   );
 };
 
