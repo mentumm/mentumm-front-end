@@ -8,7 +8,6 @@ import {
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-//import { createUseStyles, DefaultTheme } from "react-jss";
 import { Link, useSearchParams } from "react-router-dom";
 import PageWrapper from "../../components/PageWrapper";
 import { mixpanelEvent, mixpanelIdentify } from "../../helpers";
@@ -17,14 +16,9 @@ import BookingConfirmation from "../BookingConfirmation";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
-// const useStyles = createUseStyles((theme: DefaultTheme) => ({
-  
-// }));
-
 const CATEGORIES = ['Professional', 'Leadership', 'Personal'];
 
 const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
-  //const classes = useStyles();
   const [coachTags, setCoachTags] = useState<CoachTag[]>();
   
   const [coachBooked, setCoachBooked] = useState<boolean>(null);
@@ -95,11 +89,10 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
           setCoachBooked(true);
         }
       } catch (error) {
-        setCoachBooked(true);
         throw new Error("Could not save booking!");
       }
     };
-    console.log(coachBooked, invitee_email)
+
     if (!coachBooked && invitee_email) {
       bookCoach();
     } else if(!invitee_email) {
@@ -118,7 +111,16 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
           <Box key={c}>
             <Heading as="h2" size="md" mb={3}>{c}</Heading>
             <UnorderedList>
-              {!!coachTags && coachTags.filter(t => t.category === c).sort((a,b) => a.name.localeCompare(b.name)).map(t => <Link key={t.id} to={`/coaches/${t.slug}`} onClick={() => selectTag(t)} ><ListItem mb={2} _hover={{color: '#5DBABD', fontWeight: 'bold'}}>{t.name}</ListItem></Link>)}
+              {!!coachTags && 
+                coachTags
+                  .filter(t => t.category === c)
+                  .sort((a,b) => a.name.localeCompare(b.name))
+                  .map(t => (
+                    <Link key={t.id} to={`/coaches/${t.slug}`} onClick={() => selectTag(t)} >
+                      <ListItem mb={2} _hover={{color: '#5DBABD', fontWeight: 'bold'}}>{t.name}</ListItem>
+                    </Link>
+                  ))
+                }
             </UnorderedList>
           </Box>
         ))}

@@ -25,32 +25,14 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
     display: "flex",
     width: "100%",
   },
-  heading: {
-    // margin: "30px 30px",
-    // marginBottom: "75px",
-  },
   column: {
     width: "100%",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
   },
-  columnRow: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    position: "relative",
-    width: "75%",
-    margin: "0 auto",
-  },
   margin: {
     marginBottom: "16px",
-  },
-  capitalize: {
-    textTransform: "capitalize",
   },
 }));
 
