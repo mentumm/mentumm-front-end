@@ -13,7 +13,6 @@ import React, { useEffect } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { Link } from "react-router-dom";
 import { 
-//  mixpanelEvent, 
   mixpanelIdentify 
 } from "../../helpers";
 import { CurrentUserProps } from "../../types";
@@ -24,18 +23,8 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
     display: "flex",
     width: "100%",
   },
-  heading: {
-    // margin: "30px 30px",
-    // marginBottom: "75px",
-  },
   column: {
     width: "100%",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  columnRow: {
-    display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
@@ -47,9 +36,6 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   },
   margin: {
     marginBottom: "16px",
-  },
-  capitalize: {
-    //textTransform: "capitalize",
   },
   list: { 
     paddingLeft: 24,
@@ -65,7 +51,6 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 
 const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const classes = useStyles();;
-
 
   useEffect(() => {
     if (currentUser) {
