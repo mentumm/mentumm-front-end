@@ -8,17 +8,11 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-//import axios from "axios";
 import React from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
-//import { useSearchParams } from "react-router-dom";
-//import { mixpanelEvent, mixpanelIdentify } from "../../helpers";
 import { CurrentUserProps } from "../../types";
 import welcome from "./thank-you.png";
 import { Link } from "react-router-dom";
-
-
-//const NODE_API = process.env.REACT_APP_NODE_API;
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -38,53 +32,6 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 
 const BookingConfirmation: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const classes = useStyles();
-  /*
-  const [coachBooked, setCoachBooked] = useState<boolean>(null);
-  const [searchParams] = useSearchParams();
-
-  useEffect(() => {
-    if (currentUser) {
-      mixpanelIdentify(String(currentUser.id));
-    }
-  }, [currentUser]);
-
-  useEffect(() => {
-    const event_type_uuid = searchParams.get("event_type_uuid");
-    const event_type_name = searchParams.get("event_type_name");
-    const event_start_time = searchParams.get("event_start_time");
-    const event_end_time = searchParams.get("event_end_time");
-    const invitee_uuid = searchParams.get("invitee_uuid");
-    const invitee_full_name = searchParams.get("invitee_full_name");
-    const invitee_email = searchParams.get("invitee_email");
-    const utmSource = searchParams.get("utm_source");
-
-    const bookCoach = async () => {
-      try {
-        const bookedCoach = await axios.post(`${NODE_API}/v1/user/book-coach`, {
-          user_id: currentUser.id,
-          coach_id: utmSource,
-          event_end_time,
-          event_start_time,
-          event_type_name,
-          event_type_uuid,
-          invitee_email,
-          invitee_full_name,
-          invitee_uuid,
-        });
-
-        if (bookedCoach) {
-          setCoachBooked(true);
-        }
-      } catch (error) {
-        throw new Error("Could not load Coach Tags!");
-      }
-    };
-
-    if (!coachBooked && invitee_email) {
-      bookCoach();
-    }
-  }, [searchParams, coachBooked, currentUser]);
-*/
   return (
     <div className={classes.root}>
       <div className={classes.column}>
