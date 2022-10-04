@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { Link as RouteLink, useNavigate } from "react-router-dom";
 import Coach from "../../components/Coach";
+import PageWrapper from "../../components/PageWrapper";
 import { CoachSkills, CoachType } from "../../types";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
@@ -43,8 +44,7 @@ const CoachResults: React.FC = () => {
   };
 
   const pageHeading = () => {
-    return coaches[0].skills.filter((tag: CoachSkills) => tag.slug === slug)[0]
-      .name;
+    return !!coaches && coaches[0].skills.find((tag: CoachSkills) => tag.slug === slug)?.name;
   };
 
   useEffect(() => {
@@ -70,33 +70,23 @@ const CoachResults: React.FC = () => {
   }, [coaches, slug]);
 
   return (
-    <div className={classes.root}>
-      <div className={classes.resultHeading}>
-        <Heading as="h1" size="2xl">
-          {coaches && coaches.length
-            ? "Your Coaches for " + pageHeading()
-            : null}
-        </Heading>
-        <Text>
-          <Link color="#3168b2" onClick={() => navigate(-1)}>
-            Back to Home
-          </Link>
-        </Text>
+    <PageWrapper title={`Pick a ${pageHeading()} Coach`} >
+      <div className={classes.root}>
+        <div className={classes.coaches}>
+          {!!coaches && coaches.length ? (
+            coaches.map((coach: CoachType) => (
+              <RouteLink to={`/coach/${generateUrl(coach)}`} key={coach.id}>
+                <Coach coachInfo={coach} slug={slug} />
+              </RouteLink>
+            ))
+          ) : (
+            <Heading as="h1" size="2xl">
+              Searching
+            </Heading>
+          )}
+        </div>
       </div>
-      <div className={classes.coaches}>
-        {coaches && coaches.length ? (
-          coaches.map((coach: CoachType) => (
-            <RouteLink to={`/coach/${generateUrl(coach)}`} key={coach.id}>
-              <Coach coachInfo={coach} slug={slug} />
-            </RouteLink>
-          ))
-        ) : (
-          <Heading as="h1" size="2xl">
-            Searching
-          </Heading>
-        )}
-      </div>
-    </div>
+    </PageWrapper>
   );
 };
 

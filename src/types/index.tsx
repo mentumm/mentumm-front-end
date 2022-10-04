@@ -52,7 +52,6 @@ export interface LocationState {
   currentUser: CurrentUser;
   coachTags: CoachSkills[];
 }
-
 export interface ReviewFormType {
   user_id: string | number;
   coach_id: string | number;
@@ -76,4 +75,13 @@ export interface CoachReviewProps {
   onClose: () => void;
   coach: CoachType;
   currentUser: CurrentUser;
+}
+export interface CoachTag {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+  category: 'Professional' | 'Leadership' | 'Personal';
 }

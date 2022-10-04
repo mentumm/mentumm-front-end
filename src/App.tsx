@@ -10,6 +10,7 @@ import { CurrentUser } from "./types";
 import CoachBio from "./views/CoachBio";
 import CoachResults from "./views/CoachResults";
 import CoachSearch from "./views/CoachSearch";
+import GetStarted from "./views/GetStarted";
 import Login from "./views/Login";
 import Register from "./views/Register";
 
@@ -58,7 +59,7 @@ function App() {
                   currentUser={currentUser}
                 />
               ) : (
-                <Navigate to="/search" replace />
+                <Navigate to="/get-started" replace />
               )
             }
           />
@@ -83,6 +84,14 @@ function App() {
             element={
               <SignInWrapper currentUser={currentUser}>
                 <CoachBio currentUser={currentUser} />
+              </SignInWrapper>
+            }
+          />
+          <Route
+            path="/get-started"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <GetStarted currentUser={currentUser} />
               </SignInWrapper>
             }
           />
