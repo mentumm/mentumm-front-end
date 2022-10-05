@@ -8,11 +8,12 @@ import {
   ModalOverlay,
   Stack,
   useColorModeValue,
+  useToast,
 } from "@chakra-ui/react";
 import ReviewForm from "./ReviewForm";
 import axios from "axios";
-import envConfig from "../envConfig";
-import { CoachReviewProps, ReviewFormType } from "../types";
+import { CoachReviewProps, ReviewFormType } from "../../types";
+import envConfig from "../../envConfig";
 
 const CoachReview: React.FC<CoachReviewProps> = ({
   isOpen,
@@ -20,6 +21,8 @@ const CoachReview: React.FC<CoachReviewProps> = ({
   coach,
   currentUser,
 }) => {
+  const toast = useToast();
+
   const submitForm = (rating: ReviewFormType) => {
     try {
       const reviewCoach = axios.post(
@@ -28,6 +31,14 @@ const CoachReview: React.FC<CoachReviewProps> = ({
       );
 
       if (reviewCoach) {
+        toast({
+          title: "Review Submitted!",
+          description: `We've submitted your review for ${coach.name}.`,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+          position: "bottom-right",
+        });
         onClose();
       }
     } catch (error) {
