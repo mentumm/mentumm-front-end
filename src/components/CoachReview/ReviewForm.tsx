@@ -15,9 +15,9 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { mixpanelEvent } from "../helpers";
-import { getTags } from "../helpers/tagHelpers";
-import { CoachSkills, ReviewFormProps } from "../types";
+import { mixpanelEvent } from "../../helpers";
+import { getTags } from "../../helpers/tagHelpers";
+import { CoachSkills, ReviewFormProps } from "../../types";
 import Rating from "./Rating";
 
 const ReviewForm: React.FC<ReviewFormProps> = ({

@@ -28,7 +28,7 @@ import { GoGlobe } from "react-icons/go";
 import { SiLinkedin } from "react-icons/si";
 import { mixpanelEvent } from "../../helpers";
 import { useNavigate } from "react-router";
-import CoachReview from "../../CoachReview";
+import CoachReview from "../../components/CoachReview";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
@@ -169,10 +169,12 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                 colorScheme="brand"
                 variant="solid"
                 onClick={() => {
-                  // mixpanelEvent("Clicked Book Coach", {
-                  //   "Coach Name": coach ? coach.name : null,
-                  //   "Coach ID": coach ? coach.id : null,
-                  // });
+                  mixpanelEvent("Clicked Review Coach", {
+                    "Coach Name": coach ? coach.name : null,
+                    "Coach ID": coach ? coach.id : null,
+                    "User ID": currentUser ? currentUser.id : null,
+                    "Employer ID": currentUser ? currentUser.employer_id : null,
+                  });
                   onReviewOpen();
                 }}
               >
