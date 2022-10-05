@@ -85,7 +85,7 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
                   <ListItem><strong>Choose the coach</strong> you want to work with</ListItem>
                   <ListItem><strong>Book a session</strong> that fits your schedule</ListItem>
               </OrderedList>
-              <Button as={Link} to="/search" background="#2cbdbe" color="#fff" mt={2}>GET STARTED</Button>
+              <Button as={Link} to="/search" background="#2cbdbe" color="#fff" _hover={{ bg: '#3CA8AB' }} mt={2}>GET STARTED</Button>
               </Box>
             </Stack>
             <Stack>

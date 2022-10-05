@@ -104,7 +104,7 @@ function App() {
                   currentUser={currentUser}
                 />
               ) : (
-                <Navigate to="/search" replace />
+                <Navigate to="/get-started" replace />
               )
             }
           />

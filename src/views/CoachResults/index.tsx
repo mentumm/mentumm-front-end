@@ -44,7 +44,7 @@ const CoachResults: React.FC = () => {
   };
 
   const pageHeading = () => {
-    return !!coaches && coaches[0].skills.find((tag: CoachSkills) => tag.slug === slug)?.name;
+    return coaches ? coaches[0].skills.find((tag: CoachSkills) => tag.slug === slug)?.name : '';
   };
 
   useEffect(() => {
@@ -70,7 +70,7 @@ const CoachResults: React.FC = () => {
   }, [coaches, slug]);
 
   return (
-    <PageWrapper title={`Pick a ${pageHeading()} Coach`} >
+    <PageWrapper title={coaches ? `Pick a ${pageHeading()} Coach`: ''} backTo="/search">
       <div className={classes.root}>
         <div className={classes.coaches}>
           {!!coaches && coaches.length ? (

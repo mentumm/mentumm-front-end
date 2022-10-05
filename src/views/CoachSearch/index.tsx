@@ -93,7 +93,7 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
       }
     };
 
-    if (!coachBooked && invitee_email) {
+    if (!coachBooked && invitee_email && currentUser?.id) {
       bookCoach();
     } else if(!invitee_email) {
       setCoachBooked(false);
@@ -105,10 +105,10 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
   }
 
   return (
-    <PageWrapper title="Pick a Topic">
+    <PageWrapper title="Pick a Topic" backTo="/get-started">
       <Stack direction="row" gap="100px" pl={2}>
         {CATEGORIES.map(c => (
-          <Box key={c}>
+          <Box key={c} minW={240}>
             <Heading as="h2" size="md" mb={3}>{c}</Heading>
             <UnorderedList>
               {!!coachTags && 

@@ -60,7 +60,7 @@ const BookingConfirmation: React.FC<CurrentUserProps> = ({ currentUser }) => {
                 <Text fontSize="large" className={classes.margin}>
                 We look forward to seeing you soon! &#128522;
                 </Text>
-                <Button as={Link} to="/search" background="#2cbdbe" color="#fff" _hover={{ bg: '#3CA8AB' }}>BACK TO HOME</Button>
+                <Button as={Link} to="/get-started" background="#2cbdbe" color="#fff" _hover={{ bg: '#3CA8AB' }}>BACK TO HOME</Button>
               </Box>
             </Stack>
             <Stack>
