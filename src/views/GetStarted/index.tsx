@@ -64,7 +64,7 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
         <Container maxW="100%">
           <Flex
             dir="row"
-            alignItems="center"
+            alignItems="top"
             justifyContent="center"
             gap={{ base: "0", md: "12" }}
             direction={{ base: "column-reverse", md: "row" }}
@@ -73,7 +73,7 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
               align={["center", "center", "flex-start", "flex-start"]}
               alignItems="center"
             >
-              <Box maxW="750px" position="relative">
+              <Box maxW="750px" position="relative" mt={16} pt={2}>
                 <Heading as="h2" size="xl" className={classes.margin}>
                   Welcome to mentumm, {currentUser ? `${currentUser.first_name}!` : null}
                 </Heading>
@@ -89,7 +89,7 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
               </Box>
             </Stack>
             <Stack>
-              <Box maxW="md">
+              <Box maxW="md" width="448px">
                 <Image
                   src={welcome}
                   alt="Person Searching for a Coach"
