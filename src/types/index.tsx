@@ -52,3 +52,36 @@ export interface LocationState {
   currentUser: CurrentUser;
   coachTags: CoachSkills[];
 }
+export interface ReviewFormType {
+  user_id: string | number;
+  coach_id: string | number;
+  rating_overall: number;
+  rating_listening: number;
+  additional_comments?: string | null;
+  primary_topic: string;
+  user_learned: boolean;
+  user_would_book_again: boolean;
+}
+
+export interface ReviewFormProps {
+  submitForm: (form: ReviewFormType) => void;
+  currentUser: CurrentUser;
+  coach: CoachType;
+}
+
+export interface CoachReviewProps {
+  isOpen: boolean;
+  onOpen: () => void;
+  onClose: () => void;
+  coach: CoachType;
+  currentUser: CurrentUser;
+}
+export interface CoachTag {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+  category: 'Professional' | 'Leadership' | 'Personal';
+}

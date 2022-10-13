@@ -64,7 +64,6 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
       });
 
       if (!loginUser) {
-        console.log("something went wrong");
         throw Error("Unable to login");
       }
 
@@ -98,8 +97,13 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
     }
   };
 
+  const onSubmit: React.FormEventHandler<HTMLDivElement> = (e) => {
+    e.preventDefault();
+    login(email, password);
+  }
+
   return (
-    <Container maxW="md">
+    <Container as="form" onSubmit={onSubmit} maxW="md">
       <Stack spacing="8">
         <Stack spacing="6">
           <Stack spacing={{ base: "2", md: "3" }} textAlign="left">
@@ -150,6 +154,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
           </HStack>
           <Stack spacing="4">
             <Button
+              type="submit"
               colorScheme="brand"
               variant="solid"
               onClick={() => login(email, password)}
