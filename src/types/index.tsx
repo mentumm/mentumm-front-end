@@ -8,9 +8,40 @@ export interface CurrentUserProps {
   currentUser: CurrentUser;
 }
 
+export interface CoachBooking {
+  id: number;
+  user_id: number;
+  coach_id: number;
+  event_type_uuid?: string;
+  event_type_name?: string;
+  event_start_time?: string;
+  event_end_time?: string;
+  invitee_uuid?: string;
+  invitee_full_name?: string;
+  invitee_email?: string;
+  user_review: CoachUserRating;
+}
+
+export interface CoachUserRating {
+  additional_comments: string;
+  coach_id: number; 
+  created_at: string; 
+  id: number; 
+  primary_topic: string;
+  rating_listening: number;
+  rating_overall: number;
+  updated_at: string;
+  user_coach_id: number;
+  user_id: number;
+  user_learned: boolean;
+  user_would_book_again: boolean;
+}
+
 export interface CoachProps {
   coachInfo: CoachType;
-  slug: string;
+  slug?: string;
+  booking?: CoachBooking
+  currentUser?: CurrentUser,
 }
 
 export interface CoachType {
@@ -30,8 +61,11 @@ export interface CoachType {
 export interface CoachSkills {
   id: number;
   name: string;
-  description: string;
   slug: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+  category: 'Professional' | 'Leadership' | 'Personal';
 }
 
 export interface CurrentUser {
@@ -67,21 +101,14 @@ export interface ReviewFormProps {
   submitForm: (form: ReviewFormType) => void;
   currentUser: CurrentUser;
   coach: CoachType;
+  userCoachId?: number;
 }
 
 export interface CoachReviewProps {
   isOpen: boolean;
   onOpen: () => void;
-  onClose: () => void;
+  onClose: (success?: boolean) => void;
   coach: CoachType;
   currentUser: CurrentUser;
-}
-export interface CoachTag {
-  id: number;
-  name: string;
-  slug: string;
-  description: string;
-  created_at: string;
-  updated_at: string;
-  category: 'Professional' | 'Leadership' | 'Personal';
+  userCoachId?: number;
 }

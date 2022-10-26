@@ -7,6 +7,7 @@ import { CardContent } from "./CardContent";
 import { CardHeader } from "./CardHeader";
 import { UserAvatar } from "./UserAvatar";
 import { GoGlobe } from "react-icons/go";
+import BookingInfo from "./BookingInfo";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -14,32 +15,38 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   },
 }));
 
+const generateCoachTags = (tags: CoachSkills[], slug) => {
+  if (tags.length > 4) {
+    let trimmedTags = [];
+
+    const remainingTags = tags.filter(
+      (tag: CoachSkills) => tag.slug !== slug
+    );
+
+    // make sure to show the tag that the user searched for
+    trimmedTags.push(tags.find((tag) => tag.slug === slug));
+    remainingTags.slice(0, 2).map((tag) => trimmedTags.push(tag));
+    // the extra +3 more tag
+    trimmedTags.push({
+      id: Math.floor(Math.random() * (2000 - 1000) + 1000),
+      name: `+ ${tags.length - 4} more`,
+    });
+
+    return trimmedTags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>);
+  } else {
+    return tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>);
+  }
+};
+
 const Coach: React.FC<CoachProps> = (props) => {
   const classes = useStyles();
-  const { name, skills, location, photo_url } = props.coachInfo;
-
-  const generateCoachTags = (tags: CoachSkills[]) => {
-    if (tags.length > 4) {
-      let trimmedTags = [];
-
-      const remainingTags = tags.filter(
-        (tag: CoachSkills) => tag.slug !== props.slug
-      );
-
-      // make sure to show the tag that the user searched for
-      trimmedTags.push(tags.find((tag) => tag.slug === props.slug));
-      remainingTags.slice(0, 2).map((tag) => trimmedTags.push(tag));
-      // the extra +3 more tag
-      trimmedTags.push({
-        id: Math.floor(Math.random() * (2000 - 1000) + 1000),
-        name: `+ ${tags.length - 4} more`,
-      });
-
-      return trimmedTags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>);
-    } else {
-      return tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>);
-    }
-  };
+  const { 
+    coachInfo,
+    slug,
+    booking,
+    currentUser,
+  } = props;
+  const { name, skills, location, photo_url } = coachInfo;
 
   return (
     <div className={classes.root}>
@@ -69,9 +76,10 @@ const Coach: React.FC<CoachProps> = (props) => {
                 Expertise
               </Text>
               <Wrap shouldWrapChildren>
-                {skills ? generateCoachTags(skills) : null}
+                {skills ? generateCoachTags(skills, slug) : null}
               </Wrap>
             </CardContent>
+            {!!booking && <BookingInfo booking={booking} coach={coachInfo} currentUser={currentUser} />}
           </Stack>
         </Card>
       </Box>

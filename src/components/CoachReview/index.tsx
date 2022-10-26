@@ -20,6 +20,7 @@ const CoachReview: React.FC<CoachReviewProps> = ({
   onClose,
   coach,
   currentUser,
+  userCoachId,
 }) => {
   const toast = useToast();
 
@@ -39,7 +40,7 @@ const CoachReview: React.FC<CoachReviewProps> = ({
           isClosable: true,
           position: "bottom-right",
         });
-        onClose();
+        onClose(true);
       }
     } catch (error) {
       throw new error("Unable to submit Coach review");
@@ -87,6 +88,7 @@ const CoachReview: React.FC<CoachReviewProps> = ({
               submitForm={submitForm}
               currentUser={currentUser}
               coach={coach}
+              userCoachId={userCoachId}
             />
           </Stack>
         </ModalBody>

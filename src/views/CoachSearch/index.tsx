@@ -11,20 +11,21 @@ import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import PageWrapper from "../../components/PageWrapper";
 import { mixpanelEvent, mixpanelIdentify } from "../../helpers";
-import { CurrentUserProps, CoachTag } from "../../types";
+import { CurrentUserProps, CoachSkills } from "../../types";
 import BookingConfirmation from "../BookingConfirmation";
+import { useGetTags } from "../../helpers/tagHelpers";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
 const CATEGORIES = ['Professional', 'Leadership', 'Personal'];
 
 const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
-  const [coachTags, setCoachTags] = useState<CoachTag[]>();
-  
+
+  const coachTags = useGetTags();
   const [coachBooked, setCoachBooked] = useState<boolean>(null);
   const [searchParams] = useSearchParams();
 
-  const selectTag = (t: CoachTag) => {
+  const selectTag = (t: CoachSkills) => {
     mixpanelEvent("Searched For Tag", {
       "User ID": currentUser ? currentUser.id : null,
       "Tag Slug": t.slug,
@@ -32,27 +33,6 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
       "Tag ID": t.id,
     });
   };
-
-  const loadTags = async () => {
-    // for some reason this fails when redirected from calendly, not sure why
-    // doesn't impact anything but a message in console - hopefully we can refactor
-    // how calendly is being used in general
-    try {
-      const tags = await axios.get(`${NODE_API}/v1/tags`);
-
-      if (tags) {
-        setCoachTags(tags.data);
-      }
-    } catch (error) {
-      throw new Error("Could not load Coach Tags!");
-    }
-  };
-
-  useEffect(() => {
-    if (!coachTags) {
-      loadTags();
-    }
-  }, [coachTags]);
 
   useEffect(() => {
     if (currentUser) {
@@ -105,7 +85,7 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
   }
 
   return (
-    <PageWrapper title="Pick a Topic" backTo="/get-started">
+    <PageWrapper title="Pick a Topic" backTo="/home">
       <Stack direction="row" gap="75px" pl={2}>
         {CATEGORIES.map(c => (
           <Box key={c} minW={275}>

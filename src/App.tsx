@@ -11,6 +11,7 @@ import CoachBio from "./views/CoachBio";
 import CoachResults from "./views/CoachResults";
 import CoachSearch from "./views/CoachSearch";
 import GetStarted from "./views/GetStarted";
+import Home from "./views/Home";
 import Login from "./views/Login";
 import Register from "./views/Register";
 
@@ -59,8 +60,16 @@ function App() {
                   currentUser={currentUser}
                 />
               ) : (
-                <Navigate to="/get-started" replace />
+                <Navigate to="/home" replace />
               )
+            }
+          />
+          <Route
+            path="/home"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <Home currentUser={currentUser} />
+              </SignInWrapper>
             }
           />
           <Route
