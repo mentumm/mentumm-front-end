@@ -14,18 +14,19 @@ import {
   Textarea,
   useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, {useState } from "react";
 import { mixpanelEvent } from "../../helpers";
-import { getTags } from "../../helpers/tagHelpers";
-import { CoachSkills, ReviewFormProps } from "../../types";
+import { useGetTags } from "../../helpers/tagHelpers";
+import { ReviewFormProps } from "../../types";
 import Rating from "./Rating";
 
 const ReviewForm: React.FC<ReviewFormProps> = ({
   submitForm,
   coach,
   currentUser,
+  userCoachId,
 }) => {
-  const [coachTags, setCoachTags] = useState<CoachSkills[]>([]);
+  const coachTags = useGetTags();
   const [topic, setTopic] = useState<string>("");
   const [listeningRating, setListeningRating] = useState<number>(0);
   const [overallRating, setOverallRating] = useState<number>(0);
@@ -35,17 +36,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
   const [overallRatingError, setOverallRatingError] = useState<boolean>(false);
   const [listeningError, setListeningError] = useState<boolean>(false);
   const [tagError, setTagError] = useState<boolean>(false);
-
-  useEffect(() => {
-    const getCoachTags = async () => {
-      const tags = await getTags();
-      setCoachTags(tags);
-    };
-
-    if (!coachTags.length) {
-      getCoachTags();
-    }
-  }, [coachTags]);
 
   const selectTag = (e) => {
     setTopic(e.target.value);
@@ -76,6 +66,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
       primary_topic: topic,
       user_learned: learnFromCoach === "yes" ? true : false,
       user_would_book_again: bookCoachAgain === "yes" ? true : false,
+      user_coach_id: userCoachId,
     };
 
     mixpanelEvent("Coach Review", { ...review, coach_name: coach.name });

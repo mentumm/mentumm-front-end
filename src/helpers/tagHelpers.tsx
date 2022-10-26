@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useState, useEffect } from "react";
 import envConfig from "../envConfig";
 import { CoachSkills } from "../types";
 
@@ -13,3 +14,18 @@ export const getTags = async () => {
     throw new Error("Could not load Coach Tags!");
   }
 };
+
+export const useGetTags = () => {
+  const [coachTags, setCoachTags] = useState<CoachSkills[]>([]);
+
+  useEffect(() => {
+    const getCoachTags = async () => {
+      const tags = await getTags();
+      setCoachTags(tags);
+    };
+
+    getCoachTags();
+  }, []);
+
+  return coachTags;
+}
