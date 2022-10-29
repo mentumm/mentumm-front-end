@@ -15,7 +15,7 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   },
 }));
 
-const generateCoachTags = (tags: CoachSkills[], slug) => {
+const generateCoachTags = (tags: CoachSkills[], slug: string) => {
   if (tags.length > 4) {
     let trimmedTags = [];
 
@@ -24,8 +24,12 @@ const generateCoachTags = (tags: CoachSkills[], slug) => {
     );
 
     // make sure to show the tag that the user searched for
-    trimmedTags.push(tags.find((tag) => tag.slug === slug));
-    remainingTags.slice(0, 2).map((tag) => trimmedTags.push(tag));
+    if(slug){
+      trimmedTags.push(tags.find((tag) => tag.slug === slug));
+      remainingTags.slice(0, 2).map((tag) => trimmedTags.push(tag));
+    } else {
+      remainingTags.slice(0, 3).map((tag) => trimmedTags.push(tag));
+    }
     // the extra +3 more tag
     trimmedTags.push({
       id: Math.floor(Math.random() * (2000 - 1000) + 1000),
