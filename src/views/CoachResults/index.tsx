@@ -32,19 +32,18 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   },
 }));
 
+export const generateCoachUrl = (coach: CoachType) => {
+  return coach.name.replace(/\W|_/g, "-").toLowerCase() + `-${coach.id}`;
+};
+
 const CoachResults: React.FC = () => {
   const classes = useStyles();
   const windowUrl = window.location.toString().toLowerCase();
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
-  const [coaches, setCoaches] = useState<CoachType[] | null>(null);
-  const navigate = useNavigate();
-
-  const generateUrl = (coach: CoachType) => {
-    return coach.name.replace(/\W|_/g, "-").toLowerCase() + `-${coach.id}`;
-  };
+  const [coaches, setCoaches] = useState<CoachType[] | null>(null);  
 
   const pageHeading = () => {
-    return coaches ? coaches[0].skills.find((tag: CoachSkills) => tag.slug === slug)?.name : '';
+    return coaches.length ? coaches[0].skills.find((tag: CoachSkills) => tag.slug === slug)?.name : '';
   };
 
   useEffect(() => {
@@ -75,7 +74,7 @@ const CoachResults: React.FC = () => {
         <div className={classes.coaches}>
           {!!coaches && coaches.length ? (
             coaches.map((coach: CoachType) => (
-              <RouteLink to={`/coach/${generateUrl(coach)}`} key={coach.id}>
+              <RouteLink to={`/coach/${generateCoachUrl(coach)}`} key={coach.id}>
                 <Coach coachInfo={coach} slug={slug} />
               </RouteLink>
             ))
