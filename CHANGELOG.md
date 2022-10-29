@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/mentumm/mentumm-front-end/compare/v1.1.4...v1.1.5) (2022-10-29)
+
+
+### Bug Fixes
+
+* **home:** fix bug on home causing crash ([44c072c](https://github.com/mentumm/mentumm-front-end/commit/44c072cedca8c8c0627b613e164da831698b473a))
+
 ## [1.1.4](https://github.com/denvermullets/mentumm-front-end/compare/v1.1.3...v1.1.4) (2022-08-25)
 
 
