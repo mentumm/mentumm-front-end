@@ -42,7 +42,7 @@ const iconTag = {
   'personal-fitness': 'heartbeat',
   'presentation-public-speaking': 'photo-video',
   'problem-solving': 'puzzle-piece',
-  'relationship-management': 'hand-holding',
+  'relationship-management': 'hand-holding-heart',
   'sales': 'funnel-dollar',
   'sleep': 'cloud-moon',
   'strategic-planning': 'route',

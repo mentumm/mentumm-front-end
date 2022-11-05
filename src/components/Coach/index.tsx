@@ -16,9 +16,9 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 }));
 
 const generateCoachTags = (tags: CoachSkills[], slug: string) => {
+  let trimmedTags = [];
+  
   if (tags.length > 4) {
-    let trimmedTags = [];
-
     const remainingTags = tags.filter(
       (tag: CoachSkills) => tag.slug !== slug
     );
@@ -36,10 +36,10 @@ const generateCoachTags = (tags: CoachSkills[], slug: string) => {
       name: `+ ${tags.length - 4} more`,
     });
 
-    return trimmedTags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>);
   } else {
-    return tags.map((tag) => <Tag key={tag.id}>{tag.name}</Tag>);
+    trimmedTags = tags;    
   }
+  return trimmedTags.map((tag) => !!tag && <Tag key={tag.id}>{tag.name}</Tag>);
 };
 
 const Coach: React.FC<CoachProps> = (props) => {

@@ -27,8 +27,7 @@ import { CoachType, CurrentUserProps } from "../../types";
 import { GoGlobe } from "react-icons/go";
 import { SiLinkedin } from "react-icons/si";
 import { mixpanelEvent } from "../../helpers";
-import { useNavigate } from "react-router";
-import CoachReview from "../../components/CoachReview";
+import PageWrapper from "../../components/PageWrapper";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
@@ -39,15 +38,10 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
     onOpen: calendlyOnOpen,
     onClose: calendlyOnClose,
   } = useDisclosure();
-  const {
-    isOpen: isReviewOpen,
-    onOpen: onReviewOpen,
-    onClose: onReviewClose,
-  } = useDisclosure();
   const windowUrl = window.location.toString().toLowerCase();
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
   const coachId = slug.split("-");
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     const loadCoach = async () => {
@@ -78,11 +72,12 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   }, [coach, coachId]);
 
   return (
+    <PageWrapper>
     <Box
       maxW="5xl"
       mx="auto"
       px={{ base: "4", md: "8", lg: "12" }}
-      py={{ base: "6", md: "8", lg: "12" }}
+      pb={{ base: "6", md: "8", lg: "12" }}
     >
       <Stack direction={{ base: "column", md: "row" }}>
         <Box flex="1">
@@ -165,34 +160,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                 </Modal>
                 Book Your Coaching Session
               </Button>
-              <Button
-                colorScheme="brand"
-                variant="solid"
-                onClick={() => {
-                  mixpanelEvent("Clicked Review Coach", {
-                    "Coach Name": coach ? coach.name : null,
-                    "Coach ID": coach ? coach.id : null,
-                    "User ID": currentUser ? currentUser.id : null,
-                    "Employer ID": currentUser ? currentUser.employer_id : null,
-                  });
-                  onReviewOpen();
-                }}
-              >
-                Leave a Review
-                <CoachReview
-                  isOpen={isReviewOpen}
-                  onOpen={onReviewOpen}
-                  onClose={onReviewClose}
-                  coach={coach}
-                  currentUser={currentUser}
-                />
-              </Button>
             </Stack>
-            <Text>
-              <Link color="#3168b2" onClick={() => navigate(-1)}>
-                Back to Results
-              </Link>
-            </Text>
             <Stack spacing="4">
               <Wrap shouldWrapChildren>
                 {coach && coach.skills.length
@@ -206,6 +174,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
         </Box>
       </Stack>
     </Box>
+    </PageWrapper>
   );
 };
 
