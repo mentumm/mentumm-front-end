@@ -97,7 +97,7 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
                   .sort((a,b) => a.name.localeCompare(b.name))
                   .map(t => (
                     <Link key={t.id} to={`/coaches/${t.slug}`} onClick={() => selectTag(t)} >
-                      <ListItem mb={2} _hover={{color: '#5DBABD', fontWeight: 'bold'}}>{t.name}</ListItem>
+                      <ListItem mb={2} _hover={{color: '#5DBABD'}}>{t.name}</ListItem>
                     </Link>
                   ))
                 }
