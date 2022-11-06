@@ -172,7 +172,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
           />
         </FormControl>
         <Button type="submit" colorScheme="brand" alignSelf="start" size="lg">
-          Submit review
+          Submit Review
         </Button>
       </Stack>
     </form>

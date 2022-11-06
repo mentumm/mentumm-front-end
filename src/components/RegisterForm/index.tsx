@@ -220,27 +220,21 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
               colorScheme="brand"
               variant="solid"
               onClick={() => login()}
-              disabled={!checkedTerms}
             >
               Register
             </Button>
-            <HStack>
-              <Checkbox
-                colorScheme="brand"
-                isRequired
-                onChange={() => setCheckedTerms(!checkedTerms)}
-              />
+            
               <Text>
-                I acknowledge mentumm's{" "}
-                <Link
+              By signing up you are agreeing to the{' '}
+              <Link
                   color="#3168b2"
                   href="https://mentumm.com/coaching-terms-and-conditions/"
                   isExternal
-                >
-                  Terms and Conditions
-                </Link>
+                >Terms & Conditions
+              </Link> {' '}
+              and to receive personalized commercial communication.
               </Text>
-            </HStack>
+
           </Stack>
         </Stack>
       </Stack>
