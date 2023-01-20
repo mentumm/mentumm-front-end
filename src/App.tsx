@@ -14,6 +14,7 @@ import GetStarted from "./views/GetStarted";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Register from "./views/Register";
+import Profile from "./views/Profile";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -69,6 +70,14 @@ function App() {
             element={
               <SignInWrapper currentUser={currentUser}>
                 <Home currentUser={currentUser} />
+              </SignInWrapper>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <Profile currentUser={currentUser} />
               </SignInWrapper>
             }
           />
