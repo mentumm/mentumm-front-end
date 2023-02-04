@@ -17,14 +17,12 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 
 const generateCoachTags = (tags: CoachSkills[], slug: string) => {
   let trimmedTags = [];
-  
+
   if (tags.length > 4) {
-    const remainingTags = tags.filter(
-      (tag: CoachSkills) => tag.slug !== slug
-    );
+    const remainingTags = tags.filter((tag: CoachSkills) => tag.slug !== slug);
 
     // make sure to show the tag that the user searched for
-    if(slug){
+    if (slug) {
       trimmedTags.push(tags.find((tag) => tag.slug === slug));
       remainingTags.slice(0, 2).map((tag) => trimmedTags.push(tag));
     } else {
@@ -35,21 +33,15 @@ const generateCoachTags = (tags: CoachSkills[], slug: string) => {
       id: Math.floor(Math.random() * (2000 - 1000) + 1000),
       name: `+ ${tags.length - 4} more`,
     });
-
   } else {
-    trimmedTags = tags;    
+    trimmedTags = tags;
   }
   return trimmedTags.map((tag) => !!tag && <Tag key={tag.id}>{tag.name}</Tag>);
 };
 
 const Coach: React.FC<CoachProps> = (props) => {
   const classes = useStyles();
-  const { 
-    coachInfo,
-    slug,
-    booking,
-    currentUser,
-  } = props;
+  const { coachInfo, slug, booking, currentUser } = props;
   const { name, skills, location, photo_url } = coachInfo;
 
   return (
@@ -83,7 +75,13 @@ const Coach: React.FC<CoachProps> = (props) => {
                 {skills ? generateCoachTags(skills, slug) : null}
               </Wrap>
             </CardContent>
-            {!!booking && <BookingInfo booking={booking} coach={coachInfo} currentUser={currentUser} />}
+            {!!booking && (
+              <BookingInfo
+                booking={booking}
+                coach={coachInfo}
+                currentUser={currentUser}
+              />
+            )}
           </Stack>
         </Card>
       </Box>

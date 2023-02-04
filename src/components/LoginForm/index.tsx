@@ -100,7 +100,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
   const onSubmit: React.FormEventHandler<HTMLDivElement> = (e) => {
     e.preventDefault();
     login(email, password);
-  }
+  };
 
   return (
     <Container as="form" onSubmit={onSubmit} maxW="md">

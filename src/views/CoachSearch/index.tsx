@@ -1,10 +1,4 @@
-import {
-  Box,
-  Heading,
-  ListItem,
-  Stack,
-  UnorderedList,
-} from "@chakra-ui/react";
+import { Box, Heading, ListItem, Stack, UnorderedList } from "@chakra-ui/react";
 
 import axios from "axios";
 import React, { useEffect, useState } from "react";
@@ -17,10 +11,9 @@ import { useGetTags } from "../../helpers/tagHelpers";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
-const CATEGORIES = ['Professional', 'Leadership', 'Personal'];
+const CATEGORIES = ["Professional", "Leadership", "Personal"];
 
 const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
-
   const coachTags = useGetTags();
   const [coachBooked, setCoachBooked] = useState<boolean>(null);
   const [searchParams] = useSearchParams();
@@ -75,32 +68,39 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
 
     if (!coachBooked && invitee_email && currentUser?.id) {
       bookCoach();
-    } else if(!invitee_email) {
+    } else if (!invitee_email) {
       setCoachBooked(false);
     }
   }, [searchParams, coachBooked, currentUser]);
 
-  if(coachBooked) {
-    return <BookingConfirmation currentUser={currentUser} />
+  if (coachBooked) {
+    return <BookingConfirmation currentUser={currentUser} />;
   }
 
   return (
     <PageWrapper title="Pick a Topic" backTo="/home">
       <Stack direction="row" gap="75px" pl={2}>
-        {CATEGORIES.map(c => (
+        {CATEGORIES.map((c) => (
           <Box key={c} minW={275}>
-            <Heading as="h2" size="md" mb={3}>{c}</Heading>
+            <Heading as="h2" size="md" mb={3}>
+              {c}
+            </Heading>
             <UnorderedList>
-              {!!coachTags && 
+              {!!coachTags &&
                 coachTags
-                  .filter(t => t.category === c)
-                  .sort((a,b) => a.name.localeCompare(b.name))
-                  .map(t => (
-                    <Link key={t.id} to={`/coaches/${t.slug}`} onClick={() => selectTag(t)} >
-                      <ListItem mb={2} _hover={{color: '#5DBABD'}}>{t.name}</ListItem>
+                  .filter((t) => t.category === c)
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map((t) => (
+                    <Link
+                      key={t.id}
+                      to={`/coaches/${t.slug}`}
+                      onClick={() => selectTag(t)}
+                    >
+                      <ListItem mb={2} _hover={{ color: "#5DBABD" }}>
+                        {t.name}
+                      </ListItem>
                     </Link>
-                  ))
-                }
+                  ))}
             </UnorderedList>
           </Box>
         ))}

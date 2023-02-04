@@ -24,9 +24,9 @@ export interface CoachBooking {
 
 export interface CoachUserRating {
   additional_comments: string;
-  coach_id: number; 
-  created_at: string; 
-  id: number; 
+  coach_id: number;
+  created_at: string;
+  id: number;
   primary_topic: string;
   rating_listening: number;
   rating_overall: number;
@@ -40,8 +40,8 @@ export interface CoachUserRating {
 export interface CoachProps {
   coachInfo: CoachType;
   slug?: string;
-  booking?: CoachBooking
-  currentUser?: CurrentUser,
+  booking?: CoachBooking;
+  currentUser?: CurrentUser;
 }
 
 export interface CoachType {
@@ -65,7 +65,7 @@ export interface CoachSkills {
   description: string;
   created_at: string;
   updated_at: string;
-  category: 'Professional' | 'Leadership' | 'Personal';
+  category: "Professional" | "Leadership" | "Personal";
 }
 
 export interface CurrentUser {
