@@ -103,6 +103,8 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
                   color="#fff"
                   _hover={{ bg: "#3CA8AB" }}
                   mt={2}
+                  padding={7}
+                  fontWeight="bold"
                 >
                   GET STARTED
                 </Button>
