@@ -33,13 +33,13 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
     margin: "0 auto",
   },
   margin: {
-    marginBottom: "16px",
+    marginBottom: "24px",
   },
   list: {
     paddingLeft: 24,
     fontSize: 24,
     "& > li": {
-      marginBottom: 16,
+      marginBottom: 24,
     },
     "& > li::marker": {
       fontWeight: "bold",
