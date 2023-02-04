@@ -28,4 +28,4 @@ export const useGetTags = () => {
   }, []);
 
   return coachTags;
-}
+};

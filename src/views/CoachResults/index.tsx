@@ -40,10 +40,12 @@ const CoachResults: React.FC = () => {
   const classes = useStyles();
   const windowUrl = window.location.toString().toLowerCase();
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
-  const [coaches, setCoaches] = useState<CoachType[] | null>(null);  
+  const [coaches, setCoaches] = useState<CoachType[] | null>(null);
 
   const pageHeading = () => {
-    return coaches.length ? coaches[0].skills.find((tag: CoachSkills) => tag.slug === slug)?.name : '';
+    return coaches.length
+      ? coaches[0].skills.find((tag: CoachSkills) => tag.slug === slug)?.name
+      : "";
   };
 
   useEffect(() => {
@@ -69,12 +71,18 @@ const CoachResults: React.FC = () => {
   }, [coaches, slug]);
 
   return (
-    <PageWrapper title={coaches ? `Pick a ${pageHeading()} Coach`: ''} backTo="/search">
+    <PageWrapper
+      title={coaches ? `Pick a ${pageHeading()} Coach` : ""}
+      backTo="/search"
+    >
       <div className={classes.root}>
         <div className={classes.coaches}>
           {!!coaches && coaches.length ? (
             coaches.map((coach: CoachType) => (
-              <RouteLink to={`/coach/${generateCoachUrl(coach)}`} key={coach.id}>
+              <RouteLink
+                to={`/coach/${generateCoachUrl(coach)}`}
+                key={coach.id}
+              >
                 <Coach coachInfo={coach} slug={slug} />
               </RouteLink>
             ))
