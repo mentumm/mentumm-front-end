@@ -72,7 +72,7 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
               align={["center", "center", "flex-start", "flex-start"]}
               alignItems="center"
             >
-              <Box maxW="750px" position="relative" mt={16} pt={2}>
+              <Box maxW="750px" position="relative">
                 <Heading as="h2" size="xl" className={classes.margin}>
                   Welcome to mentumm,{" "}
                   {currentUser ? `${currentUser.first_name}!` : null}
@@ -83,14 +83,14 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
                   className={classes.margin}
                   fontWeight="normal"
                 >
-                  On-Demand Coaching, For You 😎
+                  One-on-One Coaching, For You 😎
                 </Heading>
                 <OrderedList className={classes.list}>
                   <ListItem>
-                    <strong>Pick a topic</strong> you want to get better in
+                    <strong>Pick the coaching style</strong> you prefer
                   </ListItem>
                   <ListItem>
-                    <strong>Choose the coach</strong> you want to work with
+                    <strong>Select the coach</strong> you want to work with
                   </ListItem>
                   <ListItem>
                     <strong>Book a session</strong> that fits your schedule
