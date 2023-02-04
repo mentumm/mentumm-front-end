@@ -12,9 +12,7 @@ import {
 import React, { useEffect } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { Link } from "react-router-dom";
-import { 
-  mixpanelIdentify 
-} from "../../helpers";
+import { mixpanelIdentify } from "../../helpers";
 import { CurrentUserProps } from "../../types";
 import welcome from "../CoachSearch/welcome.png";
 
@@ -37,20 +35,20 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   margin: {
     marginBottom: "16px",
   },
-  list: { 
+  list: {
     paddingLeft: 24,
     fontSize: 24,
-    '& > li': {
+    "& > li": {
       marginBottom: 16,
     },
-    '& > li::marker': {
+    "& > li::marker": {
       fontWeight: "bold",
     },
-  }
+  },
 }));
 
 const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
-  const classes = useStyles();;
+  const classes = useStyles();
 
   useEffect(() => {
     if (currentUser) {
@@ -75,17 +73,38 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
             >
               <Box maxW="750px" position="relative" mt={16} pt={2}>
                 <Heading as="h2" size="xl" className={classes.margin}>
-                  Welcome to mentumm, {currentUser ? `${currentUser.first_name}!` : null}
+                  Welcome to mentumm,{" "}
+                  {currentUser ? `${currentUser.first_name}!` : null}
                 </Heading>
-                <Heading as="h1" size="lg" className={classes.margin} fontWeight="normal">
+                <Heading
+                  as="h1"
+                  size="lg"
+                  className={classes.margin}
+                  fontWeight="normal"
+                >
                   On-Demand Coaching, For You 😎
                 </Heading>
                 <OrderedList className={classes.list}>
-                  <ListItem><strong>Pick a topic</strong> you want to get better in</ListItem>
-                  <ListItem><strong>Choose the coach</strong> you want to work with</ListItem>
-                  <ListItem><strong>Book a session</strong> that fits your schedule</ListItem>
-              </OrderedList>
-              <Button as={Link} to="/search" background="#2cbdbe" color="#fff" _hover={{ bg: '#3CA8AB' }} mt={2}>GET STARTED</Button>
+                  <ListItem>
+                    <strong>Pick a topic</strong> you want to get better in
+                  </ListItem>
+                  <ListItem>
+                    <strong>Choose the coach</strong> you want to work with
+                  </ListItem>
+                  <ListItem>
+                    <strong>Book a session</strong> that fits your schedule
+                  </ListItem>
+                </OrderedList>
+                <Button
+                  as={Link}
+                  to="/search"
+                  background="#2cbdbe"
+                  color="#fff"
+                  _hover={{ bg: "#3CA8AB" }}
+                  mt={2}
+                >
+                  GET STARTED
+                </Button>
               </Box>
             </Stack>
             <Stack>

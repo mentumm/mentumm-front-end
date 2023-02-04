@@ -42,7 +42,6 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
   const coachId = slug.split("-");
 
-
   useEffect(() => {
     const loadCoach = async () => {
       try {
@@ -73,107 +72,107 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
 
   return (
     <PageWrapper>
-    <Box
-      maxW="5xl"
-      mx="auto"
-      px={{ base: "4", md: "8", lg: "12" }}
-      pb={{ base: "6", md: "8", lg: "12" }}
-    >
-      <Stack direction={{ base: "column", md: "row" }}>
-        <Box flex="1">
-          <AspectRatio maxW="450px" ratio={1}>
-            <Image
-              src={
-                coach && coach.photo_url
-                  ? coach.photo_url
-                  : "https://mentumm.com/wp-content/uploads/2022/06/mentumm_profile.png"
-              }
-              alt="Coach image"
-            />
-          </AspectRatio>
-        </Box>
-        <Box maxW="sm">
-          <Stack spacing="8">
-            <Stack spacing="4">
-              <Stack>
-                <Heading size="2xl" fontWeight="bold">
-                  {coach ? coach.name : null}
-                </Heading>
-                <HStack fontSize="md">
-                  <Icon as={GoGlobe} color="gray.500" />
-                  <Text>{coach ? coach.location : null}</Text>
-                  <Icon as={SiLinkedin} color="gray.500" />
-                  <Link
-                    href={
-                      coach && coach.linkedin_url ? coach.linkedin_url : "#"
-                    }
-                    isExternal
-                  >
+      <Box
+        maxW="5xl"
+        mx="auto"
+        px={{ base: "4", md: "8", lg: "12" }}
+        pb={{ base: "6", md: "8", lg: "12" }}
+      >
+        <Stack direction={{ base: "column", md: "row" }}>
+          <Box flex="1">
+            <AspectRatio maxW="450px" ratio={1}>
+              <Image
+                src={
+                  coach && coach.photo_url
+                    ? coach.photo_url
+                    : "https://mentumm.com/wp-content/uploads/2022/06/mentumm_profile.png"
+                }
+                alt="Coach image"
+              />
+            </AspectRatio>
+          </Box>
+          <Box maxW="sm">
+            <Stack spacing="8">
+              <Stack spacing="4">
+                <Stack>
+                  <Heading size="2xl" fontWeight="bold">
                     {coach ? coach.name : null}
-                  </Link>
-                </HStack>
+                  </Heading>
+                  <HStack fontSize="md">
+                    <Icon as={GoGlobe} color="gray.500" />
+                    <Text>{coach ? coach.location : null}</Text>
+                    <Icon as={SiLinkedin} color="gray.500" />
+                    <Link
+                      href={
+                        coach && coach.linkedin_url ? coach.linkedin_url : "#"
+                      }
+                      isExternal
+                    >
+                      {coach ? coach.name : null}
+                    </Link>
+                  </HStack>
+                </Stack>
+                <Text color="black">{coach ? coach.bio : null}</Text>
               </Stack>
-              <Text color="black">{coach ? coach.bio : null}</Text>
-            </Stack>
-            <Stack spacing="4">
-              <Button
-                colorScheme="brand"
-                variant="solid"
-                onClick={() => {
-                  mixpanelEvent("Clicked Book Coach", {
-                    "Coach Name": coach ? coach.name : null,
-                    "Coach ID": coach ? coach.id : null,
-                  });
-                  calendlyOnOpen();
-                }}
-              >
-                <Modal
-                  isOpen={calendlyIsOpen}
-                  onClose={calendlyOnClose}
-                  isCentered
-                  size="xl"
+              <Stack spacing="4">
+                <Button
+                  colorScheme="brand"
+                  variant="solid"
+                  onClick={() => {
+                    mixpanelEvent("Clicked Book Coach", {
+                      "Coach Name": coach ? coach.name : null,
+                      "Coach ID": coach ? coach.id : null,
+                    });
+                    calendlyOnOpen();
+                  }}
                 >
-                  <ModalOverlay />
-                  <ModalContent>
-                    <ModalHeader>
-                      Book your session {coach ? `with ${coach.name}` : null}
-                    </ModalHeader>
-                    <ModalCloseButton />
-                    <ModalBody>
-                      <InlineWidget
-                        url={coach ? coach.booking_link : null}
-                        utm={{
-                          utmSource: coach ? String(coach.id) : null,
-                        }}
-                      />
-                    </ModalBody>
-                    <ModalFooter>
-                      <Button
-                        colorScheme="brand"
-                        mr={3}
-                        onClick={calendlyOnClose}
-                      >
-                        Cancel
-                      </Button>
-                    </ModalFooter>
-                  </ModalContent>
-                </Modal>
-                Book Your Coaching Session
-              </Button>
+                  <Modal
+                    isOpen={calendlyIsOpen}
+                    onClose={calendlyOnClose}
+                    isCentered
+                    size="xl"
+                  >
+                    <ModalOverlay />
+                    <ModalContent>
+                      <ModalHeader>
+                        Book your session {coach ? `with ${coach.name}` : null}
+                      </ModalHeader>
+                      <ModalCloseButton />
+                      <ModalBody>
+                        <InlineWidget
+                          url={coach ? coach.booking_link : null}
+                          utm={{
+                            utmSource: coach ? String(coach.id) : null,
+                          }}
+                        />
+                      </ModalBody>
+                      <ModalFooter>
+                        <Button
+                          colorScheme="brand"
+                          mr={3}
+                          onClick={calendlyOnClose}
+                        >
+                          Cancel
+                        </Button>
+                      </ModalFooter>
+                    </ModalContent>
+                  </Modal>
+                  Book Your Coaching Session
+                </Button>
+              </Stack>
+              <Stack spacing="4">
+                <Wrap shouldWrapChildren>
+                  {coach && coach.skills.length
+                    ? coach.skills.map((skill) => (
+                        <Tag key={skill.id}>{skill.name}</Tag>
+                      ))
+                    : null}
+                </Wrap>
+              </Stack>
             </Stack>
-            <Stack spacing="4">
-              <Wrap shouldWrapChildren>
-                {coach && coach.skills.length
-                  ? coach.skills.map((skill) => (
-                      <Tag key={skill.id}>{skill.name}</Tag>
-                    ))
-                  : null}
-              </Wrap>
-            </Stack>
-          </Stack>
-        </Box>
-      </Stack>
-    </Box>
+          </Box>
+        </Stack>
+      </Box>
     </PageWrapper>
   );
 };

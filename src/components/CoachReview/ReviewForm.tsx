@@ -14,7 +14,7 @@ import {
   Textarea,
   useColorModeValue,
 } from "@chakra-ui/react";
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { mixpanelEvent } from "../../helpers";
 import { useGetTags } from "../../helpers/tagHelpers";
 import { ReviewFormProps } from "../../types";
