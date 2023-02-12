@@ -9,7 +9,6 @@ import NavBar from "./components/NavBar";
 import { CurrentUser } from "./types";
 import CoachBio from "./views/CoachBio";
 import CoachResults from "./views/CoachResults";
-import CoachSearch from "./views/CoachSearch";
 import { CoachSearchV2 } from "./views/CoachSearchV2";
 import GetStarted from "./views/GetStarted";
 import Home from "./views/Home";

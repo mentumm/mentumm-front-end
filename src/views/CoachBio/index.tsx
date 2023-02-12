@@ -28,6 +28,8 @@ import { GoGlobe } from "react-icons/go";
 import { SiLinkedin } from "react-icons/si";
 import { mixpanelEvent } from "../../helpers";
 import PageWrapper from "../../components/PageWrapper";
+import { useParams } from "react-router";
+import { FaCouch } from "react-icons/fa";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
@@ -38,16 +40,17 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
     onOpen: calendlyOnOpen,
     onClose: calendlyOnClose,
   } = useDisclosure();
-  const windowUrl = window.location.toString().toLowerCase();
-  const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
-  const coachId = slug.split("-");
+
+  const params = useParams();
+  const slug = params?.coach;
+  const coachId = slug;
 
   useEffect(() => {
     const loadCoach = async () => {
       try {
         const singleCoach = await axios.get(`${NODE_API}/v1/coaches`, {
           params: {
-            id: coachId[coachId.length - 1],
+            id: coachId,
           },
         });
 
@@ -77,10 +80,75 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
         mx="auto"
         px={{ base: "4", md: "8", lg: "12" }}
         pb={{ base: "6", md: "8", lg: "12" }}
+        display="flex"
+        flexDirection="row"
+        flexWrap="wrap"
+        justifyContent="center"
+        alignItems="flex-start"
+      >
+        <Box flex="1">
+          <AspectRatio maxW="332px" maxH="442px" ratio={9 / 16}>
+            <Image
+              borderRadius={18}
+              boxShadow="base"
+              src={
+                coach && coach.photo_url
+                  ? coach.photo_url
+                  : "https://mentumm.com/wp-content/uploads/2022/06/mentumm_profile.png"
+              }
+              alt="Coach image"
+            />
+          </AspectRatio>
+        </Box>
+
+        <Box>
+          <Heading size="2xl" fontWeight="bold">
+            {coach ? coach.name : null}
+          </Heading>
+          <HStack mt="6">
+            <Box display="flex" alignItems="center" mr="6">
+              <Icon as={GoGlobe} color="gray.500" boxSize="32px" mr="2" />
+              <Text fontSize={20}>{coach ? coach.location : null}</Text>
+            </Box>
+            <Box display="flex" alignItems="center">
+              <Icon as={SiLinkedin} boxSize="32px" color="gray.500" mr="2" />
+              <Link
+                href={coach && coach.linkedin_url ? coach.linkedin_url : "#"}
+                isExternal
+                fontSize={20}
+              >
+                {coach ? coach.name : null}
+              </Link>
+            </Box>
+          </HStack>
+          <HStack mt="8">
+            <Heading size="lg" fontWeight="bold">
+              Coaching Style
+            </Heading>
+          </HStack>
+        </Box>
+      </Box>
+      <Box maxW="5xl" mx="auto" p="6" mb="14" boxShadow="base">
+        <Heading size="md" mb="4">
+          About {coach.name}
+        </Heading>
+        <Text>{coach.bio}</Text>
+      </Box>
+      <Box maxW="5xl" mx="auto" p="6" boxShadow="base">
+        <Heading size="md" mb="4">
+          Top Achievements
+        </Heading>
+        <Text>{coach.bio}</Text>
+      </Box>
+      {/* <Box
+        maxW="5xl"
+        mx="auto"
+        px={{ base: "4", md: "8", lg: "12" }}
+        pb={{ base: "6", md: "8", lg: "12" }}
       >
         <Stack direction={{ base: "column", md: "row" }}>
-          <Box flex="1">
-            <AspectRatio maxW="450px" ratio={1}>
+          <Box flex="1" backgroundColor="#fff" maxW="539px">
+            <AspectRatio maxW="332px" ratio={1}>
               <Image
                 src={
                   coach && coach.photo_url
@@ -172,7 +240,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
             </Stack>
           </Box>
         </Stack>
-      </Box>
+      </Box> */}
     </PageWrapper>
   );
 };
