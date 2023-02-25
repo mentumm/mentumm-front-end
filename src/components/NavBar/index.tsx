@@ -34,7 +34,7 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   coaches: {
     height: "70%",
     color: "white",
-    margin: "0 15px",
+    margin: "0 25px",
     "& > a": {
       display: "flex",
       justifyContent: "center",
@@ -65,13 +65,20 @@ const NavBar: React.FC<UserLoginProps> = (props) => {
         </Link>
       </div>
       <div className={classes.rightContent}>
-        <div className={classes.coaches}>
-          <Link to="/search">
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-            <span>Coaches</span>
-          </Link>
-        </div>
-        <NavMenu currentUser={currentUser} setCurrentUser={setCurrentUser} />
+        {currentUser ? (
+          <>
+            <div className={classes.coaches}>
+              <Link to="/search">
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                <span>Coaches</span>
+              </Link>
+            </div>
+            <NavMenu
+              currentUser={currentUser}
+              setCurrentUser={setCurrentUser}
+            />
+          </>
+        ) : null}
       </div>
     </div>
   );

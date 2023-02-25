@@ -7,7 +7,27 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 const useStyles = createUseStyles({
-  root: {},
+  button: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: 48,
+    width: 48,
+    borderRadius: "50%",
+    background: "#88E4E7",
+    color: "#5F5F5F",
+    fontSize: 20,
+    "&:hover": {
+      opacity: 0.8,
+    },
+  },
+  menuItems: {
+    "& > button": {
+      "&:hover, &:focus": {
+        background: "#CBE3E4",
+      },
+    },
+  },
 });
 
 type NavMenuProps = {
@@ -27,21 +47,25 @@ const NavMenu = ({
     setCurrentUser(null);
   };
 
+  const generateUserInitials = () => {
+    return currentUser.first_name[0] + currentUser.last_name[0];
+  };
+
   return (
-    <div className={classes.root}>
-      <Menu>
-        <MenuButton>Menu</MenuButton>
-        <MenuList>
-          <MenuItem>Profile</MenuItem>
-          <MenuItem
-            icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
-            onClick={logoutUser}
-          >
-            Logout
-          </MenuItem>
-        </MenuList>
-      </Menu>
-    </div>
+    <Menu>
+      <MenuButton className={classes.button}>
+        {generateUserInitials()}
+      </MenuButton>
+      <MenuList className={classes.menuItems}>
+        <MenuItem>Profile</MenuItem>
+        <MenuItem
+          icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
+          onClick={logoutUser}
+        >
+          Logout
+        </MenuItem>
+      </MenuList>
+    </Menu>
   );
 };
 
