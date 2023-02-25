@@ -1,11 +1,11 @@
 import React from "react";
-import { useCookies } from "react-cookie";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { Link } from "react-router-dom";
 import { UserLoginProps } from "../../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import logo from "./m_logo.png";
+import NavMenu from "./NavMenu";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -55,15 +55,8 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 
 const NavBar: React.FC<UserLoginProps> = (props) => {
   const classes = useStyles();
-  // const [cookie, setCookie, removeCookie] = useCookies(["growth_10"]);
-  // destructured it this way so that i don't have tslint crying at me
-  const removeCookie = useCookies(["growth_10"])[2];
   const { currentUser, setCurrentUser } = props;
 
-  const logout = () => {
-    removeCookie("growth_10", { path: "/" });
-    setCurrentUser(null);
-  };
   return (
     <div className={classes.root}>
       <div className={classes.logo}>
@@ -78,13 +71,7 @@ const NavBar: React.FC<UserLoginProps> = (props) => {
             <span>Coaches</span>
           </Link>
         </div>
-        <div className={classes.logout}>
-          {currentUser ? (
-            <Link color="white" to="#" onClick={() => logout()}>
-              Logout
-            </Link>
-          ) : null}
-        </div>
+        <NavMenu currentUser={currentUser} setCurrentUser={setCurrentUser} />
       </div>
     </div>
   );
