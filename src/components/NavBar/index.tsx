@@ -3,6 +3,8 @@ import { useCookies } from "react-cookie";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { Link } from "react-router-dom";
 import { UserLoginProps } from "../../types";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import logo from "./m_logo.png";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
@@ -19,6 +21,32 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   },
   logo: {
     width: "65px",
+    "&:hover": {
+      opacity: 0.8,
+    },
+  },
+  rightContent: {
+    display: "flex",
+    flexFlow: "row nowrap",
+    alignItems: "center",
+    height: "100%",
+  },
+  coaches: {
+    height: "70%",
+    color: "white",
+    margin: "0 15px",
+    "& > a": {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      height: "100%",
+    },
+    "& *": {
+      margin: "0 2px",
+    },
+    "&:hover": {
+      opacity: 0.8,
+    },
   },
   logout: {
     color: "white",
@@ -43,12 +71,20 @@ const NavBar: React.FC<UserLoginProps> = (props) => {
           <img src={logo} alt="Momentum" role="banner" />
         </Link>
       </div>
-      <div className={classes.logout}>
-        {currentUser ? (
-          <Link color="white" to="#" onClick={() => logout()}>
-            Logout
+      <div className={classes.rightContent}>
+        <div className={classes.coaches}>
+          <Link to="/search">
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+            <span>Coaches</span>
           </Link>
-        ) : null}
+        </div>
+        <div className={classes.logout}>
+          {currentUser ? (
+            <Link color="white" to="#" onClick={() => logout()}>
+              Logout
+            </Link>
+          ) : null}
+        </div>
       </div>
     </div>
   );
