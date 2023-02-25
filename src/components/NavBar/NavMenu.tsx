@@ -57,7 +57,8 @@ const NavMenu = ({
         {generateUserInitials()}
       </MenuButton>
       <MenuList className={classes.menuItems}>
-        <MenuItem>Profile</MenuItem>
+        {/* Uncomment profile menu item after profile page is built */}
+        {/* <MenuItem>Profile</MenuItem> */}
         <MenuItem
           icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
           onClick={logoutUser}
