@@ -69,7 +69,10 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
       user_coach_id: userCoachId,
     };
 
-    mixpanelEvent("Coach Review", { ...review, coach_name: coach.name });
+    mixpanelEvent("Coach Review", {
+      ...review,
+      coach_name: `${coach.first_name} ${coach.last_name}`,
+    });
     submitForm(review);
   };
 

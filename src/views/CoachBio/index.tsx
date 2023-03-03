@@ -56,7 +56,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
         setCoach(singleCoach.data[0]);
         mixpanelEvent("Coach Bio Viewed", {
           "Coach ID": coach.id,
-          "Coach Name": coach.name,
+          "Coach Name": `${coach.first_name} ${coach.last_name}`,
           "Coach Skills": coach.skills.map((skill) => skill.name),
         });
       } catch (error) {
@@ -96,7 +96,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
               <Stack spacing="4">
                 <Stack>
                   <Heading size="2xl" fontWeight="bold">
-                    {coach ? coach.name : null}
+                    {coach ? `${coach.first_name} ${coach.last_name}` : null}
                   </Heading>
                   <HStack fontSize="md">
                     <Icon as={GoGlobe} color="gray.500" />
@@ -108,7 +108,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                       }
                       isExternal
                     >
-                      {coach ? coach.name : null}
+                      {coach ? `${coach.first_name} ${coach.last_name}` : null}
                     </Link>
                   </HStack>
                 </Stack>
@@ -120,7 +120,9 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                   variant="solid"
                   onClick={() => {
                     mixpanelEvent("Clicked Book Coach", {
-                      "Coach Name": coach ? coach.name : null,
+                      "Coach Name": coach
+                        ? `${coach.first_name} ${coach.last_name}`
+                        : null,
                       "Coach ID": coach ? coach.id : null,
                     });
                     calendlyOnOpen();
@@ -135,12 +137,15 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                     <ModalOverlay />
                     <ModalContent>
                       <ModalHeader>
-                        Book your session {coach ? `with ${coach.name}` : null}
+                        Book your session{" "}
+                        {coach
+                          ? `with ${`${coach.first_name} ${coach.last_name}`}`
+                          : null}
                       </ModalHeader>
                       <ModalCloseButton />
                       <ModalBody>
                         <InlineWidget
-                          url={coach ? coach.booking_link : null}
+                          url={coach ? coach.booking_url : null}
                           utm={{
                             utmSource: coach ? String(coach.id) : null,
                           }}

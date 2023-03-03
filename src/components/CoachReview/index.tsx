@@ -34,7 +34,7 @@ const CoachReview: React.FC<CoachReviewProps> = ({
       if (reviewCoach) {
         toast({
           title: "Review Submitted!",
-          description: `We've submitted your review for ${coach.name}.`,
+          description: `We've submitted your review for ${`${coach.first_name} ${coach.last_name}`}.`,
           status: "success",
           duration: 9000,
           isClosable: true,
@@ -82,7 +82,7 @@ const CoachReview: React.FC<CoachReviewProps> = ({
               fontWeight="medium"
               color={useColorModeValue("black", "white")}
             >
-              {coach ? coach.name : null}
+              {coach ? `${coach.first_name} ${coach.last_name}` : null}
             </Heading>
             <ReviewForm
               submitForm={submitForm}
