@@ -42,7 +42,7 @@ const generateCoachTags = (tags: CoachSkills[], slug: string) => {
 const Coach: React.FC<CoachProps> = (props) => {
   const classes = useStyles();
   const { coachInfo, slug, booking, currentUser } = props;
-  const { name, skills, location, photo_url } = coachInfo;
+  const { first_name, last_name, skills, location, photo_url } = coachInfo;
 
   return (
     <div className={classes.root}>
@@ -53,7 +53,7 @@ const Coach: React.FC<CoachProps> = (props) => {
             spacing={{ base: "4", md: "10" }}
           >
             <UserAvatar
-              name={name ? name : null}
+              name={`${first_name} ${last_name}`}
               src={
                 photo_url
                   ? photo_url
@@ -61,7 +61,7 @@ const Coach: React.FC<CoachProps> = (props) => {
               }
             />
             <CardContent>
-              <CardHeader title={name ? name : null} />
+              <CardHeader title={`${first_name} ${last_name}`} />
               <Stack mt="1">
                 <HStack fontSize="sm">
                   <Icon as={GoGlobe} color="gray.500" />

@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import SignInWrapper from "./components/LoginWrapper";
 import NavBar from "./components/NavBar";
 import { CurrentUser } from "./types";
+import { EditProfile } from "./views/Coach/EditProfile";
 import CoachBio from "./views/CoachBio";
 import CoachResults from "./views/CoachResults";
 import CoachSearch from "./views/CoachSearch";
@@ -94,6 +95,14 @@ function App() {
             element={
               <SignInWrapper currentUser={currentUser}>
                 <CoachBio currentUser={currentUser} />
+              </SignInWrapper>
+            }
+          />
+          <Route
+            path="/coach/:coachId/profile"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <EditProfile />
               </SignInWrapper>
             }
           />

@@ -53,7 +53,9 @@ const BookingInfo = ({ booking, coach, currentUser }: IProps) => {
             variant="solid"
             onClick={() => {
               mixpanelEvent("Clicked Review Coach", {
-                "Coach Name": coach ? coach.name : null,
+                "Coach Name": coach
+                  ? `${coach.first_name} ${coach.last_name}`
+                  : null,
                 "Coach ID": coach ? coach.id : null,
                 "User ID": currentUser ? currentUser.id : null,
                 "Employer ID": currentUser ? currentUser.employer_id : null,

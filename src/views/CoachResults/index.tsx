@@ -33,7 +33,8 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 }));
 
 export const generateCoachUrl = (coach: CoachType) => {
-  return coach.name.replace(/\W|_/g, "-").toLowerCase() + `-${coach.id}`;
+  const name = `${coach.first_name} ${coach.last_name}`;
+  return name.replace(/\W|_/g, "-").toLowerCase() + `-${coach.id}`;
 };
 
 const CoachResults: React.FC = () => {
