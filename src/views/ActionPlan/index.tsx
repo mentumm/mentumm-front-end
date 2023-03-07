@@ -1,9 +1,19 @@
 import React from "react";
 import { createUseStyles } from "react-jss";
 import { CurrentUser } from "../../types";
-import { Field, Form, Formik } from "formik";
+import { Form, Formik } from "formik";
 import * as Yup from "yup";
-import { Button, FormLabel, Input, Stack } from "@chakra-ui/react";
+import {
+  Button,
+  FormLabel,
+  Input,
+  Slider,
+  SliderFilledTrack,
+  SliderMark,
+  SliderThumb,
+  SliderTrack,
+  Stack,
+} from "@chakra-ui/react";
 
 const useStyles = createUseStyles({
   root: {
@@ -70,6 +80,151 @@ const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
       >
         {({ isSubmitting, handleChange, values }) => (
           <Form>
+            <FormLabel>Rank yourself 1-10 in the following areas:</FormLabel>
+            <FormLabel>Personal</FormLabel>
+            <Slider
+              id="personalRank"
+              name="personalRank"
+              defaultValue={values.personalRank}
+              min={1}
+              max={10}
+              onChange={(value) =>
+                handleChange({ target: { value, name: "personalRank" } })
+              }
+            >
+              <SliderMark
+                value={values.personalRank}
+                mt="-8"
+                ml="-1"
+                fontSize="sm"
+              >
+                {values.personalRank}
+              </SliderMark>
+              <SliderTrack>
+                <SliderFilledTrack bg="#3182CE" />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+            <FormLabel>Professional</FormLabel>
+            <Slider
+              id="professionalRank"
+              name="professionalRank"
+              defaultValue={values.professionalRank}
+              min={1}
+              max={10}
+              onChange={(value) =>
+                handleChange({ target: { value, name: "professionalRank" } })
+              }
+            >
+              <SliderMark
+                value={values.professionalRank}
+                mt="-8"
+                ml="-1"
+                fontSize="sm"
+              >
+                {values.professionalRank}
+              </SliderMark>
+              <SliderTrack>
+                <SliderFilledTrack bg="#3182CE" />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+            <FormLabel>Health and Wellness</FormLabel>
+            <Slider
+              id="healthWellnessRank"
+              name="healthWellnessRank"
+              defaultValue={values.healthWellnessRank}
+              min={1}
+              max={10}
+              onChange={(value) =>
+                handleChange({ target: { value, name: "healthWellnessRank" } })
+              }
+            >
+              <SliderMark
+                value={values.healthWellnessRank}
+                mt="-8"
+                ml="-1"
+                fontSize="sm"
+              >
+                {values.healthWellnessRank}
+              </SliderMark>
+              <SliderTrack>
+                <SliderFilledTrack bg="#3182CE" />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+            <FormLabel>Work-Life Balance</FormLabel>
+            <Slider
+              id="workLifeBalanceRank"
+              name="workLifeBalanceRank"
+              defaultValue={values.workLifeBalanceRank}
+              min={1}
+              max={10}
+              onChange={(value) =>
+                handleChange({ target: { value, name: "workLifeBalanceRank" } })
+              }
+            >
+              <SliderMark
+                value={values.workLifeBalanceRank}
+                mt="-8"
+                ml="-1"
+                fontSize="sm"
+              >
+                {values.workLifeBalanceRank}
+              </SliderMark>
+              <SliderTrack>
+                <SliderFilledTrack bg="#3182CE" />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+            <FormLabel>Motivation</FormLabel>
+            <Slider
+              id="motivationRank"
+              name="motivationRank"
+              defaultValue={values.motivationRank}
+              min={1}
+              max={10}
+              onChange={(value) =>
+                handleChange({ target: { value, name: "motivationRank" } })
+              }
+            >
+              <SliderMark
+                value={values.motivationRank}
+                mt="-8"
+                ml="-1"
+                fontSize="sm"
+              >
+                {values.motivationRank}
+              </SliderMark>
+              <SliderTrack>
+                <SliderFilledTrack bg="#3182CE" />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
+            <FormLabel>Relationships</FormLabel>
+            <Slider
+              id="relationshipsRank"
+              name="relationshipsRank"
+              defaultValue={values.relationshipsRank}
+              min={1}
+              max={10}
+              onChange={(value) =>
+                handleChange({ target: { value, name: "relationshipsRank" } })
+              }
+            >
+              <SliderMark
+                value={values.relationshipsRank}
+                mt="-8"
+                ml="-1"
+                fontSize="sm"
+              >
+                {values.relationshipsRank}
+              </SliderMark>
+              <SliderTrack>
+                <SliderFilledTrack bg="#3182CE" />
+              </SliderTrack>
+              <SliderThumb />
+            </Slider>
             <FormLabel>
               What are the most important personal issues you are currently
               navigating?
