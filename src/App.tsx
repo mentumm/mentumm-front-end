@@ -7,6 +7,7 @@ import Footer from "./components/Footer";
 import SignInWrapper from "./components/LoginWrapper";
 import NavBar from "./components/NavBar";
 import { CurrentUser } from "./types";
+import ActionPlan from "./views/ActionPlan";
 import { EditProfile } from "./views/Coach/EditProfile";
 import CoachBio from "./views/CoachBio";
 import CoachResults from "./views/CoachResults";
@@ -125,6 +126,14 @@ function App() {
               ) : (
                 <Navigate to="/get-started" replace />
               )
+            }
+          />
+          <Route
+            path="/action-plan"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <ActionPlan currentUser={currentUser} />
+              </SignInWrapper>
             }
           />
         </Routes>
