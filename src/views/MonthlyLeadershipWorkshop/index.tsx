@@ -12,6 +12,7 @@ import {
 import { GoDesktopDownload } from "react-icons/go";
 import VimeoVideo from "../../components/MonthlyLeadershipWorkshop/VimeoVideo";
 import envConfig from "../../envConfig";
+import { mixpanelEvent } from "../../helpers";
 
 const MonthlyLeadershipWorkshop: React.FC = () => {
   const [workshops, setWorkshops] = useState<Workshop[]>([]);
@@ -36,8 +37,18 @@ const MonthlyLeadershipWorkshop: React.FC = () => {
     getWorkshops();
   }, []);
 
-  const downloadWorkbook = (workshop) => {
+  const downloadWorkbook = (workshop: Workshop) => {
     window.open(workshop.workbook_url);
+
+    mixpanelEvent("Clicked Download Workbook", {
+      "Workshop Id": workshop.id,
+    });
+  };
+
+  const handleOnPlay = (workshop: Workshop) => {
+    mixpanelEvent("Played Workshop Video", {
+      "Workshop Id": workshop.id,
+    });
   };
 
   type WorkShopVideoProps = {
@@ -47,7 +58,10 @@ const MonthlyLeadershipWorkshop: React.FC = () => {
   const WorkshopVideo: React.FC<WorkShopVideoProps> = ({ workshop }) => {
     return (
       <>
-        <VimeoVideo videoId={workshop.vimeo_id} />
+        <VimeoVideo
+          videoId={workshop.vimeo_id}
+          onPlay={() => handleOnPlay(workshop)}
+        />
 
         <Heading size="md" textAlign="left" mt={8}>
           Workbook for this Workshop (please download)
