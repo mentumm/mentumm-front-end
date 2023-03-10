@@ -1,8 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { createUseStyles } from "react-jss";
 import { CurrentUser } from "../../types";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
+import { useSnackbar } from "notistack";
 import {
   Button,
   FormLabel,
@@ -54,6 +56,8 @@ type ActionPlanProps = {
 
 const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
   const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
   const handleSubmit = async (values: any) => {
     const keyActionItems = [
@@ -79,12 +83,21 @@ const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
         leadership_process_field: values.leadershipProcess,
         key_action_items: keyActionItems,
       })
-      .then((res) => {
-        // do stuff
-        console.log(res);
+      .then(() => {
+        enqueueSnackbar(
+          "Action Plan created! Your coach will discuss your monthly goals with you.",
+          {
+            variant: "success",
+          }
+        );
+        setTimeout(() => {
+          navigate("/home");
+        }, 2000);
       })
-      .catch((err) => {
-        // log shit
+      .catch(() => {
+        enqueueSnackbar("Something went wrong. Please try again.", {
+          variant: "error",
+        });
       });
   };
 
