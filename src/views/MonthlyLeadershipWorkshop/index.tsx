@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { menApiAuthClient } from "../../clients/mentumm";
 import { Workshop } from "../../types";
 import {
   Button,
@@ -23,7 +23,7 @@ const MonthlyLeadershipWorkshop: React.FC = () => {
       try {
         setLoading(true);
 
-        const results = await axios.get<Workshop[]>(
+        const results = await menApiAuthClient().get<Workshop[]>(
           `${envConfig.API_URL}/v1/workshops`
         );
 
