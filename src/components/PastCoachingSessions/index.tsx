@@ -1,7 +1,6 @@
 import { Box, Heading } from "@chakra-ui/react";
-import axios from "axios";
 import React, { FC, useEffect, useState } from "react";
-import envConfig from "../../envConfig";
+import { menApiAuthClient } from "../../clients/mentumm";
 import { CoachBooking, CoachType, CurrentUser } from "../../types";
 import Coach from "../Coach";
 
@@ -15,9 +14,10 @@ const PastCoachingSessions: FC<Iprops> = ({ currentUser }) => {
 
   useEffect(() => {
     async function loadPast() {
-      const u = await axios.get(`${envConfig.API_URL}/v1/user/past`, {
+      const u = await menApiAuthClient().get("/user/past", {
         params: { id: currentUser.id },
       });
+
       setPast(u.data);
     }
 

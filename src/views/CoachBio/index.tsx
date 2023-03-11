@@ -20,7 +20,6 @@ import {
   useDisclosure,
   Wrap,
 } from "@chakra-ui/react";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { InlineWidget } from "react-calendly";
 import { CoachType, CurrentUserProps } from "../../types";
@@ -28,8 +27,7 @@ import { GoGlobe } from "react-icons/go";
 import { SiLinkedin } from "react-icons/si";
 import { mixpanelEvent } from "../../helpers";
 import PageWrapper from "../../components/PageWrapper";
-
-const NODE_API = process.env.REACT_APP_NODE_API;
+import { menApiAuthClient } from "../../clients/mentumm";
 
 const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const [coach, setCoach] = useState<CoachType>(null);
@@ -45,7 +43,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   useEffect(() => {
     const loadCoach = async () => {
       try {
-        const singleCoach = await axios.get(`${NODE_API}/v1/coaches`, {
+        const singleCoach = await menApiAuthClient().get("/coaches", {
           params: {
             id: coachId[coachId.length - 1],
           },

@@ -10,10 +10,8 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import PageWrapper from "../../components/PageWrapper";
 import { debounce } from "lodash";
-import axios from "axios";
 import Coach from "../../components/Coach";
-
-const NODE_API = process.env.REACT_APP_NODE_API;
+import { menApiAuthClient } from "../../clients/mentumm";
 
 export const CoachSearchV2 = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -24,9 +22,10 @@ export const CoachSearchV2 = () => {
   const handleSearch = debounce(async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get(
-        `${NODE_API}/v1/coaches?search=${searchTerm}`
+      const response = await menApiAuthClient().get(
+        `coaches?search=${searchTerm}`
       );
+
       if (!response || !response.data) {
         throw new Error("Could not get response from search API");
       }
@@ -49,7 +48,7 @@ export const CoachSearchV2 = () => {
     handleSearch();
   };
 
-  const getCoaches = async () => axios.get(`${NODE_API}/v1/coaches`);
+  const getCoaches = async () => menApiAuthClient().get(`/coaches`);
 
   const handleReset = async () => {
     try {
