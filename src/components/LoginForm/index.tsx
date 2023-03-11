@@ -25,7 +25,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
   const [password, setPassword] = useState<string>(null);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
-  const [, setCookie] = useCookies(["growth_10"]);
+  const [, setCookie] = useCookies(["growth_10", "growth_10_token"]);
 
   const validateEmail = () => {
     if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -58,6 +58,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
     }
 
     try {
+      // TODO: Add basic API Key auth handling
       const loginUser = await axios.post(`${NODE_API}/v1/user/login`, {
         email: userEmail,
         password: userPassword,
@@ -73,7 +74,10 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
         return;
       }
       const user: CurrentUser = loginUser.data;
+      await handleAPICreds(email, password, user.id);
       setCurrentUser(user);
+
+      console.log(user);
       setCookie("growth_10", user, {
         path: "/",
         secure: true,
@@ -97,9 +101,38 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
     }
   };
 
-  const onSubmit: React.FormEventHandler<HTMLDivElement> = (e) => {
+  const handleAPICreds = async (
+    email: string,
+    password: string,
+    userId: number
+  ) => {
+    console.log(userId);
+    try {
+      const token = await axios.post(`${NODE_API}/v1/token/generate`, {
+        email,
+        password,
+        id: userId,
+      });
+
+      console.log(token);
+
+      if (!token || !token.data) {
+        throw new Error(`[Could not get API Token]: ${token.statusText}`);
+      }
+      setCookie("growth_10_token", token.data, {
+        path: "/",
+        secure: true,
+        expires: new Date(Date.now() + 3600 * 1000 * 48),
+        sameSite: true,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onSubmit: React.FormEventHandler<HTMLDivElement> = async (e) => {
     e.preventDefault();
-    login(email, password);
+    await login(email, password);
   };
 
   return (

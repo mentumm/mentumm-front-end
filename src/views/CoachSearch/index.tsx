@@ -8,6 +8,7 @@ import { mixpanelEvent, mixpanelIdentify } from "../../helpers";
 import { CurrentUserProps, CoachSkills } from "../../types";
 import BookingConfirmation from "../BookingConfirmation";
 import { useGetTags } from "../../helpers/tagHelpers";
+import { menApiAuthClient } from "../../clients/mentumm";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
@@ -46,7 +47,7 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
 
     const bookCoach = async () => {
       try {
-        const bookedCoach = await axios.post(`${NODE_API}/v1/user/book-coach`, {
+        const bookedCoach = await menApiAuthClient().post("/user/book-coach", {
           user_id: currentUser.id,
           coach_id: utmSource,
           event_end_time,
