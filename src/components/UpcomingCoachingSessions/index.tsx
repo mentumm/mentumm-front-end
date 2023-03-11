@@ -1,7 +1,6 @@
 import { Box, Heading } from "@chakra-ui/react";
-import axios from "axios";
 import React, { FC, useEffect, useState } from "react";
-import envConfig from "../../envConfig";
+import { menApiAuthClient } from "../../clients/mentumm";
 import { CoachBooking, CoachType } from "../../types";
 import Coach from "../Coach";
 
@@ -15,9 +14,10 @@ const UpcomingCoachingSessions: FC<Iprops> = ({ id }) => {
 
   useEffect(() => {
     async function loadUpcoming() {
-      const u = await axios.get(`${envConfig.API_URL}/v1/user/upcoming`, {
+      const u = await menApiAuthClient().get("/user/upcoming", {
         params: { id },
       });
+
       setUpcoming(u.data);
     }
 
