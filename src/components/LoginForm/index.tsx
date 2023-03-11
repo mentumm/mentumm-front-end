@@ -77,7 +77,6 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
       await handleAPICreds(email, password, user.id);
       setCurrentUser(user);
 
-      console.log(user);
       setCookie("growth_10", user, {
         path: "/",
         secure: true,
@@ -106,15 +105,12 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
     password: string,
     userId: number
   ) => {
-    console.log(userId);
     try {
       const token = await axios.post(`${NODE_API}/v1/token/generate`, {
         email,
         password,
         id: userId,
       });
-
-      console.log(token);
 
       if (!token || !token.data) {
         throw new Error(`[Could not get API Token]: ${token.statusText}`);
