@@ -31,7 +31,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
   const [userFirstNameError, setUserFirstNameError] = useState<boolean>(false);
   const [userLastNameError, setUserLastNameError] = useState<boolean>(false);
   const [inviteCodeError, setInviteCodeError] = useState<boolean>(false);
-  const [, setCookie] = useCookies(["growth_10"]);
+  const [, setCookie] = useCookies(["growth_10_03142023"]);
   const [checkedTerms, setCheckedTerms] = useState<boolean>(false);
 
   const validateEmail = () => {
@@ -114,7 +114,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
       }
 
       setCurrentUser(createUser.data[0]);
-      setCookie("growth_10", createUser.data[0], {
+      setCookie("growth_10_03142023", createUser.data[0], {
         path: "/",
         secure: true,
         expires: new Date(Date.now() + 3600 * 1000 * 48),

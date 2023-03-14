@@ -26,24 +26,24 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 function App() {
   const classes = useStyles();
   const [currentUser, setCurrentUser] = useState<CurrentUser>(null);
-  const [cookies] = useCookies(["growth_10"]);
+  const [cookies] = useCookies(["growth_10_03142023"]);
 
   useEffect(() => {
-    if (cookies.growth_10) {
+    if (cookies.growth_10_03142023) {
       setCurrentUser({
-        id: cookies.growth_10.id,
+        id: cookies.growth_10_03142023.id,
 
         // leaving backward compatibility for now
-        first_name: cookies.growth_10.name
-          ? cookies.growth_10.name.split(" ")[0]
-          : cookies.growth_10.first_name,
-        last_name: cookies.growth_10.name
-          ? cookies.growth_10.name.split(" ")[1]
-          : cookies.growth_10.last_name,
+        first_name: cookies.growth_10_03142023.name
+          ? cookies.growth_10_03142023.name.split(" ")[0]
+          : cookies.growth_10_03142023.first_name,
+        last_name: cookies.growth_10_03142023.name
+          ? cookies.growth_10_03142023.name.split(" ")[1]
+          : cookies.growth_10_03142023.last_name,
         //
 
-        email: cookies.growth_10.email,
-        employer_id: cookies.growth_10.employer_id,
+        email: cookies.growth_10_03142023.email,
+        employer_id: cookies.growth_10_03142023.employer_id,
       });
     }
   }, [cookies]);
@@ -117,7 +117,7 @@ function App() {
           <Route
             path="/sign-up"
             element={
-              !currentUser || !cookies.growth_10 ? (
+              !currentUser || !cookies.growth_10_03142023 ? (
                 <Register
                   setCurrentUser={setCurrentUser}
                   currentUser={currentUser}
