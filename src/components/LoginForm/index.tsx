@@ -75,9 +75,8 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
       }
       const user: CurrentUser = loginUser.data;
       await handleAPICreds(email, password, user.id);
-      setCurrentUser(user); // pretty sure this is failing
+      setCurrentUser(user);
 
-      console.log(user);
       setCookie("growth_10", user, {
         path: "/",
         secure: true,
@@ -106,7 +105,10 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
     password: string,
     userId: number
   ) => {
+<<<<<<< HEAD
     console.log(userId);
+=======
+>>>>>>> 429e074fc560eaa140683f7eb69f0111288dc4ab
     try {
       const token = await axios.post(`${NODE_API}/v1/token/generate`, {
         email,
@@ -114,8 +116,11 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
         id: userId,
       });
 
+<<<<<<< HEAD
       console.log(token);
 
+=======
+>>>>>>> 429e074fc560eaa140683f7eb69f0111288dc4ab
       if (!token || !token.data) {
         throw new Error(`[Could not get API Token]: ${token.statusText}`);
       }
@@ -180,7 +185,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
             </FormControl>
           </Stack>
           <HStack justify="space-between">
-            <Checkbox defaultIsChecked>Remember me</Checkbox>
+            <Checkbox defaultChecked>Remember me</Checkbox>
             <Button variant="link" colorScheme="brand" size="sm">
               Forgot password
             </Button>

@@ -15,6 +15,7 @@ import GetStarted from "./views/GetStarted";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Register from "./views/Register";
+import MonthlyLeadershipWorkshop from "./views/MonthlyLeadershipWorkshop";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -125,6 +126,10 @@ function App() {
                 <Navigate to="/get-started" replace />
               )
             }
+          />
+          <Route
+            path="/monthly-leadership-workshop"
+            element={<MonthlyLeadershipWorkshop />}
           />
         </Routes>
         <Footer />
