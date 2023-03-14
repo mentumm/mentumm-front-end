@@ -105,10 +105,6 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
     password: string,
     userId: number
   ) => {
-<<<<<<< HEAD
-    console.log(userId);
-=======
->>>>>>> 429e074fc560eaa140683f7eb69f0111288dc4ab
     try {
       const token = await axios.post(`${NODE_API}/v1/token/generate`, {
         email,
@@ -116,11 +112,6 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
         id: userId,
       });
 
-<<<<<<< HEAD
-      console.log(token);
-
-=======
->>>>>>> 429e074fc560eaa140683f7eb69f0111288dc4ab
       if (!token || !token.data) {
         throw new Error(`[Could not get API Token]: ${token.statusText}`);
       }
