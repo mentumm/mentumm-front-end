@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { createUseStyles } from "react-jss";
 import { CurrentUser } from "../../types";
-import { Form, Formik } from "formik";
+import { Form, Formik, FormikValues } from "formik";
 import * as Yup from "yup";
 import { useSnackbar } from "notistack";
 import {
@@ -59,7 +59,7 @@ const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: FormikValues) => {
     const keyActionItems = [
       values.keyActionItem1,
       values.keyActionItem2,
