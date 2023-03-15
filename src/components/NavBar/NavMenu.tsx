@@ -40,10 +40,10 @@ const NavMenu = ({
   setCurrentUser,
 }: NavMenuProps): JSX.Element => {
   const classes = useStyles();
-  const removeCookie = useCookies(["growth_10"])[2];
+  const removeCookie = useCookies(["growth_10_03142023"])[2];
 
   const logoutUser = () => {
-    removeCookie("growth_10", { path: "/" });
+    removeCookie("growth_10_03142023", { path: "/" });
     setCurrentUser(null);
   };
 

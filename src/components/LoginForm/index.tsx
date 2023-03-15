@@ -25,7 +25,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
   const [password, setPassword] = useState<string>(null);
   const [emailError, setEmailError] = useState<boolean>(false);
   const [passwordError, setPasswordError] = useState<boolean>(false);
-  const [, setCookie] = useCookies(["growth_10", "growth_10_token"]);
+  const [, setCookie] = useCookies(["growth_10_03142023", "growth_10_token"]);
 
   const validateEmail = () => {
     if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -77,7 +77,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
       await handleAPICreds(email, password, user.id);
       setCurrentUser(user);
 
-      setCookie("growth_10", user, {
+      setCookie("growth_10_03142023", user, {
         path: "/",
         secure: true,
         expires: new Date(Date.now() + 3600 * 1000 * 48),

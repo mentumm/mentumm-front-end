@@ -15,9 +15,9 @@ const defaultUserContext = {
 export const UserContext = createContext(defaultUserContext);
 
 const SignInWrapper: React.FC<SignInProps> = ({ children, currentUser }) => {
-  const [cookies] = useCookies(["growth_10"]);
+  const [cookies] = useCookies(["growth_10_03142023"]);
 
-  return !currentUser && !cookies.growth_10 ? (
+  return !currentUser && !cookies.growth_10_03142023 ? (
     <Navigate replace to="/" />
   ) : (
     <UserContext.Provider value={{ currentUser }}>
