@@ -135,7 +135,7 @@ function App() {
                 <ActionPlan currentUser={currentUser} />
               </SignInWrapper>
             }
-            />
+          />
           <Route
             path="/monthly-leadership-workshop"
             element={<MonthlyLeadershipWorkshop />}
