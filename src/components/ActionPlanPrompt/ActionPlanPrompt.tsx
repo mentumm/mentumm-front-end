@@ -43,7 +43,7 @@ const ActionPlanPrompt = ({ actionPlan }): JSX.Element => {
             borderColor="#2cbdbe"
             size="lg"
           >
-            Review
+            REVIEW
           </Button>
         )}
       </div>
