@@ -87,7 +87,7 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
           color="#fff"
           _hover={{ bg: "#3CA8AB" }}
           mt={2}
-          style={{ zIndex: -1 }}
+          style={{ zIndex: 0 }}
         >
           PICK A TOPIC
         </Button>
