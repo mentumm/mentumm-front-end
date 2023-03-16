@@ -13,6 +13,7 @@ import CoachBio from "./views/CoachBio";
 import CoachResults from "./views/CoachResults";
 import { CoachSearchV2 } from "./views/CoachSearchV2";
 import GetStarted from "./views/GetStarted";
+import CoachingStyle from "./views/GetStarted/CoachingStyle";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Register from "./views/Register";
@@ -116,6 +117,14 @@ function App() {
             }
           />
           <Route
+            path="/get-started/coaching-style"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <CoachingStyle />
+              </SignInWrapper>
+            }
+          />
+          <Route
             path="/sign-up"
             element={
               !currentUser || !cookies.growth_10 ? (
@@ -135,10 +144,14 @@ function App() {
                 <ActionPlan currentUser={currentUser} />
               </SignInWrapper>
             }
-            />
+          />
           <Route
             path="/monthly-leadership-workshop"
-            element={<MonthlyLeadershipWorkshop />}
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <MonthlyLeadershipWorkshop />
+              </SignInWrapper>
+            }
           />
         </Routes>
         <Footer />

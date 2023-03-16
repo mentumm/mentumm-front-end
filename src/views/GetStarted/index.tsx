@@ -98,7 +98,7 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
                 </OrderedList>
                 <Button
                   as={Link}
-                  to="/search"
+                  to="/get-started/coaching-style"
                   background="#2cbdbe"
                   color="#fff"
                   _hover={{ bg: "#3CA8AB" }}

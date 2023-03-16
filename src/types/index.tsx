@@ -138,3 +138,14 @@ export interface Workshop {
   created_at: Date;
   updated_at?: Date;
 }
+
+export interface StyleType {
+  id: string | number;
+  name: string;
+  slug: string;
+  description: string;
+  color: string;
+  icon: string;
+  created_at: Date;
+  updated_at?: Date;
+}
