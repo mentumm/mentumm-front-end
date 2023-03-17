@@ -92,7 +92,7 @@ function App() {
             }
           />
           <Route
-            path="/coach/:coach"
+            path="/coach/:coachId"
             element={
               <SignInWrapper currentUser={currentUser}>
                 <CoachBio currentUser={currentUser} />
