@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUseStyles } from "react-jss";
-import { CurrentUser } from "../../types";
+import { ActionPlanForm, CurrentUser } from "../../types";
 import { Form, Formik, FormikValues } from "formik";
 import * as Yup from "yup";
 import { useSnackbar } from "notistack";
@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import envConfig from "../../envConfig";
+import { menApiAuthClient } from "../../clients/mentumm";
 
 const useStyles = createUseStyles({
   root: {
@@ -58,6 +59,28 @@ const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
+  const [actionPlan, setActionPlan] = useState<ActionPlanForm>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const getActionPlan = async () => {
+      try {
+        const actionPlan = await menApiAuthClient().get<ActionPlanForm>(
+          `/action-plans/${currentUser.id}/${new Date().toISOString()}`
+        );
+        if (actionPlan.data) {
+          setActionPlan(actionPlan.data);
+        }
+        setLoading(false);
+      } catch (error) {
+        throw new Error("Could not fetch Action Plan!");
+      }
+    };
+
+    if (currentUser) {
+      getActionPlan();
+    }
+  }, [currentUser]);
 
   const handleSubmit = async (values: FormikValues) => {
     const keyActionItems = [
@@ -68,58 +91,85 @@ const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
       values.keyActionItem5,
     ];
 
-    await axios
-      .post(`${envConfig.API_URL}/v1/action-plans`, {
-        user_id: currentUser.id,
-        personal_rank: values.personalRank,
-        professional_rank: values.professionalRank,
-        health_wellness_rank: values.healthWellnessRank,
-        work_life_balance_rank: values.workLifeBalanceRank,
-        motivation_rank: values.motivationRank,
-        relationships_rank: values.relationshipsRank,
-        personal_issues_field: values.personalIssues,
-        professional_issues_field: values.professionalIssues,
-        decisions_field: values.decisions,
-        leadership_process_field: values.leadershipProcess,
-        key_action_items: keyActionItems,
-      })
-      .then(() => {
-        enqueueSnackbar(
-          "Action Plan created! Your coach will discuss your monthly goals with you.",
-          {
+    const actionPlanValues = {
+      user_id: currentUser.id,
+      personal_rank: values.personalRank,
+      professional_rank: values.professionalRank,
+      health_wellness_rank: values.healthWellnessRank,
+      work_life_balance_rank: values.workLifeBalanceRank,
+      motivation_rank: values.motivationRank,
+      relationships_rank: values.relationshipsRank,
+      personal_issues_field: values.personalIssues,
+      professional_issues_field: values.professionalIssues,
+      decisions_field: values.decisions,
+      leadership_process_field: values.leadershipProcess,
+      key_action_items: keyActionItems,
+    };
+
+    if (actionPlan) {
+      await axios
+        .patch(`${envConfig.API_URL}/v1/action-plans`, {
+          ...actionPlanValues,
+          action_plan_id: actionPlan.id,
+        })
+        .then(() => {
+          enqueueSnackbar("Action Plan updated!", {
             variant: "success",
-          }
-        );
-        setTimeout(() => {
-          navigate("/home");
-        }, 2000);
-      })
-      .catch(() => {
-        enqueueSnackbar("Something went wrong. Please try again.", {
-          variant: "error",
+          });
+          setTimeout(() => {
+            navigate("/home");
+          }, 2000);
+        })
+        .catch(() => {
+          enqueueSnackbar("Something went wrong. Please try again.", {
+            variant: "error",
+          });
         });
-      });
+    } else {
+      await axios
+        .post(`${envConfig.API_URL}/v1/action-plans`, {
+          ...actionPlanValues,
+        })
+        .then(() => {
+          enqueueSnackbar(
+            "Action Plan created! Your coach will discuss your monthly goals with you.",
+            {
+              variant: "success",
+            }
+          );
+          setTimeout(() => {
+            navigate("/home");
+          }, 2000);
+        })
+        .catch(() => {
+          enqueueSnackbar("Something went wrong. Please try again.", {
+            variant: "error",
+          });
+        });
+    }
   };
+
+  if (loading) return null;
 
   return (
     <div className={classes.root}>
       <Formik
         initialValues={{
-          personalRank: 1,
-          professionalRank: 1,
-          healthWellnessRank: 1,
-          workLifeBalanceRank: 1,
-          motivationRank: 1,
-          relationshipsRank: 1,
-          personalIssues: "",
-          professionalIssues: "",
-          decisions: "",
-          leadershipProcess: "",
-          keyActionItem1: "",
-          keyActionItem2: "",
-          keyActionItem3: "",
-          keyActionItem4: "",
-          keyActionItem5: "",
+          personalRank: actionPlan?.personal_rank || 1,
+          professionalRank: actionPlan?.professional_rank || 1,
+          healthWellnessRank: actionPlan?.health_wellness_rank || 1,
+          workLifeBalanceRank: actionPlan?.work_life_balance_rank || 1,
+          motivationRank: actionPlan?.motivation_rank || 1,
+          relationshipsRank: actionPlan?.relationships_rank || 1,
+          personalIssues: actionPlan?.personal_issues_field || "",
+          professionalIssues: actionPlan?.professional_issues_field || "",
+          decisions: actionPlan?.decisions_field || "",
+          leadershipProcess: actionPlan?.leadership_process_field || "",
+          keyActionItem1: actionPlan?.key_action_items[0] || "",
+          keyActionItem2: actionPlan?.key_action_items[1] || "",
+          keyActionItem3: actionPlan?.key_action_items[2] || "",
+          keyActionItem4: actionPlan?.key_action_items[3] || "",
+          keyActionItem5: actionPlan?.key_action_items[4] || "",
         }}
         validationSchema={Yup.object({
           personalRank: Yup.number(),

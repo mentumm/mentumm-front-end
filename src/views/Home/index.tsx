@@ -6,9 +6,10 @@ import HighlightedTags from "../../components/HighlightedTags";
 import PastCoachingSessions from "../../components/PastCoachingSessions";
 import UpcomingCoachingSessions from "../../components/UpcomingCoachingSessions";
 import { useGetTags } from "../../helpers/tagHelpers";
-import { CoachType, CurrentUser } from "../../types";
+import { ActionPlanForm, CoachType, CurrentUser } from "../../types";
 import getWeek from "date-fns/getWeek";
 import { menApiAuthClient } from "../../clients/mentumm";
+import ActionPlanPrompt from "../../components/ActionPlanPrompt/ActionPlanPrompt";
 
 function getCurrentFeatured<T>(
   objects: T[],
@@ -33,6 +34,7 @@ interface IProps {
 const Home: React.FC<IProps> = ({ currentUser }) => {
   const coachTags = useGetTags();
   const [coaches, setCoaches] = useState<CoachType[]>([]);
+  const [actionPlan, setActionPlan] = useState<ActionPlanForm>(null);
 
   useEffect(() => {
     const getCoaches = async () => {
@@ -44,8 +46,23 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
         throw new Error("Could not load Coach Tags!");
       }
     };
+
+    const getActionPlan = async () => {
+      try {
+        const actionPlan = await menApiAuthClient().get<ActionPlanForm>(
+          `/action-plans/${currentUser.id}/${new Date().toISOString()}`
+        );
+        setActionPlan(actionPlan.data);
+      } catch (error) {
+        throw new Error("Could not fetch Action Plan!");
+      }
+    };
+
+    if (currentUser) {
+      getActionPlan();
+    }
     getCoaches();
-  }, []);
+  }, [currentUser]);
 
   if (!currentUser) {
     return null;
@@ -70,11 +87,13 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
           color="#fff"
           _hover={{ bg: "#3CA8AB" }}
           mt={2}
-          style={{ zIndex: -1 }}
+          style={{ zIndex: 0 }}
         >
           PICK A TOPIC
         </Button>
       </Stack>
+
+      <ActionPlanPrompt actionPlan={actionPlan} />
 
       <UpcomingCoachingSessions id={currentUser?.id} />
       <HighlightedTags title="Hot Topics" tags={hotTopics} />
