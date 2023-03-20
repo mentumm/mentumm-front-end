@@ -8,6 +8,8 @@ export interface CurrentUserProps {
   currentUser: CurrentUser;
 }
 
+export type UserRoles = "user" | "coach";
+
 export interface User {
   id: string | number;
   first_name: string;
@@ -29,8 +31,28 @@ export interface User {
   legacy_coach_id?: string | number; // only for initial migration, should not really be used outside of migrations, so dont use it
   city?: string;
   state?: string;
-  role: "coach" | "user";
+  role: UserRoles;
+  phone_number?: string;
+  facebook_url?: string;
+  instagram_url?: string;
+  website_url?: string;
 }
+
+type UserPrivateFields =
+  | "password"
+  | "id"
+  | "location"
+  | "last_sign_in"
+  | "reset_password_token"
+  | "created_at"
+  | "updated_at"
+  | "deleted_at"
+  | "reset_password_expiration"
+  | "legacy_coach_id"
+  | "role"
+  | "employer_id";
+
+export interface UserPublic extends Omit<User, UserPrivateFields> {}
 
 export interface CoachBooking {
   id: number;
@@ -89,6 +111,7 @@ export interface CurrentUser {
   email: string;
   employer_id: number;
   last_sign_in?: Date;
+  role: UserRoles;
 }
 
 export interface UserLoginProps {

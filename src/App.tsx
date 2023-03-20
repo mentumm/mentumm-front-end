@@ -44,6 +44,7 @@ function App() {
 
         email: cookies.growth_10_03142023.email,
         employer_id: cookies.growth_10_03142023.employer_id,
+        role: cookies.growth_10_03142023.role,
       });
     }
   }, [cookies]);
