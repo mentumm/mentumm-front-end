@@ -8,6 +8,7 @@ import { CardHeader } from "./CardHeader";
 import { UserAvatar } from "./UserAvatar";
 import { GoGlobe } from "react-icons/go";
 import BookingInfo from "./BookingInfo";
+import { Link } from "react-router-dom";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -42,10 +43,10 @@ const generateCoachTags = (tags: CoachSkills[], slug: string) => {
 const Coach: React.FC<CoachProps> = (props) => {
   const classes = useStyles();
   const { coachInfo, slug, booking, currentUser } = props;
-  const { first_name, last_name, skills, location, photo_url } = coachInfo;
+  const { first_name, last_name, skills, location, photo_url, id } = coachInfo;
 
   return (
-    <div className={classes.root}>
+    <Link to={`/coach/${id}`} className={classes.root}>
       <Box as="section" py="6">
         <Card>
           <Stack
@@ -85,7 +86,7 @@ const Coach: React.FC<CoachProps> = (props) => {
           </Stack>
         </Card>
       </Box>
-    </div>
+    </Link>
   );
 };
 
