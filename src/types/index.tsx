@@ -140,7 +140,7 @@ export interface Workshop {
 }
 
 export interface StyleType {
-  id: string | number;
+  id: number;
   name: string;
   slug: string;
   description: string;

@@ -120,7 +120,7 @@ function App() {
             path="/get-started/coaching-style"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <CoachingStyle />
+                <CoachingStyle currentUser={currentUser} />
               </SignInWrapper>
             }
           />

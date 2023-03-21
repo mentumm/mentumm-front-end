@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { menApiAuthClient } from "../../../clients/mentumm";
 import { StyleType } from "../../../types";
 import {
@@ -23,10 +22,12 @@ import {
   FaChessKing,
 } from "react-icons/fa";
 import envConfig from "../../../envConfig";
+import { useNavigate } from "react-router";
+import { CurrentUser } from "../../../types";
 
 type StyleTypeOptionProps = {
   styleType: StyleType;
-  checkedItems: String[];
+  checkedItems: Number[];
   setCheckedItems: Function;
 };
 
@@ -64,11 +65,11 @@ const StyleTypeOption: React.FC<StyleTypeOptionProps> = ({
 
   return (
     <Checkbox
-      value={styleType.slug}
-      isChecked={checkedItems.includes(styleType.slug)}
+      value={styleType.id}
+      isChecked={checkedItems.includes(styleType.id)}
       onChange={(e) => setCheckedItems(toggleStyleTypeChecked(e.target.value))}
       isDisabled={
-        !checkedItems.includes(styleType.slug) && checkedItems.length > 1
+        !checkedItems.includes(styleType.id) && checkedItems.length > 1
       }
       aria-label={styleType.name}
       display={"flex"}
@@ -77,9 +78,9 @@ const StyleTypeOption: React.FC<StyleTypeOptionProps> = ({
         alignItems="center"
         p={2}
         align="stretch"
-        width={315}
+        width={330}
         backgroundColor={
-          checkedItems.includes(styleType.slug) ? "#C0E1FF" : "#EDF2F7"
+          checkedItems.includes(styleType.id) ? "#C0E1FF" : "#EDF2F7"
         }
         borderRadius={4}
         _hover={{ bg: checkedItems.length < 2 ? "#C0E1FF" : "" }}
@@ -96,7 +97,7 @@ const StyleTypeOption: React.FC<StyleTypeOptionProps> = ({
 
 type ContentContainerProps = {
   styleTypes: StyleType[];
-  checkedItems: String[];
+  checkedItems: Number[];
   setCheckedItems: Function;
 };
 
@@ -119,9 +120,15 @@ const ContentContainer: React.FC<ContentContainerProps> = ({
   );
 };
 
-const CoachingStyle: React.FC = () => {
+type CoachingStyleProps = {
+  currentUser: CurrentUser;
+};
+
+const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser }) => {
+  const navigate = useNavigate();
   const [styleTypes, setStyleTypes] = useState<StyleType[]>([]);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [checkedItems, setCheckedItems] = React.useState([]);
 
   useEffect(() => {
@@ -142,6 +149,28 @@ const CoachingStyle: React.FC = () => {
     };
     getStyleTypes();
   }, []);
+
+  const handleContinue = async () => {
+    if (saving) {
+      return;
+    }
+
+    setSaving(true);
+
+    await menApiAuthClient()
+      .post(`${envConfig.API_URL}/v1/user/${currentUser.id}/style_types`, {
+        style_types: checkedItems,
+      })
+      .then(() => {
+        navigate("/home");
+      })
+      .finally(() => {
+        setSaving(false);
+      })
+      .catch((e) => {
+        console.error(e);
+      });
+  };
 
   return (
     <Container maxW={1270}>
@@ -168,17 +197,16 @@ const CoachingStyle: React.FC = () => {
       )}
 
       <Button
-        as={Link}
-        to="/home"
         background="#2cbdbe"
         color="#fff"
         _hover={{ bg: "#3CA8AB" }}
         mt={8}
         padding={7}
         fontWeight="bold"
-        isDisabled={checkedItems.length < 2}
+        isDisabled={checkedItems.length < 2 || saving}
+        onClick={handleContinue}
       >
-        CONTINUE
+        CONTINUE {saving && <Spinner ml={1} size="xs" />}
       </Button>
     </Container>
   );
