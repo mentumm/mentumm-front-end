@@ -8,6 +8,30 @@ export interface CurrentUserProps {
   currentUser: CurrentUser;
 }
 
+export interface User {
+  id: string | number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  employer_id: number;
+  created_at: Date;
+  updated_at?: Date;
+  deleted_at?: Date;
+  password: string;
+  reset_password_token: string;
+  reset_password_expiration: Date;
+  last_sign_in: Date;
+  bio?: string;
+  photo_url?: string;
+  booking_url?: string;
+  linkedin_url: string;
+  location?: string; // deprecated
+  legacy_coach_id?: string | number; // only for initial migration, should not really be used outside of migrations, so dont use it
+  city?: string;
+  state?: string;
+  role: "coach" | "user";
+}
+
 export interface CoachBooking {
   id: number;
   user_id: number;
@@ -44,17 +68,7 @@ export interface CoachProps {
   currentUser?: CurrentUser;
 }
 
-export interface CoachType {
-  name: string;
-  id: number;
-  bio: string;
-  photo_url: string;
-  booking_link: string;
-  linkedin_url: string;
-  location: string;
-  deleted_at: string;
-  created_at: string;
-  updated_at: string;
+export interface CoachType extends User {
   skills: CoachSkills[];
 }
 
@@ -111,4 +125,16 @@ export interface CoachReviewProps {
   coach: CoachType;
   currentUser: CurrentUser;
   userCoachId?: number;
+}
+
+export interface Workshop {
+  id: string | number;
+  name: string;
+  vimeo_id: string;
+  workbook_url: string;
+  year: number;
+  month: number;
+  hidden: 1 | 0;
+  created_at: Date;
+  updated_at?: Date;
 }

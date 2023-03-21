@@ -17,11 +17,13 @@ const HighlightedCoaches: React.FC<IProps> = ({ title, coaches }) => {
         {title}
       </Heading>
       <Box display="flex" flexFlow="row wrap" gap={4}>
-        {coaches.map((c) => (
-          <RouteLink to={`/coach/${generateCoachUrl(c)}`} key={c.id}>
-            <Coach coachInfo={c} />
-          </RouteLink>
-        ))}
+        {coaches.map((c) => {
+          return (
+            <RouteLink to={`/coach/${generateCoachUrl(c)}`} key={c.id}>
+              <Coach coachInfo={c} />
+            </RouteLink>
+          );
+        })}
       </Box>
     </>
   );

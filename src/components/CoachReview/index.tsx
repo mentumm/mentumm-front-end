@@ -11,9 +11,8 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import ReviewForm from "./ReviewForm";
-import axios from "axios";
 import { CoachReviewProps, ReviewFormType } from "../../types";
-import envConfig from "../../envConfig";
+import { menApiAuthClient } from "../../clients/mentumm";
 
 const CoachReview: React.FC<CoachReviewProps> = ({
   isOpen,
@@ -24,17 +23,17 @@ const CoachReview: React.FC<CoachReviewProps> = ({
 }) => {
   const toast = useToast();
 
-  const submitForm = (rating: ReviewFormType) => {
+  const submitForm = async (rating: ReviewFormType) => {
     try {
-      const reviewCoach = axios.post(
-        `${envConfig.API_URL}/v1/coach/rating`,
+      const reviewCoach = await menApiAuthClient().post(
+        "/coach/rating",
         rating
       );
 
       if (reviewCoach) {
         toast({
           title: "Review Submitted!",
-          description: `We've submitted your review for ${coach.name}.`,
+          description: `We've submitted your review for ${`${coach.first_name} ${coach.last_name}`}.`,
           status: "success",
           duration: 9000,
           isClosable: true,
@@ -82,7 +81,7 @@ const CoachReview: React.FC<CoachReviewProps> = ({
               fontWeight="medium"
               color={useColorModeValue("black", "white")}
             >
-              {coach ? coach.name : null}
+              {coach ? `${coach.first_name} ${coach.last_name}` : null}
             </Heading>
             <ReviewForm
               submitForm={submitForm}

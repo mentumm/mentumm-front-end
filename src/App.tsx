@@ -7,6 +7,8 @@ import Footer from "./components/Footer";
 import SignInWrapper from "./components/LoginWrapper";
 import NavBar from "./components/NavBar";
 import { CurrentUser } from "./types";
+import ActionPlan from "./views/ActionPlan";
+import { EditProfile } from "./views/Coach/EditProfile";
 import CoachBio from "./views/CoachBio";
 import CoachResults from "./views/CoachResults";
 import { CoachSearchV2 } from "./views/CoachSearchV2";
@@ -14,6 +16,7 @@ import GetStarted from "./views/GetStarted";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Register from "./views/Register";
+import MonthlyLeadershipWorkshop from "./views/MonthlyLeadershipWorkshop";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -97,6 +100,14 @@ function App() {
             }
           />
           <Route
+            path="/coach/:coachId/profile"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <EditProfile />
+              </SignInWrapper>
+            }
+          />
+          <Route
             path="/get-started"
             element={
               <SignInWrapper currentUser={currentUser}>
@@ -116,6 +127,18 @@ function App() {
                 <Navigate to="/get-started" replace />
               )
             }
+          />
+          <Route
+            path="/action-plan"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <ActionPlan currentUser={currentUser} />
+              </SignInWrapper>
+            }
+            />
+          <Route
+            path="/monthly-leadership-workshop"
+            element={<MonthlyLeadershipWorkshop />}
           />
         </Routes>
         <Footer />

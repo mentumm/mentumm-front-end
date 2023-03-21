@@ -20,7 +20,6 @@ import {
   useDisclosure,
   Wrap,
 } from "@chakra-ui/react";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { InlineWidget } from "react-calendly";
 import { CoachType, CurrentUserProps } from "../../types";
@@ -28,6 +27,7 @@ import { GoGlobe } from "react-icons/go";
 import { SiLinkedin } from "react-icons/si";
 import { mixpanelEvent } from "../../helpers";
 import PageWrapper from "../../components/PageWrapper";
+import { menApiAuthClient } from "../../clients/mentumm";
 import { useParams } from "react-router";
 import { FaCouch } from "react-icons/fa";
 
@@ -48,7 +48,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   useEffect(() => {
     const loadCoach = async () => {
       try {
-        const singleCoach = await axios.get(`${NODE_API}/v1/coaches`, {
+        const singleCoach = await menApiAuthClient().get("/coaches", {
           params: {
             id: coachId,
           },
@@ -59,7 +59,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
         setCoach(singleCoach.data[0]);
         mixpanelEvent("Coach Bio Viewed", {
           "Coach ID": coach.id,
-          "Coach Name": coach.name,
+          "Coach Name": `${coach.first_name} ${coach.last_name}`,
           "Coach Skills": coach.skills.map((skill) => skill.name),
         });
       } catch (error) {
@@ -164,7 +164,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
               <Stack spacing="4">
                 <Stack>
                   <Heading size="2xl" fontWeight="bold">
-                    {coach ? coach.name : null}
+                    {coach ? `${coach.first_name} ${coach.last_name}` : null}
                   </Heading>
                   <HStack fontSize="md">
                     <Icon as={GoGlobe} color="gray.500" />
@@ -176,7 +176,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                       }
                       isExternal
                     >
-                      {coach ? coach.name : null}
+                      {coach ? `${coach.first_name} ${coach.last_name}` : null}
                     </Link>
                   </HStack>
                 </Stack>
@@ -188,7 +188,9 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                   variant="solid"
                   onClick={() => {
                     mixpanelEvent("Clicked Book Coach", {
-                      "Coach Name": coach ? coach.name : null,
+                      "Coach Name": coach
+                        ? `${coach.first_name} ${coach.last_name}`
+                        : null,
                       "Coach ID": coach ? coach.id : null,
                     });
                     calendlyOnOpen();
@@ -203,12 +205,15 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                     <ModalOverlay />
                     <ModalContent>
                       <ModalHeader>
-                        Book your session {coach ? `with ${coach.name}` : null}
+                        Book your session{" "}
+                        {coach
+                          ? `with ${`${coach.first_name} ${coach.last_name}`}`
+                          : null}
                       </ModalHeader>
                       <ModalCloseButton />
                       <ModalBody>
                         <InlineWidget
-                          url={coach ? coach.booking_link : null}
+                          url={coach ? coach.booking_url : null}
                           utm={{
                             utmSource: coach ? String(coach.id) : null,
                           }}

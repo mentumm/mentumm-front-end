@@ -1,13 +1,11 @@
-import { Heading, Link, Text } from "@chakra-ui/react";
-import axios from "axios";
+import { Heading } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
-import { Link as RouteLink, useNavigate } from "react-router-dom";
+import { Link as RouteLink } from "react-router-dom";
+import { menApiAuthClient } from "../../clients/mentumm";
 import Coach from "../../components/Coach";
 import PageWrapper from "../../components/PageWrapper";
 import { CoachSkills, CoachType } from "../../types";
-
-const NODE_API = process.env.REACT_APP_NODE_API;
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -33,7 +31,8 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 }));
 
 export const generateCoachUrl = (coach: CoachType) => {
-  return coach.name.replace(/\W|_/g, "-").toLowerCase() + `-${coach.id}`;
+  const name = `${coach.first_name} ${coach.last_name}`;
+  return name.replace(/\W|_/g, "-").toLowerCase() + `-${coach.id}`;
 };
 
 const CoachResults: React.FC = () => {
@@ -51,7 +50,7 @@ const CoachResults: React.FC = () => {
   useEffect(() => {
     const loadCoaches = async () => {
       try {
-        const coach = await axios.get(`${NODE_API}/v1/tags`, {
+        const coach = await menApiAuthClient().get("/tags", {
           params: {
             slug: slug,
           },

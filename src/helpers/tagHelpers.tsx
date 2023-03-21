@@ -1,11 +1,10 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
-import envConfig from "../envConfig";
+import { menApiAuthClient } from "../clients/mentumm";
 import { CoachSkills } from "../types";
 
 export const getTags = async () => {
   try {
-    const tags = await axios.get<CoachSkills[]>(`${envConfig.API_URL}/v1/tags`);
+    const tags = await menApiAuthClient().get<CoachSkills[]>("/tags");
 
     if (tags) {
       return tags.data;

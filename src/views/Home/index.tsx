@@ -1,15 +1,14 @@
 import { Button, Container, Heading, Stack } from "@chakra-ui/react";
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import HighlightedCoaches from "../../components/HighlightedCoaches";
 import HighlightedTags from "../../components/HighlightedTags";
 import PastCoachingSessions from "../../components/PastCoachingSessions";
 import UpcomingCoachingSessions from "../../components/UpcomingCoachingSessions";
-import envConfig from "../../envConfig";
 import { useGetTags } from "../../helpers/tagHelpers";
 import { CoachType, CurrentUser } from "../../types";
 import getWeek from "date-fns/getWeek";
+import { menApiAuthClient } from "../../clients/mentumm";
 
 function getCurrentFeatured<T>(
   objects: T[],
@@ -38,9 +37,7 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
   useEffect(() => {
     const getCoaches = async () => {
       try {
-        const results = await axios.get<CoachType[]>(
-          `${envConfig.API_URL}/v1/coaches`
-        );
+        const results = await menApiAuthClient().get<CoachType[]>("/coaches");
 
         setCoaches(results.data);
       } catch (error) {
@@ -73,6 +70,7 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
           color="#fff"
           _hover={{ bg: "#3CA8AB" }}
           mt={2}
+          style={{ zIndex: -1 }}
         >
           PICK A TOPIC
         </Button>
