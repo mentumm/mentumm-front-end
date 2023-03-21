@@ -33,5 +33,7 @@ export const menApiAuthClient = () => {
       },
     });
     return instance;
-  } catch (error) {}
+  } catch (error) {
+    console.error(error);
+  }
 };

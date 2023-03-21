@@ -138,3 +138,19 @@ export interface Workshop {
   created_at: Date;
   updated_at?: Date;
 }
+
+export interface ActionPlanForm {
+  id?: string | number;
+  user_id: string | number;
+  personal_rank: number;
+  professional_rank: number;
+  health_wellness_rank: number;
+  work_life_balance_rank: number;
+  motivation_rank: number;
+  relationships_rank: number;
+  personal_issues_field: string;
+  professional_issues_field: string;
+  decisions_field: string;
+  leadership_process_field: string;
+  key_action_items: string;
+}
