@@ -80,7 +80,7 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
     <Container maxW={1270}>
       <Stack justifyContent="space-between" direction="row" mt={14} mb={8}>
         <Heading>Welcome back, {currentUser?.first_name}</Heading>
-        <Button
+        {/* <Button
           as={Link}
           to="/search"
           background="#2cbdbe"
@@ -90,7 +90,7 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
           style={{ zIndex: 0 }}
         >
           PICK A TOPIC
-        </Button>
+        </Button> */}
       </Stack>
 
       <ActionPlanPrompt actionPlan={actionPlan} />

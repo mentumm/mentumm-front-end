@@ -162,6 +162,17 @@ export interface Workshop {
   updated_at?: Date;
 }
 
+export interface StyleType {
+  id: number;
+  name: string;
+  slug: string;
+  description: string;
+  color: string;
+  icon: string;
+  created_at: Date;
+  updated_at?: Date;
+}
+
 export interface ActionPlanForm {
   id?: string | number;
   user_id: string | number;
