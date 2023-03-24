@@ -31,7 +31,7 @@ type StyleTypeOptionProps = {
   setCheckedItems: Function;
 };
 
-const getStyleTypeIcon = (icon) => {
+const getStyleTypeIcon = (icon: string) => {
   switch (icon) {
     case "fa-solid fa-rocket":
       return <Icon as={FaRocket} mr={1} />;
@@ -55,9 +55,9 @@ const StyleTypeOption: React.FC<StyleTypeOptionProps> = ({
   checkedItems,
   setCheckedItems,
 }) => {
-  const toggleStyleTypeChecked = (slug) => {
-    if (checkedItems.includes(slug)) {
-      return checkedItems.filter((item) => item !== slug);
+  const toggleStyleTypeChecked = (slug: string) => {
+    if (checkedItems.includes(+slug)) {
+      return checkedItems.filter((item) => item !== +slug);
     }
 
     return [...checkedItems, slug];
