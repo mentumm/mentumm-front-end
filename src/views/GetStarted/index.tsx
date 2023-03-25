@@ -83,7 +83,7 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
                   className={classes.margin}
                   fontWeight="normal"
                 >
-                  One-on-One Coaching, For You 😎
+                  Monthly Leadership Development, For You 😎
                 </Heading>
                 <UnorderedList className={classes.list}>
                   <ListItem>
