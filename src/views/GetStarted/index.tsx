@@ -6,7 +6,7 @@ import {
   Image,
   Button,
   Stack,
-  OrderedList,
+  UnorderedList,
   ListItem,
 } from "@chakra-ui/react";
 import React, { useEffect } from "react";
@@ -85,17 +85,20 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
                 >
                   One-on-One Coaching, For You 😎
                 </Heading>
-                <OrderedList className={classes.list}>
+                <UnorderedList className={classes.list}>
                   <ListItem>
-                    <strong>Pick the coaching style</strong> you prefer
+                    <strong>Leadership Workshop:</strong> learn a new skill each
+                    month
                   </ListItem>
                   <ListItem>
-                    <strong>Select the coach</strong> you want to work with
+                    <strong>One-on-One Coaching:</strong> work monthly with your
+                    own coach
                   </ListItem>
                   <ListItem>
-                    <strong>Book a session</strong> that fits your schedule
+                    <strong>Action Planning:</strong> organize your key issues
+                    and goals each month
                   </ListItem>
-                </OrderedList>
+                </UnorderedList>
                 <Button
                   as={Link}
                   to="/get-started/coaching-style"
