@@ -1,7 +1,16 @@
-import { Box, HStack, Icon, Stack, Tag, Text, Wrap } from "@chakra-ui/react";
+import {
+  Box,
+  HStack,
+  Icon,
+  Stack,
+  Tag,
+  TagLabel,
+  Text,
+  Wrap,
+} from "@chakra-ui/react";
 import React from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
-import { CoachProps, CoachSkills } from "../../types";
+import { CoachProps, StyleType } from "../../types";
 import { Card } from "./Card";
 import { CardContent } from "./CardContent";
 import { CardHeader } from "./CardHeader";
@@ -9,6 +18,8 @@ import { UserAvatar } from "./UserAvatar";
 import { GoGlobe } from "react-icons/go";
 import BookingInfo from "./BookingInfo";
 import { Link } from "react-router-dom";
+import { StyleTypeIcon } from "../../components/StyleTypeIcon";
+import { CoachType } from "../../types";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -16,37 +27,50 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   },
 }));
 
-const generateCoachTags = (tags: CoachSkills[], slug: string) => {
+export const generateCoachUrl = (coach: CoachType) => {
+  const name = `${coach.first_name} ${coach.last_name}`;
+  return name.replace(/\W|_/g, "-").toLowerCase() + `-${coach.id}`;
+};
+
+const generateCoachTags = (tags: StyleType[], slug: string) => {
   let trimmedTags = [];
 
-  if (tags.length > 4) {
-    const remainingTags = tags.filter((tag: CoachSkills) => tag.slug !== slug);
+  if (tags.length > 2) {
+    const remainingTags = tags.filter((tag: StyleType) => tag.slug !== slug);
 
     // make sure to show the tag that the user searched for
     if (slug) {
       trimmedTags.push(tags.find((tag) => tag.slug === slug));
       remainingTags.slice(0, 2).map((tag) => trimmedTags.push(tag));
     } else {
-      remainingTags.slice(0, 3).map((tag) => trimmedTags.push(tag));
+      remainingTags.slice(0, 2).map((tag) => trimmedTags.push(tag));
     }
     // the extra +3 more tag
     trimmedTags.push({
       id: Math.floor(Math.random() * (2000 - 1000) + 1000),
-      name: `+ ${tags.length - 4} more`,
+      name: `+ ${tags.length - 2} more`,
     });
   } else {
     trimmedTags = tags;
   }
-  return trimmedTags.map((tag) => !!tag && <Tag key={tag.id}>{tag.name}</Tag>);
+  return trimmedTags.map(
+    (tag) =>
+      !!tag && (
+        <Tag key={tag.id} backgroundColor={tag.color} size="lg">
+          <StyleTypeIcon icon={tag.icon} />
+          <TagLabel>{tag.name}</TagLabel>
+        </Tag>
+      )
+  );
 };
 
 const Coach: React.FC<CoachProps> = (props) => {
   const classes = useStyles();
   const { coachInfo, slug, booking, currentUser } = props;
-  const { first_name, last_name, skills, location, photo_url, id } = coachInfo;
+  const { first_name, last_name, expertise, location, photo_url } = coachInfo;
 
   return (
-    <Link to={`/coach/${id}`} className={classes.root}>
+    <Link to={`/coach/${generateCoachUrl(coachInfo)}`} className={classes.root}>
       <Box as="section" py="6">
         <Card>
           <Stack
@@ -64,16 +88,13 @@ const Coach: React.FC<CoachProps> = (props) => {
             <CardContent>
               <CardHeader title={`${first_name} ${last_name}`} />
               <Stack mt="1">
-                <HStack fontSize="sm">
+                <HStack fontSize="md" mt={2}>
                   <Icon as={GoGlobe} color="gray.500" />
                   <Text>{location ? location : null}</Text>
                 </HStack>
               </Stack>
-              <Text fontWeight="semibold" mt="8" mb="2">
-                Expertise
-              </Text>
-              <Wrap shouldWrapChildren>
-                {skills ? generateCoachTags(skills, slug) : null}
+              <Wrap shouldWrapChildren mt={4}>
+                {expertise ? generateCoachTags(expertise, slug) : null}
               </Wrap>
             </CardContent>
             {!!booking && (

@@ -1,8 +1,6 @@
 import {
   Heading,
   Box,
-  AspectRatio,
-  Image,
   FormLabel,
   Input,
   Textarea,

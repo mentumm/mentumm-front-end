@@ -1,7 +1,6 @@
 import { Heading } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
-import { Link as RouteLink } from "react-router-dom";
 import { menApiAuthClient } from "../../clients/mentumm";
 import Coach from "../../components/Coach";
 import PageWrapper from "../../components/PageWrapper";
@@ -78,12 +77,7 @@ const CoachResults: React.FC = () => {
         <div className={classes.coaches}>
           {!!coaches && coaches.length ? (
             coaches.map((coach: CoachType) => (
-              <RouteLink
-                to={`/coach/${generateCoachUrl(coach)}`}
-                key={coach.id}
-              >
-                <Coach coachInfo={coach} slug={slug} />
-              </RouteLink>
+              <Coach coachInfo={coach} slug={slug} />
             ))
           ) : (
             <Heading as="h1" size="2xl">

@@ -1,15 +1,13 @@
-import { Button, Container, Heading, Stack } from "@chakra-ui/react";
+import { Container, Heading, Stack } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import HighlightedCoaches from "../../components/HighlightedCoaches";
-import HighlightedTags from "../../components/HighlightedTags";
 import PastCoachingSessions from "../../components/PastCoachingSessions";
 import UpcomingCoachingSessions from "../../components/UpcomingCoachingSessions";
-import { useGetTags } from "../../helpers/tagHelpers";
 import { ActionPlanForm, CoachType, CurrentUser } from "../../types";
 import getWeek from "date-fns/getWeek";
 import { menApiAuthClient } from "../../clients/mentumm";
 import ActionPlanPrompt from "../../components/ActionPlanPrompt/ActionPlanPrompt";
+import { HomeMonthlyLeadershipWorkshop } from "../../components/HomeMonthlyLeadershipWorkshop";
 
 function getCurrentFeatured<T>(
   objects: T[],
@@ -32,7 +30,6 @@ interface IProps {
 }
 
 const Home: React.FC<IProps> = ({ currentUser }) => {
-  const coachTags = useGetTags();
   const [coaches, setCoaches] = useState<CoachType[]>([]);
   const [actionPlan, setActionPlan] = useState<ActionPlanForm>(null);
 
@@ -68,13 +65,7 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
     return null;
   }
 
-  const hotTopics = getCurrentFeatured(coachTags, 4);
   const featuredCoaches = getCurrentFeatured(coaches, 2);
-  const careerGrowthTopics = getCurrentFeatured(
-    coachTags.filter((t) => t.category === "Professional"),
-    4,
-    4
-  );
 
   return (
     <Container maxW={1270}>
@@ -94,11 +85,9 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
       </Stack>
 
       <ActionPlanPrompt actionPlan={actionPlan} />
-
+      <HomeMonthlyLeadershipWorkshop />
       <UpcomingCoachingSessions id={currentUser?.id} />
-      <HighlightedTags title="Hot Topics" tags={hotTopics} />
       <HighlightedCoaches title="Featured Coaches" coaches={featuredCoaches} />
-      <HighlightedTags title="Career Growth Topics" tags={careerGrowthTopics} />
       <PastCoachingSessions currentUser={currentUser} />
     </Container>
   );
