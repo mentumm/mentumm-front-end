@@ -59,7 +59,15 @@ const WorkShopThumbnail = ({ workshop }: WorkShopThumbnailProps) => {
 
   return (
     <Link to="/monthly-leadership-workshop">
-      <Box className={classes.video} p={2}>
+      <Box
+        className={classes.video}
+        p={2}
+        shadow={{ md: "base" }}
+        rounded={{ sm: "lg" }}
+        _hover={{
+          shadow: "lg",
+        }}
+      >
         <Image src={logo} mt={2} width={150} />
         <Heading mt={6} mb={6} size="md">
           {workshop.name}
@@ -102,7 +110,7 @@ export const HomeMonthlyLeadershipWorkshop = () => {
 
   return (
     <Box>
-      <Heading fontWeight="normal" fontSize={24} mt={12} mb={2}>
+      <Heading fontWeight="normal" fontSize={24} mt={12} mb={6}>
         Monthly Leadership Workshop
       </Heading>
 
