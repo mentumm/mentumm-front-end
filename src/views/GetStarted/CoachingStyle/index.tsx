@@ -136,7 +136,7 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser }) => {
         style_types: checkedItems,
       })
       .then(() => {
-        navigate("/home");
+        navigate("/search");
       })
       .finally(() => {
         setSaving(false);
