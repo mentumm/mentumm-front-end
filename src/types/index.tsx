@@ -92,6 +92,7 @@ export interface CoachProps {
 
 export interface CoachType extends User {
   skills: CoachSkills[];
+  expertise: StyleType[];
 }
 
 export interface CoachSkills {

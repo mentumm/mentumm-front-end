@@ -6,21 +6,12 @@ import {
   Checkbox,
   Container,
   Flex,
-  Icon,
   Heading,
   Stack,
   Text,
   Spinner,
 } from "@chakra-ui/react";
-import {
-  FaRocket,
-  FaHatWizard,
-  FaSeedling,
-  FaAnchor,
-  FaLightbulb,
-  FaFire,
-  FaChessKing,
-} from "react-icons/fa";
+import { StyleTypeIcon } from "../../../components/StyleTypeIcon";
 import envConfig from "../../../envConfig";
 import { useNavigate } from "react-router";
 import { CurrentUser } from "../../../types";
@@ -31,45 +22,28 @@ type StyleTypeOptionProps = {
   setCheckedItems: Function;
 };
 
-const getStyleTypeIcon = (icon: string) => {
-  switch (icon) {
-    case "fa-solid fa-rocket":
-      return <Icon as={FaRocket} mr={1} />;
-    case "fa-solid fa-hat-wizard":
-      return <Icon as={FaHatWizard} mr={1} />;
-    case "fa-solid fa-seedling":
-      return <Icon as={FaSeedling} mr={1} />;
-    case "fa-solid fa-anchor":
-      return <Icon as={FaAnchor} mr={1} />;
-    case "fa-solid fa-lightbulb":
-      return <Icon as={FaLightbulb} mr={1} />;
-    case "fa-solid fa-fire-flame-curved":
-      return <Icon as={FaFire} mr={1} />;
-    case "fa-solid fa-chess-king":
-      return <Icon as={FaChessKing} mr={1} />;
-  }
-};
-
 const StyleTypeOption: React.FC<StyleTypeOptionProps> = ({
   styleType,
   checkedItems,
   setCheckedItems,
 }) => {
-  const toggleStyleTypeChecked = (slug: string) => {
-    if (checkedItems.includes(+slug)) {
-      return checkedItems.filter((item) => item !== +slug);
+  const toggleStyleTypeChecked = (id: number) => {
+    if (checkedItems.includes(id)) {
+      return checkedItems.filter((item) => item !== id);
     }
 
-    return [...checkedItems, slug];
+    return [...checkedItems, id];
   };
 
   return (
     <Checkbox
       value={styleType.id}
-      isChecked={checkedItems.includes(styleType.id)}
-      onChange={(e) => setCheckedItems(toggleStyleTypeChecked(e.target.value))}
+      isChecked={checkedItems.includes(Number(styleType.id))}
+      onChange={(e) =>
+        setCheckedItems(toggleStyleTypeChecked(Number(e.target.value)))
+      }
       isDisabled={
-        !checkedItems.includes(styleType.id) && checkedItems.length > 1
+        !checkedItems.includes(Number(styleType.id)) && checkedItems.length > 1
       }
       aria-label={styleType.name}
       display={"flex"}
@@ -80,12 +54,12 @@ const StyleTypeOption: React.FC<StyleTypeOptionProps> = ({
         align="stretch"
         width={330}
         backgroundColor={
-          checkedItems.includes(styleType.id) ? "#C0E1FF" : "#EDF2F7"
+          checkedItems.includes(Number(styleType.id)) ? "#C0E1FF" : "#EDF2F7"
         }
         borderRadius={4}
         _hover={{ bg: checkedItems.length < 2 ? "#C0E1FF" : "" }}
       >
-        {getStyleTypeIcon(styleType.icon)}
+        <StyleTypeIcon icon={styleType.icon} />
         <Text textTransform="uppercase" fontWeight="bold" mr={1}>
           {styleType.name}
         </Text>{" "}

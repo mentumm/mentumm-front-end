@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Button,
-  Checkbox,
   Container,
   FormControl,
   FormErrorMessage,
@@ -14,7 +13,6 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { UserLoginProps } from "../../types";
-import axios from "axios";
 import { useCookies } from "react-cookie";
 import { menApiAuthClient } from "../../clients/mentumm";
 
@@ -33,7 +31,6 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
   const [userLastNameError, setUserLastNameError] = useState<boolean>(false);
   const [inviteCodeError, setInviteCodeError] = useState<boolean>(false);
   const [, setCookie] = useCookies(["growth_10_03142023"]);
-  const [checkedTerms, setCheckedTerms] = useState<boolean>(false);
 
   const validateEmail = () => {
     if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
