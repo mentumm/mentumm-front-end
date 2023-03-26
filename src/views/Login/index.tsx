@@ -13,7 +13,7 @@ import { useNavigate } from "react-router";
 import LoginForm from "../../components/LoginForm";
 import RegisterAction from "../../components/RegisterAction";
 import { UserLoginProps } from "../../types";
-import landing_logo from "./landing_logo.png";
+import logo from "./mentumm-logo.svg";
 
 const useStyles = createUseStyles({
   root: {
@@ -45,7 +45,7 @@ const Login: React.FC<UserLoginProps> = (props) => {
         >
           <Center>
             <Image
-              src={landing_logo}
+              src={logo}
               alt="mentumm banner"
               w={{ base: "auto", lg: "500px" }}
             />
