@@ -86,8 +86,8 @@ const MonthlyLeadershipWorkshop: React.FC = () => {
       </Heading>
 
       <Text mt={4} mb={4}>
-        Please watch the following video and follow along with the workshop
-        below:
+        Please watch the following video and follow the content by downloading
+        the workbook below:
       </Text>
 
       {loading ? <Spinner /> : <WorkshopVideo workshop={workshops[0]} />}

@@ -70,7 +70,7 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
   return (
     <Container maxW={1270}>
       <Stack justifyContent="space-between" direction="row" mt={14} mb={8}>
-        <Heading>Welcome back, {currentUser?.first_name}</Heading>
+        <Heading>Welcome Back, {currentUser?.first_name}</Heading>
         {/* <Button
           as={Link}
           to="/search"
@@ -84,8 +84,8 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
         </Button> */}
       </Stack>
 
-      <ActionPlanPrompt actionPlan={actionPlan} />
       <HomeMonthlyLeadershipWorkshop />
+      <ActionPlanPrompt actionPlan={actionPlan} />
       <UpcomingCoachingSessions id={currentUser?.id} />
       <HighlightedCoaches title="Featured Coaches" coaches={featuredCoaches} />
       <PastCoachingSessions currentUser={currentUser} />
