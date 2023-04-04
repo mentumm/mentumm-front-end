@@ -5,91 +5,80 @@ import {
   Input,
   InputGroup,
   InputLeftAddon,
+  Spinner,
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import PageWrapper from "../../components/PageWrapper";
-import { debounce } from "lodash";
 import Coach from "../../components/Coach";
 import { menApiAuthClient } from "../../clients/mentumm";
+import axios from "axios";
 
 export const CoachSearchV2 = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [coaches, setCoaches] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const inputRef = useRef(null);
 
-  const handleSearch = debounce(async () => {
-    try {
-      setIsLoading(true);
-      const response = await menApiAuthClient().get(
-        `coaches?search=${searchTerm}`
-      );
-
-      if (!response || !response.data) {
-        throw new Error("Could not get response from search API");
-      }
-      setCoaches(response.data);
-      setIsLoading(false);
-    } catch (err) {
-      console.error(err);
-    }
-  }, 250);
-
-  const handleChange = async (value: string) => {
-    if (value === "") {
-      await handleReset();
-    }
-    // dont search until we have three characters to reduce network requests
-    if (value.length < 2) {
-      return;
-    }
+  const handleChange = (value: string) => {
     setSearchTerm(value);
-    handleSearch();
   };
 
-  const getCoaches = async () => menApiAuthClient().get(`/coaches`);
-
-  const handleReset = async () => {
-    try {
-      inputRef.current.value = "";
-      const coaches = await getCoaches();
-      setCoaches(coaches.data);
-    } catch (err) {
-      console.error(err);
-    }
+  const handleReset = () => {
+    setSearchTerm("");
   };
 
   useEffect(() => {
-    const fetchInitialCoaches = async () => {
+    const controller = new AbortController();
+
+    const getCoaches = async () => {
+      setIsLoading(true);
+
       try {
-        const coaches = await getCoaches();
+        const coaches = await menApiAuthClient().get(
+          `/coaches${searchTerm ? `?search=${searchTerm}` : ""}`,
+          {
+            signal: controller.signal,
+          }
+        );
         if (!coaches || !coaches.data) {
           throw new Error("Could not get Coaches from API");
         }
         setCoaches(coaches.data);
+        setIsLoading(false);
       } catch (err) {
+        if (axios.isCancel(err)) {
+          return;
+        }
+        setIsLoading(false);
         console.error(err);
       }
     };
-    fetchInitialCoaches();
-  }, []);
+
+    const timeoutId = setTimeout(() => {
+      getCoaches();
+    }, 250);
+
+    return () => {
+      clearTimeout(timeoutId);
+      controller.abort();
+    };
+  }, [searchTerm]);
 
   return (
-    <PageWrapper title="All mentumm Coaches" backTo="/home">
+    <PageWrapper title="All Mentumm Coaches" backTo="/home">
       <Box display="flex" flexDir="row" paddingX={4}>
         <InputGroup>
           <InputLeftAddon children={<SearchIcon />} />
           <Input
-            ref={inputRef}
             placeholder="Search by coach name..."
             onChange={(e) => handleChange(e.target.value)}
             flex={1}
             mr="4"
+            value={searchTerm}
           />
         </InputGroup>
         <Button
-          disabled={inputRef?.current && inputRef?.current.value.length < 2}
+          disabled={searchTerm.length === 0}
           onClick={handleReset}
           leftIcon={<CloseIcon />}
           bgColor="#2cbdbe"
@@ -97,6 +86,11 @@ export const CoachSearchV2 = () => {
           Reset
         </Button>
       </Box>
+      {isLoading && (
+        <Box textAlign={"center"} mt="8">
+          <Spinner size="xl" />
+        </Box>
+      )}
       {coaches.length >= 1 && (
         <Box
           display="flex"
@@ -112,14 +106,13 @@ export const CoachSearchV2 = () => {
             ))}
         </Box>
       )}
-      {!coaches ||
-        (coaches.length === 0 && (
-          <Box p="32" textAlign="center">
-            <Text>
-              Sorry, no coaches were found. Try a different search term.
-            </Text>
-          </Box>
-        ))}
+      {!isLoading && coaches.length === 0 && (
+        <Box p="32" textAlign="center">
+          <Text>
+            Sorry, no coaches were found. Try a different search term.
+          </Text>
+        </Box>
+      )}
     </PageWrapper>
   );
 };

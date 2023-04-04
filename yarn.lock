@@ -8743,7 +8743,6 @@ __metadata:
     eslint-plugin-react-app: ^6.2.2
     formik: ^2.2.9
     framer-motion: ^10.2.4
-    lodash: ^4.17.21
     mixpanel-browser: ^2.45.0
     notistack: ^3.0.1
     prettier: 2.8.4
