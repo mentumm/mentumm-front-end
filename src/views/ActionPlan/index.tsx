@@ -131,12 +131,9 @@ const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
           ...actionPlanValues,
         })
         .then(() => {
-          enqueueSnackbar(
-            "Action Plan created! Your coach will discuss your monthly goals with you.",
-            {
-              variant: "success",
-            }
-          );
+          enqueueSnackbar("Your Action Plan Has Been Submitted!", {
+            variant: "success",
+          });
           setTimeout(() => {
             navigate("/home");
           }, 2000);
