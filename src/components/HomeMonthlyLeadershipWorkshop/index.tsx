@@ -108,13 +108,20 @@ export const HomeMonthlyLeadershipWorkshop = () => {
     getWorkshops();
   }, []);
 
-  return (
-    <Box>
-      <Heading fontWeight="normal" fontSize={24} mt={12} mb={6}>
-        Monthly Leadership Workshop
-      </Heading>
+  if (loading) {
+    return <Spinner />;
+  }
 
-      {loading ? <Spinner /> : <WorkShopThumbnail workshop={workshops[0]} />}
-    </Box>
+  return (
+    <>
+      {workshops.length ? (
+        <Box>
+          <Heading fontWeight="normal" fontSize={24} mt={12} mb={6}>
+            Monthly Leadership Workshop
+          </Heading>
+          <WorkShopThumbnail workshop={workshops[0]} />
+        </Box>
+      ) : null}
+    </>
   );
 };
