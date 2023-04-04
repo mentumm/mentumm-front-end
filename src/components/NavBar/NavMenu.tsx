@@ -48,7 +48,9 @@ const NavMenu = ({
   };
 
   const generateUserInitials = () => {
-    return currentUser.first_name[0] + currentUser.last_name[0];
+    return `${currentUser.first_name[0] ?? ""}${
+      currentUser.last_name[0] ?? ""
+    }`.toUpperCase();
   };
 
   return (
