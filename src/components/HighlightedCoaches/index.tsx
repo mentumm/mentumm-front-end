@@ -2,8 +2,6 @@ import { Box, Heading } from "@chakra-ui/react";
 import React from "react";
 import { CoachType } from "../../types";
 import Coach from "../Coach";
-import { Link as RouteLink } from "react-router-dom";
-import { generateCoachUrl } from "../../views/CoachResults";
 
 interface IProps {
   title: string;
@@ -18,11 +16,7 @@ const HighlightedCoaches: React.FC<IProps> = ({ title, coaches }) => {
       </Heading>
       <Box display="flex" flexFlow="row wrap" gap={4}>
         {coaches.map((c) => {
-          return (
-            <RouteLink to={`/coach/${generateCoachUrl(c)}`} key={c.id}>
-              <Coach coachInfo={c} />
-            </RouteLink>
-          );
+          return <Coach coachInfo={c} key={c.id} />;
         })}
       </Box>
     </>

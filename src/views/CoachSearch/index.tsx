@@ -1,6 +1,5 @@
 import { Box, Heading, ListItem, Stack, UnorderedList } from "@chakra-ui/react";
 
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import PageWrapper from "../../components/PageWrapper";
@@ -9,8 +8,6 @@ import { CurrentUserProps, CoachSkills } from "../../types";
 import BookingConfirmation from "../BookingConfirmation";
 import { useGetTags } from "../../helpers/tagHelpers";
 import { menApiAuthClient } from "../../clients/mentumm";
-
-const NODE_API = process.env.REACT_APP_NODE_API;
 
 const CATEGORIES = ["Professional", "Leadership", "Personal"];
 
