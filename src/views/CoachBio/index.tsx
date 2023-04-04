@@ -21,13 +21,14 @@ import {
   Wrap,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { InlineWidget } from "react-calendly";
+import { InlineWidget, useCalendlyEventListener } from "react-calendly";
 import { CoachType, CurrentUserProps } from "../../types";
 import { GoGlobe } from "react-icons/go";
 import { SiLinkedin } from "react-icons/si";
 import { mixpanelEvent } from "../../helpers";
 import PageWrapper from "../../components/PageWrapper";
 import { menApiAuthClient } from "../../clients/mentumm";
+import { useNavigate } from "react-router";
 
 const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const [coach, setCoach] = useState<CoachType>(null);
@@ -39,6 +40,13 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const windowUrl = window.location.toString().toLowerCase();
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
   const coachId = slug.split("-");
+  const navigate = useNavigate();
+  useCalendlyEventListener({
+    onEventScheduled: () =>
+      setTimeout(() => {
+        navigate("/booking-confirmation");
+      }, 1000),
+  });
 
   useEffect(() => {
     const loadCoach = async () => {

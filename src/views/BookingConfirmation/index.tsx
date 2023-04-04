@@ -42,6 +42,7 @@ const BookingConfirmation: React.FC<CurrentUserProps> = ({ currentUser }) => {
             justifyContent="center"
             gap={{ base: "0", md: "12" }}
             direction={{ base: "column-reverse", md: "row" }}
+            minH="calc(100vh - 200px)"
           >
             <Stack
               align={["center", "center", "flex-start", "flex-start"]}

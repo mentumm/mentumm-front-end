@@ -18,6 +18,7 @@ import Home from "./views/Home";
 import Login from "./views/Login";
 import Register from "./views/Register";
 import MonthlyLeadershipWorkshop from "./views/MonthlyLeadershipWorkshop";
+import BookingConfirmation from "./views/BookingConfirmation";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -151,6 +152,14 @@ function App() {
             element={
               <SignInWrapper currentUser={currentUser}>
                 <MonthlyLeadershipWorkshop />
+              </SignInWrapper>
+            }
+          />
+          <Route
+            path="/booking-confirmation"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <BookingConfirmation currentUser={currentUser} />
               </SignInWrapper>
             }
           />
