@@ -71,17 +71,6 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
     <Container maxW={1270}>
       <Stack justifyContent="space-between" direction="row" mt={14} mb={8}>
         <Heading>Welcome Back, {currentUser?.first_name}</Heading>
-        {/* <Button
-          as={Link}
-          to="/search"
-          background="#2cbdbe"
-          color="#fff"
-          _hover={{ bg: "#3CA8AB" }}
-          mt={2}
-          style={{ zIndex: 0 }}
-        >
-          PICK A TOPIC
-        </Button> */}
       </Stack>
 
       <HomeMonthlyLeadershipWorkshop />
