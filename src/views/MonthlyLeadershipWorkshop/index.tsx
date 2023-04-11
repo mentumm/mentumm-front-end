@@ -67,11 +67,7 @@ const MonthlyLeadershipWorkshop: React.FC = () => {
           Workbook for this Workshop (please download)
         </Heading>
 
-        <Button
-          mt={4}
-          colorScheme="brand"
-          onClick={() => downloadWorkbook(workshop)}
-        >
+        <Button mt={4} onClick={() => downloadWorkbook(workshop)}>
           Download Workbook&nbsp;
           <Icon as={GoDesktopDownload} />
         </Button>

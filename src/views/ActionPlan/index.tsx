@@ -477,12 +477,7 @@ const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
                 )}
               </Stack>
             </FormControl>
-            <Button
-              bg="#5DBABD"
-              color="white"
-              type="submit"
-              disabled={isSubmitting}
-            >
+            <Button type="submit" disabled={isSubmitting}>
               Submit
             </Button>
           </Form>

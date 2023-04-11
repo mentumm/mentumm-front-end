@@ -171,7 +171,6 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser }) => {
       )}
 
       <Button
-        background="#2cbdbe"
         color="#fff"
         _hover={{ bg: "#3CA8AB" }}
         mt={8}

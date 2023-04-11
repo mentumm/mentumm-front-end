@@ -25,24 +25,11 @@ const ActionPlanPrompt = ({ actionPlan }): JSX.Element => {
       </Heading>
       <div className={classes.buttonRow}>
         {!actionPlan ? (
-          <Button
-            as={Link}
-            to="/action-plan"
-            background="#2cbdbe"
-            color="white"
-            size="lg"
-          >
+          <Button as={Link} to="/action-plan" size="lg">
             START
           </Button>
         ) : (
-          <Button
-            as={Link}
-            to="/action-plan"
-            variant="outline"
-            color="#2cbdbe"
-            borderColor="#2cbdbe"
-            size="lg"
-          >
+          <Button as={Link} to="/action-plan" variant="outline" size="lg">
             REVIEW
           </Button>
         )}

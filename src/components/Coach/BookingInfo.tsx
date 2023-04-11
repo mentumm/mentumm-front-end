@@ -49,8 +49,6 @@ const BookingInfo = ({ booking, coach, currentUser }: IProps) => {
         ) : (
           <Button
             mt={6}
-            colorScheme="brand"
-            variant="solid"
             onClick={(e) => {
               e.preventDefault();
               mixpanelEvent("Clicked Review Coach", {

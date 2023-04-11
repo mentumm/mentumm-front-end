@@ -81,7 +81,6 @@ export const CoachSearchV2 = () => {
           disabled={searchTerm.length === 0}
           onClick={handleReset}
           leftIcon={<CloseIcon />}
-          bgColor="#2cbdbe"
         >
           Reset
         </Button>

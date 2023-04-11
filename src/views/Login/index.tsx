@@ -69,12 +69,7 @@ const Login: React.FC<UserLoginProps> = (props) => {
       <Show below="lg">
         <Container paddingTop={{ base: "4" }}>
           Not a current user?{" "}
-          <Button
-            variant="link"
-            colorScheme="brand"
-            size="sm"
-            onClick={() => navigate("/sign-up")}
-          >
+          <Button variant="link" size="sm" onClick={() => navigate("/sign-up")}>
             Register now!
           </Button>
         </Container>
