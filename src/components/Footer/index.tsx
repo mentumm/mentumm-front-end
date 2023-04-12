@@ -8,7 +8,7 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
     left: 0,
     bottom: 0,
     right: 0,
-    backgroundColor: "#2cbdbe",
+    backgroundColor: "var(--chakra-colors-brand-300)",
     width: "100%",
   },
 }));

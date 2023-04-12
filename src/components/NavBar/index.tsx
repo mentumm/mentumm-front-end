@@ -11,7 +11,7 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
     position: "sticky",
     display: "flex",
-    backgroundColor: "#2cbdbe",
+    backgroundColor: "var(--chakra-colors-brand-300)",
     flexFlow: "row nowrap",
     width: "100%",
     height: "75px",

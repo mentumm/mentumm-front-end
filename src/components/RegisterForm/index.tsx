@@ -217,14 +217,11 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
           </Stack>
 
           <Stack spacing="4">
-            <Button colorScheme="brand" variant="solid" onClick={() => login()}>
-              Register
-            </Button>
+            <Button onClick={() => login()}>Register</Button>
 
             <Text>
               By signing up you are agreeing to the{" "}
               <Link
-                color="#3168b2"
                 href="https://mentumm.com/coaching-terms-and-conditions/"
                 isExternal
               >

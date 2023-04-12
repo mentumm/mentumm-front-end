@@ -172,17 +172,12 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
           </Stack>
           <HStack justify="space-between">
             <Checkbox defaultChecked>Remember me</Checkbox>
-            <Button variant="link" colorScheme="brand" size="sm">
+            <Button variant="link" size="sm">
               Forgot password
             </Button>
           </HStack>
           <Stack spacing="4">
-            <Button
-              type="submit"
-              colorScheme="brand"
-              variant="solid"
-              onClick={() => login(email, password)}
-            >
+            <Button type="submit" onClick={() => login(email, password)}>
               Sign In
             </Button>
           </Stack>

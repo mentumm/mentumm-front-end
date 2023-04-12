@@ -1,22 +1,46 @@
-import { extendTheme } from "@chakra-ui/react";
+import {
+  extendTheme,
+  withDefaultColorScheme,
+  defineStyleConfig,
+} from "@chakra-ui/react";
 
-const customTheme = extendTheme({
-  colors: {
-    // change the colors here using material UI color scale
-    // use in component with `colorScheme="brand"`
-    brand: {
-      50: "#ebf1f9",
-      100: "#c3d6ee",
-      200: "#9bbae3",
-      300: "#739ed8",
-      400: "#4b83cd",
-      500: "#3269b4",
-      600: "#27528c",
-      700: "#1c3a64",
-      800: "#11233c",
-      900: "#060c14",
+const customTheme = extendTheme(
+  withDefaultColorScheme({ colorScheme: "brand" }),
+  {
+    colors: {
+      // change the colors here using material UI color scale
+      // use in component with `colorScheme="brand"`
+      brand: {
+        50: "#dff3f5",
+        100: "#aee2e3",
+        200: "#76d1d2",
+        300: "#2cbdbe",
+        400: "#00afae",
+        500: "#00a09c",
+        600: "#00938e",
+        700: "#00827c",
+        800: "#00726c",
+        900: "#00564d",
+      },
     },
-  },
-});
+    components: {
+      Link: defineStyleConfig({
+        baseStyle: {
+          color: "brand.500",
+        },
+      }),
+      Button: defineStyleConfig({
+        baseStyle: {
+          textTransform: "uppercase",
+        },
+      }),
+      Tag: {
+        defaultProps: {
+          colorScheme: "gray",
+        },
+      },
+    },
+  }
+);
 
 export default customTheme;

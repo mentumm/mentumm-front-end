@@ -74,9 +74,6 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
         {/* <Button
           as={Link}
           to="/search"
-          background="#2cbdbe"
-          color="#fff"
-          _hover={{ bg: "#3CA8AB" }}
           mt={2}
           style={{ zIndex: 0 }}
         >

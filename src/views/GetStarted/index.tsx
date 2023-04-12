@@ -102,9 +102,6 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
                 <Button
                   as={Link}
                   to="/get-started/coaching-style"
-                  background="#2cbdbe"
-                  color="#fff"
-                  _hover={{ bg: "#3CA8AB" }}
                   mt={2}
                   padding={7}
                   fontWeight="bold"

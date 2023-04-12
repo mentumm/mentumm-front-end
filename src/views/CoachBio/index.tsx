@@ -122,8 +122,6 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
               </Stack>
               <Stack spacing="4">
                 <Button
-                  colorScheme="brand"
-                  variant="solid"
                   onClick={() => {
                     mixpanelEvent("Clicked Book Coach", {
                       "Coach Name": coach
@@ -158,11 +156,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                         />
                       </ModalBody>
                       <ModalFooter>
-                        <Button
-                          colorScheme="brand"
-                          mr={3}
-                          onClick={calendlyOnClose}
-                        >
+                        <Button mr={3} onClick={calendlyOnClose}>
                           Cancel
                         </Button>
                       </ModalFooter>
