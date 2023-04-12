@@ -7,7 +7,6 @@ export const Card = (props: BoxProps) => (
     maxWidth="xl"
     minWidth={{ sm: "xl" }}
     mx="auto"
-    minHeight="2xs"
     p={{ base: "6", md: "8" }}
     rounded={{ sm: "lg" }}
     shadow={{ md: "base" }}
