@@ -82,7 +82,7 @@ function App() {
             path="/search"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <CoachSearchV2 />
+                <CoachSearchV2 currentUser={currentUser} />
               </SignInWrapper>
             }
           />
