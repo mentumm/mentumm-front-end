@@ -168,13 +168,12 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
             name="comment"
             placeholder="Your comments"
             rows={4}
-            focusBorderColor={useColorModeValue("blue.500", "blue.200")}
             resize="none"
             value={additionalComments}
             onChange={handleCommentChange}
           />
         </FormControl>
-        <Button type="submit" colorScheme="brand" alignSelf="start" size="lg">
+        <Button type="submit" alignSelf="start" size="lg">
           Submit Review
         </Button>
       </Stack>

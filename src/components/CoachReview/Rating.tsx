@@ -14,7 +14,7 @@ interface Props {
 const Rating = (props: Props) => {
   const { max = 5, size, rootProps, rating, setRating, setErrors } = props;
   const color = useColorModeValue("gray.200", "gray.600");
-  const activeColor = "#2cbdbe";
+  const activeColor = "var(--chakra-colors-brand-500)";
 
   return (
     <HStack spacing="0.5" {...rootProps}>

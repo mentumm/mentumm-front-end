@@ -183,11 +183,13 @@ const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
           leadershipProcess: Yup.string().required(
             "Please fill out this field"
           ),
-          keyActionItem1: Yup.string().required("Please fill out this field"),
-          keyActionItem2: Yup.string().required("Please fill out this field"),
-          keyActionItem3: Yup.string().required("Please fill out this field"),
-          keyActionItem4: Yup.string().required("Please fill out this field"),
-          keyActionItem5: Yup.string().required("Please fill out this field"),
+          keyActionItem1: Yup.string().required(
+            "Please fill out at least one key action item"
+          ),
+          keyActionItem2: Yup.string(),
+          keyActionItem3: Yup.string(),
+          keyActionItem4: Yup.string(),
+          keyActionItem5: Yup.string(),
         })}
         onSubmit={async (values, { setSubmitting }) => {
           await handleSubmit(values);
@@ -477,12 +479,7 @@ const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
                 )}
               </Stack>
             </FormControl>
-            <Button
-              bg="#5DBABD"
-              color="white"
-              type="submit"
-              disabled={isSubmitting}
-            >
+            <Button type="submit" disabled={isSubmitting}>
               Submit
             </Button>
           </Form>
