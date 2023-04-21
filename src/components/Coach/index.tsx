@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
-import { CoachProps, StyleType } from "../../types";
+import { CoachProps, Tag as TagType } from "../../types";
 import { Card } from "./Card";
 import { CardContent } from "./CardContent";
 import { CardHeader } from "./CardHeader";
@@ -18,7 +18,7 @@ import { UserAvatar } from "./UserAvatar";
 import { GoGlobe } from "react-icons/go";
 import BookingInfo from "./BookingInfo";
 import { Link } from "react-router-dom";
-import { StyleTypeIcon } from "../../components/StyleTypeIcon";
+import { TagIcon } from "../TagIcon";
 import { CoachType } from "../../types";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
@@ -32,11 +32,11 @@ export const generateCoachUrl = (coach: CoachType) => {
   return name.replace(/\W|_/g, "-").toLowerCase() + `-${coach.id}`;
 };
 
-const generateCoachTags = (tags: StyleType[], slug: string) => {
+const generateCoachTags = (tags: TagType[], slug: string) => {
   let trimmedTags = [];
 
   if (tags.length > 2) {
-    const remainingTags = tags.filter((tag: StyleType) => tag.slug !== slug);
+    const remainingTags = tags.filter((tag: TagType) => tag.slug !== slug);
 
     // make sure to show the tag that the user searched for
     if (slug) {
@@ -57,7 +57,7 @@ const generateCoachTags = (tags: StyleType[], slug: string) => {
     (tag) =>
       !!tag && (
         <Tag key={tag.id} backgroundColor={tag.color} size="lg">
-          <StyleTypeIcon icon={tag.icon} />
+          <TagIcon icon={tag.icon} />
           <TagLabel>{tag.name}</TagLabel>
         </Tag>
       )

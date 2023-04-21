@@ -10,11 +10,11 @@ import {
   FaChessKing,
 } from "react-icons/fa";
 
-type StyleTypeIconProps = {
+type TagIconProps = {
   icon: string;
 };
 
-export const StyleTypeIcon = ({ icon }: StyleTypeIconProps) => {
+export const TagIcon = ({ icon }: TagIconProps) => {
   switch (icon) {
     case "fa-solid fa-rocket":
       return <Icon as={FaRocket} mr={1} />;

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import PageWrapper from "../../components/PageWrapper";
 import { mixpanelEvent, mixpanelIdentify } from "../../helpers";
-import { CurrentUserProps, CoachSkills } from "../../types";
+import { CurrentUserProps, Tag } from "../../types";
 import BookingConfirmation from "../BookingConfirmation";
 import { useGetTags } from "../../helpers/tagHelpers";
 import { menApiAuthClient } from "../../clients/mentumm";
@@ -16,7 +16,7 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const [coachBooked, setCoachBooked] = useState<boolean>(null);
   const [searchParams] = useSearchParams();
 
-  const selectTag = (t: CoachSkills) => {
+  const selectTag = (t: Tag) => {
     mixpanelEvent("Searched For Tag", {
       "User ID": currentUser ? currentUser.id : null,
       "Tag Slug": t.slug,
