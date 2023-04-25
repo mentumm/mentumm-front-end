@@ -20,7 +20,7 @@ const ActionPlanPrompt = ({ actionPlan }): JSX.Element => {
 
   return (
     <div className={classes.root}>
-      <Heading fontWeight="normal" fontSize={24} mt={12} mb={4}>
+      <Heading fontWeight="normal" fontSize={24} mt={12} mb={2}>
         Monthly Action Plan
       </Heading>
       <div className={classes.buttonRow}>

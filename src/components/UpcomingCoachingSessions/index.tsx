@@ -1,15 +1,30 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Button, Heading } from "@chakra-ui/react";
 import React, { FC, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { menApiAuthClient } from "../../clients/mentumm";
 import { CoachBooking, CoachType } from "../../types";
 import Coach from "../Coach";
+import { createUseStyles } from "react-jss";
 
 interface Iprops {
   id: number;
 }
 type TChoachBooking = CoachBooking & { coach: CoachType };
 
+const useStyles = createUseStyles({
+  root: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  buttonRow: {
+    display: "flex",
+    flexDirection: "row",
+    marginTop: 10,
+  },
+});
+
 const UpcomingCoachingSessions: FC<Iprops> = ({ id }) => {
+  const classes = useStyles();
   const [upcoming, setUpcoming] = useState<TChoachBooking[]>([]);
 
   useEffect(() => {
@@ -24,22 +39,28 @@ const UpcomingCoachingSessions: FC<Iprops> = ({ id }) => {
     loadUpcoming();
   }, [id]);
 
-  if (!upcoming.length) {
-    return null;
-  }
-
   return (
-    <>
-      <Heading fontWeight="normal" fontSize={24} mt={12}>
-        Upcoming Coaching Sessions
+    <div className={classes.root}>
+      <Heading fontWeight="normal" fontSize={24} mt={12} mb={2}>
+        {upcoming.length ? "Upcoming Coaching Sessions" : "Coaching Sessions"}
       </Heading>
-      <Box display="flex" flexFlow="row wrap" gap={4}>
-        {upcoming.map((u) => {
-          const { coach, ...booking } = u;
-          return <Coach key={booking.id} coachInfo={coach} booking={booking} />;
-        })}
-      </Box>
-    </>
+      {upcoming.length ? (
+        <Box display="flex" flexFlow="row wrap" gap={4}>
+          {upcoming.map((u) => {
+            const { coach, ...booking } = u;
+            return (
+              <Coach key={booking.id} coachInfo={coach} booking={booking} />
+            );
+          })}
+        </Box>
+      ) : (
+        <div className={classes.buttonRow}>
+          <Button as={Link} to="/search" size="lg">
+            BOOK A COACH
+          </Button>
+        </div>
+      )}
+    </div>
   );
 };
 
