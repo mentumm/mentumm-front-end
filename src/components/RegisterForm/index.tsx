@@ -14,7 +14,8 @@ import {
 } from "@chakra-ui/react";
 import { UserLoginProps } from "../../types";
 import { useCookies } from "react-cookie";
-import { menApiAuthClient } from "../../clients/mentumm";
+// import { menApiAuthClient } from "../../clients/mentumm";
+import axios from "axios";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
@@ -87,16 +88,14 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
     }
 
     try {
-      const createUser = await menApiAuthClient().post(
-        `${NODE_API}/v1/user/register`,
-        {
-          email: email,
-          password: password,
-          invite_code: inviteCode,
-          first_name: userFirstName,
-          last_name: userLastName,
-        }
-      );
+      // temporarily bypass menApiAuthClient until we fix auth
+      const createUser = await axios.post(`${NODE_API}/v1/user/register`, {
+        email: email,
+        password: password,
+        invite_code: inviteCode,
+        first_name: userFirstName,
+        last_name: userLastName,
+      });
 
       if (!createUser) {
         throw Error("Unable to login");
