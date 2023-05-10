@@ -8,6 +8,7 @@ import { useSnackbar } from "notistack";
 import {
   Button,
   FormLabel,
+  Heading,
   Textarea,
   Slider,
   SliderFilledTrack,
@@ -15,19 +16,16 @@ import {
   SliderThumb,
   SliderTrack,
   Stack,
+  Text,
   Input,
   FormControl,
 } from "@chakra-ui/react";
 import axios from "axios";
 import envConfig from "../../envConfig";
 import { menApiAuthClient } from "../../clients/mentumm";
+import PageWrapper from "../../components/PageWrapper";
 
 const useStyles = createUseStyles({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
   form: {
     display: "flex",
     flexDirection: "column",
@@ -35,10 +33,6 @@ const useStyles = createUseStyles({
     "& > div": {
       padding: [10, 0],
     },
-  },
-  heading: {
-    fontSize: 24,
-    margin: [20, 0],
   },
   sliders: {
     "& > label": {
@@ -149,7 +143,7 @@ const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
   if (loading) return null;
 
   return (
-    <div className={classes.root}>
+    <PageWrapper>
       <Formik
         initialValues={{
           personalRank: actionPlan?.personal_rank || 1,
@@ -198,8 +192,12 @@ const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
       >
         {({ isSubmitting, handleChange, values, errors, touched }) => (
           <Form className={classes.form}>
-            <h1 className={classes.heading}>Your Monthly Action Plan</h1>
-            <FormLabel>Rank yourself 1-10 in the following areas:</FormLabel>
+            <Heading size="lg" textAlign="left">
+              Your Monthly Action Plan
+            </Heading>
+            <Text mt={4} mb={4}>
+              Rank yourself 1-10 in the following areas:
+            </Text>
             <FormControl className={classes.sliders}>
               <FormLabel>Personal</FormLabel>
               <Slider
@@ -485,7 +483,7 @@ const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
           </Form>
         )}
       </Formik>
-    </div>
+    </PageWrapper>
   );
 };
 

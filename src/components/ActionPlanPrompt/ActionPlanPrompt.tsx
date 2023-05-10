@@ -1,4 +1,4 @@
-import { Button, Heading } from "@chakra-ui/react";
+import { Button } from "@chakra-ui/react";
 import React from "react";
 import { createUseStyles } from "react-jss";
 import { Link } from "react-router-dom";
@@ -11,7 +11,6 @@ const useStyles = createUseStyles({
   buttonRow: {
     display: "flex",
     flexDirection: "row",
-    marginTop: 10,
   },
 });
 
@@ -20,17 +19,14 @@ const ActionPlanPrompt = ({ actionPlan }): JSX.Element => {
 
   return (
     <div className={classes.root}>
-      <Heading fontWeight="normal" fontSize={24} mt={12} mb={2}>
-        Monthly Action Plan
-      </Heading>
       <div className={classes.buttonRow}>
         {!actionPlan ? (
           <Button as={Link} to="/action-plan" size="lg">
-            START
+            START YOUR PLAN
           </Button>
         ) : (
           <Button as={Link} to="/action-plan" variant="outline" size="lg">
-            REVIEW
+            REVIEW YOUR PLAN
           </Button>
         )}
       </div>

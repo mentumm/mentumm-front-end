@@ -1,4 +1,12 @@
-import { Container, Heading, Stack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  Stack,
+  HStack,
+  Image,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import HighlightedCoaches from "../../components/HighlightedCoaches";
 import PastCoachingSessions from "../../components/PastCoachingSessions";
@@ -7,7 +15,11 @@ import { ActionPlanForm, CoachType, CurrentUser } from "../../types";
 import getWeek from "date-fns/getWeek";
 import { menApiAuthClient } from "../../clients/mentumm";
 import ActionPlanPrompt from "../../components/ActionPlanPrompt/ActionPlanPrompt";
-import { HomeMonthlyLeadershipWorkshop } from "../../components/HomeMonthlyLeadershipWorkshop";
+import { Link } from "react-router-dom";
+import hexBlue from "./hex-blue.svg";
+import hexGreen from "./hex-green.svg";
+import hexPurple from "./hex-purple.svg";
+import threePillar from "./three-pillar.svg";
 
 function getCurrentFeatured<T>(
   objects: T[],
@@ -73,8 +85,50 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
         <Heading>Welcome Back, {currentUser?.first_name}</Heading>
       </Stack>
 
-      <HomeMonthlyLeadershipWorkshop />
-      <ActionPlanPrompt actionPlan={actionPlan} />
+      <HStack justifyContent="space-between">
+        <Box>
+          <HStack alignItems="flex-start" mb={12}>
+            <Box>
+              <Image src={hexBlue} alt="Leadership Workshops" mt={1} />
+            </Box>
+            <Box>
+              <Heading fontWeight="normal" fontSize={24} mb={4}>
+                Leadership Workshops
+              </Heading>
+              <Button as={Link} to="/workshops" size="lg">
+                SEE ALL WORKSHOPS
+              </Button>
+            </Box>
+          </HStack>
+          <HStack alignItems="flex-start" mb={12}>
+            <Box>
+              <Image src={hexPurple} alt="Action Planning" mt={1} />
+            </Box>
+            <Box>
+              <Heading fontWeight="normal" fontSize={24} mb={4}>
+                Action Planning
+              </Heading>
+              <ActionPlanPrompt actionPlan={actionPlan} />
+            </Box>
+          </HStack>
+          <HStack alignItems="flex-start" mb={12}>
+            <Box>
+              <Image src={hexGreen} alt="One-on-One Coaching" mt={1} />
+            </Box>
+            <Box>
+              <Heading fontWeight="normal" fontSize={24} mb={4}>
+                One-on-One Coaching
+              </Heading>
+              <Button as={Link} to="/search" size="lg">
+                BOOK YOUR SESSION
+              </Button>
+            </Box>
+          </HStack>
+        </Box>
+        <Box>
+          <Image src={threePillar} alt="One-on-One Coaching" />
+        </Box>
+      </HStack>
       <UpcomingCoachingSessions id={currentUser?.id} />
       <HighlightedCoaches title="Featured Coaches" coaches={featuredCoaches} />
       <PastCoachingSessions currentUser={currentUser} />

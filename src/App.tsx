@@ -17,7 +17,8 @@ import CoachingStyle from "./views/GetStarted/CoachingStyle";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import Register from "./views/Register";
-import MonthlyLeadershipWorkshop from "./views/MonthlyLeadershipWorkshop";
+import Workshops from "./views/Workshops";
+import WorkshopSlug from "./views/WorkshopSlug";
 import BookingConfirmation from "./views/BookingConfirmation";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
@@ -148,10 +149,18 @@ function App() {
             }
           />
           <Route
-            path="/monthly-leadership-workshop"
+            path="/workshops"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <MonthlyLeadershipWorkshop />
+                <Workshops />
+              </SignInWrapper>
+            }
+          />
+          <Route
+            path="/workshops/:slug"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <WorkshopSlug />
               </SignInWrapper>
             }
           />
