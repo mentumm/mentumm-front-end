@@ -91,18 +91,8 @@ export interface CoachProps {
 }
 
 export interface CoachType extends User {
-  skills: CoachSkills[];
-  expertise: StyleType[];
-}
-
-export interface CoachSkills {
-  id: number;
-  name: string;
-  slug: string;
-  description: string;
-  created_at: string;
-  updated_at: string;
-  category: "Professional" | "Leadership" | "Personal";
+  styles: Tag[];
+  expertise: Tag[];
 }
 
 export interface CurrentUser {
@@ -122,7 +112,7 @@ export interface UserLoginProps {
 
 export interface LocationState {
   currentUser: CurrentUser;
-  coachTags: CoachSkills[];
+  coachTags: Tag[];
 }
 export interface ReviewFormType {
   user_id: string | number;
@@ -163,13 +153,14 @@ export interface Workshop {
   updated_at?: Date;
 }
 
-export interface StyleType {
+export interface Tag {
   id: number;
   name: string;
   slug: string;
   description: string;
   color: string;
   icon: string;
+  category: "Professional" | "Leadership" | "Personal";
   created_at: Date;
   updated_at?: Date;
 }

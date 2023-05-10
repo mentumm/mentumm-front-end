@@ -4,7 +4,7 @@ import { createUseStyles, DefaultTheme } from "react-jss";
 import { menApiAuthClient } from "../../clients/mentumm";
 import Coach from "../../components/Coach";
 import PageWrapper from "../../components/PageWrapper";
-import { CoachSkills, CoachType } from "../../types";
+import { Tag, CoachType } from "../../types";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -42,14 +42,14 @@ const CoachResults: React.FC = () => {
 
   const pageHeading = () => {
     return coaches.length
-      ? coaches[0].skills.find((tag: CoachSkills) => tag.slug === slug)?.name
+      ? coaches[0].expertise.find((tag: Tag) => tag.slug === slug)?.name
       : "";
   };
 
   useEffect(() => {
     const loadCoaches = async () => {
       try {
-        const coach = await menApiAuthClient().get("/tags", {
+        const coach = await menApiAuthClient().get("/tags?kind=expertise", {
           params: {
             slug: slug,
           },

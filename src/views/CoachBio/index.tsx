@@ -55,7 +55,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
         mixpanelEvent("Coach Bio Viewed", {
           "Coach ID": coach.id,
           "Coach Name": `${coach.first_name} ${coach.last_name}`,
-          "Coach Skills": coach.skills.map((skill) => skill.name),
+          "Coach Expertise": coach.expertise.map((expertise) => expertise.name),
         });
       } catch (error) {
         console.log("Problem loading Coach Bio", error);
@@ -146,8 +146,8 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                             utmSource: coach ? String(coach.id) : null,
                           }}
                           prefill={{
-                            email: currentUser.email,
-                            name: `${currentUser.first_name} ${currentUser.last_name}`,
+                            email: currentUser?.email,
+                            name: `${currentUser?.first_name} ${currentUser?.last_name}`,
                           }}
                         />
                       </ModalBody>
@@ -163,9 +163,9 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
               </Stack>
               <Stack spacing="4">
                 <Wrap shouldWrapChildren>
-                  {coach && coach.skills.length
-                    ? coach.skills.map((skill) => (
-                        <Tag key={skill.id}>{skill.name}</Tag>
+                  {coach && coach.expertise.length
+                    ? coach.expertise.map((expertise) => (
+                        <Tag key={expertise.id}>{expertise.name}</Tag>
                       ))
                     : null}
                 </Wrap>
