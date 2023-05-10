@@ -1,53 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { menApiAuthClient } from "../../clients/mentumm";
 import { Workshop } from "../../types";
-import {
-  Button,
-  Container,
-  Heading,
-  Text,
-  Icon,
-  Spinner,
-} from "@chakra-ui/react";
+import { Button, Heading, Text, Icon, Spinner } from "@chakra-ui/react";
 import { GoDesktopDownload } from "react-icons/go";
-import VimeoVideo from "../../components/MonthlyLeadershipWorkshop/VimeoVideo";
+import VimeoVideo from "../../components/WorkshopSlug/VimeoVideo";
 import envConfig from "../../envConfig";
 import { mixpanelEvent } from "../../helpers";
+import { useParams } from "react-router";
+import PageWrapper from "../../components/PageWrapper";
 
-const MonthlyLeadershipWorkshop: React.FC = () => {
-  const [workshops, setWorkshops] = useState<Workshop[]>([]);
+const WorkshopSlug: React.FC = () => {
+  const [workshop, setWorkshop] = useState<Workshop>(null);
   const [loading, setLoading] = useState(true);
+  const { slug } = useParams();
 
   useEffect(() => {
-    const getWorkshops = async () => {
+    const getWorkshop = async () => {
       try {
         setLoading(true);
 
-        const results = await menApiAuthClient().get<Workshop[]>(
-          `${envConfig.API_URL}/v1/workshops`
+        const results = await menApiAuthClient().get<Workshop>(
+          `${envConfig.API_URL}/v1/workshops/${slug}`
         );
 
-        setWorkshops(results.data);
+        setWorkshop(results.data);
       } catch (error) {
         throw new Error("Could not load Workshops!");
       } finally {
         setLoading(false);
       }
     };
-    getWorkshops();
-  }, []);
+    getWorkshop();
+  }, [slug]);
 
   const downloadWorkbook = (workshop: Workshop) => {
     window.open(workshop.workbook_url);
 
     mixpanelEvent("Clicked Download Workbook", {
-      "Workshop Id": workshop.id,
+      "Workshop Slug": workshop.slug,
     });
   };
 
   const handleOnPlay = (workshop: Workshop) => {
     mixpanelEvent("Played Workshop Video", {
-      "Workshop Id": workshop.id,
+      "Workshop Slug": workshop.slug,
     });
   };
 
@@ -76,9 +72,9 @@ const MonthlyLeadershipWorkshop: React.FC = () => {
   };
 
   return (
-    <Container maxW={1270}>
-      <Heading size="lg" textAlign="left" mt={8}>
-        Your Monthly Leadership Workshop
+    <PageWrapper>
+      <Heading size="lg" textAlign="left">
+        Leadership Workshop
       </Heading>
 
       <Text mt={4} mb={4}>
@@ -86,9 +82,9 @@ const MonthlyLeadershipWorkshop: React.FC = () => {
         the workbook below:
       </Text>
 
-      {loading ? <Spinner /> : <WorkshopVideo workshop={workshops[0]} />}
-    </Container>
+      {loading ? <Spinner /> : <WorkshopVideo workshop={workshop} />}
+    </PageWrapper>
   );
 };
 
-export default MonthlyLeadershipWorkshop;
+export default WorkshopSlug;

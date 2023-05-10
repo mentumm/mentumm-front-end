@@ -1,6 +1,5 @@
-import { Box, Button, Heading } from "@chakra-ui/react";
+import { Box, Heading } from "@chakra-ui/react";
 import React, { FC, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { menApiAuthClient } from "../../clients/mentumm";
 import { CoachBooking, CoachType } from "../../types";
 import Coach from "../Coach";
@@ -41,25 +40,21 @@ const UpcomingCoachingSessions: FC<Iprops> = ({ id }) => {
 
   return (
     <div className={classes.root}>
-      <Heading fontWeight="normal" fontSize={24} mt={12} mb={2}>
-        {upcoming.length ? "Upcoming Coaching Sessions" : "Coaching Sessions"}
-      </Heading>
       {upcoming.length ? (
-        <Box display="flex" flexFlow="row wrap" gap={4}>
-          {upcoming.map((u) => {
-            const { coach, ...booking } = u;
-            return (
-              <Coach key={booking.id} coachInfo={coach} booking={booking} />
-            );
-          })}
-        </Box>
-      ) : (
-        <div className={classes.buttonRow}>
-          <Button as={Link} to="/search" size="lg">
-            BOOK A COACH
-          </Button>
-        </div>
-      )}
+        <>
+          <Heading fontWeight="normal" fontSize={24} mt={12} mb={2}>
+            Upcoming Coaching Sessions
+          </Heading>
+          <Box display="flex" flexFlow="row wrap" gap={4}>
+            {upcoming.map((u) => {
+              const { coach, ...booking } = u;
+              return (
+                <Coach key={booking.id} coachInfo={coach} booking={booking} />
+              );
+            })}
+          </Box>
+        </>
+      ) : null}
     </div>
   );
 };
