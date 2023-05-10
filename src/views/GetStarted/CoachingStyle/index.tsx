@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { menApiAuthClient } from "../../../clients/mentumm";
-import { StyleType } from "../../../types";
+import { Tag } from "../../../types";
 import {
   Button,
   Checkbox,
@@ -11,23 +11,23 @@ import {
   Text,
   Spinner,
 } from "@chakra-ui/react";
-import { StyleTypeIcon } from "../../../components/StyleTypeIcon";
+import { TagIcon } from "../../../components/TagIcon";
 import envConfig from "../../../envConfig";
 import { useNavigate } from "react-router";
 import { CurrentUser } from "../../../types";
 
-type StyleTypeOptionProps = {
-  styleType: StyleType;
+type TagOptionProps = {
+  tag: Tag;
   checkedItems: Number[];
   setCheckedItems: Function;
 };
 
-const StyleTypeOption: React.FC<StyleTypeOptionProps> = ({
-  styleType,
+const TagOption: React.FC<TagOptionProps> = ({
+  tag,
   checkedItems,
   setCheckedItems,
 }) => {
-  const toggleStyleTypeChecked = (id: number) => {
+  const toggleTagChecked = (id: number) => {
     if (checkedItems.includes(id)) {
       return checkedItems.filter((item) => item !== id);
     }
@@ -37,15 +37,15 @@ const StyleTypeOption: React.FC<StyleTypeOptionProps> = ({
 
   return (
     <Checkbox
-      value={styleType.id}
-      isChecked={checkedItems.includes(Number(styleType.id))}
+      value={tag.id}
+      isChecked={checkedItems.includes(Number(tag.id))}
       onChange={(e) =>
-        setCheckedItems(toggleStyleTypeChecked(Number(e.target.value)))
+        setCheckedItems(toggleTagChecked(Number(e.target.value)))
       }
       isDisabled={
-        !checkedItems.includes(Number(styleType.id)) && checkedItems.length > 1
+        !checkedItems.includes(Number(tag.id)) && checkedItems.length > 1
       }
-      aria-label={styleType.name}
+      aria-label={tag.name}
       display={"flex"}
     >
       <Flex
@@ -54,38 +54,38 @@ const StyleTypeOption: React.FC<StyleTypeOptionProps> = ({
         align="stretch"
         width={330}
         backgroundColor={
-          checkedItems.includes(Number(styleType.id)) ? "#C0E1FF" : "#EDF2F7"
+          checkedItems.includes(Number(tag.id)) ? "#C0E1FF" : "#EDF2F7"
         }
         borderRadius={4}
         _hover={{ bg: checkedItems.length < 2 ? "#C0E1FF" : "" }}
       >
-        <StyleTypeIcon icon={styleType.icon} />
+        <TagIcon icon={tag.icon} />
         <Text textTransform="uppercase" fontWeight="bold" mr={1}>
-          {styleType.name}
+          {tag.name}
         </Text>{" "}
-        <Text>- {styleType.description}</Text>
+        <Text>- {tag.description}</Text>
       </Flex>
     </Checkbox>
   );
 };
 
 type ContentContainerProps = {
-  styleTypes: StyleType[];
+  tags: Tag[];
   checkedItems: Number[];
   setCheckedItems: Function;
 };
 
 const ContentContainer: React.FC<ContentContainerProps> = ({
-  styleTypes,
+  tags,
   checkedItems,
   setCheckedItems,
 }) => {
   return (
     <Stack direction="column" spacing={3} align="stretch">
-      {styleTypes.map((styleType) => (
-        <StyleTypeOption
-          key={styleType.id}
-          styleType={styleType}
+      {tags.map((tag) => (
+        <TagOption
+          key={tag.id}
+          tag={tag}
           checkedItems={checkedItems}
           setCheckedItems={setCheckedItems}
         />
@@ -100,28 +100,28 @@ type CoachingStyleProps = {
 
 const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser }) => {
   const navigate = useNavigate();
-  const [styleTypes, setStyleTypes] = useState<StyleType[]>([]);
+  const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [checkedItems, setCheckedItems] = React.useState([]);
 
   useEffect(() => {
-    const getStyleTypes = async () => {
+    const getTags = async () => {
       try {
         setLoading(true);
 
-        const results = await menApiAuthClient().get<StyleType[]>(
-          `${envConfig.API_URL}/v1/style_types`
+        const results = await menApiAuthClient().get<Tag[]>(
+          `${envConfig.API_URL}/v1/tags?kind=style`
         );
 
-        setStyleTypes(results.data.sort(() => (Math.random() > 0.5 ? 1 : -1)));
+        setTags(results.data.sort(() => (Math.random() > 0.5 ? 1 : -1)));
       } catch (error) {
-        throw new Error("Could not load Style Types!");
+        throw new Error("Could not load Style Tags!");
       } finally {
         setLoading(false);
       }
     };
-    getStyleTypes();
+    getTags();
   }, []);
 
   const handleContinue = async () => {
@@ -132,8 +132,10 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser }) => {
     setSaving(true);
 
     await menApiAuthClient()
-      .post(`${envConfig.API_URL}/v1/user/${currentUser.id}/style_types`, {
-        style_types: checkedItems,
+      .post(`${envConfig.API_URL}/v1/user/tags`, {
+        tag_ids: checkedItems,
+        user_id: currentUser.id,
+        clear: true,
       })
       .then(() => {
         navigate("/search");
@@ -166,7 +168,7 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser }) => {
         <ContentContainer
           checkedItems={checkedItems}
           setCheckedItems={setCheckedItems}
-          styleTypes={styleTypes}
+          tags={tags}
         />
       )}
 

@@ -2,7 +2,7 @@
 import { Heading, Stack, Box } from "@chakra-ui/react";
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import { CoachSkills } from "../../types";
+import { Tag } from "../../types";
 import {
   FontAwesomeIcon,
   FontAwesomeIconProps,
@@ -56,7 +56,7 @@ const iconTag = {
 };
 
 interface Iprops {
-  tags: CoachSkills[];
+  tags: Tag[];
   title: string;
 }
 
