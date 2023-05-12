@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { createUseStyles, DefaultTheme } from "react-jss";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import AppContainer from "./components/AppContainer";
 import Footer from "./components/Footer";
 import SignInWrapper from "./components/LoginWrapper";
@@ -26,6 +26,18 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
     width: "100%",
   },
 }));
+
+function RedirectOnCondition({ currentUser, to }) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate(to, { replace: true });
+    }
+  }, [currentUser, navigate, to]);
+
+  return null;
+}
 
 function App() {
   const classes = useStyles();
@@ -67,7 +79,7 @@ function App() {
                   currentUser={currentUser}
                 />
               ) : (
-                <Navigate to="/home" replace />
+                <RedirectOnCondition currentUser={currentUser} to="/home" />
               )
             }
           />
@@ -136,7 +148,10 @@ function App() {
                   currentUser={currentUser}
                 />
               ) : (
-                <Navigate to="/get-started" replace />
+                <RedirectOnCondition
+                  currentUser={currentUser}
+                  to="/get-started"
+                />
               )
             }
           />
