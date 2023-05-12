@@ -5,6 +5,7 @@ import {
   Input,
   Textarea,
   Select,
+  Button,
 } from "@chakra-ui/react";
 import React, { useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -30,6 +31,8 @@ export const EditProfile = () => {
     return null;
   }
 
+  console.log(currentUser);
+
   return (
     <PageWrapper>
       <Box>
@@ -41,9 +44,9 @@ export const EditProfile = () => {
       <Box>
         <Formik
           initialValues={{
-            first_name: "",
-            last_name: "",
-            email: "",
+            first_name: currentUser.first_name || "",
+            last_name: currentUser.last_name || "",
+            email: currentUser.email || "",
             city: "",
             state: "",
             phone_number: "", // i think this is a new field and needs a migration
@@ -245,9 +248,9 @@ export const EditProfile = () => {
               <label htmlFor="email">Email</label>
               <Field name="email" placeholder="jane@acme.com" type="email" /> */}
 
-              <button type="submit" disabled={props.isSubmitting}>
+              <Button type="submit" disabled={props.isSubmitting}>
                 Submit
-              </button>
+              </Button>
             </Form>
           )}
         </Formik>
