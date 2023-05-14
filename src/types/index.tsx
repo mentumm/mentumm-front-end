@@ -109,6 +109,10 @@ export interface CurrentUser {
   booking_url?: string;
   linkedin_url?: string;
   bio?: string;
+  phone_number?: string;
+  facebook_url?: string;
+  instagram_url?: string;
+  website_url?: string;
 }
 
 export interface UserLoginProps {

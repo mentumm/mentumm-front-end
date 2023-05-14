@@ -7,16 +7,15 @@ import {
   Select,
   Button,
 } from "@chakra-ui/react";
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router";
-import { UserContext } from "../../../components/LoginWrapper";
 import PageWrapper from "../../../components/PageWrapper";
 import { Form, Formik, FormikHelpers } from "formik";
 import { UserPublic } from "../../../types";
 import { usStates } from "../../../utils/states";
+import { menApiAuthClient } from "../../../clients/mentumm";
 
-export const EditProfile = () => {
-  const { currentUser } = useContext(UserContext);
+export const EditProfile = ({ currentUser, setCurrentUser }) => {
   const navigate = useNavigate();
   const { coachId } = useParams();
 
@@ -27,11 +26,20 @@ export const EditProfile = () => {
     }
   }, [currentUser, coachId, navigate]);
 
+  const handleSubmit = async (values: UserPublic) => {
+    await menApiAuthClient().put("/user", {
+      ...values,
+      id: currentUser.id,
+    });
+    setCurrentUser({
+      ...currentUser,
+      ...values,
+    });
+  };
+
   if (!currentUser) {
     return null;
   }
-
-  console.log(currentUser);
 
   return (
     <PageWrapper>
@@ -47,21 +55,22 @@ export const EditProfile = () => {
             first_name: currentUser.first_name || "",
             last_name: currentUser.last_name || "",
             email: currentUser.email || "",
-            city: "",
-            state: "",
-            phone_number: "", // i think this is a new field and needs a migration
-            linkedin_url: "",
-            instagram_url: "", // new?
-            facebook_url: "", // new or maybe missing form the types
-            website_url: "", // new
-            booking_url: "",
+            city: currentUser.city || "",
+            state: currentUser.state || "",
+            phone_number: currentUser.phone_number || "",
+            linkedin_url: currentUser.linkedin_url || "",
+            instagram_url: currentUser.instagram_url || "",
+            facebook_url: currentUser.facebook_url || "",
+            website_url: currentUser.website_url || "",
+            booking_url: currentUser.booking_url || "",
+            bio: currentUser.bio || "",
           }}
           onSubmit={(
             values: UserPublic,
             { setSubmitting }: FormikHelpers<UserPublic>
           ) => {
-            setTimeout(() => {
-              alert(JSON.stringify(values, null, 2));
+            setTimeout(async () => {
+              await handleSubmit(values);
               setSubmitting(false);
             }, 500);
           }}
@@ -119,7 +128,8 @@ export const EditProfile = () => {
                     id="state"
                     name="state"
                     onChange={props.handleChange}
-                    placeholder="Select State..."
+                    value={props.values.state}
+                    placeholder={props.values.state || "Select State..."}
                   >
                     {usStates.map((state) => {
                       return (

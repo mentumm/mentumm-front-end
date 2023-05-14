@@ -67,6 +67,10 @@ function App() {
         booking_url: cookies.growth_10_03142023.booking_url,
         linkedin_url: cookies.growth_10_03142023.linkedin_url,
         bio: cookies.growth_10_03142023.bio,
+        instagram_url: cookies.growth_10_03142023.instagram_url,
+        facebook_url: cookies.growth_10_03142023.facebook_url,
+        website_url: cookies.growth_10_03142023.website_url,
+        phone_number: cookies.growth_10_03142023.phone_number,
       });
     }
   }, [cookies]);
@@ -125,7 +129,10 @@ function App() {
             path="/coach/:coachId/profile"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <EditProfile />
+                <EditProfile
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                />
               </SignInWrapper>
             }
           />
