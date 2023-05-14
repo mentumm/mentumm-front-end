@@ -17,6 +17,7 @@ import * as Yup from "yup";
 import { UserPublic } from "../../../types";
 import { usStates } from "../../../utils/states";
 import { menApiAuthClient } from "../../../clients/mentumm";
+import { useSnackbar } from "notistack";
 
 const urlRegex = /^(?:([a-z]+):)?(\/\/)?([^\s$.?#].[^\s]*)$/i;
 
@@ -32,6 +33,7 @@ function ensureHttps(url: string) {
 export const EditProfile = ({ currentUser, setCurrentUser }) => {
   const navigate = useNavigate();
   const { coachId } = useParams();
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     // ensure that only coaches can edit their own profiles
@@ -41,19 +43,31 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
   }, [currentUser, coachId, navigate]);
 
   const handleSubmit = async (values: UserPublic) => {
-    await menApiAuthClient().put("/user", {
-      ...values,
-      linkedin_url: ensureHttps(values.linkedin_url),
-      instagram_url: ensureHttps(values.instagram_url),
-      facebook_url: ensureHttps(values.facebook_url),
-      website_url: ensureHttps(values.website_url),
-      booking_url: ensureHttps(values.booking_url),
-      id: currentUser.id,
-    });
-    setCurrentUser({
-      ...currentUser,
-      ...values,
-    });
+    await menApiAuthClient()
+      .put("/user", {
+        ...values,
+        linkedin_url: ensureHttps(values.linkedin_url),
+        instagram_url: ensureHttps(values.instagram_url),
+        facebook_url: ensureHttps(values.facebook_url),
+        website_url: ensureHttps(values.website_url),
+        booking_url: ensureHttps(values.booking_url),
+        id: currentUser.id,
+      })
+      .then(() => {
+        setCurrentUser({
+          ...currentUser,
+          ...values,
+        });
+        enqueueSnackbar("Profile updated successfully!", {
+          variant: "success",
+        });
+      })
+      .catch((err) => {
+        console.error(err);
+        enqueueSnackbar("Something went wrong. Please try again.", {
+          variant: "error",
+        });
+      });
   };
 
   if (!currentUser) {
@@ -87,7 +101,9 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
           validationSchema={Yup.object().shape({
             first_name: Yup.string().required("Required"),
             last_name: Yup.string().required("Required"),
-            email: Yup.string().email("Invalid email address"),
+            email: Yup.string()
+              .email("Invalid email address")
+              .required("Required"),
             city: Yup.string(),
             state: Yup.string(),
             phone_number: Yup.string().matches(
