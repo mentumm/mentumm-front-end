@@ -162,6 +162,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                   </Box>
                   <Box flex="50%" paddingEnd="6">
                     <FormControl
+                      isRequired
                       mb="4"
                       isInvalid={
                         props.touched.first_name && !!props.errors.first_name
@@ -184,6 +185,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                   </Box>
                   <Box flexBasis="50%">
                     <FormControl
+                      isRequired
                       isInvalid={
                         props.touched.last_name && !!props.errors.last_name
                       }
@@ -251,6 +253,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                   </Box>
                   <Box flexBasis="50%" paddingEnd="6">
                     <FormControl
+                      isRequired
                       mb="4"
                       isInvalid={props.touched.email && !!props.errors.email}
                     >
@@ -269,6 +272,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                   </Box>
                   <Box flexBasis="50%">
                     <FormControl
+                      isRequired
                       isInvalid={
                         props.touched.phone_number &&
                         !!props.errors.phone_number
@@ -292,6 +296,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                   </Box>
                   <Box flexBasis="50%" paddingEnd="6">
                     <FormControl
+                      isRequired
                       mb="4"
                       isInvalid={
                         props.touched.linkedin_url &&
@@ -323,7 +328,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                       }
                     >
                       <FormLabel htmlFor="instagram_url">
-                        Instagram Profile (optional)
+                        {"Instagram Profile (Optional)"}
                       </FormLabel>
                       <Input
                         variant="outline"
@@ -348,7 +353,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                       }
                     >
                       <FormLabel htmlFor="facebook_url">
-                        Facebook Profile
+                        {"Facebook Profile (Optional)"}
                       </FormLabel>
                       <Input
                         variant="outline"
@@ -370,7 +375,9 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                         props.touched.website_url && !!props.errors.website_url
                       }
                     >
-                      <FormLabel htmlFor="website_url">Website URL</FormLabel>
+                      <FormLabel htmlFor="website_url">
+                        {"Website URL (Optional)"}
+                      </FormLabel>
                       <Input
                         variant="outline"
                         id="website_url"
@@ -392,6 +399,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                   </Box>
                   <Box flex={1}>
                     <FormControl
+                      isRequired
                       isInvalid={
                         props.touched.booking_url && !!props.errors.booking_url
                       }
@@ -420,6 +428,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                   </Box>
                   <Box flex={1}>
                     <FormControl
+                      isRequired
                       isInvalid={props.touched.bio && !!props.errors.bio}
                     >
                       <FormLabel htmlFor="bio">
