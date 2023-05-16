@@ -117,18 +117,26 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                 .required("Required"),
               city: Yup.string(),
               state: Yup.string(),
-              phone_number: Yup.string().matches(
-                /^(\+\d{1,3}[- ]?)?\d{10}$/,
-                "Invalid phone number"
-              ),
-              linkedin_url: Yup.string().matches(urlRegex, "Invalid URL"),
+              phone_number: Yup.string()
+                .matches(/^(\+\d{1,3}[- ]?)?\d{10}$/, "Invalid phone number")
+                .required("Required"),
+              linkedin_url: Yup.string()
+                .matches(urlRegex, "Invalid URL")
+                .required("Required"),
               instagram_url: Yup.string().matches(urlRegex, "Invalid URL"),
               facebook_url: Yup.string().matches(urlRegex, "Invalid URL"),
               website_url: Yup.string().matches(urlRegex, "Invalid URL"),
               booking_url: Yup.string()
                 .matches(urlRegex, "Invalid URL")
+                .test(
+                  "calendly",
+                  "URL must be a Calendly URL.",
+                  (value) => value && value.includes("calendly.com")
+                )
                 .required("Required"),
-              bio: Yup.string(),
+              bio: Yup.string()
+                .max(500, "Must be 500 charatcers or less")
+                .required("Required"),
             })}
             onSubmit={async (
               values: UserPublic,
