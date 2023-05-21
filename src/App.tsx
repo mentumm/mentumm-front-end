@@ -61,6 +61,16 @@ function App() {
         email: cookies.growth_10_03142023.email,
         employer_id: cookies.growth_10_03142023.employer_id,
         role: cookies.growth_10_03142023.role,
+        city: cookies.growth_10_03142023.city,
+        state: cookies.growth_10_03142023.state,
+        photo_url: cookies.growth_10_03142023.photo_url,
+        booking_url: cookies.growth_10_03142023.booking_url,
+        linkedin_url: cookies.growth_10_03142023.linkedin_url,
+        bio: cookies.growth_10_03142023.bio,
+        instagram_url: cookies.growth_10_03142023.instagram_url,
+        facebook_url: cookies.growth_10_03142023.facebook_url,
+        website_url: cookies.growth_10_03142023.website_url,
+        phone_number: cookies.growth_10_03142023.phone_number,
       });
     }
   }, [cookies]);
@@ -119,7 +129,10 @@ function App() {
             path="/coach/:coachId/profile"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <EditProfile />
+                <EditProfile
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                />
               </SignInWrapper>
             }
           />
