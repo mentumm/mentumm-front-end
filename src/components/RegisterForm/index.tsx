@@ -31,7 +31,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
   const [userFirstNameError, setUserFirstNameError] = useState<boolean>(false);
   const [userLastNameError, setUserLastNameError] = useState<boolean>(false);
   const [inviteCodeError, setInviteCodeError] = useState<boolean>(false);
-  const [, setCookie] = useCookies(["growth_10_03142023"]);
+  const [, setCookie] = useCookies();
 
   const validateEmail = () => {
     if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -113,13 +113,35 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
           return;
       }
 
-      setCurrentUser(createUser.data[0]);
       setCookie("growth_10_03142023", createUser.data[0], {
         path: "/",
         secure: true,
         expires: new Date(Date.now() + 3600 * 1000 * 48),
         sameSite: true,
       });
+
+      const handleAPICreds = async (email: string, password: string) => {
+        try {
+          const token = await axios.post(`${NODE_API}/v1/token/generate`, {
+            email,
+            password,
+          });
+
+          if (!token || !token.data) {
+            throw new Error(`[Could not get API Token]: ${token.statusText}`);
+          }
+          setCookie("growth_10_token", token.data, {
+            path: "/",
+            secure: true,
+            expires: new Date(Date.now() + 3600 * 1000 * 48),
+            sameSite: true,
+          });
+        } catch (error) {
+          console.error(error);
+        }
+      };
+
+      handleAPICreds(email, password);
     } catch (error) {
       console.log(error);
     }
