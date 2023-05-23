@@ -4,7 +4,11 @@ import { createUseStyles } from "react-jss";
 import { Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { CurrentUser } from "../../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import {
+  faArrowRightFromBracket,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 const useStyles = createUseStyles({
   button: {
@@ -59,8 +63,13 @@ const NavMenu = ({
         {generateUserInitials()}
       </MenuButton>
       <MenuList className={classes.menuItems}>
-        {/* Uncomment profile menu item after profile page is built */}
-        {/* <MenuItem>Profile</MenuItem> */}
+        {currentUser.role === "coach" ? (
+          <Link to={`/coach/${currentUser.id}/profile`}>
+            <MenuItem icon={<FontAwesomeIcon icon={faUser} />}>
+              Profile
+            </MenuItem>
+          </Link>
+        ) : null}
         <MenuItem
           icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
           onClick={logoutUser}

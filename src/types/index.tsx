@@ -103,6 +103,16 @@ export interface CurrentUser {
   employer_id: number;
   last_sign_in?: Date;
   role: UserRoles;
+  city?: string;
+  state?: string;
+  photo_url?: string;
+  booking_url?: string;
+  linkedin_url?: string;
+  bio?: string;
+  phone_number?: string;
+  facebook_url?: string;
+  instagram_url?: string;
+  website_url?: string;
 }
 
 export interface UserLoginProps {
