@@ -246,7 +246,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                       <FormErrorMessage>{props.errors.state}</FormErrorMessage>
                     </FormControl>
                   </Box>
-                  <Box flexBasis="100%" marginY="6">
+                  <Box flexBasis="100%" marginTop={10} marginBottom={6}>
                     <Heading as="h2" size="md" fontWeight="normal">
                       Contact Information
                     </Heading>
@@ -392,7 +392,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                       </FormErrorMessage>
                     </FormControl>
                   </Box>
-                  <Box flexBasis="100%" marginY="6">
+                  <Box flexBasis="100%" marginTop={10} marginBottom={6}>
                     <Heading as="h2" size="md" fontWeight="normal">
                       Mentumm-specific Calendly Booking Link
                     </Heading>
@@ -421,7 +421,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                       </FormErrorMessage>
                     </FormControl>
                   </Box>
-                  <Box flexBasis="100%" marginY="6">
+                  <Box flexBasis="100%" marginTop={10} marginBottom={6}>
                     <Heading as="label" size="md" fontWeight="normal">
                       Public Bio
                     </Heading>
