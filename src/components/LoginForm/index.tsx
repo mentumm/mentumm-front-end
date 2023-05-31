@@ -60,7 +60,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
     try {
       // TODO: Add basic API Key auth handling
       const loginUser = await axios.post(`${NODE_API}/v1/user/login`, {
-        email: userEmail,
+        email: userEmail.toLowerCase(),
         password: userPassword,
       });
 
@@ -103,7 +103,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
   const handleAPICreds = async (email: string, password: string) => {
     try {
       const token = await axios.post(`${NODE_API}/v1/token/generate`, {
-        email,
+        email: email.toLowerCase(),
         password,
       });
 

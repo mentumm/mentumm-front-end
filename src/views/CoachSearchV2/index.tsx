@@ -76,7 +76,7 @@ export const CoachSearchV2 = ({ currentUser }) => {
     const event_end_time = searchParams.get("event_end_time");
     const invitee_uuid = searchParams.get("invitee_uuid");
     const invitee_full_name = searchParams.get("invitee_full_name");
-    const invitee_email = searchParams.get("invitee_email");
+    const invitee_email = searchParams.get("invitee_email").toLowerCase();
     const utmSource = searchParams.get("utm_source");
 
     const bookCoach = async () => {

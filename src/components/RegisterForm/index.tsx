@@ -90,7 +90,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
     try {
       // temporarily bypass menApiAuthClient until we fix auth
       const createUser = await axios.post(`${NODE_API}/v1/user/register`, {
-        email: email,
+        email: email.toLowerCase(),
         password: password,
         invite_code: inviteCode,
         first_name: userFirstName,
@@ -123,7 +123,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
       const handleAPICreds = async (email: string, password: string) => {
         try {
           const token = await axios.post(`${NODE_API}/v1/token/generate`, {
-            email,
+            email: email.toLowerCase(),
             password,
           });
 
