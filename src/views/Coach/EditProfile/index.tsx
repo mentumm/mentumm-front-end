@@ -126,7 +126,6 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
               email: Yup.string()
                 .email("Invalid email address")
                 .required("Required"),
-              password: Yup.string(),
               update_password: Yup.string(),
               retype_password: Yup.string()
                 .oneOf([Yup.ref("update_password")], "Passwords do not match"),
@@ -508,13 +507,6 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                       </Box>
                     </Box>
                   </Box>
-
-                  {/* <label htmlFor="lastName">Last Name</label>
-              <Field name="lastName" placeholder="Doe" />
-
-              <label htmlFor="email">Email</label>
-              <Field name="email" placeholder="jane@acme.com" type="email" /> */}
-
                   <Button
                     type="submit"
                     isDisabled={props.isSubmitting || !!(Object.keys(props.errors).length)}

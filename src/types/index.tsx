@@ -58,11 +58,6 @@ export interface UserPublic extends Omit<User, UserPrivateFields> {
   retype_password?: string;
 }
 
-// export interface UpdatePassword {
-//   id: number;
-//   password: string;
-// }
-
 export interface CoachBooking {
   id: number;
   user_id: number;
