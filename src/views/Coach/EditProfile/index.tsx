@@ -126,7 +126,8 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
               email: Yup.string()
                 .email("Invalid email address")
                 .required("Required"),
-              update_password: Yup.string(),
+              update_password: Yup.string()
+                .oneOf([Yup.ref("retype_password")], "Passwords do not match"),
               retype_password: Yup.string()
                 .oneOf([Yup.ref("update_password")], "Passwords do not match"),
               city: Yup.string(),
@@ -161,6 +162,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
             }}
           >
             {(props) => {
+              console.log(props.errors)
               const {
                 touched: {
                   update_password,
