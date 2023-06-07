@@ -162,7 +162,6 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
             }}
           >
             {(props) => {
-              console.log(props.errors)
               const {
                 touched: {
                   update_password,
