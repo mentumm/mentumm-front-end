@@ -174,7 +174,6 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                 }
               } = props;
               const isTouchedPassword = !!(update_password && retype_password)
-              console.log(Object.keys(props.errors))
               return (
                 <Form>
                   <Box
