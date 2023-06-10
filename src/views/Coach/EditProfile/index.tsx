@@ -11,8 +11,10 @@ import {
   Container,
   Flex,
   Center,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import PageWrapper from "../../../components/PageWrapper";
 import { Form, Formik, FormikHelpers } from "formik";
@@ -22,6 +24,7 @@ import { usStates } from "../../../utils/states";
 import { menApiAuthClient } from "../../../clients/mentumm";
 import { useSnackbar } from "notistack";
 import { useCookies } from "react-cookie";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 const urlRegex = /^(?:([a-z]+):)?(\/\/)?([^\s$.?#].[^\s]*)$/i;
 
@@ -39,6 +42,8 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
   const { coachId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
   const [, setCookie] = useCookies(["growth_10_03142023", "growth_10_token"]);
+  const [showPassword, setShowPassword] = useState(false)
+  const handlePasswordShowClick = () => setShowPassword(!showPassword)
 
   useEffect(() => {
     // ensure that only coaches can edit their own profiles
@@ -169,6 +174,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                 }
               } = props;
               const isTouchedPassword = !!(update_password && retype_password)
+              console.log(Object.keys(props.errors))
               return (
                 <Form>
                   <Box
@@ -297,7 +303,6 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                       <FormControl
                         isRequired
                         isInvalid={
-                          props.touched.phone_number &&
                           !!props.errors.phone_number
                         }
                       >
@@ -322,7 +327,6 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                         isRequired
                         mb="4"
                         isInvalid={
-                          props.touched.linkedin_url &&
                           !!props.errors.linkedin_url
                         }
                       >
@@ -424,7 +428,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                       <FormControl
                         isRequired
                         isInvalid={
-                          props.touched.booking_url && !!props.errors.booking_url
+                          !!props.errors.booking_url
                         }
                       >
                         <FormLabel htmlFor="booking_url">
@@ -452,7 +456,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                     <Box flex={1}>
                       <FormControl
                         isRequired
-                        isInvalid={props.touched.bio && !!props.errors.bio}
+                        isInvalid={!!props.errors.bio}
                       >
                         <FormLabel htmlFor="bio">
                           Please limit to one paragraph. You can write about your
@@ -482,24 +486,53 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                           <Flex
                             mt={4}
                           >
-                            <Input
-                              mr={4}
-                              variant="outline"
-                              id="update_password"
-                              name="update_password"
-                              value={props.values.password}
-                              onChange={props.handleChange}
-                              onBlur={props.handleBlur}
-                              placeholder="Password"
-                            />
-                            <Input
-                              variant="outline"
-                              id="retype_password"
-                              name="retype_password"
-                              onChange={props.handleChange}
-                              onBlur={props.handleBlur}
-                              placeholder="Retype Password"
-                            />
+                            <InputGroup>
+                              <Input
+                                htmlSize={26}
+                                w="auto"
+                                variant="outline"
+                                id="update_password"
+                                name="update_password"
+                                type={showPassword ? 'text' : 'password'}
+                                value={props.values.password}
+                                onChange={props.handleChange}
+                                onBlur={props.handleBlur}
+                                placeholder="Password"
+                              />
+                              <InputRightElement
+                                mr={4}
+                              >
+                                <Button
+                                  size='sm'
+                                  colorScheme={showPassword ? 'blue' : 'brand'}
+                                  onClick={handlePasswordShowClick}>
+                                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                                </Button>
+                              </InputRightElement>
+                            </InputGroup>
+                            <InputGroup>
+                              <Input
+                                htmlSize={26}
+                                autoComplete="new-password"
+                                w="auto"
+                                variant="outline"
+                                id="retype_password"
+                                name="retype_password"
+                                type={showPassword ? 'text' : 'password'}
+                                onChange={props.handleChange}
+                                onBlur={props.handleBlur}
+                                placeholder="Retype Password"
+                              />
+                              <InputRightElement
+                                mr={4}
+                              >
+                                <Button
+                                  size='sm'
+                                  onClick={handlePasswordShowClick}>
+                                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                                </Button>
+                              </InputRightElement>
+                            </InputGroup>
                           </Flex>
                           <Center>
                             <FormErrorMessage>{props.errors.retype_password}</FormErrorMessage>
