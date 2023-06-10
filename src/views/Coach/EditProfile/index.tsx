@@ -502,6 +502,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                                 mr={4}
                               >
                                 <Button
+                                  variant="ghost"
                                   size='sm'
                                   colorScheme={showPassword ? 'blue' : 'brand'}
                                   onClick={handlePasswordShowClick}>
@@ -526,6 +527,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                                 mr={4}
                               >
                                 <Button
+                                  variant="ghost"
                                   size='sm'
                                   onClick={handlePasswordShowClick}>
                                   {showPassword ? <ViewIcon /> : <ViewOffIcon />}
