@@ -11,7 +11,6 @@ import {
   FormControl,
   FormErrorMessage,
   Container,
-  Flex,
   Center,
   InputGroup,
   InputRightElement,
@@ -473,6 +472,28 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                         />
                         <FormErrorMessage>{props.errors.bio}</FormErrorMessage>
                       </FormControl>
+                    </Box>
+                    <Box flexBasis="100%" mt={10}>
+                      <Flex>
+                        <Heading
+                          pt="2px"
+                          as="h2"
+                          size="md"
+                          fontWeight="normal"
+                        >
+                          Coaching Styles
+                        </Heading>
+                        <Button
+                          ml={2}
+                          size="sm"
+                          variant="ghost"
+                        >
+                          Edit
+                        </Button>
+                      </Flex>
+                      <Text fontSize="xs">
+                        Select up to 2 Coaching Styles
+                      </Text>
                     </Box>
                     <Box flexBasis="100%" marginTop={10} marginBottom={6}>
                       <Heading as="label" size="md" fontWeight="normal">
