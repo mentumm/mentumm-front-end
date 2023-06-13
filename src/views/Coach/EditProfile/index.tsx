@@ -20,6 +20,7 @@ import { usStates } from "../../../utils/states";
 import { menApiAuthClient } from "../../../clients/mentumm";
 import { useSnackbar } from "notistack";
 import { useCookies } from "react-cookie";
+import Achievements from "./Achievements";
 
 const urlRegex = /^(?:([a-z]+):)?(\/\/)?([^\s$.?#].[^\s]*)$/i;
 
@@ -108,6 +109,9 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
               website_url: currentUser.website_url || "",
               booking_url: currentUser.booking_url || "",
               bio: currentUser.bio || "",
+              achievements1: currentUser.achievements1 || "",
+              achievements2: currentUser.achievements2 || "",
+              achievements3: currentUser.achievements3 || "",
             }}
             validationSchema={Yup.object().shape({
               first_name: Yup.string().required("Required"),
@@ -137,6 +141,17 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
               bio: Yup.string()
                 .max(500, "Must be 500 charatcers or less")
                 .required("Required"),
+              achievements1: Yup.string()
+                .max(15, "Must be 15 charatcers or less")
+                .required("At least one achievement is required"),
+              achievements2: Yup.string().max(
+                15,
+                "Must be 15 charatcers or less"
+              ),
+              achievements3: Yup.string().max(
+                15,
+                "Must be 15 charatcers or less"
+              ),
             })}
             onSubmit={async (
               values: UserPublic,
@@ -447,13 +462,9 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                     </FormControl>
                   </Box>
                 </Box>
-
-                {/* <label htmlFor="lastName">Last Name</label>
-              <Field name="lastName" placeholder="Doe" />
-
-              <label htmlFor="email">Email</label>
-              <Field name="email" placeholder="jane@acme.com" type="email" /> */}
-
+                <Box>
+                  <Achievements {...props} />
+                </Box>
                 <Button
                   type="submit"
                   disabled={props.isSubmitting}
