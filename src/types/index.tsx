@@ -52,7 +52,11 @@ type UserPrivateFields =
   | "role"
   | "employer_id";
 
-export interface UserPublic extends Omit<User, UserPrivateFields> {}
+export interface UserPublic extends Omit<User, UserPrivateFields> {
+  password?: string;
+  update_password?: string;
+  retype_password?: string;
+}
 
 export interface CoachBooking {
   id: number;
