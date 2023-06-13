@@ -6,6 +6,8 @@ import {
   Textarea,
   Select,
   Button,
+  Text,
+  Flex,
   FormControl,
   FormErrorMessage,
   Container,
@@ -426,7 +428,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                       Public Bio
                     </Heading>
                   </Box>
-                  <Box flex={1}>
+                  <Box mb={8} flex={1}>
                     <FormControl
                       isRequired
                       isInvalid={props.touched.bio && !!props.errors.bio}
@@ -446,6 +448,28 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                       <FormErrorMessage>{props.errors.bio}</FormErrorMessage>
                     </FormControl>
                   </Box>
+                </Box>
+                <Box>
+                  <Flex>
+                    <Heading
+                      pt="2px"
+                      as="h2"
+                      size="md"
+                      fontWeight="normal"
+                    >
+                      Coaching Styles
+                    </Heading>
+                    <Button
+                      ml={2}
+                      size="sm"
+                      variant="ghost"
+                    >
+                      Edit
+                    </Button>
+                  </Flex>
+                  <Text fontSize="xs">
+                    Select up to 2 Coaching Styles
+                  </Text>
                 </Box>
 
                 {/* <label htmlFor="lastName">Last Name</label>
