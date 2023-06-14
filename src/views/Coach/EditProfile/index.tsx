@@ -72,7 +72,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
         mixpanelEvent("Coach Edit Profile Viewed", {
           "Coach ID": coach.id,
           "Coach Name": `${coach.first_name} ${coach.last_name}`,
-          "Coach Expertise": coach.expertise.map((expertise) => expertise.name),
+          "Coach Styles": coachStyles.map((style) => style.name),
         });
       } catch (error) {
         console.log("Problem loading Coach Profile", error);
