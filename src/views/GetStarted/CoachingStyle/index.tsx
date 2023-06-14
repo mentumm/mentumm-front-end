@@ -95,15 +95,17 @@ const ContentContainer: React.FC<ContentContainerProps> = ({
 };
 
 type CoachingStyleProps = {
+  isCoach?: boolean;
   currentUser: CurrentUser;
 };
 
-const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser }) => {
+const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser, isCoach }) => {
   const navigate = useNavigate();
   const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [checkedItems, setCheckedItems] = React.useState([]);
+  const userOrCoach = isCoach ? 'coach' : 'user';
 
   useEffect(() => {
     const getTags = async () => {
@@ -132,13 +134,15 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser }) => {
     setSaving(true);
 
     await menApiAuthClient()
-      .post(`${envConfig.API_URL}/v1/user/tags`, {
+      .post(`${envConfig.API_URL}/v1/${userOrCoach}/tags`, {
         tag_ids: checkedItems,
-        user_id: currentUser.id,
+        [isCoach ? 'coach_id' : 'user_id']: currentUser.id,
         clear: true,
       })
       .then(() => {
-        navigate("/search");
+        isCoach ?
+          navigate(`/coach/${currentUser.id}/profile`) :
+          navigate("/search");
       })
       .finally(() => {
         setSaving(false);
@@ -151,12 +155,24 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser }) => {
   return (
     <Container maxW={1270}>
       <Heading size="lg" textAlign="left" mt={8}>
-        Select Your Desired Coaching Style
+        {isCoach ?
+          'Select Your Coaching Styles' :
+          'Select Your Desired Coaching Style'
+        }
       </Heading>
 
       <Heading size="md" textAlign="left" mt={8}>
-        Pick 2 coaching styles most conducive to your growth goals.
+        {isCoach ?
+          'Pick 2 coaching styles that describe you best' :
+          'Pick 2 coaching styles most conducive to your growth goals.'
+        }
       </Heading>
+
+      {isCoach &&
+        <Heading size="sm">
+          These are used in guiding mentee-coach matches.
+        </Heading>
+      }
 
       <Text mt={4} mb={6}>
         You can update this later in your profile.

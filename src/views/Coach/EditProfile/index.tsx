@@ -14,18 +14,22 @@ import {
   Center,
   InputGroup,
   InputRightElement,
+  Tag,
+  HStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import PageWrapper from "../../../components/PageWrapper";
 import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import { UserPublic } from "../../../types";
+import { UserPublic, CoachType } from "../../../types";
 import { usStates } from "../../../utils/states";
 import { menApiAuthClient } from "../../../clients/mentumm";
+import { mixpanelEvent } from "../../../helpers";
 import { useSnackbar } from "notistack";
 import { useCookies } from "react-cookie";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 
 const urlRegex = /^(?:([a-z]+):)?(\/\/)?([^\s$.?#].[^\s]*)$/i;
 
@@ -44,13 +48,41 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
   const { enqueueSnackbar } = useSnackbar();
   const [, setCookie] = useCookies(["growth_10_03142023", "growth_10_token"]);
   const [showPassword, setShowPassword] = useState(false)
+  const [coachStyles, setCoachStyles] = useState([]);
   const handlePasswordShowClick = () => setShowPassword(!showPassword)
+
+  // console.log({ currentUser })
 
   useEffect(() => {
     // ensure that only coaches can edit their own profiles
     if (currentUser && currentUser.id !== coachId) {
       navigate("/");
     }
+
+    // query for coach data
+    const loadCoach = async () => {
+      try {
+        const singleCoach = await menApiAuthClient().get("/coaches", {
+          params: {
+            id: currentUser.id,
+          },
+        });
+
+        const coach: CoachType = singleCoach.data[0];
+        setCoachStyles(coach.styles);
+
+        mixpanelEvent("Coach Edit Profile Viewed", {
+          "Coach ID": coach.id,
+          "Coach Name": `${coach.first_name} ${coach.last_name}`,
+          "Coach Expertise": coach.expertise.map((expertise) => expertise.name),
+        });
+      } catch (error) {
+        console.log("Problem loading Coach Profile", error);
+        throw new Error(error);
+      }
+    };
+    loadCoach();
+
   }, [currentUser, coachId, navigate]);
 
   const handleUpdate = async (values: UserPublic) => {
@@ -483,17 +515,32 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                         >
                           Coaching Styles
                         </Heading>
-                        <Button
-                          ml={2}
-                          size="sm"
-                          variant="ghost"
-                        >
-                          Edit
-                        </Button>
+                        <Link to={`/coach/${currentUser.id}/coaching-style`}>
+                          <Button
+                            ml={2}
+                            size="sm"
+                            variant="ghost"
+                          >
+                            Edit
+                          </Button>
+                        </Link>
                       </Flex>
                       <Text fontSize="xs">
                         Select up to 2 Coaching Styles
                       </Text>
+                      <Box>
+                        <HStack
+                          mt={2}
+                          spacing={2}>
+                          {coachStyles.map((style) =>
+                            <Tag
+                              color="white"
+                              bg="blue.600">
+                              {style.name}
+                            </Tag>
+                          )}
+                        </HStack>
+                      </Box>
                     </Box>
                     <Box flexBasis="100%" marginTop={10} marginBottom={6}>
                       <Heading as="label" size="md" fontWeight="normal">
