@@ -534,21 +534,22 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                         <HStack
                           mt={2}
                           spacing={2}>
-                          {coachStyles.length ?
-                            (coachStyles.map((style) =>
-                              <Tag
-                                color="white"
-                                bg="blue.600">
-                                {style.name}
-                              </Tag>))
-                            :
-                            (<Link to={`/coach/${currentUser.id}/coaching-style`}>
-                              <Tag
-                                mt={2}
-                                _hover={{ bg: "#5DBABD", color: "white" }}>
-                                ADD COACHING STYLES
-                              </Tag>
-                            </Link>)
+                          {
+                            coachStyles.length ?
+                              (coachStyles.map((style) =>
+                                <Tag
+                                  color="white"
+                                  bg="blue.600">
+                                  {style.name}
+                                </Tag>))
+                              :
+                              (<Link to={`/coach/${currentUser.id}/coaching-style`}>
+                                <Tag
+                                  mt={2}
+                                  _hover={{ bg: "#5DBABD", color: "white" }}>
+                                  ADD COACHING STYLES
+                                </Tag>
+                              </Link>)
                           }
                         </HStack>
                       </Box>
