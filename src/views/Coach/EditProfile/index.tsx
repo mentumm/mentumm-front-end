@@ -513,15 +513,19 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                         >
                           Coaching Styles
                         </Heading>
-                        <Link to={`/coach/${currentUser.id}/coaching-style`}>
-                          <Button
-                            ml={2}
-                            size="sm"
-                            variant="ghost"
-                          >
-                            Edit
-                          </Button>
-                        </Link>
+                        {coachStyles.length ? (
+                          <Link to={`/coach/${currentUser.id}/coaching-style`}>
+                            <Button
+                              ml={2}
+                              size="sm"
+                              variant="ghost"
+                            >
+                              Edit
+                            </Button>
+                          </Link>
+                        ) :
+                          null
+                        }
                       </Flex>
                       <Text fontSize="xs">
                         Select up to 2 Coaching Styles
@@ -530,13 +534,24 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                         <HStack
                           mt={2}
                           spacing={2}>
-                          {coachStyles.map((style) =>
-                            <Tag
-                              color="white"
-                              bg="blue.600">
-                              {style.name}
-                            </Tag>
-                          )}
+                          {coachStyles.length ?
+                            (coachStyles.map((style) =>
+                              <Tag
+                                color="white"
+                                bg="blue.600">
+                                {style.name}
+                              </Tag>)
+                            ) :
+                            (
+                              <Link to={`/coach/${currentUser.id}/coaching-style`}>
+                                <Tag
+                                  mt={2}
+                                  _hover={{ bg: "#5DBABD", color: "white" }}>
+                                  ADD COACHING STYLES
+                                </Tag>
+                              </Link>
+                            )
+                          }
                         </HStack>
                       </Box>
                     </Box>
