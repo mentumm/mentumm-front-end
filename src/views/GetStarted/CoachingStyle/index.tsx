@@ -105,7 +105,6 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser, isCoach }) =
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [checkedItems, setCheckedItems] = React.useState([]);
-  const userOrCoach = isCoach ? 'coach' : 'user';
 
   useEffect(() => {
     const getTags = async () => {
@@ -134,9 +133,9 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser, isCoach }) =
     setSaving(true);
 
     await menApiAuthClient()
-      .post(`${envConfig.API_URL}/v1/${userOrCoach}/tags`, {
+      .post(`${envConfig.API_URL}/v1/user/tags`, {
         tag_ids: checkedItems,
-        [isCoach ? 'coach_id' : 'user_id']: currentUser.id,
+        user_id: currentUser.id,
         clear: true,
       })
       .then(() => {

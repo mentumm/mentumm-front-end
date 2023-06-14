@@ -40,8 +40,6 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
   const coachId = slug.split("-");
 
-  // console.log({ coachId })
-
   useEffect(() => {
     const loadCoach = async () => {
       try {

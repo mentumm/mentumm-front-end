@@ -51,8 +51,6 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
   const [coachStyles, setCoachStyles] = useState([]);
   const handlePasswordShowClick = () => setShowPassword(!showPassword)
 
-  // console.log({ currentUser })
-
   useEffect(() => {
     // ensure that only coaches can edit their own profiles
     if (currentUser && currentUser.id !== coachId) {
