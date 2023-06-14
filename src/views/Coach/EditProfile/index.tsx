@@ -540,17 +540,15 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                                 color="white"
                                 bg="blue.600">
                                 {style.name}
-                              </Tag>)
-                            ) :
-                            (
-                              <Link to={`/coach/${currentUser.id}/coaching-style`}>
-                                <Tag
-                                  mt={2}
-                                  _hover={{ bg: "#5DBABD", color: "white" }}>
-                                  ADD COACHING STYLES
-                                </Tag>
-                              </Link>
-                            )
+                              </Tag>))
+                            :
+                            (<Link to={`/coach/${currentUser.id}/coaching-style`}>
+                              <Tag
+                                mt={2}
+                                _hover={{ bg: "#5DBABD", color: "white" }}>
+                                ADD COACHING STYLES
+                              </Tag>
+                            </Link>)
                           }
                         </HStack>
                       </Box>
