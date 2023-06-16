@@ -3,6 +3,7 @@ import {
   Box,
   Card,
   Container,
+  Grid,
   Heading
 } from "@chakra-ui/react";
 import { menApiAuthClient } from '../../clients/mentumm';
@@ -11,27 +12,68 @@ import { Tag } from '../../types';
 import { CurrentUser } from '../../types';
 import { useNavigate } from 'react-router';
 
+type TagsSectionProps = {
+  tags: {
+    category: string,
+    data: Tag[];
+  };
+};
+
+const TagsSection: React.FC<TagsSectionProps> = ({
+  tags
+}) => (
+  <Box my={8}>
+    <Heading size="md" mb={4}>
+      {tags.category}
+    </Heading>
+    <Grid
+      pl={8}
+      templateColumns="repeat(3, 1fr)"
+      gap={4}
+    >
+      {tags.data.map((tag: Tag) => (
+        <Card
+          h="40px"
+          w="279px"
+          pl={2}
+          pt={2}
+        >
+          {tag.name}
+        </Card>
+      ))}
+    </Grid>
+  </Box>
+)
+
 type CoachExpertiseProps = {
   currentUser: CurrentUser;
 };
+
 export const CoachExpertise: React.FC<CoachExpertiseProps> = ({
   currentUser
 }) => {
   const navigate = useNavigate();
-  const [professionalTags, setProfessionalTags] = useState([]);
-  const [leadershipTags, setLeadershipTags] = useState([]);
-  const [personalTags, setPersonalTags] = useState([]);
+  const [professionalTags, setProfessionalTags] = useState({ category: "Professional", data: [] });
+  const [leadershipTags, setLeadershipTags] = useState({ category: "Leadership", data: [] });
+  const [personalTags, setPersonalTags] = useState({ category: "Personal", data: [] });
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]);
-  const tagCategories = ["Professional", "Leadership", "Personal"];
+
+  type Setter = React.Dispatch<React.SetStateAction<{ category: string, data: Tag[] }>>;
 
   const setTags = (
-    setter: Function,
+    setter: Setter,
     data: Tag[],
-    kind: string) => (
-    setter(data.filter((tag) => tag.category === kind))
-  );
+    category: string
+  ) => {
+    setter(prevState => ({
+      ...prevState,
+      data: data.filter(tag => tag.category === category)
+    }));
+  };
+
+  console.log(professionalTags)
 
   useEffect(() => {
     const getTags = async () => {
@@ -84,42 +126,9 @@ export const CoachExpertise: React.FC<CoachExpertiseProps> = ({
         Pick up to 6 Areas of Expertise
       </Heading>
       <Box>
-        <Box>
-          <Heading size="md" mb={4}>
-            Professional
-          </Heading>
-          <Box>
-            {professionalTags.map((tag) => (
-              <Card>
-                {tag.name}
-              </Card>
-            ))}
-          </Box>
-        </Box>
-        <Box>
-          <Heading size="md" mb={4}>
-            Leadership
-          </Heading>
-          <Box>
-            {leadershipTags.map((tag) => (
-              <Card>
-                {tag.name}
-              </Card>
-            ))}
-          </Box>
-        </Box>
-        <Box>
-          <Heading size="md" mb={4}>
-            Personal
-          </Heading>
-          <Box>
-            {personalTags.map((tag) => (
-              <Card>
-                {tag.name}
-              </Card>
-            ))}
-          </Box>
-        </Box>
+        <TagsSection tags={professionalTags} />
+        <TagsSection tags={leadershipTags} />
+        <TagsSection tags={personalTags} />
       </Box>
     </Container>
   )
