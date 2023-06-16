@@ -1,49 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Card,
   Container,
-  Grid,
-  Heading
+  Heading,
+  Button,
+  Spinner,
 } from "@chakra-ui/react";
 import { menApiAuthClient } from '../../clients/mentumm';
 import envConfig from '../../envConfig';
 import { Tag } from '../../types';
 import { CurrentUser } from '../../types';
 import { useNavigate } from 'react-router';
+import { TagsSection } from './components';
 
-type TagsSectionProps = {
-  tags: {
-    category: string,
-    data: Tag[];
-  };
-};
-
-const TagsSection: React.FC<TagsSectionProps> = ({
-  tags
-}) => (
-  <Box my={8}>
-    <Heading size="md" mb={4}>
-      {tags.category}
-    </Heading>
-    <Grid
-      pl={8}
-      templateColumns="repeat(3, 1fr)"
-      gap={4}
-    >
-      {tags.data.map((tag: Tag) => (
-        <Card
-          h="40px"
-          w="279px"
-          pl={2}
-          pt={2}
-        >
-          {tag.name}
-        </Card>
-      ))}
-    </Grid>
-  </Box>
-)
 
 type CoachExpertiseProps = {
   currentUser: CurrentUser;
@@ -58,7 +27,7 @@ export const CoachExpertise: React.FC<CoachExpertiseProps> = ({
   const [personalTags, setPersonalTags] = useState({ category: "Personal", data: [] });
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [checkedItems, setCheckedItems] = useState([]);
+  const [selectedItems, setSelectedItems] = useState([]);
 
   type Setter = React.Dispatch<React.SetStateAction<{ category: string, data: Tag[] }>>;
 
@@ -72,8 +41,6 @@ export const CoachExpertise: React.FC<CoachExpertiseProps> = ({
       data: data.filter(tag => tag.category === category)
     }));
   };
-
-  console.log(professionalTags)
 
   useEffect(() => {
     const getTags = async () => {
@@ -105,12 +72,12 @@ export const CoachExpertise: React.FC<CoachExpertiseProps> = ({
 
     await menApiAuthClient()
       .post(`${envConfig.API_URL}/v1/user/tags`, {
-        tag_ids: checkedItems,
+        tag_ids: selectedItems,
         user_id: currentUser.id,
         clear: true,
       })
       .then(() => {
-        navigate("/search");
+        navigate(`/coach/${currentUser.id}/profile`);
       })
       .finally(() => {
         setSaving(false);
@@ -125,11 +92,38 @@ export const CoachExpertise: React.FC<CoachExpertiseProps> = ({
       <Heading size="lg" textAlign="left" my={8}>
         Pick up to 6 Areas of Expertise
       </Heading>
-      <Box>
-        <TagsSection tags={professionalTags} />
-        <TagsSection tags={leadershipTags} />
-        <TagsSection tags={personalTags} />
-      </Box>
+      {loading ? <Spinner /> :
+        (<Box>
+          <TagsSection
+            tags={professionalTags}
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
+          />
+          <TagsSection
+            tags={leadershipTags}
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
+          />
+          <TagsSection
+            tags={personalTags}
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
+          />
+        </Box>)
+      }
+
+      <Button
+        color="#fff"
+        w="232px"
+        _hover={{ bg: "#3CA8AB" }}
+        mt={8}
+        padding={7}
+        fontWeight="bold"
+        isDisabled={selectedItems.length < 6 || saving}
+        onClick={handleContinue}
+      >
+        SAVE {saving && <Spinner ml={1} size="xs" />}
+      </Button>
     </Container>
   )
 }
