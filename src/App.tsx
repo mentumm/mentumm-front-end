@@ -74,6 +74,12 @@ function App() {
         achievements1: cookies.growth_10_03142023.achievements1,
         achievements2: cookies.growth_10_03142023.achievements2,
         achievements3: cookies.growth_10_03142023.achievements3,
+        hobbies1: cookies.growth_10_03142023.hobbies1,
+        hobbies2: cookies.growth_10_03142023.hobbies2,
+        hobbies3: cookies.growth_10_03142023.hobbies3,
+        hobbies4: cookies.growth_10_03142023.hobbies4,
+        hobbies5: cookies.growth_10_03142023.hobbies5,
+        hobbies6: cookies.growth_10_03142023.hobbies6,
       });
     }
   }, [cookies]);

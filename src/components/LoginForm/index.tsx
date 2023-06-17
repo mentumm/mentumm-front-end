@@ -51,6 +51,13 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
     return ["", "", ""];
   };
 
+  const parseHobbies = (hobbies: string) => {
+    if (hobbies) {
+      return JSON.parse(hobbies);
+    }
+    return ["", "", "", "", "", "", ""];
+  };
+
   const login = async (userEmail: string, userPassword: string) => {
     setEmailError(!email || email === "" || !validateEmail());
     setPasswordError(!password || password === "");
@@ -84,11 +91,18 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
       await handleAPICreds(email, password);
 
       const achievements = parseAchievements(user.achievements);
+      const hobbies = parseHobbies(user.hobbies);
       const updatedUser = {
         ...user,
         achievements1: achievements[0],
         achievements2: achievements[1],
         achievements3: achievements[2],
+        hobbies1: hobbies[0],
+        hobbies2: hobbies[1],
+        hobbies3: hobbies[2],
+        hobbies4: hobbies[3],
+        hobbies5: hobbies[4],
+        hobbies6: hobbies[5],
       };
 
       setCurrentUser(updatedUser);
