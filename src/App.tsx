@@ -71,6 +71,9 @@ function App() {
         facebook_url: cookies.growth_10_03142023.facebook_url,
         website_url: cookies.growth_10_03142023.website_url,
         phone_number: cookies.growth_10_03142023.phone_number,
+        achievements1: cookies.growth_10_03142023.achievements1,
+        achievements2: cookies.growth_10_03142023.achievements2,
+        achievements3: cookies.growth_10_03142023.achievements3,
       });
     }
   }, [cookies]);

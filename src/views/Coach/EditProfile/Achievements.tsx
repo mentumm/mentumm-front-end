@@ -1,6 +1,7 @@
 import {
   Box,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
@@ -18,12 +19,18 @@ const Achievements = (props: FormikProps<UserPublic>) => {
           Top Achievements
         </Heading>
       </Box>
-      <FormControl isRequired>
-        <FormLabel htmlFor="achievements">
-          {"Use short form response (up to 15 words per achievement)"}
-        </FormLabel>
-        <Stack direction="column" spacing={4}>
+      <FormLabel htmlFor="achievements">
+        {"Use short form response (up to 15 words per achievement)"}
+      </FormLabel>
+      <Stack direction="column" spacing={4}>
+        <FormControl
+          isRequired
+          isInvalid={
+            props.touched.achievements1 && !!props.errors.achievements1
+          }
+        >
           <Input
+            isRequired
             id="achievements1"
             name="achievements1"
             placeholder="Enter Achievement"
@@ -31,6 +38,13 @@ const Achievements = (props: FormikProps<UserPublic>) => {
             onChange={props.handleChange}
             onBlur={props.handleBlur}
           />
+          <FormErrorMessage>{props.errors.achievements1}</FormErrorMessage>
+        </FormControl>
+        <FormControl
+          isInvalid={
+            props.touched.achievements2 && !!props.errors.achievements2
+          }
+        >
           <Input
             id="achievements2"
             name="achievements2"
@@ -39,6 +53,13 @@ const Achievements = (props: FormikProps<UserPublic>) => {
             onChange={props.handleChange}
             onBlur={props.handleBlur}
           />
+          <FormErrorMessage>{props.errors.achievements2}</FormErrorMessage>
+        </FormControl>
+        <FormControl
+          isInvalid={
+            props.touched.achievements3 && !!props.errors.achievements3
+          }
+        >
           <Input
             id="achievements3"
             name="achievements3"
@@ -47,8 +68,9 @@ const Achievements = (props: FormikProps<UserPublic>) => {
             onChange={props.handleChange}
             onBlur={props.handleBlur}
           />
-        </Stack>
-      </FormControl>
+          <FormErrorMessage>{props.errors.achievements3}</FormErrorMessage>
+        </FormControl>
+      </Stack>
     </Box>
   );
 };

@@ -149,15 +149,15 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                 .max(500, "Must be 500 charatcers or less")
                 .required("Required"),
               achievements1: Yup.string()
-                .max(15, "Must be 15 charatcers or less")
+                .max(100, "Must be 100 charatcers or less")
                 .required("At least one achievement is required"),
               achievements2: Yup.string().max(
-                15,
-                "Must be 15 charatcers or less"
+                100,
+                "Must be 100 charatcers or less"
               ),
               achievements3: Yup.string().max(
-                15,
-                "Must be 15 charatcers or less"
+                100,
+                "Must be 100 charatcers or less"
               ),
             })}
             onSubmit={async (

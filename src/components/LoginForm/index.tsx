@@ -44,6 +44,13 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
     setPasswordError(e.target.value === "");
   };
 
+  const parseAchievements = (achievements: string) => {
+    if (achievements) {
+      return JSON.parse(achievements);
+    }
+    return ["", "", ""];
+  };
+
   const login = async (userEmail: string, userPassword: string) => {
     setEmailError(!email || email === "" || !validateEmail());
     setPasswordError(!password || password === "");
@@ -75,9 +82,17 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
       }
       const user: CurrentUser = loginUser.data;
       await handleAPICreds(email, password);
-      setCurrentUser(user);
 
-      setCookie("growth_10_03142023", user, {
+      const achievements = parseAchievements(user.achievements);
+      const updatedUser = {
+        ...user,
+        achievements1: achievements[0],
+        achievements2: achievements[1],
+        achievements3: achievements[2],
+      };
+
+      setCurrentUser(updatedUser);
+      setCookie("growth_10_03142023", updatedUser, {
         path: "/",
         secure: true,
         expires: new Date(Date.now() + 3600 * 1000 * 48),
@@ -87,7 +102,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
       // that happened prior to login
       mixpanelIdentify(String(user.id));
       // set mixpanel profile, maybe this should be server side
-      mixpanelPeople(user);
+      mixpanelPeople(updatedUser);
       mixpanelEvent("User Logged In", {
         "User ID": user.id,
         "First Name": user.first_name,
