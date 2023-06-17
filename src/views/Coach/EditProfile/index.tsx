@@ -21,6 +21,7 @@ import { menApiAuthClient } from "../../../clients/mentumm";
 import { useSnackbar } from "notistack";
 import { useCookies } from "react-cookie";
 import Achievements from "./Achievements";
+import Hobbies from "./Hobbies";
 
 const urlRegex = /^(?:([a-z]+):)?(\/\/)?([^\s$.?#].[^\s]*)$/i;
 
@@ -47,8 +48,18 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
   }, [currentUser, coachId, navigate]);
 
   const handleSubmit = async (values: UserPublic) => {
-    const { achievements1, achievements2, achievements3, ...submitValues } =
-      values;
+    const {
+      achievements1,
+      achievements2,
+      achievements3,
+      hobbies1,
+      hobbies2,
+      hobbies3,
+      hobbies4,
+      hobbies5,
+      hobbies6,
+      ...submitValues
+    } = values;
     await menApiAuthClient()
       .put("/user", {
         ...submitValues,
@@ -61,6 +72,14 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
           achievements1,
           achievements2,
           achievements3,
+        ]),
+        hobbies: JSON.stringify([
+          hobbies1,
+          hobbies2,
+          hobbies3,
+          hobbies4,
+          hobbies5,
+          hobbies6,
         ]),
         id: currentUser.id,
       })
@@ -119,6 +138,12 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
               achievements1: currentUser.achievements1 || "",
               achievements2: currentUser.achievements2 || "",
               achievements3: currentUser.achievements3 || "",
+              hobbies1: currentUser.hobbies1 || "",
+              hobbies2: currentUser.hobbies2 || "",
+              hobbies3: currentUser.hobbies3 || "",
+              hobbies4: currentUser.hobbies4 || "",
+              hobbies5: currentUser.hobbies5 || "",
+              hobbies6: currentUser.hobbies6 || "",
             }}
             validationSchema={Yup.object().shape({
               first_name: Yup.string().required("Required"),
@@ -159,7 +184,16 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                 100,
                 "Must be 100 charatcers or less"
               ),
+              hobbies1: Yup.string()
+                .max(25, "Must be 25 charatcers or less")
+                .required("At least one hobby is required"),
+              hobbies2: Yup.string().max(25, "Must be 25 charatcers or less"),
+              hobbies3: Yup.string().max(25, "Must be 25 charatcers or less"),
+              hobbies4: Yup.string().max(25, "Must be 25 charatcers or less"),
+              hobbies5: Yup.string().max(25, "Must be 25 charatcers or less"),
+              hobbies6: Yup.string().max(25, "Must be 25 charatcers or less"),
             })}
+            validateOnChange
             onSubmit={async (
               values: UserPublic,
               { setSubmitting }: FormikHelpers<UserPublic>
@@ -470,6 +504,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                   </Box>
                 </Box>
                 <Achievements {...props} />
+                <Hobbies {...props} />
                 <Button
                   type="submit"
                   disabled={props.isSubmitting}

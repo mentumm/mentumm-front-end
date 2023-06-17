@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   FormControl,
@@ -8,7 +9,6 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import { FormikProps } from "formik";
-import React from "react";
 import { UserPublic } from "../../../types";
 
 const Achievements = (props: FormikProps<UserPublic>) => {
@@ -30,7 +30,6 @@ const Achievements = (props: FormikProps<UserPublic>) => {
           }
         >
           <Input
-            isRequired
             id="achievements1"
             name="achievements1"
             placeholder="Enter Achievement"
