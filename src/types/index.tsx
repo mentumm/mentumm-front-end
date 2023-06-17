@@ -36,6 +36,15 @@ export interface User {
   facebook_url?: string;
   instagram_url?: string;
   website_url?: string;
+  achievements1?: string;
+  achievements2?: string;
+  achievements3?: string;
+  hobbies1?: string;
+  hobbies2?: string;
+  hobbies3?: string;
+  hobbies4?: string;
+  hobbies5?: string;
+  hobbies6?: string;
 }
 
 type UserPrivateFields =

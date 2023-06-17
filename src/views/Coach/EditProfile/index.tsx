@@ -47,14 +47,21 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
   }, [currentUser, coachId, navigate]);
 
   const handleSubmit = async (values: UserPublic) => {
+    const { achievements1, achievements2, achievements3, ...submitValues } =
+      values;
     await menApiAuthClient()
       .put("/user", {
-        ...values,
+        ...submitValues,
         linkedin_url: ensureHttps(values.linkedin_url),
         instagram_url: ensureHttps(values.instagram_url),
         facebook_url: ensureHttps(values.facebook_url),
         website_url: ensureHttps(values.website_url),
         booking_url: ensureHttps(values.booking_url),
+        achievements: JSON.stringify([
+          achievements1,
+          achievements2,
+          achievements3,
+        ]),
         id: currentUser.id,
       })
       .then(() => {
@@ -462,9 +469,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                     </FormControl>
                   </Box>
                 </Box>
-                <Box>
-                  <Achievements {...props} />
-                </Box>
+                <Achievements {...props} />
                 <Button
                   type="submit"
                   disabled={props.isSubmitting}
