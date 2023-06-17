@@ -6,13 +6,16 @@ import {
   Textarea,
   Select,
   Button,
+  Flex,
+  Text,
   FormControl,
   FormErrorMessage,
   Container,
-  Flex,
   Center,
   InputGroup,
   InputRightElement,
+  Tag,
+  HStack,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -25,6 +28,7 @@ import { menApiAuthClient } from "../../../clients/mentumm";
 import { useSnackbar } from "notistack";
 import { useCookies } from "react-cookie";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 
 const urlRegex = /^(?:([a-z]+):)?(\/\/)?([^\s$.?#].[^\s]*)$/i;
 
@@ -44,6 +48,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
   const [, setCookie] = useCookies(["growth_10_03142023", "growth_10_token"]);
   const [showPassword, setShowPassword] = useState(false)
   const handlePasswordShowClick = () => setShowPassword(!showPassword)
+  const [coachExpertise, setCoachExpertise] = useState([]);
 
   useEffect(() => {
     // ensure that only coaches can edit their own profiles
@@ -471,6 +476,57 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                         />
                         <FormErrorMessage>{props.errors.bio}</FormErrorMessage>
                       </FormControl>
+                    </Box>
+                    <Box flexBasis="100%" mt={10}>
+                      <Flex>
+                        <Heading
+                          pt="2px"
+                          as="h2"
+                          size="md"
+                          fontWeight="normal"
+                        >
+                          Top Areas of Expertise
+                        </Heading>
+                        {coachExpertise.length ? (
+                          <Link to={`/coach/${currentUser.id}/coaching-style`}>
+                            <Button
+                              ml={2}
+                              size="sm"
+                              variant="ghost"
+                            >
+                              Edit
+                            </Button>
+                          </Link>
+                        ) :
+                          null
+                        }
+                      </Flex>
+                      <Text fontSize="xs">
+                        Select up to 6 Areas of Expertise
+                      </Text>
+                      <Box>
+                        <HStack
+                          mt={2}
+                          spacing={2}>
+                          {
+                            coachExpertise.length ?
+                              (coachExpertise.map((style) =>
+                                <Tag
+                                  color="white"
+                                  bg="blue.600">
+                                  {style.name}
+                                </Tag>))
+                              :
+                              (<Link to={`/coach/${currentUser.id}/expertise`}>
+                                <Tag
+                                  mt={2}
+                                  _hover={{ bg: "#5DBABD", color: "white" }}>
+                                  ADD AREAS OF EXPERTISE
+                                </Tag>
+                              </Link>)
+                          }
+                        </HStack>
+                      </Box>
                     </Box>
                     <Box flexBasis="100%" marginTop={10} marginBottom={6}>
                       <Heading as="label" size="md" fontWeight="normal">
