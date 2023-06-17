@@ -21,13 +21,17 @@ export const TagsSection: React.FC<TagsSectionProps> = ({
   selectedItems,
   setSelectedItems,
 }) => {
-  const toggleTag = (id: number) => (
-    selectedItems.includes(id)
-      ? selectedItems.filter((item) => item !== id)
-      : selectedItems.length < 6
-        ? [...selectedItems, id]
-        : selectedItems
-  )
+  const toggleTag = (id: number) => {
+    if (selectedItems.includes(id)) {
+      return selectedItems.filter((item) => item !== id);
+    }
+
+    if (selectedItems.length < 6) {
+      return [...selectedItems, id];
+    }
+
+    return selectedItems;
+  }
 
   return (
     <Box my={8}>
