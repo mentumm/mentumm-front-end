@@ -55,7 +55,7 @@ export const CoachExpertise: React.FC<CoachExpertiseProps> = ({
         setTags(setPersonalTags, data, "Personal");
 
       } catch (error) {
-        throw new Error("Could not load Style Tags!");
+        throw new Error("Could not load Expertise Tags!");
       } finally {
         setLoading(false);
       }
