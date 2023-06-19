@@ -488,7 +488,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                           Top Areas of Expertise
                         </Heading>
                         {coachExpertise.length ? (
-                          <Link to={`/coach/${currentUser.id}/coaching-style`}>
+                          <Link to={`/coach/${currentUser.id}/expertise`}>
                             <Button
                               ml={2}
                               size="sm"

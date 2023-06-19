@@ -50,6 +50,7 @@ export const CoachExpertise: React.FC<CoachExpertiseProps> = ({
         const { data } = await menApiAuthClient().get<Tag[]>(
           `${envConfig.API_URL}/v1/tags?kind=expertise`
         );
+        console.log({ data })
         setTags(setProfessionalTags, data, "Professional");
         setTags(setLeadershipTags, data, "Leadership");
         setTags(setPersonalTags, data, "Personal");
@@ -73,6 +74,7 @@ export const CoachExpertise: React.FC<CoachExpertiseProps> = ({
     await menApiAuthClient()
       .post(`${envConfig.API_URL}/v1/user/tags`, {
         tag_ids: selectedItems,
+        kind: 'expertise',
         user_id: currentUser.id,
         clear: true,
       })

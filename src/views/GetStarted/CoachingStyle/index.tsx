@@ -134,6 +134,7 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser }) => {
     await menApiAuthClient()
       .post(`${envConfig.API_URL}/v1/user/tags`, {
         tag_ids: checkedItems,
+        kind: 'style',
         user_id: currentUser.id,
         clear: true,
       })
