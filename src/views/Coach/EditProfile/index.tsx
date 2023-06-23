@@ -24,6 +24,8 @@ import { usStates } from "../../../utils/states";
 import { menApiAuthClient } from "../../../clients/mentumm";
 import { useSnackbar } from "notistack";
 import { useCookies } from "react-cookie";
+import Achievements from "./Achievements";
+import Hobbies from "./Hobbies";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 const urlRegex = /^(?:([a-z]+):)?(\/\/)?([^\s$.?#].[^\s]*)$/i;
@@ -42,8 +44,8 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
   const { coachId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
   const [, setCookie] = useCookies(["growth_10_03142023", "growth_10_token"]);
-  const [showPassword, setShowPassword] = useState(false)
-  const handlePasswordShowClick = () => setShowPassword(!showPassword)
+  const [showPassword, setShowPassword] = useState(false);
+  const handlePasswordShowClick = () => setShowPassword(!showPassword);
 
   useEffect(() => {
     // ensure that only coaches can edit their own profiles
@@ -53,7 +55,21 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
   }, [currentUser, coachId, navigate]);
 
   const handleUpdate = async (values: UserPublic) => {
-    const { update_password, retype_password, ...rest } = values;
+    const {
+      achievements1,
+      achievements2,
+      achievements3,
+      hobbies1,
+      hobbies2,
+      hobbies3,
+      hobbies4,
+      hobbies5,
+      hobbies6,
+      update_password,
+      retype_password,
+      ...rest
+    } = values;
+
     const updateValues = {
       ...rest,
       linkedin_url: ensureHttps(values.linkedin_url),
@@ -61,9 +77,21 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
       facebook_url: ensureHttps(values.facebook_url),
       website_url: ensureHttps(values.website_url),
       booking_url: ensureHttps(values.booking_url),
+      achievements: JSON.stringify([
+        achievements1,
+        achievements2,
+        achievements3,
+      ]),
+      hobbies: JSON.stringify([
+        hobbies1,
+        hobbies2,
+        hobbies3,
+        hobbies4,
+        hobbies5,
+        hobbies6,
+      ]),
       id: currentUser.id,
-    }
-
+    };
     update_password && (updateValues.password = update_password);
 
     await menApiAuthClient()
@@ -90,7 +118,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
           variant: "error",
         });
       });
-  }
+  };
 
   const handleSubmit = async (values: UserPublic) => {
     handleUpdate(values);
@@ -124,6 +152,15 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
               website_url: currentUser.website_url || "",
               booking_url: currentUser.booking_url || "",
               bio: currentUser.bio || "",
+              achievements1: currentUser.achievements1 || "",
+              achievements2: currentUser.achievements2 || "",
+              achievements3: currentUser.achievements3 || "",
+              hobbies1: currentUser.hobbies1 || "",
+              hobbies2: currentUser.hobbies2 || "",
+              hobbies3: currentUser.hobbies3 || "",
+              hobbies4: currentUser.hobbies4 || "",
+              hobbies5: currentUser.hobbies5 || "",
+              hobbies6: currentUser.hobbies6 || "",
             }}
             validationSchema={Yup.object().shape({
               first_name: Yup.string().required("Required"),
@@ -131,10 +168,14 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
               email: Yup.string()
                 .email("Invalid email address")
                 .required("Required"),
-              update_password: Yup.string()
-                .oneOf([Yup.ref("retype_password")], "Passwords do not match"),
-              retype_password: Yup.string()
-                .oneOf([Yup.ref("update_password")], "Passwords do not match"),
+              update_password: Yup.string().oneOf(
+                [Yup.ref("retype_password")],
+                "Passwords do not match"
+              ),
+              retype_password: Yup.string().oneOf(
+                [Yup.ref("update_password")],
+                "Passwords do not match"
+              ),
               city: Yup.string(),
               state: Yup.string(),
               phone_number: Yup.string()
@@ -157,7 +198,27 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
               bio: Yup.string()
                 .max(500, "Must be 500 charatcers or less")
                 .required("Required"),
+              achievements1: Yup.string()
+                .max(100, "Must be 100 charatcers or less")
+                .required("At least one achievement is required"),
+              achievements2: Yup.string().max(
+                100,
+                "Must be 100 charatcers or less"
+              ),
+              achievements3: Yup.string().max(
+                100,
+                "Must be 100 charatcers or less"
+              ),
+              hobbies1: Yup.string()
+                .max(25, "Must be 25 charatcers or less")
+                .required("At least one hobby is required"),
+              hobbies2: Yup.string().max(25, "Must be 25 charatcers or less"),
+              hobbies3: Yup.string().max(25, "Must be 25 charatcers or less"),
+              hobbies4: Yup.string().max(25, "Must be 25 charatcers or less"),
+              hobbies5: Yup.string().max(25, "Must be 25 charatcers or less"),
+              hobbies6: Yup.string().max(25, "Must be 25 charatcers or less"),
             })}
+            validateOnChange
             onSubmit={async (
               values: UserPublic,
               { setSubmitting }: FormikHelpers<UserPublic>
@@ -168,12 +229,9 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
           >
             {(props) => {
               const {
-                touched: {
-                  update_password,
-                  retype_password
-                }
+                touched: { update_password, retype_password },
               } = props;
-              const isTouchedPassword = !!(update_password && retype_password)
+              const isTouchedPassword = !!(update_password && retype_password);
               return (
                 <Form>
                   <Box
@@ -271,7 +329,9 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                             );
                           })}
                         </Select>
-                        <FormErrorMessage>{props.errors.state}</FormErrorMessage>
+                        <FormErrorMessage>
+                          {props.errors.state}
+                        </FormErrorMessage>
                       </FormControl>
                     </Box>
                     <Box flexBasis="100%" marginTop={10} marginBottom={6}>
@@ -295,17 +355,19 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                           onBlur={props.handleBlur}
                           placeholder="john.savage@mentumm.com"
                         />
-                        <FormErrorMessage>{props.errors.email}</FormErrorMessage>
+                        <FormErrorMessage>
+                          {props.errors.email}
+                        </FormErrorMessage>
                       </FormControl>
                     </Box>
                     <Box flexBasis="50%">
                       <FormControl
                         isRequired
-                        isInvalid={
-                          !!props.errors.phone_number
-                        }
+                        isInvalid={!!props.errors.phone_number}
                       >
-                        <FormLabel htmlFor="phone_number">Phone Number</FormLabel>
+                        <FormLabel htmlFor="phone_number">
+                          Phone Number
+                        </FormLabel>
                         <Input
                           type="tel"
                           variant="outline"
@@ -325,9 +387,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                       <FormControl
                         isRequired
                         mb="4"
-                        isInvalid={
-                          !!props.errors.linkedin_url
-                        }
+                        isInvalid={!!props.errors.linkedin_url}
                       >
                         <FormLabel htmlFor="linkedin_url">
                           LinkedIn Profile
@@ -398,7 +458,8 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                     <Box flexBasis="50%">
                       <FormControl
                         isInvalid={
-                          props.touched.website_url && !!props.errors.website_url
+                          props.touched.website_url &&
+                          !!props.errors.website_url
                         }
                       >
                         <FormLabel htmlFor="website_url">
@@ -426,9 +487,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                     <Box flex={1}>
                       <FormControl
                         isRequired
-                        isInvalid={
-                          !!props.errors.booking_url
-                        }
+                        isInvalid={!!props.errors.booking_url}
                       >
                         <FormLabel htmlFor="booking_url">
                           Enter your Mentumm-specific Calendly link
@@ -453,13 +512,10 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                       </Heading>
                     </Box>
                     <Box flex={1}>
-                      <FormControl
-                        isRequired
-                        isInvalid={!!props.errors.bio}
-                      >
+                      <FormControl isRequired isInvalid={!!props.errors.bio}>
                         <FormLabel htmlFor="bio">
-                          Please limit to one paragraph. You can write about your
-                          years of experience, industry, or skills.
+                          Please limit to one paragraph. You can write about
+                          your years of experience, industry, or skills.
                         </FormLabel>
                         <Textarea
                           id="bio"
@@ -472,19 +528,21 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                         <FormErrorMessage>{props.errors.bio}</FormErrorMessage>
                       </FormControl>
                     </Box>
-                    <Box flexBasis="100%" marginTop={10} marginBottom={6}>
-                      <Heading as="label" size="md" fontWeight="normal">
-                        Change Password
-                      </Heading>
-                      <Box
-                        w="60%"
-                      >
+                    <Box flexBasis="100%" marginTop={4} marginBottom={6}>
+                      <Achievements {...props} />
+                      <Hobbies {...props} />
+                      <Box flexBasis="100%" marginTop={10} marginBottom={6}>
+                        <Heading as="label" size="md" fontWeight="normal">
+                          Change Password
+                        </Heading>
+                      </Box>
+                      <Box w="60%">
                         <FormControl
-                          isInvalid={isTouchedPassword && !!props.errors.retype_password}
+                          isInvalid={
+                            isTouchedPassword && !!props.errors.retype_password
+                          }
                         >
-                          <Flex
-                            mt={4}
-                          >
+                          <Flex mt={4}>
                             <InputGroup>
                               <Input
                                 htmlSize={26}
@@ -492,21 +550,25 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                                 variant="outline"
                                 id="update_password"
                                 name="update_password"
-                                type={showPassword ? 'text' : 'password'}
+                                type={showPassword ? "text" : "password"}
                                 value={props.values.password}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
                                 placeholder="Password"
+                                marginRight={2}
                               />
-                              <InputRightElement
-                                mr={4}
-                              >
+                              <InputRightElement mr={4}>
                                 <Button
                                   variant="ghost"
-                                  size='sm'
-                                  colorScheme={showPassword ? 'blue' : 'brand'}
-                                  onClick={handlePasswordShowClick}>
-                                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                                  size="sm"
+                                  colorScheme={showPassword ? "blue" : "brand"}
+                                  onClick={handlePasswordShowClick}
+                                >
+                                  {showPassword ? (
+                                    <ViewIcon />
+                                  ) : (
+                                    <ViewOffIcon />
+                                  )}
                                 </Button>
                               </InputRightElement>
                             </InputGroup>
@@ -518,25 +580,30 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                                 variant="outline"
                                 id="retype_password"
                                 name="retype_password"
-                                type={showPassword ? 'text' : 'password'}
+                                type={showPassword ? "text" : "password"}
                                 onChange={props.handleChange}
                                 onBlur={props.handleBlur}
                                 placeholder="Retype Password"
                               />
-                              <InputRightElement
-                                mr={4}
-                              >
+                              <InputRightElement mr={4}>
                                 <Button
                                   variant="ghost"
-                                  size='sm'
-                                  onClick={handlePasswordShowClick}>
-                                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                                  size="sm"
+                                  onClick={handlePasswordShowClick}
+                                >
+                                  {showPassword ? (
+                                    <ViewIcon />
+                                  ) : (
+                                    <ViewOffIcon />
+                                  )}
                                 </Button>
                               </InputRightElement>
                             </InputGroup>
                           </Flex>
                           <Center>
-                            <FormErrorMessage>{props.errors.retype_password}</FormErrorMessage>
+                            <FormErrorMessage>
+                              {props.errors.retype_password}
+                            </FormErrorMessage>
                           </Center>
                         </FormControl>
                       </Box>
@@ -544,14 +611,16 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                   </Box>
                   <Button
                     type="submit"
-                    isDisabled={props.isSubmitting || !!(Object.keys(props.errors).length)}
+                    isDisabled={
+                      props.isSubmitting || !!Object.keys(props.errors).length
+                    }
                     mt="6"
                     size="lg"
                   >
                     Submit
                   </Button>
                 </Form>
-              )
+              );
             }}
           </Formik>
         </Box>
