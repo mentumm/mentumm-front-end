@@ -16,6 +16,7 @@ import {
   InputRightElement,
   Tag,
   HStack,
+  FormHelperText,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -527,9 +528,11 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                           null
                         }
                       </Flex>
-                      <Text fontSize="xs">
-                        Select up to 2 Coaching Styles
-                      </Text>
+                      <FormControl>
+                        <FormHelperText mt={0}>
+                          Select up to 2 Coaching Styles
+                        </FormHelperText>
+                      </FormControl>
                       <Box>
                         <HStack
                           mt={2}
