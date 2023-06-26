@@ -146,6 +146,17 @@ function App() {
             }
           />
           <Route
+            path="/coach/:coachId/coaching-style"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <CoachingStyle
+                  isCoach
+                  currentUser={currentUser}
+                />
+              </SignInWrapper>
+            }
+          />
+          <Route
             path="/get-started"
             element={
               <SignInWrapper currentUser={currentUser}>

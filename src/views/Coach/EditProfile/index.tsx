@@ -6,27 +6,33 @@ import {
   Textarea,
   Select,
   Button,
+  Text,
+  Flex,
   FormControl,
   FormErrorMessage,
   Container,
-  Flex,
   Center,
   InputGroup,
   InputRightElement,
+  Tag,
+  HStack,
+  FormHelperText,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import PageWrapper from "../../../components/PageWrapper";
 import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
-import { UserPublic } from "../../../types";
+import { UserPublic, CoachType } from "../../../types";
 import { usStates } from "../../../utils/states";
 import { menApiAuthClient } from "../../../clients/mentumm";
+import { mixpanelEvent } from "../../../helpers";
 import { useSnackbar } from "notistack";
 import { useCookies } from "react-cookie";
 import Achievements from "./Achievements";
 import Hobbies from "./Hobbies";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { Link } from "react-router-dom";
 
 const urlRegex = /^(?:([a-z]+):)?(\/\/)?([^\s$.?#].[^\s]*)$/i;
 
@@ -44,14 +50,40 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
   const { coachId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
   const [, setCookie] = useCookies(["growth_10_03142023", "growth_10_token"]);
-  const [showPassword, setShowPassword] = useState(false);
-  const handlePasswordShowClick = () => setShowPassword(!showPassword);
+  const [showPassword, setShowPassword] = useState(false)
+  const [coachStyles, setCoachStyles] = useState([]);
+  const handlePasswordShowClick = () => setShowPassword(!showPassword)
 
   useEffect(() => {
     // ensure that only coaches can edit their own profiles
     if (currentUser && currentUser.id !== coachId) {
       navigate("/");
     }
+
+    // query for coach data
+    const loadCoach = async () => {
+      try {
+        const singleCoach = await menApiAuthClient().get("/coaches", {
+          params: {
+            id: currentUser.id,
+          },
+        });
+
+        const coach: CoachType = singleCoach.data[0];
+        setCoachStyles(coach.styles);
+
+        mixpanelEvent("Coach Edit Profile Viewed", {
+          "Coach ID": coach.id,
+          "Coach Name": `${coach.first_name} ${coach.last_name}`,
+          "Coach Styles": coachStyles.map((style) => style.name),
+        });
+      } catch (error) {
+        console.log("Problem loading Coach Profile", error);
+        throw new Error(error);
+      }
+    };
+    loadCoach();
+
   }, [currentUser, coachId, navigate]);
 
   const handleUpdate = async (values: UserPublic) => {
@@ -527,6 +559,59 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                         />
                         <FormErrorMessage>{props.errors.bio}</FormErrorMessage>
                       </FormControl>
+                    </Box>
+                    <Box flexBasis="100%" mt={10}>
+                      <Flex>
+                        <Heading
+                          pt="2px"
+                          as="h2"
+                          size="md"
+                          fontWeight="normal"
+                        >
+                          Coaching Styles
+                        </Heading>
+                        {coachStyles.length ? (
+                          <Link to={`/coach/${currentUser.id}/coaching-style`}>
+                            <Button
+                              ml={2}
+                              size="sm"
+                              variant="ghost"
+                            >
+                              Edit
+                            </Button>
+                          </Link>
+                        ) :
+                          null
+                        }
+                      </Flex>
+                      <FormControl>
+                        <FormHelperText mt={0}>
+                          Select up to 2 Coaching Styles
+                        </FormHelperText>
+                      </FormControl>
+                      <Box>
+                        <HStack
+                          mt={2}
+                          spacing={2}>
+                          {
+                            coachStyles.length ?
+                              (coachStyles.map((style) =>
+                                <Tag
+                                  color="white"
+                                  bg="blue.600">
+                                  {style.name}
+                                </Tag>))
+                              :
+                              (<Link to={`/coach/${currentUser.id}/coaching-style`}>
+                                <Tag
+                                  mt={2}
+                                  _hover={{ bg: "#5DBABD", color: "white" }}>
+                                  ADD COACHING STYLES
+                                </Tag>
+                              </Link>)
+                          }
+                        </HStack>
+                      </Box>
                     </Box>
                     <Box flexBasis="100%" marginTop={4} marginBottom={6}>
                       <Achievements {...props} />
