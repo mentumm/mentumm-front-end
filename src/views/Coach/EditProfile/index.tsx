@@ -6,7 +6,6 @@ import {
   Textarea,
   Select,
   Button,
-  Text,
   Flex,
   FormControl,
   FormErrorMessage,
