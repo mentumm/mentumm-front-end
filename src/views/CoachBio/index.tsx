@@ -165,8 +165,8 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                 <Wrap shouldWrapChildren>
                   {coach && coach.expertise.length
                     ? coach.expertise.map((expertise) => (
-                        <Tag key={expertise.id}>{expertise.name}</Tag>
-                      ))
+                      <Tag key={expertise.id}>{expertise.name}</Tag>
+                    ))
                     : null}
                 </Wrap>
               </Stack>
