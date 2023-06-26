@@ -33,7 +33,6 @@ import Achievements from "./Achievements";
 import Hobbies from "./Hobbies";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
-import { Link } from "react-router-dom";
 
 const urlRegex = /^(?:([a-z]+):)?(\/\/)?([^\s$.?#].[^\s]*)$/i;
 
@@ -73,6 +72,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
 
         const coach: CoachType = singleCoach.data[0];
         setCoachStyles(coach.styles);
+        setCoachExpertise(coach.expertise);
 
         mixpanelEvent("Coach Edit Profile Viewed", {
           "Coach ID": coach.id,
@@ -86,7 +86,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
     };
     loadCoach();
 
-  }, [currentUser, coachId, navigate]);
+  }, [currentUser, coachId, navigate, coachStyles]);
 
   const handleUpdate = async (values: UserPublic) => {
     const {
@@ -570,57 +570,6 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                           size="md"
                           fontWeight="normal"
                         >
-                          Top Areas of Expertise
-                        </Heading>
-                        {coachExpertise.length ? (
-                          <Link to={`/coach/${currentUser.id}/expertise`}>
-                            <Button
-                              ml={2}
-                              size="sm"
-                              variant="ghost"
-                            >
-                              Edit
-                            </Button>
-                          </Link>
-                        ) :
-                          null
-                        }
-                      </Flex>
-                      <Text fontSize="xs">
-                        Select up to 6 Areas of Expertise
-                      </Text>
-                      <Box>
-                        <HStack
-                          mt={2}
-                          spacing={2}>
-                          {
-                            coachExpertise.length ?
-                              (coachExpertise.map((style) =>
-                                <Tag
-                                  color="white"
-                                  bg="blue.600">
-                                  {style.name}
-                                </Tag>))
-                              :
-                              (<Link to={`/coach/${currentUser.id}/expertise`}>
-                                <Tag
-                                  mt={2}
-                                  _hover={{ bg: "#5DBABD", color: "white" }}>
-                                  ADD AREAS OF EXPERTISE
-                                </Tag>
-                              </Link>)
-                          }
-                        </HStack>
-                      </Box>
-                    </Box>
-                    <Box flexBasis="100%" mt={10}>
-                      <Flex>
-                        <Heading
-                          pt="2px"
-                          as="h2"
-                          size="md"
-                          fontWeight="normal"
-                        >
                           Coaching Styles
                         </Heading>
                         {coachStyles.length ? (
@@ -660,6 +609,59 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                                   mt={2}
                                   _hover={{ bg: "#5DBABD", color: "white" }}>
                                   ADD COACHING STYLES
+                                </Tag>
+                              </Link>)
+                          }
+                        </HStack>
+                      </Box>
+                    </Box>
+                    <Box flexBasis="100%" mt={10}>
+                      <Flex>
+                        <Heading
+                          pt="2px"
+                          as="h2"
+                          size="md"
+                          fontWeight="normal"
+                        >
+                          Top Areas of Expertise
+                        </Heading>
+                        {coachExpertise.length ? (
+                          <Link to={`/coach/${currentUser.id}/expertise`}>
+                            <Button
+                              ml={2}
+                              size="sm"
+                              variant="ghost"
+                            >
+                              Edit
+                            </Button>
+                          </Link>
+                        ) :
+                          null
+                        }
+                      </Flex>
+                      <FormControl>
+                        <FormHelperText mt={0}>
+                          Select up to 6 Areas of Expertise
+                        </FormHelperText>
+                      </FormControl>
+                      <Box>
+                        <HStack
+                          mt={2}
+                          spacing={2}>
+                          {
+                            coachExpertise.length ?
+                              (coachExpertise.map((style) =>
+                                <Tag
+                                  color="white"
+                                  bg="blue.600">
+                                  {style.name}
+                                </Tag>))
+                              :
+                              (<Link to={`/coach/${currentUser.id}/expertise`}>
+                                <Tag
+                                  mt={2}
+                                  _hover={{ bg: "#5DBABD", color: "white" }}>
+                                  ADD AREAS OF EXPERTISE
                                 </Tag>
                               </Link>)
                           }
