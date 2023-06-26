@@ -136,6 +136,7 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser, isCoach }) =
       .post(`${envConfig.API_URL}/v1/user/tags`, {
         tag_ids: checkedItems,
         user_id: currentUser.id,
+        kind: 'style',
         clear: true,
       })
       .then(() => {
