@@ -562,34 +562,36 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                         <FormErrorMessage>{props.errors.bio}</FormErrorMessage>
                       </FormControl>
                     </Box>
-                    <Box flexBasis="100%" mt={10}>
-                      <Flex>
-                        <Heading
-                          pt="2px"
-                          as="h2"
-                          size="md"
-                          fontWeight="normal"
-                        >
-                          Coaching Styles
-                        </Heading>
-                        {coachStyles.length ? (
-                          <Link to={`/coach/${currentUser.id}/coaching-style`}>
-                            <Button
-                              ml={2}
-                              size="sm"
-                              variant="ghost"
-                            >
-                              Edit
-                            </Button>
-                          </Link>
-                        ) :
-                          null
-                        }
-                      </Flex>
+                    <Box flexBasis="100%">
+                      <Box mt={10} mb={6}>
+                        <Flex>
+                          <Heading
+                            pt="2px"
+                            as="h2"
+                            size="md"
+                            fontWeight="normal"
+                          >
+                            Coaching Styles
+                          </Heading>
+                          {coachStyles.length ? (
+                            <Link to={`/coach/${currentUser.id}/coaching-style`}>
+                              <Button
+                                ml={2}
+                                size="sm"
+                                variant="ghost"
+                              >
+                                Edit
+                              </Button>
+                            </Link>
+                          ) :
+                            null
+                          }
+                        </Flex>
+                      </Box>
                       <FormControl>
-                        <FormHelperText mt={0}>
+                        <FormLabel htmlFor="coaching-style" mt={0}>
                           Select up to 2 Coaching Styles
-                        </FormHelperText>
+                        </FormLabel>
                       </FormControl>
                       <Box>
                         <HStack
@@ -615,34 +617,36 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                         </HStack>
                       </Box>
                     </Box>
-                    <Box flexBasis="100%" mt={10}>
-                      <Flex>
-                        <Heading
-                          pt="2px"
-                          as="h2"
-                          size="md"
-                          fontWeight="normal"
-                        >
-                          Top Areas of Expertise
-                        </Heading>
-                        {coachExpertise.length ? (
-                          <Link to={`/coach/${currentUser.id}/expertise`}>
-                            <Button
-                              ml={2}
-                              size="sm"
-                              variant="ghost"
-                            >
-                              Edit
-                            </Button>
-                          </Link>
-                        ) :
-                          null
-                        }
-                      </Flex>
+                    <Box flexBasis="100%">
+                      <Box mt={10} mb={6}>
+                        <Flex>
+                          <Heading
+                            pt="2px"
+                            as="h2"
+                            size="md"
+                            fontWeight="normal"
+                          >
+                            Top Areas of Expertise
+                          </Heading>
+                          {coachExpertise.length ? (
+                            <Link to={`/coach/${currentUser.id}/expertise`}>
+                              <Button
+                                ml={2}
+                                size="sm"
+                                variant="ghost"
+                              >
+                                Edit
+                              </Button>
+                            </Link>
+                          ) :
+                            null
+                          }
+                        </Flex>
+                      </Box>
                       <FormControl>
-                        <FormHelperText mt={0}>
+                        <FormLabel htmlFor="coaching-expertise" mt={0}>
                           Select up to 6 Areas of Expertise
-                        </FormHelperText>
+                        </FormLabel>
                       </FormControl>
                       <Box>
                         <HStack
