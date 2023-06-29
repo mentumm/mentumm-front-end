@@ -14,7 +14,7 @@ import { createUseStyles, DefaultTheme } from "react-jss";
 import { Link } from "react-router-dom";
 import { mixpanelIdentify } from "../../helpers";
 import { CurrentUserProps } from "../../types";
-import welcome from "../CoachSearch/welcome.png";
+import welcome from "./welcome.png";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {

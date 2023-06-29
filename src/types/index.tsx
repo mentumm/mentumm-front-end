@@ -167,6 +167,17 @@ export interface Workshop {
   updated_at?: Date;
 }
 
+export enum TagKind {
+  expertise = "expertise",
+  style = "style",
+}
+
+export enum TagCategory {
+  Professional = "Professional",
+  Leadership = "Leadership",
+  Personal = "Personal",
+}
+
 export interface Tag {
   id: number;
   name: string;
@@ -174,7 +185,8 @@ export interface Tag {
   description: string;
   color: string;
   icon: string;
-  category: "Professional" | "Leadership" | "Personal";
+  category: TagCategory;
+  kind: TagKind;
   created_at: Date;
   updated_at?: Date;
 }

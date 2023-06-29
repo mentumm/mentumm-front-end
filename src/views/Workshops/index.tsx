@@ -40,7 +40,7 @@ const WorkshopsPage: React.FC = () => {
     return (
       <Grid templateColumns="repeat(3, 1fr)" gap={8}>
         {workshops.map((workshop) => (
-          <GridItem>
+          <GridItem key={workshop.id}>
             <Link to={`/workshops/${workshop.slug}`}>
               <Image src={workshop.thumbnail_url} alt={workshop.name} />
             </Link>

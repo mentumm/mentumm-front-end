@@ -13,7 +13,7 @@ import { useNavigate } from "react-router";
 import LoginForm from "../../components/LoginForm";
 import RegisterAction from "../../components/RegisterAction";
 import { UserLoginProps } from "../../types";
-import logo from "./mentumm-logo.svg";
+import logo from "../../assets/mentumm-logo.svg";
 
 const useStyles = createUseStyles({
   root: {
