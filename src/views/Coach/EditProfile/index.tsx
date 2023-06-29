@@ -654,8 +654,9 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                           spacing={2}>
                           {
                             coachExpertise.length ?
-                              (coachExpertise.map((style) =>
+                              (coachExpertise.map((style, i) =>
                                 <Tag
+                                  key={i}
                                   color="white"
                                   bg="blue.600">
                                   {style.name}
