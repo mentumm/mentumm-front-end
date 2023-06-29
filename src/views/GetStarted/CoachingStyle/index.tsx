@@ -137,7 +137,6 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser, isCoach }) =
         tag_ids: checkedItems,
         kind: 'style',
         user_id: currentUser.id,
-        kind: 'style',
         clear: true,
       })
       .then(() => {
