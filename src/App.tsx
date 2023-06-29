@@ -39,6 +39,20 @@ function RedirectOnCondition({ currentUser, to }) {
   return null;
 }
 
+function RedirectOnSignup({ currentUser }: { currentUser: CurrentUser }) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentUser.role === "coach") {
+      navigate(`/coach/${currentUser.id}/coaching-style`, { replace: true });
+    } else {
+      navigate("/get-started", { replace: true });
+    }
+  }, [currentUser, navigate]);
+
+  return null;
+}
+
 function App() {
   const classes = useStyles();
   const [currentUser, setCurrentUser] = useState<CurrentUser>(null);
@@ -149,10 +163,7 @@ function App() {
             path="/coach/:coachId/coaching-style"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <CoachingStyle
-                  isCoach
-                  currentUser={currentUser}
-                />
+                <CoachingStyle isCoach currentUser={currentUser} />
               </SignInWrapper>
             }
           />
@@ -181,10 +192,7 @@ function App() {
                   currentUser={currentUser}
                 />
               ) : (
-                <RedirectOnCondition
-                  currentUser={currentUser}
-                  to="/get-started"
-                />
+                <RedirectOnSignup currentUser={currentUser} />
               )
             }
           />
