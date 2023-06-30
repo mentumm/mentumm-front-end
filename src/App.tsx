@@ -27,18 +27,7 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   },
 }));
 
-function RedirectOnCondition({ currentUser, to }) {
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (currentUser) {
-      navigate(to, { replace: true });
-    }
-  }, [currentUser, navigate, to]);
-
-  return null;
-}
-
+// coaches skip user onboarding on register
 function RedirectOnSignup({ currentUser }: { currentUser: CurrentUser }) {
   const navigate = useNavigate();
 
@@ -47,6 +36,21 @@ function RedirectOnSignup({ currentUser }: { currentUser: CurrentUser }) {
       navigate(`/coach/${currentUser.id}/coaching-style`, { replace: true });
     } else {
       navigate("/get-started", { replace: true });
+    }
+  }, [currentUser, navigate]);
+
+  return null;
+}
+
+// coaches skip user onboarding on first-time sign in
+function RedirectOnSignIn({ currentUser }: { currentUser: CurrentUser }) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentUser.role === "coach" && !currentUser.last_sign_in) {
+      navigate(`/coach/${currentUser.id}/coaching-style`, { replace: true });
+    } else {
+      navigate("/home", { replace: true });
     }
   }, [currentUser, navigate]);
 
@@ -112,7 +116,7 @@ function App() {
                   currentUser={currentUser}
                 />
               ) : (
-                <RedirectOnCondition currentUser={currentUser} to="/home" />
+                <RedirectOnSignIn currentUser={currentUser} />
               )
             }
           />
