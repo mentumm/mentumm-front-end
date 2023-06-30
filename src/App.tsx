@@ -20,6 +20,7 @@ import Register from "./views/Register";
 import Workshops from "./views/Workshops";
 import WorkshopSlug from "./views/WorkshopSlug";
 import BookingConfirmation from "./views/BookingConfirmation";
+import { CoachExpertise } from "./views/CoachExpertise";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -145,6 +146,16 @@ function App() {
             element={
               <SignInWrapper currentUser={currentUser}>
                 <CoachBio currentUser={currentUser} />
+              </SignInWrapper>
+            }
+          />
+          <Route
+            path="/coach/:coachId/expertise"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <CoachExpertise
+                  currentUser={currentUser}
+                />
               </SignInWrapper>
             }
           />
