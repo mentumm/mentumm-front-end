@@ -25,7 +25,7 @@ const Hobbies = (props: FormikProps<UserPublic>) => {
       <SimpleGrid columns={2} spacing={4}>
         <FormControl
           isRequired
-          isInvalid={props.touched.hobbies1 && !!props.errors.hobbies1}
+          isInvalid={!!props.errors.hobbies1}
         >
           <Input
             id="hobbies1"

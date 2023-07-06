@@ -26,7 +26,7 @@ const Achievements = (props: FormikProps<UserPublic>) => {
         <FormControl
           isRequired
           isInvalid={
-            props.touched.achievements1 && !!props.errors.achievements1
+            !!props.errors.achievements1
           }
         >
           <Input
