@@ -6,7 +6,6 @@ import {
   Textarea,
   Select,
   Button,
-  Text,
   Flex,
   FormControl,
   FormErrorMessage,
@@ -53,6 +52,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
   const [showPassword, setShowPassword] = useState(false)
   const [coachStyles, setCoachStyles] = useState([]);
   const handlePasswordShowClick = () => setShowPassword(!showPassword)
+  const [coachExpertise, setCoachExpertise] = useState([]);
 
   useEffect(() => {
     // ensure that only coaches can edit their own profiles
@@ -71,19 +71,21 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
 
         const coach: CoachType = singleCoach.data[0];
         setCoachStyles(coach.styles);
+        setCoachExpertise(coach.expertise);
 
         mixpanelEvent("Coach Edit Profile Viewed", {
           "Coach ID": coach.id,
           "Coach Name": `${coach.first_name} ${coach.last_name}`,
           "Coach Styles": coach.styles.map((style) => style.name),
+          "Coach Expertise": coach.expertise.map((expertise) => expertise.name),
         });
       } catch (error) {
         console.log("Problem loading Coach Profile", error);
         throw new Error(error);
       }
+
     };
     loadCoach();
-
   }, [currentUser, coachId, navigate]);
 
   const handleUpdate = async (values: UserPublic) => {
@@ -560,34 +562,36 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                         <FormErrorMessage>{props.errors.bio}</FormErrorMessage>
                       </FormControl>
                     </Box>
-                    <Box flexBasis="100%" mt={10}>
-                      <Flex>
-                        <Heading
-                          pt="2px"
-                          as="h2"
-                          size="md"
-                          fontWeight="normal"
-                        >
-                          Coaching Styles
-                        </Heading>
-                        {coachStyles.length ? (
-                          <Link to={`/coach/${currentUser.id}/coaching-style`}>
-                            <Button
-                              ml={2}
-                              size="sm"
-                              variant="ghost"
-                            >
-                              Edit
-                            </Button>
-                          </Link>
-                        ) :
-                          null
-                        }
-                      </Flex>
+                    <Box flexBasis="100%">
+                      <Box mt={10} mb={6}>
+                        <Flex>
+                          <Heading
+                            pt="2px"
+                            as="h2"
+                            size="md"
+                            fontWeight="normal"
+                          >
+                            Coaching Styles
+                          </Heading>
+                          {coachStyles.length ? (
+                            <Link to={`/coach/${currentUser.id}/coaching-style`}>
+                              <Button
+                                ml={2}
+                                size="sm"
+                                variant="ghost"
+                              >
+                                Edit
+                              </Button>
+                            </Link>
+                          ) :
+                            null
+                          }
+                        </Flex>
+                      </Box>
                       <FormControl>
-                        <FormHelperText mt={0}>
+                        <FormLabel htmlFor="coaching-style" mt={0}>
                           Select up to 2 Coaching Styles
-                        </FormHelperText>
+                        </FormLabel>
                       </FormControl>
                       <Box>
                         <HStack
@@ -607,6 +611,62 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                                   mt={2}
                                   _hover={{ bg: "#5DBABD", color: "white" }}>
                                   ADD COACHING STYLES
+                                </Tag>
+                              </Link>)
+                          }
+                        </HStack>
+                      </Box>
+                    </Box>
+                    <Box flexBasis="100%">
+                      <Box mt={10} mb={6}>
+                        <Flex>
+                          <Heading
+                            pt="2px"
+                            as="h2"
+                            size="md"
+                            fontWeight="normal"
+                          >
+                            Top Areas of Expertise
+                          </Heading>
+                          {coachExpertise.length ? (
+                            <Link to={`/coach/${currentUser.id}/expertise`}>
+                              <Button
+                                ml={2}
+                                size="sm"
+                                variant="ghost"
+                              >
+                                Edit
+                              </Button>
+                            </Link>
+                          ) :
+                            null
+                          }
+                        </Flex>
+                      </Box>
+                      <FormControl>
+                        <FormLabel htmlFor="coaching-expertise" mt={0}>
+                          Select up to 6 Areas of Expertise
+                        </FormLabel>
+                      </FormControl>
+                      <Box>
+                        <HStack
+                          mt={2}
+                          spacing={2}>
+                          {
+                            coachExpertise.length ?
+                              (coachExpertise.map((style, i) =>
+                                <Tag
+                                  key={i}
+                                  color="white"
+                                  bg="blue.600">
+                                  {style.name}
+                                </Tag>))
+                              :
+                              (<Link to={`/coach/${currentUser.id}/expertise`}>
+                                <Tag
+                                  mt={2}
+                                  _hover={{ bg: "#5DBABD", color: "white" }}>
+                                  ADD AREAS OF EXPERTISE
                                 </Tag>
                               </Link>)
                           }
