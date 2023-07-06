@@ -47,6 +47,8 @@ function RedirectOnSignIn({ currentUser }: { currentUser: CurrentUser }) {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("role: ", currentUser.role);
+    console.log("last_sign_in: ", currentUser.last_sign_in);
     if (currentUser.role === "coach" && !currentUser.last_sign_in) {
       navigate(`/coach/${currentUser.id}/coaching-style`, { replace: true });
     } else {
@@ -66,6 +68,7 @@ function App() {
     if (cookies.growth_10_03142023) {
       setCurrentUser({
         id: cookies.growth_10_03142023.id,
+        last_sign_in: cookies.growth_10_03142023.last_sign_in,
 
         // leaving backward compatibility for now
         first_name: cookies.growth_10_03142023.name
@@ -167,7 +170,11 @@ function App() {
             path="/coach/:coachId/coaching-style"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <CoachingStyle isCoach currentUser={currentUser} />
+                <CoachingStyle
+                  isCoach
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                />
               </SignInWrapper>
             }
           />
@@ -183,7 +190,10 @@ function App() {
             path="/get-started/coaching-style"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <CoachingStyle currentUser={currentUser} />
+                <CoachingStyle
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                />
               </SignInWrapper>
             }
           />
