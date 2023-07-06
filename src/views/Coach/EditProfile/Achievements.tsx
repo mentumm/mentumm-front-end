@@ -19,14 +19,16 @@ const Achievements = (props: FormikProps<UserPublic>) => {
           Top Achievements
         </Heading>
       </Box>
-      <FormLabel htmlFor="achievements">
-        {"Use short form response (up to 15 words per achievement)"}
-      </FormLabel>
+      <FormControl>
+        <FormLabel htmlFor="achievements">
+          {"Use short form response (up to 15 words per achievement)"}
+        </FormLabel>
+      </FormControl>
       <Stack direction="column" spacing={4}>
         <FormControl
           isRequired
           isInvalid={
-            !!props.errors.achievements1
+            props.touched.achievements1 && !!props.errors.achievements1
           }
         >
           <Input

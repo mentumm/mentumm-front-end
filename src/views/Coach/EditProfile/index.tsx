@@ -758,7 +758,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                   <Button
                     type="submit"
                     isDisabled={
-                      props.isSubmitting || !!Object.keys(props.errors).length
+                      props.isSubmitting
                     }
                     mt="6"
                     size="lg"
