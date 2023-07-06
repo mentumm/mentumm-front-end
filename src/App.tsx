@@ -48,8 +48,6 @@ function RedirectOnSignIn({ currentUser }: { currentUser: CurrentUser }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("role: ", currentUser.role);
-    console.log("last_sign_in: ", currentUser.last_sign_in);
     if (currentUser.role === "coach" && !currentUser.last_sign_in) {
       navigate(`/coach/${currentUser.id}/coaching-style`, { replace: true });
     } else {
@@ -160,9 +158,7 @@ function App() {
             path="/coach/:coachId/expertise"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <CoachExpertise
-                  currentUser={currentUser}
-                />
+                <CoachExpertise currentUser={currentUser} />
               </SignInWrapper>
             }
           />
