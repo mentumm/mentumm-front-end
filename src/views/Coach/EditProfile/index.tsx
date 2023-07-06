@@ -15,7 +15,6 @@ import {
   InputRightElement,
   Tag,
   HStack,
-  FormHelperText,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -65,7 +64,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
       try {
         const singleCoach = await menApiAuthClient().get("/coaches", {
           params: {
-            id: currentUser.id,
+            id: currentUser?.id,
           },
         });
 
@@ -599,10 +598,12 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                           spacing={2}>
                           {
                             coachStyles.length ?
-                              (coachStyles.map((style) =>
+                              (coachStyles.map((style, i) =>
                                 <Tag
                                   color="white"
-                                  bg="blue.600">
+                                  bg="blue.600"
+                                  key={i}
+                                >
                                   {style.name}
                                 </Tag>))
                               :
@@ -757,7 +758,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                   <Button
                     type="submit"
                     isDisabled={
-                      props.isSubmitting || !!Object.keys(props.errors).length
+                      props.isSubmitting
                     }
                     mt="6"
                     size="lg"

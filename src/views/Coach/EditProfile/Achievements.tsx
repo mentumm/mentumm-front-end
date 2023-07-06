@@ -19,9 +19,13 @@ const Achievements = (props: FormikProps<UserPublic>) => {
           Top Achievements
         </Heading>
       </Box>
-      <FormLabel htmlFor="achievements">
-        {"Use short form response (up to 15 words per achievement)"}
-      </FormLabel>
+      <FormControl
+        isRequired
+      >
+        <FormLabel htmlFor="achievements">
+          {"Use short form response (up to 15 words per achievement)"}
+        </FormLabel>
+      </FormControl>
       <Stack direction="column" spacing={4}>
         <FormControl
           isRequired

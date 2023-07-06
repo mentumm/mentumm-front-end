@@ -19,13 +19,17 @@ const Hobbies = (props: FormikProps<UserPublic>) => {
           Favorite Hobbies
         </Heading>
       </Box>
-      <FormLabel htmlFor="hobbies">
-        {"Use short form response (1-2 words per hobby)"}
-      </FormLabel>
+      <FormControl
+        isRequired
+      >
+        <FormLabel htmlFor="hobbies">
+          {"Use short form response (1-2 words per hobby)"}
+        </FormLabel>
+      </FormControl>
       <SimpleGrid columns={2} spacing={4}>
         <FormControl
-          isRequired
-          isInvalid={props.touched.hobbies1 && !!props.errors.hobbies1}
+          isInvalid={
+            props.touched.hobbies1 && !!props.errors.hobbies1}
         >
           <Input
             id="hobbies1"
