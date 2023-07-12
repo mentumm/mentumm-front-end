@@ -36,6 +36,15 @@ export interface User {
   facebook_url?: string;
   instagram_url?: string;
   website_url?: string;
+  achievements1?: string;
+  achievements2?: string;
+  achievements3?: string;
+  hobbies1?: string;
+  hobbies2?: string;
+  hobbies3?: string;
+  hobbies4?: string;
+  hobbies5?: string;
+  hobbies6?: string;
 }
 
 type UserPrivateFields =
@@ -52,7 +61,11 @@ type UserPrivateFields =
   | "role"
   | "employer_id";
 
-export interface UserPublic extends Omit<User, UserPrivateFields> {}
+export interface UserPublic extends Omit<User, UserPrivateFields> {
+  password?: string;
+  update_password?: string;
+  retype_password?: string;
+}
 
 export interface CoachBooking {
   id: number;
@@ -113,6 +126,17 @@ export interface CurrentUser {
   facebook_url?: string;
   instagram_url?: string;
   website_url?: string;
+  achievements?: string;
+  achievements1?: string;
+  achievements2?: string;
+  achievements3?: string;
+  hobbies?: string;
+  hobbies1?: string;
+  hobbies2?: string;
+  hobbies3?: string;
+  hobbies4?: string;
+  hobbies5?: string;
+  hobbies6?: string;
 }
 
 export interface UserLoginProps {
@@ -163,6 +187,17 @@ export interface Workshop {
   updated_at?: Date;
 }
 
+export enum TagKind {
+  expertise = "expertise",
+  style = "style",
+}
+
+export enum TagCategory {
+  Professional = "Professional",
+  Leadership = "Leadership",
+  Personal = "Personal",
+}
+
 export interface Tag {
   id: number;
   name: string;
@@ -170,7 +205,8 @@ export interface Tag {
   description: string;
   color: string;
   icon: string;
-  category: "Professional" | "Leadership" | "Personal";
+  category: TagCategory;
+  kind: TagKind;
   created_at: Date;
   updated_at?: Date;
 }

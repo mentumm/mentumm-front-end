@@ -16,6 +16,7 @@ import { CurrentUser, UserLoginProps } from "../../types";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { mixpanelEvent, mixpanelIdentify, mixpanelPeople } from "../../helpers";
+import { Link } from "react-router-dom";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
@@ -42,6 +43,20 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     setPasswordError(e.target.value === "");
+  };
+
+  const parseAchievements = (achievements: string) => {
+    if (achievements) {
+      return JSON.parse(achievements);
+    }
+    return ["", "", ""];
+  };
+
+  const parseHobbies = (hobbies: string) => {
+    if (hobbies) {
+      return JSON.parse(hobbies);
+    }
+    return ["", "", "", "", "", "", ""];
   };
 
   const login = async (userEmail: string, userPassword: string) => {
@@ -75,9 +90,24 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
       }
       const user: CurrentUser = loginUser.data;
       await handleAPICreds(email, password);
-      setCurrentUser(user);
 
-      setCookie("growth_10_03142023", user, {
+      const achievements = parseAchievements(user.achievements);
+      const hobbies = parseHobbies(user.hobbies);
+      const updatedUser = {
+        ...user,
+        achievements1: achievements[0],
+        achievements2: achievements[1],
+        achievements3: achievements[2],
+        hobbies1: hobbies[0],
+        hobbies2: hobbies[1],
+        hobbies3: hobbies[2],
+        hobbies4: hobbies[3],
+        hobbies5: hobbies[4],
+        hobbies6: hobbies[5],
+      };
+
+      setCurrentUser(updatedUser);
+      setCookie("growth_10_03142023", updatedUser, {
         path: "/",
         secure: true,
         expires: new Date(Date.now() + 3600 * 1000 * 48),
@@ -87,7 +117,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
       // that happened prior to login
       mixpanelIdentify(String(user.id));
       // set mixpanel profile, maybe this should be server side
-      mixpanelPeople(user);
+      mixpanelPeople(updatedUser);
       mixpanelEvent("User Logged In", {
         "User ID": user.id,
         "First Name": user.first_name,
@@ -172,9 +202,14 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
           </Stack>
           <HStack justify="space-between">
             <Checkbox defaultChecked>Remember me</Checkbox>
-            <Button variant="link" size="sm">
-              Forgot password
-            </Button>
+            <Link to="/forgot-password">
+              <Button
+                variant="link"
+                size="sm"
+              >
+                Forgot password
+              </Button>
+            </Link>
           </HStack>
           <Stack spacing="4">
             <Button type="submit" onClick={() => login(email, password)}>

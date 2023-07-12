@@ -3,7 +3,7 @@ import React from "react";
 import { createUseStyles } from "react-jss";
 import RegisterForm from "../../components/RegisterForm";
 import { UserLoginProps } from "../../types";
-import logo from "./mentumm-logo.svg";
+import logo from "../../assets/mentumm-logo.svg";
 
 const useStyles = createUseStyles({
   root: {
@@ -37,7 +37,6 @@ const Register: React.FC<UserLoginProps> = (props) => {
               <Image
                 src={logo}
                 alt="mentumm banner"
-                // maxW="md"
                 w={{ base: "auto", lg: "500px" }}
               />
             </Center>

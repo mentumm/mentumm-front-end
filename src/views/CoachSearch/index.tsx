@@ -1,35 +1,72 @@
-import { Box, Heading, ListItem, Stack, UnorderedList } from "@chakra-ui/react";
-
+import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
+import {
+  Box,
+  Button,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { Link, useSearchParams } from "react-router-dom";
 import PageWrapper from "../../components/PageWrapper";
-import { mixpanelEvent, mixpanelIdentify } from "../../helpers";
-import { CurrentUserProps, Tag } from "../../types";
-import BookingConfirmation from "../BookingConfirmation";
-import { useGetTags } from "../../helpers/tagHelpers";
+import Coach from "../../components/Coach";
 import { menApiAuthClient } from "../../clients/mentumm";
+import axios from "axios";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
-const CATEGORIES = ["Professional", "Leadership", "Personal"];
-
-const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
-  const coachTags = useGetTags();
-  const [coachBooked, setCoachBooked] = useState<boolean>(null);
+export const CoachSearch = ({ currentUser }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [coaches, setCoaches] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [searchParams] = useSearchParams();
+  const [coachBooked, setCoachBooked] = useState<boolean>(null);
+  const navigate = useNavigate();
 
-  const selectTag = (t: Tag) => {
-    mixpanelEvent("Searched For Tag", {
-      "User ID": currentUser ? currentUser.id : null,
-      "Tag Slug": t.slug,
-      "Tag Name": t.name,
-      "Tag ID": t.id,
-    });
+  const handleChange = (value: string) => {
+    setSearchTerm(value);
+  };
+
+  const handleReset = () => {
+    setSearchTerm("");
   };
 
   useEffect(() => {
-    if (currentUser) {
-      mixpanelIdentify(String(currentUser.id));
-    }
-  }, [currentUser]);
+    const controller = new AbortController();
+
+    const getCoaches = async () => {
+      setIsLoading(true);
+
+      try {
+        const coaches = await menApiAuthClient().get(
+          `/coaches${searchTerm ? `?search=${searchTerm}` : ""}`,
+          {
+            signal: controller.signal,
+          }
+        );
+        if (!coaches || !coaches.data) {
+          throw new Error("Could not get Coaches from API");
+        }
+        setCoaches(coaches.data);
+        setIsLoading(false);
+      } catch (err) {
+        if (axios.isCancel(err)) {
+          return;
+        }
+        setIsLoading(false);
+        console.error(err);
+      }
+    };
+
+    const timeoutId = setTimeout(() => {
+      getCoaches();
+    }, 250);
+
+    return () => {
+      clearTimeout(timeoutId);
+      controller.abort();
+    };
+  }, [searchTerm]);
 
   useEffect(() => {
     // these are for the calendly redirect url params
@@ -72,37 +109,57 @@ const CoachSearch: React.FC<CurrentUserProps> = ({ currentUser }) => {
   }, [searchParams, coachBooked, currentUser]);
 
   if (coachBooked) {
-    return <BookingConfirmation currentUser={currentUser} />;
+    navigate("/booking-confirmation");
   }
 
   return (
-    <PageWrapper title="Pick a Topic" backTo="/home">
-      <Stack direction="row" gap="75px" pl={2}>
-        {CATEGORIES.map((c) => (
-          <Box key={c} minW={275}>
-            <Heading as="h2" size="md" mb={3}>
-              {c}
-            </Heading>
-            <UnorderedList>
-              {!!coachTags &&
-                coachTags
-                  .filter((t) => t.category === c)
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .map((t) => (
-                    <Link
-                      key={t.id}
-                      to={`/coaches/${t.slug}`}
-                      onClick={() => selectTag(t)}
-                    >
-                      <ListItem mb={2} _hover={{ color: "#5DBABD" }}>
-                        {t.name}
-                      </ListItem>
-                    </Link>
-                  ))}
-            </UnorderedList>
-          </Box>
-        ))}
-      </Stack>
+    <PageWrapper title="All Mentumm Coaches" backTo="/home">
+      <Box display="flex" flexDir="row" paddingX={4}>
+        <InputGroup>
+          <InputLeftAddon children={<SearchIcon />} />
+          <Input
+            placeholder="Search by coach name..."
+            onChange={(e) => handleChange(e.target.value)}
+            flex={1}
+            mr="4"
+            value={searchTerm}
+          />
+        </InputGroup>
+        <Button
+          disabled={searchTerm.length === 0}
+          onClick={handleReset}
+          leftIcon={<CloseIcon />}
+        >
+          Reset
+        </Button>
+      </Box>
+      {isLoading && (
+        <Box textAlign={"center"} mt="8">
+          <Spinner size="xl" />
+        </Box>
+      )}
+      {coaches.length >= 1 && (
+        <Box
+          display="flex"
+          flexDir="row"
+          flexWrap="wrap"
+          justifyContent="space-around"
+        >
+          {!isLoading &&
+            coaches.map((coach) => (
+              <Box key={coach.id} padding={4}>
+                <Coach coachInfo={coach} />
+              </Box>
+            ))}
+        </Box>
+      )}
+      {!isLoading && coaches.length === 0 && (
+        <Box p="32" textAlign="center">
+          <Text>
+            Sorry, no coaches were found. Try a different search term.
+          </Text>
+        </Box>
+      )}
     </PageWrapper>
   );
 };

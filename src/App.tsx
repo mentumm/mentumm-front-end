@@ -11,7 +11,7 @@ import ActionPlan from "./views/ActionPlan";
 import { EditProfile } from "./views/Coach/EditProfile";
 import CoachBio from "./views/CoachBio";
 import CoachResults from "./views/CoachResults";
-import { CoachSearchV2 } from "./views/CoachSearchV2";
+import { CoachSearch } from "./views/CoachSearch";
 import GetStarted from "./views/GetStarted";
 import CoachingStyle from "./views/GetStarted/CoachingStyle";
 import Home from "./views/Home";
@@ -20,6 +20,9 @@ import Register from "./views/Register";
 import Workshops from "./views/Workshops";
 import WorkshopSlug from "./views/WorkshopSlug";
 import BookingConfirmation from "./views/BookingConfirmation";
+import { CoachExpertise } from "./views/CoachExpertise";
+import { ForgotPassword } from "./views/ForgotPassword";
+import { ResetPassword } from "./views/ResetPassword";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -27,14 +30,32 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   },
 }));
 
-function RedirectOnCondition({ currentUser, to }) {
+// coaches skip user onboarding on register
+function RedirectOnSignup({ currentUser }: { currentUser: CurrentUser }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (currentUser) {
-      navigate(to, { replace: true });
+    if (currentUser.role === "coach") {
+      navigate(`/coach/${currentUser.id}/coaching-style`, { replace: true });
+    } else {
+      navigate("/get-started", { replace: true });
     }
-  }, [currentUser, navigate, to]);
+  }, [currentUser, navigate]);
+
+  return null;
+}
+
+// coaches skip user onboarding on first-time sign in
+function RedirectOnSignIn({ currentUser }: { currentUser: CurrentUser }) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentUser.role === "coach" && !currentUser.last_sign_in) {
+      navigate(`/coach/${currentUser.id}/coaching-style`, { replace: true });
+    } else {
+      navigate("/home", { replace: true });
+    }
+  }, [currentUser, navigate]);
 
   return null;
 }
@@ -48,6 +69,7 @@ function App() {
     if (cookies.growth_10_03142023) {
       setCurrentUser({
         id: cookies.growth_10_03142023.id,
+        last_sign_in: cookies.growth_10_03142023.last_sign_in,
 
         // leaving backward compatibility for now
         first_name: cookies.growth_10_03142023.name
@@ -71,6 +93,15 @@ function App() {
         facebook_url: cookies.growth_10_03142023.facebook_url,
         website_url: cookies.growth_10_03142023.website_url,
         phone_number: cookies.growth_10_03142023.phone_number,
+        achievements1: cookies.growth_10_03142023.achievements1,
+        achievements2: cookies.growth_10_03142023.achievements2,
+        achievements3: cookies.growth_10_03142023.achievements3,
+        hobbies1: cookies.growth_10_03142023.hobbies1,
+        hobbies2: cookies.growth_10_03142023.hobbies2,
+        hobbies3: cookies.growth_10_03142023.hobbies3,
+        hobbies4: cookies.growth_10_03142023.hobbies4,
+        hobbies5: cookies.growth_10_03142023.hobbies5,
+        hobbies6: cookies.growth_10_03142023.hobbies6,
       });
     }
   }, [cookies]);
@@ -89,7 +120,7 @@ function App() {
                   currentUser={currentUser}
                 />
               ) : (
-                <RedirectOnCondition currentUser={currentUser} to="/home" />
+                <RedirectOnSignIn currentUser={currentUser} />
               )
             }
           />
@@ -105,7 +136,7 @@ function App() {
             path="/search"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <CoachSearchV2 currentUser={currentUser} />
+                <CoachSearch currentUser={currentUser} />
               </SignInWrapper>
             }
           />
@@ -126,10 +157,30 @@ function App() {
             }
           />
           <Route
+            path="/coach/:coachId/expertise"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <CoachExpertise currentUser={currentUser} />
+              </SignInWrapper>
+            }
+          />
+          <Route
             path="/coach/:coachId/profile"
             element={
               <SignInWrapper currentUser={currentUser}>
                 <EditProfile
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                />
+              </SignInWrapper>
+            }
+          />
+          <Route
+            path="/coach/:coachId/coaching-style"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <CoachingStyle
+                  isCoach
                   currentUser={currentUser}
                   setCurrentUser={setCurrentUser}
                 />
@@ -148,7 +199,10 @@ function App() {
             path="/get-started/coaching-style"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <CoachingStyle currentUser={currentUser} />
+                <CoachingStyle
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                />
               </SignInWrapper>
             }
           />
@@ -161,10 +215,7 @@ function App() {
                   currentUser={currentUser}
                 />
               ) : (
-                <RedirectOnCondition
-                  currentUser={currentUser}
-                  to="/get-started"
-                />
+                <RedirectOnSignup currentUser={currentUser} />
               )
             }
           />
@@ -198,6 +249,18 @@ function App() {
               <SignInWrapper currentUser={currentUser}>
                 <BookingConfirmation currentUser={currentUser} />
               </SignInWrapper>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <ForgotPassword />
+            }
+          />
+          <Route
+            path="/reset-password/:tokenId"
+            element={
+              <ResetPassword />
             }
           />
         </Routes>

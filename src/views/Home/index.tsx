@@ -20,6 +20,13 @@ import hexBlue from "./hex-blue.svg";
 import hexGreen from "./hex-green.svg";
 import hexPurple from "./hex-purple.svg";
 import threePillar from "./three-pillar.svg";
+import { createUseStyles } from "react-jss";
+
+const useStyles = createUseStyles({
+  hide: {
+    display: "none",
+  },
+});
 
 function getCurrentFeatured<T>(
   objects: T[],
@@ -42,6 +49,7 @@ interface IProps {
 }
 
 const Home: React.FC<IProps> = ({ currentUser }) => {
+  const classes = useStyles();
   const [coaches, setCoaches] = useState<CoachType[]>([]);
   const [actionPlan, setActionPlan] = useState<ActionPlanForm>(null);
 
@@ -129,9 +137,14 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
           <Image src={threePillar} alt="One-on-One Coaching" />
         </Box>
       </HStack>
-      <UpcomingCoachingSessions id={currentUser?.id} />
-      <HighlightedCoaches title="Featured Coaches" coaches={featuredCoaches} />
-      <PastCoachingSessions currentUser={currentUser} />
+      <div className={currentUser.role === "coach" ? classes.hide : null}>
+        <UpcomingCoachingSessions id={currentUser?.id} />
+        <HighlightedCoaches
+          title="Featured Coaches"
+          coaches={featuredCoaches}
+        />
+        <PastCoachingSessions currentUser={currentUser} />
+      </div>
     </Container>
   );
 };

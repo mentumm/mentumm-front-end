@@ -15,6 +15,7 @@ import { TagIcon } from "../../../components/TagIcon";
 import envConfig from "../../../envConfig";
 import { useNavigate } from "react-router";
 import { CurrentUser } from "../../../types";
+import { useCookies } from "react-cookie";
 
 type TagOptionProps = {
   tag: Tag;
@@ -95,15 +96,22 @@ const ContentContainer: React.FC<ContentContainerProps> = ({
 };
 
 type CoachingStyleProps = {
+  isCoach?: boolean;
   currentUser: CurrentUser;
+  setCurrentUser: Function;
 };
 
-const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser }) => {
+const CoachingStyle: React.FC<CoachingStyleProps> = ({
+  currentUser,
+  setCurrentUser,
+  isCoach,
+}) => {
   const navigate = useNavigate();
   const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [checkedItems, setCheckedItems] = React.useState([]);
+  const [, setCookie] = useCookies(["growth_10_03142023"]);
 
   useEffect(() => {
     const getTags = async () => {
@@ -134,11 +142,14 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser }) => {
     await menApiAuthClient()
       .post(`${envConfig.API_URL}/v1/user/tags`, {
         tag_ids: checkedItems,
+        kind: "style",
         user_id: currentUser.id,
         clear: true,
       })
       .then(() => {
-        navigate("/search");
+        isCoach
+          ? navigate(`/coach/${currentUser.id}/profile`)
+          : navigate("/search");
       })
       .finally(() => {
         setSaving(false);
@@ -146,17 +157,41 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({ currentUser }) => {
       .catch((e) => {
         console.error(e);
       });
+
+    if (currentUser.role === "coach" && !currentUser.last_sign_in) {
+      setCurrentUser({ ...currentUser, last_sign_in: new Date() });
+      setCookie(
+        "growth_10_03142023",
+        { ...currentUser, last_sign_in: new Date() },
+        {
+          path: "/",
+          secure: true,
+          expires: new Date(Date.now() + 3600 * 1000 * 48),
+          sameSite: true,
+        }
+      );
+    }
   };
 
   return (
     <Container maxW={1270}>
       <Heading size="lg" textAlign="left" mt={8}>
-        Select Your Desired Coaching Style
+        {isCoach
+          ? "Select Your Coaching Styles"
+          : "Select Your Desired Coaching Style"}
       </Heading>
 
       <Heading size="md" textAlign="left" mt={8}>
-        Pick 2 coaching styles most conducive to your growth goals.
+        {isCoach
+          ? "Pick 2 coaching styles that describe you best"
+          : "Pick 2 coaching styles most conducive to your growth goals."}
       </Heading>
+
+      {isCoach && (
+        <Heading size="sm">
+          These are used in guiding mentee-coach matches.
+        </Heading>
+      )}
 
       <Text mt={4} mb={6}>
         You can update this later in your profile.

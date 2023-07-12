@@ -11,7 +11,7 @@ import {
 import React from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { CurrentUserProps } from "../../types";
-import welcome from "./thank-you.png";
+import ThankYouImage from "./thank-you.png";
 import { Link } from "react-router-dom";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
@@ -73,7 +73,7 @@ const BookingConfirmation: React.FC<CurrentUserProps> = ({ currentUser }) => {
             <Stack>
               <Box maxW="md">
                 <Image
-                  src={welcome}
+                  src={ThankYouImage}
                   alt="Person Searching for a Coach"
                   maxW={{ base: "100%", md: "85%", lg: "100%" }}
                   objectFit="cover"

@@ -28,8 +28,16 @@ import { SiLinkedin } from "react-icons/si";
 import { mixpanelEvent } from "../../helpers";
 import PageWrapper from "../../components/PageWrapper";
 import { menApiAuthClient } from "../../clients/mentumm";
+import { createUseStyles } from "react-jss";
+
+const useStyles = createUseStyles({
+  hide: {
+    display: "none",
+  },
+});
 
 const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
+  const classes = useStyles();
   const [coach, setCoach] = useState<CoachType>(null);
   const {
     isOpen: calendlyIsOpen,
@@ -67,6 +75,10 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
       loadCoach();
     }
   }, [coach, coachId]);
+
+  if (!currentUser || !coach) {
+    return null;
+  }
 
   return (
     <PageWrapper>
@@ -112,55 +124,62 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                 </Stack>
                 <Text color="black">{coach ? coach.bio : null}</Text>
               </Stack>
-              <Stack spacing="4">
-                <Button
-                  onClick={() => {
-                    mixpanelEvent("Clicked Book Coach", {
-                      "Coach Name": coach
-                        ? `${coach.first_name} ${coach.last_name}`
-                        : null,
-                      "Coach ID": coach ? coach.id : null,
-                    });
-                    calendlyOnOpen();
-                  }}
+              <div
+                className={currentUser.role === "coach" ? classes.hide : null}
+              >
+                <Stack
+                  spacing="4"
+                  className={currentUser.role === "coach" ? classes.hide : null}
                 >
-                  <Modal
-                    isOpen={calendlyIsOpen}
-                    onClose={calendlyOnClose}
-                    isCentered
-                    size="xl"
+                  <Button
+                    onClick={() => {
+                      mixpanelEvent("Clicked Book Coach", {
+                        "Coach Name": coach
+                          ? `${coach.first_name} ${coach.last_name}`
+                          : null,
+                        "Coach ID": coach ? coach.id : null,
+                      });
+                      calendlyOnOpen();
+                    }}
                   >
-                    <ModalOverlay />
-                    <ModalContent>
-                      <ModalHeader>
-                        Book your session{" "}
-                        {coach
-                          ? `with ${`${coach.first_name} ${coach.last_name}`}`
-                          : null}
-                      </ModalHeader>
-                      <ModalCloseButton />
-                      <ModalBody>
-                        <InlineWidget
-                          url={coach ? coach.booking_url : null}
-                          utm={{
-                            utmSource: coach ? String(coach.id) : null,
-                          }}
-                          prefill={{
-                            email: currentUser?.email,
-                            name: `${currentUser?.first_name} ${currentUser?.last_name}`,
-                          }}
-                        />
-                      </ModalBody>
-                      <ModalFooter>
-                        <Button mr={3} onClick={calendlyOnClose}>
-                          Cancel
-                        </Button>
-                      </ModalFooter>
-                    </ModalContent>
-                  </Modal>
-                  Book Your Coaching Session
-                </Button>
-              </Stack>
+                    <Modal
+                      isOpen={calendlyIsOpen}
+                      onClose={calendlyOnClose}
+                      isCentered
+                      size="xl"
+                    >
+                      <ModalOverlay />
+                      <ModalContent>
+                        <ModalHeader>
+                          Book your session{" "}
+                          {coach
+                            ? `with ${`${coach.first_name} ${coach.last_name}`}`
+                            : null}
+                        </ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                          <InlineWidget
+                            url={coach ? coach.booking_url : null}
+                            utm={{
+                              utmSource: coach ? String(coach.id) : null,
+                            }}
+                            prefill={{
+                              email: currentUser?.email,
+                              name: `${currentUser?.first_name} ${currentUser?.last_name}`,
+                            }}
+                          />
+                        </ModalBody>
+                        <ModalFooter>
+                          <Button mr={3} onClick={calendlyOnClose}>
+                            Cancel
+                          </Button>
+                        </ModalFooter>
+                      </ModalContent>
+                    </Modal>
+                    Book Your Coaching Session
+                  </Button>
+                </Stack>
+              </div>
               <Stack spacing="4">
                 <Wrap shouldWrapChildren>
                   {coach && coach.expertise.length
