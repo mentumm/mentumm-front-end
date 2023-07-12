@@ -21,6 +21,8 @@ import Workshops from "./views/Workshops";
 import WorkshopSlug from "./views/WorkshopSlug";
 import BookingConfirmation from "./views/BookingConfirmation";
 import { CoachExpertise } from "./views/CoachExpertise";
+import { ForgotPassword } from "./views/ForgotPassword";
+import { ResetPassword } from "./views/ResetPassword";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -237,6 +239,18 @@ function App() {
               <SignInWrapper currentUser={currentUser}>
                 <BookingConfirmation currentUser={currentUser} />
               </SignInWrapper>
+            }
+          />
+          <Route
+            path="/forgot-password"
+            element={
+              <ForgotPassword />
+            }
+          />
+          <Route
+            path="/reset-password"
+            element={
+              <ResetPassword />
             }
           />
         </Routes>
