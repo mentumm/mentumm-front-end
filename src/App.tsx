@@ -11,7 +11,7 @@ import ActionPlan from "./views/ActionPlan";
 import { EditProfile } from "./views/Coach/EditProfile";
 import CoachBio from "./views/CoachBio";
 import CoachResults from "./views/CoachResults";
-import { CoachSearchV2 } from "./views/CoachSearchV2";
+import { CoachSearch } from "./views/CoachSearch";
 import GetStarted from "./views/GetStarted";
 import CoachingStyle from "./views/GetStarted/CoachingStyle";
 import Home from "./views/Home";
@@ -134,7 +134,7 @@ function App() {
             path="/search"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <CoachSearchV2 currentUser={currentUser} />
+                <CoachSearch currentUser={currentUser} />
               </SignInWrapper>
             }
           />
