@@ -9,21 +9,27 @@ import {
   FormLabel,
   Heading,
   Input,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { Formik, Form } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import logo from "../Register/mentumm-logo.svg";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 const REACT_APP_NODE_API = process.env.REACT_APP_NODE_API || "";
 
 export const ResetPassword = () => {
   const { tokenId } = useParams();
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false)
+
+  const handlePasswordShowClick = () => setShowPassword(!showPassword)
 
   const handleSubmit = async (values, { setSubmitting }) => {
     await axios
@@ -97,24 +103,58 @@ export const ResetPassword = () => {
               <FormControl isInvalid={bothTouched && !!errors.new_password}>
                 <Box mt={8}>
                   <FormLabel>New Password</FormLabel>
-                  <Input
-                    mb={8}
-                    id="new_password"
-                    name="new_password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.email}
-                  />
+                  <InputGroup>
+                    <Input
+                      mb={8}
+                      id="new_password"
+                      name="new_password"
+                      placeholder="Password"
+                      type={showPassword ? "text" : "password"}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.email}
+                    />
+                    <InputRightElement mr={4}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        colorScheme={showPassword ? "blue" : "brand"}
+                        onClick={handlePasswordShowClick}
+                      >
+                        {showPassword ? (
+                          <ViewIcon />
+                        ) : (
+                          <ViewOffIcon />
+                        )}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
                   <FormLabel>Retype Your New Password</FormLabel>
-                  <Input
-                    id="retype_password"
-                    name="retype_password"
-                    placeholder="Password"
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    value={values.retype_password}
-                  />
+                  <InputGroup>
+                    <Input
+                      id="retype_password"
+                      name="retype_password"
+                      placeholder="Password"
+                      type={showPassword ? "text" : "password"}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      value={values.retype_password}
+                    />
+                    <InputRightElement mr={4}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        colorScheme={showPassword ? "blue" : "brand"}
+                        onClick={handlePasswordShowClick}
+                      >
+                        {showPassword ? (
+                          <ViewIcon />
+                        ) : (
+                          <ViewOffIcon />
+                        )}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
                   <FormErrorMessage>
                     {String(errors.retype_password)}
                   </FormErrorMessage>
