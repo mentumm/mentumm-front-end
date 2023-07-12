@@ -8,22 +8,27 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
-  Input
-} from '@chakra-ui/react';
-import { Formik, Form } from 'formik';
-import React from 'react';
+  Input,
+} from "@chakra-ui/react";
+import { Formik, Form } from "formik";
+import React from "react";
 import * as Yup from "yup";
 import logo from "../Register/mentumm-logo.svg";
-import axios from 'axios';
-import { enqueueSnackbar } from 'notistack';
-import { useParams } from 'react-router-dom';
+import axios from "axios";
+import { enqueueSnackbar } from "notistack";
+import { useParams } from "react-router-dom";
+
+const REACT_APP_NODE_API = process.env.REACT_APP_NODE_API || "";
 
 export const ResetPassword = () => {
   const { tokenId } = useParams();
 
   const handleSubmit = async (values, { setSubmitting }) => {
     await axios
-      .post('/user/reset-password', { reset_password_token: tokenId, password: values.new_password })
+      .post(`${REACT_APP_NODE_API}/v1/user/reset-password`, {
+        reset_password_token: tokenId,
+        password: values.new_password,
+      })
       .then(() => {
         enqueueSnackbar("Password Reset Successfully!", {
           variant: "success",
@@ -34,11 +39,11 @@ export const ResetPassword = () => {
         enqueueSnackbar("Something went wrong. Please try again.", {
           variant: "error",
         });
-      })
+      });
     // .finally(() => {
     //   setSubmitting(false);
     // });
-  }
+  };
 
   return (
     <Container
@@ -56,8 +61,8 @@ export const ResetPassword = () => {
       </Center>
       <Formik
         initialValues={{
-          new_password: '',
-          retype_password: '',
+          new_password: "",
+          retype_password: "",
         }}
         validationSchema={Yup.object().shape({
           new_password: Yup.string().oneOf(
@@ -72,31 +77,27 @@ export const ResetPassword = () => {
         validateOnChange
         onSubmit={handleSubmit}
       >
-        {({ errors, touched, handleChange, handleBlur, values, isSubmitting }) => {
+        {({
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          values,
+          isSubmitting,
+        }) => {
           return (
             <Form>
-              <Heading
-                as="label"
-                size="lg"
-                fontWeight="normal"
-              >
+              <Heading as="label" size="lg" fontWeight="normal">
                 Change Password
               </Heading>
-              <FormControl
-                isInvalid={touched.email && !!errors.email}
-              >
-                <Box
-                  mt={8}
-                >
-                  <FormLabel
-                  >
-                    New Password
-                  </FormLabel>
+              <FormControl isInvalid={touched.email && !!errors.email}>
+                <Box mt={8}>
+                  <FormLabel>New Password</FormLabel>
                   <Input
                     mb={8}
                     id="new_password"
                     name="new_password"
-                    placeholder='Password'
+                    placeholder="Password"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.email}
@@ -106,14 +107,11 @@ export const ResetPassword = () => {
                       {String(errors.new_password)}
                     </FormErrorMessage>
                   )}
-                  <FormLabel
-                  >
-                    Retype Your New Password
-                  </FormLabel>
+                  <FormLabel>Retype Your New Password</FormLabel>
                   <Input
                     id="retype_password"
                     name="retype_password"
-                    placeholder='Password'
+                    placeholder="Password"
                     onChange={handleChange}
                     onBlur={handleBlur}
                     value={values.retype_password}
@@ -127,7 +125,7 @@ export const ResetPassword = () => {
                     type="submit"
                     mt={6}
                     size="lg"
-                  // isLoading={isSubmitting}
+                    // isLoading={isSubmitting}
                   >
                     Change Password
                   </Button>
@@ -138,5 +136,5 @@ export const ResetPassword = () => {
         }}
       </Formik>
     </Container>
-  )
-}
+  );
+};
