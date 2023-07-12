@@ -16,11 +16,14 @@ import * as Yup from "yup";
 import logo from "../Register/mentumm-logo.svg";
 import { menApiAuthClient } from '../../clients/mentumm';
 import { enqueueSnackbar } from 'notistack';
+import { useParams } from 'react-router-dom';
 
 export const ResetPassword = () => {
+  const { tokenId } = useParams();
+
   const handleSubmit = async (values, { setSubmitting }) => {
     await menApiAuthClient()
-      .post('/user/reset-password', { token: '001', password: values.new_password }) //change token
+      .post('/user/reset-password', { reset_password_token: tokenId, password: values.new_password })
       .then(() => {
         enqueueSnackbar("Password Reset Successfully!", {
           variant: "success",
@@ -32,9 +35,9 @@ export const ResetPassword = () => {
           variant: "error",
         });
       })
-      .finally(() => {
-        setSubmitting(false);
-      });
+    // .finally(() => {
+    //   setSubmitting(false);
+    // });
   }
 
   return (
@@ -124,7 +127,7 @@ export const ResetPassword = () => {
                     type="submit"
                     mt={6}
                     size="lg"
-                    isLoading={isSubmitting}
+                  // isLoading={isSubmitting}
                   >
                     Change Password
                   </Button>
