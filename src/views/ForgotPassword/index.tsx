@@ -14,7 +14,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
-import logo from "../Register/mentumm-logo.svg";
+import logo from "../../../src/assets/mentumm-logo.svg";
 import { Formik, Form } from "formik";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
