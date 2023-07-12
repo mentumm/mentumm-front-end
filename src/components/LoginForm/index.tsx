@@ -202,7 +202,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
           </Stack>
           <HStack justify="space-between">
             <Checkbox defaultChecked>Remember me</Checkbox>
-            <Link to="/reset-password">
+            <Link to="/forgot-password">
               <Button
                 variant="link"
                 size="sm"
