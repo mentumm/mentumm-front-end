@@ -39,10 +39,10 @@ export const ResetPassword = () => {
         enqueueSnackbar("Something went wrong. Please try again.", {
           variant: "error",
         });
+      })
+      .finally(() => {
+        setSubmitting(false);
       });
-    // .finally(() => {
-    //   setSubmitting(false);
-    // });
   };
 
   return (
@@ -125,7 +125,7 @@ export const ResetPassword = () => {
                     type="submit"
                     mt={6}
                     size="lg"
-                    // isLoading={isSubmitting}
+                    isLoading={isSubmitting}
                   >
                     Change Password
                   </Button>
