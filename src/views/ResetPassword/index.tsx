@@ -74,14 +74,11 @@ export const ResetPassword = () => {
           retype_password: "",
         }}
         validationSchema={Yup.object().shape({
-          new_password: Yup.string().oneOf(
-            [Yup.ref("retype_password")],
-            "Passwords do not match"
-          ),
-          retype_password: Yup.string().oneOf(
-            [Yup.ref("new_password")],
-            "Passwords do not match"
-          ),
+          new_password: Yup.string()
+            .required("New password is required"),
+          retype_password: Yup.string()
+            .oneOf([Yup.ref("new_password"), null], "Passwords do not match")
+            .required("Please confirm your password"),
         })}
         validateOnChange
         onSubmit={handleSubmit}
@@ -100,7 +97,7 @@ export const ResetPassword = () => {
               <Heading as="label" size="lg" fontWeight="normal">
                 Change Password
               </Heading>
-              <FormControl isInvalid={bothTouched && !!errors.new_password}>
+              <FormControl isInvalid={bothTouched && !!(errors.new_password || errors.retype_password)}>
                 <Box mt={8}>
                   <FormLabel>New Password</FormLabel>
                   <InputGroup>
