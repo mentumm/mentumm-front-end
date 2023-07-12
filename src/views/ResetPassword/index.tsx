@@ -70,7 +70,7 @@ export const ResetPassword = () => {
             "Passwords do not match"
           ),
           retype_password: Yup.string().oneOf(
-            [Yup.ref("update_password")],
+            [Yup.ref("new_password")],
             "Passwords do not match"
           ),
         })}
@@ -85,12 +85,13 @@ export const ResetPassword = () => {
           values,
           isSubmitting,
         }) => {
+          const bothTouched = touched.new_password && touched.retype_password;
           return (
             <Form>
               <Heading as="label" size="lg" fontWeight="normal">
                 Change Password
               </Heading>
-              <FormControl isInvalid={touched.email && !!errors.email}>
+              <FormControl isInvalid={bothTouched && !!errors.new_password}>
                 <Box mt={8}>
                   <FormLabel>New Password</FormLabel>
                   <Input
@@ -102,11 +103,6 @@ export const ResetPassword = () => {
                     onBlur={handleBlur}
                     value={values.email}
                   />
-                  {errors.new_password && touched.new_password && (
-                    <FormErrorMessage>
-                      {String(errors.new_password)}
-                    </FormErrorMessage>
-                  )}
                   <FormLabel>Retype Your New Password</FormLabel>
                   <Input
                     id="retype_password"
@@ -116,11 +112,9 @@ export const ResetPassword = () => {
                     onBlur={handleBlur}
                     value={values.retype_password}
                   />
-                  {errors.retype_password && errors.retype_password && (
-                    <FormErrorMessage>
-                      {String(errors.retype_password)}
-                    </FormErrorMessage>
-                  )}
+                  <FormErrorMessage>
+                    {String(errors.retype_password)}
+                  </FormErrorMessage>
                   <Button
                     type="submit"
                     mt={6}
