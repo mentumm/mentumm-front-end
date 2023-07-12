@@ -16,6 +16,7 @@ import { CurrentUser, UserLoginProps } from "../../types";
 import axios from "axios";
 import { useCookies } from "react-cookie";
 import { mixpanelEvent, mixpanelIdentify, mixpanelPeople } from "../../helpers";
+import { Link } from "react-router-dom";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
@@ -201,9 +202,14 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
           </Stack>
           <HStack justify="space-between">
             <Checkbox defaultChecked>Remember me</Checkbox>
-            <Button variant="link" size="sm">
-              Forgot password
-            </Button>
+            <Link to="/forgot-password">
+              <Button
+                variant="link"
+                size="sm"
+              >
+                Forgot password
+              </Button>
+            </Link>
           </HStack>
           <Stack spacing="4">
             <Button type="submit" onClick={() => login(email, password)}>
