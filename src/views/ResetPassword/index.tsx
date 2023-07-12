@@ -14,7 +14,7 @@ import { Formik, Form } from 'formik';
 import React from 'react';
 import * as Yup from "yup";
 import logo from "../Register/mentumm-logo.svg";
-import { menApiAuthClient } from '../../clients/mentumm';
+import axios from 'axios';
 import { enqueueSnackbar } from 'notistack';
 import { useParams } from 'react-router-dom';
 
@@ -22,7 +22,7 @@ export const ResetPassword = () => {
   const { tokenId } = useParams();
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    await menApiAuthClient()
+    await axios
       .post('/user/reset-password', { reset_password_token: tokenId, password: values.new_password })
       .then(() => {
         enqueueSnackbar("Password Reset Successfully!", {
