@@ -17,11 +17,13 @@ import logo from "../Register/mentumm-logo.svg";
 import axios from "axios";
 import { enqueueSnackbar } from "notistack";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const REACT_APP_NODE_API = process.env.REACT_APP_NODE_API || "";
 
 export const ResetPassword = () => {
   const { tokenId } = useParams();
+  const navigate = useNavigate();
 
   const handleSubmit = async (values, { setSubmitting }) => {
     await axios
@@ -33,6 +35,7 @@ export const ResetPassword = () => {
         enqueueSnackbar("Password Reset Successfully!", {
           variant: "success",
         });
+        navigate('/')
       })
       .catch((err) => {
         console.error(err);
