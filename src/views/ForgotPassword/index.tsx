@@ -16,14 +16,14 @@ import {
 import * as Yup from "yup";
 import logo from "../Register/mentumm-logo.svg";
 import { Formik, Form } from 'formik';
-import { menApiAuthClient } from '../../clients/mentumm';
+import axios from 'axios';
 import { enqueueSnackbar } from 'notistack';
 
 export const ForgotPassword = () => {
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (values, { setSubmitting }) => {
-    await menApiAuthClient()
+    await axios
       .post('/user/forgot-password', { email: values.email })
       .then(() => {
         enqueueSnackbar("Password Reset Link sent!", {
