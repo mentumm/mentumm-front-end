@@ -106,11 +106,11 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
               <Stack spacing="4">
                 <Stack>
                   <Heading size="2xl" fontWeight="bold">
-                    {coach ? `${coach.first_name} ${coach.last_name}` : null}
+                    {coach && `${coach.first_name} ${coach.last_name}`}
                   </Heading>
                   <HStack fontSize="md">
                     <Icon as={GoGlobe} color="gray.500" />
-                    <Text>{coach ? coach.location : null}</Text>
+                    <Text>{coach && coach.location}</Text>
                     <Icon as={SiLinkedin} color="gray.500" />
                     <Link
                       href={
@@ -118,26 +118,25 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                       }
                       isExternal
                     >
-                      {coach ? `${coach.first_name} ${coach.last_name}` : null}
+                      {coach && `${coach.first_name} ${coach.last_name}`}
                     </Link>
                   </HStack>
                 </Stack>
-                <Text color="black">{coach ? coach.bio : null}</Text>
+                <Text color="black">{coach && coach.bio}</Text>
               </Stack>
               <div
-                className={currentUser.role === "coach" ? classes.hide : null}
+                className={currentUser.role === "coach" && classes.hide}
               >
                 <Stack
                   spacing="4"
-                  className={currentUser.role === "coach" ? classes.hide : null}
+                  className={currentUser.role === "coach" && classes.hide}
                 >
                   <Button
                     onClick={() => {
                       mixpanelEvent("Clicked Book Coach", {
-                        "Coach Name": coach
-                          ? `${coach.first_name} ${coach.last_name}`
-                          : null,
-                        "Coach ID": coach ? coach.id : null,
+                        "Coach Name": coach &&
+                          (`${coach.first_name} ${coach.last_name}`),
+                        "Coach ID": coach && coach.id,
                       });
                       calendlyOnOpen();
                     }}
@@ -152,16 +151,16 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                       <ModalContent>
                         <ModalHeader>
                           Book your session{" "}
-                          {coach
-                            ? `with ${`${coach.first_name} ${coach.last_name}`}`
-                            : null}
+                          {coach &&
+                            (`with ${`${coach.first_name} ${coach.last_name}`}`)
+                          }
                         </ModalHeader>
                         <ModalCloseButton />
                         <ModalBody>
                           <InlineWidget
-                            url={coach ? coach.booking_url : null}
+                            url={coach && coach.booking_url}
                             utm={{
-                              utmSource: coach ? String(coach.id) : null,
+                              utmSource: coach && String(coach.id),
                             }}
                             prefill={{
                               email: currentUser?.email,
@@ -182,11 +181,11 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
               </div>
               <Stack spacing="4">
                 <Wrap shouldWrapChildren>
-                  {coach && coach.expertise.length
-                    ? coach.expertise.map((expertise) => (
-                        <Tag key={expertise.id}>{expertise.name}</Tag>
-                      ))
-                    : null}
+                  {(coach && coach.expertise.length) &&
+                    (coach.expertise.map((expertise) => (
+                      <Tag key={expertise.id}>{expertise.name}</Tag>
+                    )))
+                  }
                 </Wrap>
               </Stack>
             </Stack>
