@@ -15,10 +15,8 @@ import {
   ModalHeader,
   ModalOverlay,
   Stack,
-  Tag,
   Text,
   useDisclosure,
-  Wrap,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { InlineWidget } from "react-calendly";
@@ -29,6 +27,7 @@ import { mixpanelEvent } from "../../helpers";
 import PageWrapper from "../../components/PageWrapper";
 import { menApiAuthClient } from "../../clients/mentumm";
 import { createUseStyles } from "react-jss";
+import { AreasOfExpertise, Bio } from "./components";
 
 const useStyles = createUseStyles({
   hide: {
@@ -80,6 +79,8 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
     return null;
   }
 
+  // console.log(coach);
+
   return (
     <PageWrapper>
       <Box
@@ -122,7 +123,8 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                     </Link>
                   </HStack>
                 </Stack>
-                <Text color="black">{coach && coach.bio}</Text>
+                {coach.expertise.length && (<AreasOfExpertise coach={coach} />)}
+                {coach.bio && <Bio coach={coach} />}
               </Stack>
               <div
                 className={currentUser.role === "coach" && classes.hide}
@@ -179,15 +181,6 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                   </Button>
                 </Stack>
               </div>
-              <Stack spacing="4">
-                <Wrap shouldWrapChildren>
-                  {(coach && coach.expertise.length) &&
-                    (coach.expertise.map((expertise) => (
-                      <Tag key={expertise.id}>{expertise.name}</Tag>
-                    )))
-                  }
-                </Wrap>
-              </Stack>
             </Stack>
           </Box>
         </Stack>
