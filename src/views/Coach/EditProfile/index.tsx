@@ -30,17 +30,7 @@ import Hobbies from "./Hobbies";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { EditProfileWrapper } from "../../../components/Wrappers/EditProfileWrapper";
-
-const urlRegex = /^(?:([a-z]+):)?(\/\/)?([^\s$.?#].[^\s]*)$/i;
-
-function ensureHttps(url: string) {
-  if (!url) return url;
-  if (url.startsWith("http://") || url.startsWith("https://")) {
-    return url;
-  } else {
-    return `https://${url}`;
-  }
-}
+import { ensureHttps, urlRegex } from "../../../helpers/validators";
 
 export const EditProfile = ({ currentUser, setCurrentUser }) => {
   const navigate = useNavigate();
@@ -78,8 +68,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
           "Coach Expertise": coach.expertise.map((expertise) => expertise.name),
         });
       } catch (error) {
-        console.log("Problem loading Coach Profile", error);
-        throw new Error(error);
+        throw error;
       }
     };
     loadCoach();

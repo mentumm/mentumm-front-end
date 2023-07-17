@@ -1,4 +1,5 @@
-import axios from "axios";
+// import axios from "axios";
+import { default as axios } from "axios";
 
 const API_URL = process.env.REACT_APP_NODE_API;
 
