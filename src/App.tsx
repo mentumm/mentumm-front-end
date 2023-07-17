@@ -164,6 +164,7 @@ function App() {
               </SignInWrapper>
             }
           />
+          {/* USER PROFILE */}
           <Route
             path="/coach/:coachId/profile"
             element={
@@ -251,18 +252,8 @@ function App() {
               </SignInWrapper>
             }
           />
-          <Route
-            path="/forgot-password"
-            element={
-              <ForgotPassword />
-            }
-          />
-          <Route
-            path="/reset-password/:tokenId"
-            element={
-              <ResetPassword />
-            }
-          />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:tokenId" element={<ResetPassword />} />
         </Routes>
         <Footer />
       </div>

@@ -26,7 +26,7 @@ import { CoachType, CurrentUserProps } from "../../types";
 import { GoGlobe } from "react-icons/go";
 import { SiLinkedin } from "react-icons/si";
 import { mixpanelEvent } from "../../helpers";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/Wrappers/PageWrapper";
 import { menApiAuthClient } from "../../clients/mentumm";
 import { createUseStyles } from "react-jss";
 
