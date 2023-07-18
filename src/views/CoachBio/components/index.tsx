@@ -3,6 +3,10 @@ import Bio from "./bio";
 import ProfilePicture from "./profilePicture";
 import ProfileHeader from "./profileHeader";
 import BookingModal from "./bookingModal";
+import BookCoachingButton from "./bookCoachingButton";
+import TopAchievements from "./topAchievements";
+import Hobbies from "./hobbies";
+import Connect from "./connect";
 
 export {
   AreasOfExpertise,
@@ -10,4 +14,8 @@ export {
   ProfilePicture,
   ProfileHeader,
   BookingModal,
+  BookCoachingButton,
+  TopAchievements,
+  Hobbies,
+  Connect,
 };

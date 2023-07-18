@@ -1,25 +1,27 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
-  Button,
   Stack,
   useDisclosure,
+  VStack,
 } from "@chakra-ui/react";
 import { CoachType, CurrentUserProps } from "../../types";
 import { mixpanelEvent } from "../../helpers";
 import PageWrapper from "../../components/PageWrapper";
 import { menApiAuthClient } from "../../clients/mentumm";
-import { createUseStyles } from "react-jss";
-import { AreasOfExpertise, Bio, BookingModal, ProfileHeader, ProfilePicture } from "./components";
-
-const useStyles = createUseStyles({
-  hide: {
-    display: "none",
-  },
-});
+import {
+  AreasOfExpertise,
+  Bio,
+  BookingModal,
+  ProfileHeader,
+  ProfilePicture,
+  BookCoachingButton,
+  TopAchievements,
+  Hobbies,
+  Connect,
+} from "./components";
 
 const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
-  const classes = useStyles();
   const [coach, setCoach] = useState<CoachType>(null);
   const {
     isOpen: calendlyIsOpen,
@@ -29,6 +31,8 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const windowUrl = window.location.toString().toLowerCase();
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
   const coachId = slug.split("-");
+
+  const isCoach = (currentUser && currentUser.role === "coach");
 
   useEffect(() => {
     const loadCoach = async () => {
@@ -78,34 +82,34 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
                 <ProfileHeader coach={coach} />
                 {coach.expertise.length && (
                   <AreasOfExpertise coach={coach} />
-                )
-                }
+                )}
+                {!isCoach && (
+                  <BookCoachingButton
+                    coach={coach}
+                    calendlyOnOpen={calendlyOnOpen}
+                  />)}
               </Stack>
-              {coach.bio && <Bio coach={coach} />}
-              <div
-                className={currentUser.role === "coach" && classes.hide}
-              >
-                <Stack
-                  spacing="4"
-                  className={currentUser.role === "coach" && classes.hide}
-                >
-                  <Button
-                    onClick={() => {
-                      mixpanelEvent("Clicked Book Coach", {
-                        "Coach Name": coach &&
-                          (`${coach.first_name} ${coach.last_name}`),
-                        "Coach ID": coach && coach.id,
-                      });
-                      calendlyOnOpen();
-                    }}
-                  >
-                    Book Your Coaching Session
-                  </Button>
-                </Stack>
-              </div>
             </Stack>
           </Box>
         </Stack>
+        <VStack>
+          {coach.bio && (
+            <Bio coach={coach}
+            />
+          )}
+          {coach.achievements1 && ( //*todo* change this check once we create type for achievements
+            <TopAchievements coach={coach} />
+          )}
+          <Stack direction={{ base: "column", md: "row" }}>
+            <Hobbies coach={coach} />
+            <Connect coach={coach} />
+          </Stack>
+          {!isCoach && (
+            <BookCoachingButton
+              coach={coach}
+              calendlyOnOpen={calendlyOnOpen}
+            />)}
+        </VStack>
         <BookingModal
           coach={coach}
           currentUser={currentUser}
