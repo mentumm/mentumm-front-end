@@ -106,6 +106,8 @@ export interface CoachProps {
 export interface CoachType extends User {
   styles: Tag[];
   expertise: Tag[];
+  achievements?: string; // temp hack, need to adjust our types re: hobbies/achievements
+  hobbies?: string;
 }
 
 export interface CurrentUser {

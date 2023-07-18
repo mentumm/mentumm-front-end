@@ -92,23 +92,34 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
             </Stack>
           </Box>
         </Stack>
-        <VStack>
+        <VStack
+          spacing={8}
+        >
           {coach.bio && (
             <Bio coach={coach}
             />
           )}
-          {coach.achievements1 && ( //*todo* change this check once we create type for achievements
+          {coach.achievements && (
             <TopAchievements coach={coach} />
           )}
-          <Stack direction={{ base: "column", md: "row" }}>
+          <Stack
+            direction={{ base: "column", md: "row" }}
+            width="100%"
+            spacing={4}
+          >
             <Hobbies coach={coach} />
             <Connect coach={coach} />
           </Stack>
           {!isCoach && (
-            <BookCoachingButton
-              coach={coach}
-              calendlyOnOpen={calendlyOnOpen}
-            />)}
+            <Box
+              mt={8}
+            >
+              <BookCoachingButton
+                coach={coach}
+                calendlyOnOpen={calendlyOnOpen}
+              />
+            </Box>
+          )}
         </VStack>
         <BookingModal
           coach={coach}

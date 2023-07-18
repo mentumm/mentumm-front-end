@@ -14,7 +14,9 @@ const Bio: React.FC<BioProps> = ({ coach }) => {
   const heading = `About ${coach.first_name}`;
 
   return (
-    <Box>
+    <Box
+      mt={8}
+      width="100%">
       <Heading
         size="md"
       >
