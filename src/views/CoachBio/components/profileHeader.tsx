@@ -23,11 +23,13 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ coach }) => {
         {coach && `${coach.first_name} ${coach.last_name}`}
       </Heading>
       <HStack spacing={8} fontSize="md">
-        <Box as='span' display='inherit' alignItems='center'>
-          <Icon as={GoGlobe} color="gray.500" />
-          <Text ml={2} >{coach && coach.location}</Text>
-        </Box>
-        <Box as='span' display='inherit' alignItems='center'>
+        {(coach && coach.location) && (
+          <Box display='inherit' alignItems='center'>
+            <Icon as={GoGlobe} color="gray.500" />
+            <Text ml={2} >{coach.location}</Text>
+          </Box>
+        )}
+        <Box display='inherit' alignItems='center'>
           <Icon as={SiLinkedin} color="gray.500" />
           <Link
             ml={2}
