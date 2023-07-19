@@ -19,7 +19,7 @@ const AreasOfExpertise: React.FC<AreasOfExpertiseProps> = ({ coach }) => {
       </Heading>
       <Wrap shouldWrapChildren>
         {(coach.expertise.map((expertise) => (
-          <Tag key={expertise.id}>{expertise.name}</Tag>
+          <Tag p={2} key={expertise.id}>{expertise.name}</Tag>
         )))
         }
       </Wrap>

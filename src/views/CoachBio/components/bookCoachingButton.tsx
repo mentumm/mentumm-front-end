@@ -16,6 +16,7 @@ const BookCoachingButton: React.FC<BookCoachingButtonProps> = ({
 }) => {
   return (
     <Button
+      size='lg'
       onClick={() => {
         mixpanelEvent("Clicked Book Coach", {
           "Coach Name": coach &&
@@ -25,7 +26,7 @@ const BookCoachingButton: React.FC<BookCoachingButtonProps> = ({
         calendlyOnOpen();
       }}
     >
-      Book Your Coaching Session
+      Book Coaching Session
     </Button>
   )
 }

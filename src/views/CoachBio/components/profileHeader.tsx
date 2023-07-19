@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Box,
   Stack,
   Heading,
   HStack,
@@ -18,21 +19,26 @@ type ProfileHeaderProps = {
 const ProfileHeader: React.FC<ProfileHeaderProps> = ({ coach }) => {
   return (
     <Stack>
-      <Heading size="2xl" fontWeight="bold">
+      <Heading size="xl" fontWeight="bold">
         {coach && `${coach.first_name} ${coach.last_name}`}
       </Heading>
-      <HStack fontSize="md">
-        <Icon as={GoGlobe} color="gray.500" />
-        <Text>{coach && coach.location}</Text>
-        <Icon as={SiLinkedin} color="gray.500" />
-        <Link
-          href={
-            coach && coach.linkedin_url ? coach.linkedin_url : "#"
-          }
-          isExternal
-        >
-          {coach && `${coach.first_name} ${coach.last_name}`}
-        </Link>
+      <HStack spacing={8} fontSize="md">
+        <Box as='span' display='inherit' alignItems='center'>
+          <Icon as={GoGlobe} color="gray.500" />
+          <Text ml={2} >{coach && coach.location}</Text>
+        </Box>
+        <Box as='span' display='inherit' alignItems='center'>
+          <Icon as={SiLinkedin} color="gray.500" />
+          <Link
+            ml={2}
+            href={
+              coach && coach.linkedin_url ? coach.linkedin_url : "#"
+            }
+            isExternal
+          >
+            {coach && `${coach.first_name} ${coach.last_name}`}
+          </Link>
+        </Box>
       </HStack>
     </Stack>
   )

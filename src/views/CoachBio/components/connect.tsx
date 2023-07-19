@@ -5,6 +5,7 @@ import {
   Spacer,
   Icon,
   Button,
+  Link,
 } from '@chakra-ui/react';
 import React from 'react';
 import { SiLinkedin, SiFacebook, SiInstagram } from "react-icons/si";
@@ -59,15 +60,23 @@ const Connect: React.FC<ConnectProps> = ({ coach }) => {
       <Box
         mt={6}
       >
-        {connectUrls.map((connection) => (
-          connection.url && (
-            <Button
-              leftIcon={connection.icon}
-            >
-              {connection.name}
-            </Button>
+        {connectUrls.map((connection) => {
+          return (
+            connection.url && (
+              <Link
+                isExternal
+                href={connection.url}
+              >
+                <Button
+                  colorScheme={connection.name.toLocaleLowerCase()}
+                  leftIcon={connection.icon}
+                >
+                  {connection.name}
+                </Button>
+              </Link>
+            )
           )
-        ))}
+        })}
       </Box>
     </Box>
   )

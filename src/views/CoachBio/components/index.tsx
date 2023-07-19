@@ -7,8 +7,10 @@ import BookCoachingButton from "./bookCoachingButton";
 import TopAchievements from "./topAchievements";
 import Hobbies from "./hobbies";
 import Connect from "./connect";
+import CoachingStyles from "./coachingStyles";
 
 export {
+  CoachingStyles,
   AreasOfExpertise,
   Bio,
   ProfilePicture,

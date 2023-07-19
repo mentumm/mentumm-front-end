@@ -12,15 +12,16 @@ import { mixpanelEvent } from "../../helpers";
 import PageWrapper from "../../components/PageWrapper";
 import { menApiAuthClient } from "../../clients/mentumm";
 import {
+  ProfilePicture,
+  ProfileHeader,
+  CoachingStyles,
   AreasOfExpertise,
   Bio,
-  BookingModal,
-  ProfileHeader,
-  ProfilePicture,
   BookCoachingButton,
   TopAchievements,
   Hobbies,
   Connect,
+  BookingModal,
 } from "./components";
 
 const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
@@ -86,6 +87,9 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
             <Stack spacing="8">
               <Stack mt={{ base: "4", md: "0", lg: "0" }} spacing="4">
                 <ProfileHeader coach={coach} />
+                {coach.styles.length && (
+                  <CoachingStyles coach={coach} />
+                )}
                 {coach.expertise.length && (
                   <AreasOfExpertise coach={coach} />
                 )}
