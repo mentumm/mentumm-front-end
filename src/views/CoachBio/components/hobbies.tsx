@@ -10,6 +10,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { CoachType } from '../../../types';
+import { FaSkiing } from 'react-icons/fa';
 
 type HobbiesProps = {
   coach: CoachType
@@ -20,13 +21,16 @@ const Hobbies: React.FC<HobbiesProps> = ({ coach }) => {
   return (
     <Box
       width="50%"
+      px={8}
+      py={8}
+      shadow='base'
     >
       <Flex>
         <Heading size="md">
           Favorite Hobbies
         </Heading>
         <Spacer />
-        <Icon />
+        <Icon as={FaSkiing} boxSize='2em' color='gray.300' />
       </Flex>
       <SimpleGrid columns={2} spacing={2} mt={4}>
         {hobbiesArray.map((hobby: string, i: number) => (

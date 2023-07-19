@@ -12,8 +12,16 @@ type ProfilePictureProps = {
 
 const ProfilePicture: React.FC<ProfilePictureProps> = ({ coach }) => {
   return (
-    <Box flex="1">
-      <AspectRatio maxW="450px" ratio={1}>
+    <Box
+      bgColor='white'
+      borderRadius='md'
+      px={4}
+      py={4}
+      mr={4}
+      shadow='base'
+      width='50%'
+    >
+      <AspectRatio maxW="450px" ratio={1} mr={0}>
         <Image
           src={
             coach && coach.photo_url

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
   Box,
+  Flex,
+  Spacer,
   Stack,
   useDisclosure,
   VStack,
@@ -74,11 +76,15 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
         px={{ base: "4", md: "8", lg: "12" }}
         pb={{ base: "6", md: "8", lg: "12" }}
       >
-        <Stack direction={{ base: "column", md: "row" }}>
+        <Flex
+          flexDirection={{ base: "column", md: "row" }}
+          alignItems='center'
+        >
           <ProfilePicture coach={coach} />
-          <Box maxW="sm">
+          <Spacer />
+          <Box maxW={{ base: "80%", md: "sm", lg: "sm" }}>
             <Stack spacing="8">
-              <Stack spacing="4">
+              <Stack mt={{ base: "4", md: "0", lg: "0" }} spacing="4">
                 <ProfileHeader coach={coach} />
                 {coach.expertise.length && (
                   <AreasOfExpertise coach={coach} />
@@ -91,7 +97,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
               </Stack>
             </Stack>
           </Box>
-        </Stack>
+        </Flex>
         <VStack
           spacing={8}
         >
@@ -107,7 +113,9 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
             width="100%"
             spacing={4}
           >
-            <Hobbies coach={coach} />
+            {coach.hobbies && (
+              <Hobbies coach={coach} />
+            )}
             <Connect coach={coach} />
           </Stack>
           {!isCoach && (

@@ -16,7 +16,13 @@ const Bio: React.FC<BioProps> = ({ coach }) => {
   return (
     <Box
       mt={8}
-      width="100%">
+      px={8}
+      py={8}
+      bgColor='white'
+      borderRadius='md'
+      width="100%"
+      shadow='base'
+    >
       <Heading
         size="md"
       >
