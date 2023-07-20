@@ -21,7 +21,7 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({ coach }) => {
       shadow='base'
       width='50%'
     >
-      <AspectRatio maxW="450px" ratio={1} mr={0}>
+      <AspectRatio maxW="450px" ratio={1} >
         <Image
           src={
             coach && coach.photo_url

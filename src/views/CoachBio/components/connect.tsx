@@ -60,12 +60,13 @@ const Connect: React.FC<ConnectProps> = ({ coach }) => {
       <Box
         mt={6}
       >
-        {connectUrls.map((connection) => {
+        {connectUrls.map((connection, i) => {
           return (
             connection.url && (
               <Link
                 isExternal
                 href={connection.url}
+                key={i}
               >
                 <Button
                   colorScheme={connection.name.toLocaleLowerCase()}
