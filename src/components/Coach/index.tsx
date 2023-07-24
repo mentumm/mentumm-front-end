@@ -72,7 +72,8 @@ const Coach: React.FC<CoachProps> = (props) => {
   return (
     <Link to={`/coach/${generateCoachUrl(coachInfo)}`} className={classes.root}>
       <Box as="section" py="6">
-        <Card>
+        <Card
+        >
           <Stack
             direction={{ base: "column", md: "row" }}
             spacing={{ base: "4", md: "10" }}
