@@ -36,8 +36,10 @@ const TopAchievements: React.FC<TopAchievementsProps> = ({ coach }) => {
         mt={4}
         spacing={2}
       >
-        {achievementArray.map((achievement: string) => (
-          <ListItem>
+        {achievementArray.map((achievement: string, i: number) => (
+          <ListItem
+            key={i}
+          >
             {achievement}
           </ListItem>
         ))}

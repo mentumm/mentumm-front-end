@@ -6,6 +6,7 @@ import {
   Icon,
   Button,
   Link,
+  SimpleGrid,
 } from '@chakra-ui/react';
 import React from 'react';
 import { SiLinkedin, SiFacebook, SiInstagram } from "react-icons/si";
@@ -22,22 +23,26 @@ const Connect: React.FC<ConnectProps> = ({ coach }) => {
     {
       name: 'Facebook',
       url: coach.facebook_url,
-      icon: <SiFacebook />
+      icon: <SiFacebook size='25px' />,
+      colorScheme: 'facebook',
     },
     {
       name: 'LinkedIn',
       url: coach.linkedin_url,
-      icon: <SiLinkedin />
+      icon: <SiLinkedin size='25px' />,
+      colorScheme: 'linkedin'
     },
     {
       name: 'Instagram',
-      url: coach.website_url,
-      icon: <SiInstagram />
+      url: coach.instagram_url,
+      icon: <SiInstagram size='25px' />,
+      colorScheme: 'pink'
     },
     {
       name: 'Website',
       url: coach.website_url,
-      icon: <WebsiteIcon />
+      icon: <WebsiteIcon />,
+      colorScheme: 'teal'
     }
   ];
 
@@ -60,24 +65,27 @@ const Connect: React.FC<ConnectProps> = ({ coach }) => {
       <Box
         mt={6}
       >
-        {connectUrls.map((connection, i) => {
-          return (
-            connection.url && (
-              <Link
-                isExternal
-                href={connection.url}
-                key={i}
-              >
-                <Button
-                  colorScheme={connection.name.toLocaleLowerCase()}
-                  leftIcon={connection.icon}
+        <SimpleGrid columns={2} spacing={2} mt={4}>
+          {connectUrls.map((connection, i) => {
+            return (
+              connection.url && (
+                <Link
+                  isExternal
+                  href={connection.url}
+                  key={i}
                 >
-                  {connection.name}
-                </Button>
-              </Link>
+                  <Button
+                    w="10em"
+                    colorScheme={connection.colorScheme}
+                    leftIcon={connection.icon}
+                  >
+                    {connection.name}
+                  </Button>
+                </Link>
+              )
             )
-          )
-        })}
+          })}
+        </SimpleGrid>
       </Box>
     </Box>
   )
