@@ -23,6 +23,7 @@ import BookingConfirmation from "./views/BookingConfirmation";
 import { CoachExpertise } from "./views/CoachExpertise";
 import { ForgotPassword } from "./views/ForgotPassword";
 import { ResetPassword } from "./views/ResetPassword";
+import { EditUserProfile } from "./views/User/EditProfile";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -164,7 +165,17 @@ function App() {
               </SignInWrapper>
             }
           />
-          {/* USER PROFILE */}
+          <Route
+            path="/user/:userId/profile"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <EditUserProfile
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                />
+              </SignInWrapper>
+            }
+          />
           <Route
             path="/coach/:coachId/profile"
             element={
