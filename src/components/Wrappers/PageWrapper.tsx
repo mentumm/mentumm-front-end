@@ -22,7 +22,7 @@ const PageWrapper: FC<IProps> = ({ title, backTo = "", children }) => {
   );
 
   return (
-    <Container maxW={1270} pt={8}>
+    <Container maxW={1270} pt={8} >
       {back}
       {title ? (
         <Heading as="h1" size="lg" mb={8}>

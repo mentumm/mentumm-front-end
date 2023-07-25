@@ -14,6 +14,8 @@ import {
   InputRightElement,
   Tag,
   HStack,
+  Wrap,
+  WrapItem,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
@@ -594,12 +596,20 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                     </FormLabel>
                   </FormControl>
                   <Box>
-                    <HStack mt={2} spacing={2}>
+                    <Wrap mt={2} spacing={2}>
                       {coachExpertise.length ? (
                         coachExpertise.map((style, i) => (
-                          <Tag key={i} color="white" bg="blue.600">
-                            {style.name}
-                          </Tag>
+                          <WrapItem>
+                            <Tag
+                              whiteSpace="nowrap"
+                              minW="auto"
+                              key={i}
+                              color="white"
+                              bg="blue.600"
+                            >
+                              {style.name}
+                            </Tag>
+                          </WrapItem>
                         ))
                       ) : (
                         <Link to={`/coach/${currentUser.id}/expertise`}>
@@ -611,7 +621,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                           </Tag>
                         </Link>
                       )}
-                    </HStack>
+                    </Wrap>
                   </Box>
                 </Box>
                 <Box flexBasis="100%" marginTop={4} marginBottom={6}>
