@@ -114,9 +114,9 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
       booking_url: ensureHttps(values.booking_url),
       achievements: JSON.stringify([
         achievements1,
-        achievements2,
-        achievements3,
-      ]),
+        achievements2.trim(),
+        achievements3.trim(),
+      ].filter(achievement => achievement !== '')),
       hobbies: JSON.stringify([
         hobbies1,
         hobbies2,
@@ -188,8 +188,8 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
               booking_url: currentUser.booking_url || "",
               bio: currentUser.bio || "",
               achievements1: currentUser.achievements1 || "",
-              achievements2: currentUser.achievements2 || "",
-              achievements3: currentUser.achievements3 || "",
+              achievements2: currentUser.achievements2 || null,
+              achievements3: currentUser.achievements3 || null,
               hobbies1: currentUser.hobbies1 || "",
               hobbies2: currentUser.hobbies2 || "",
               hobbies3: currentUser.hobbies3 || "",
@@ -236,14 +236,10 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
               achievements1: Yup.string()
                 .max(100, "Must be 100 charatcers or less")
                 .required("At least one achievement is required"),
-              achievements2: Yup.string().max(
-                100,
-                "Must be 100 charatcers or less"
-              ),
-              achievements3: Yup.string().max(
-                100,
-                "Must be 100 charatcers or less"
-              ),
+              achievements2: Yup.string()
+                .max(100, "Must be 100 charatcers or less"),
+              achievements3: Yup.string()
+                .max(100, "Must be 100 charatcers or less"),
               hobbies1: Yup.string()
                 .max(25, "Must be 25 charatcers or less")
                 .required("At least one hobby is required"),
