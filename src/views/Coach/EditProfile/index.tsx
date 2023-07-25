@@ -124,7 +124,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
         hobbies4,
         hobbies5,
         hobbies6,
-      ]),
+      ].filter(hobby => hobby !== '')),
       id: currentUser.id,
     };
     update_password && (updateValues.password = update_password);
