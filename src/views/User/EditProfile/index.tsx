@@ -110,14 +110,13 @@ export const EditUserProfile = ({ currentUser, setCurrentUser }) => {
             [Yup.ref("update_password")],
             "Passwords do not match"
           ),
-          city: Yup.string(),
-          state: Yup.string(),
-          phone_number: Yup.string()
-            .matches(/^(\+\d{1,3}[- ]?)?\d{10}$/, "Invalid phone number")
-            .required("Required"),
-          linkedin_url: Yup.string()
-            .matches(urlRegex, "Invalid URL")
-            .required("Required"),
+          city: Yup.string().required("Required"),
+          state: Yup.string().required("Required"),
+          phone_number: Yup.string().matches(
+            /^(\+\d{1,3}[- ]?)?\d{10}$/,
+            "Invalid phone number"
+          ),
+          linkedin_url: Yup.string().matches(urlRegex, "Invalid URL"),
         })}
         validateOnChange
         onSubmit={async (
@@ -195,6 +194,7 @@ export const EditUserProfile = ({ currentUser, setCurrentUser }) => {
                 </Box>
                 <Box flexBasis="50%" paddingEnd="6">
                   <FormControl
+                    isRequired
                     isInvalid={props.touched.city && !!props.errors.city}
                   >
                     <FormLabel htmlFor="city">City</FormLabel>
@@ -212,6 +212,7 @@ export const EditUserProfile = ({ currentUser, setCurrentUser }) => {
                 </Box>
                 <Box flexBasis="50%">
                   <FormControl
+                    isRequired
                     isInvalid={props.touched.state && !!props.errors.state}
                   >
                     <FormLabel htmlFor="state">State</FormLabel>
@@ -259,10 +260,7 @@ export const EditUserProfile = ({ currentUser, setCurrentUser }) => {
                   </FormControl>
                 </Box>
                 <Box flexBasis="50%" paddingEnd="6">
-                  <FormControl
-                    isRequired
-                    isInvalid={!!props.errors.phone_number}
-                  >
+                  <FormControl isInvalid={!!props.errors.phone_number}>
                     <FormLabel htmlFor="phone_number">Phone Number</FormLabel>
                     <Input
                       type="tel"
@@ -280,11 +278,7 @@ export const EditUserProfile = ({ currentUser, setCurrentUser }) => {
                   </FormControl>
                 </Box>
                 <Box flexBasis="50%">
-                  <FormControl
-                    isRequired
-                    mb="4"
-                    isInvalid={!!props.errors.linkedin_url}
-                  >
+                  <FormControl mb="4" isInvalid={!!props.errors.linkedin_url}>
                     <FormLabel htmlFor="linkedin_url">
                       LinkedIn Profile
                     </FormLabel>
