@@ -71,40 +71,41 @@ function App() {
       try {
         const singleUser = await menApiAuthClient().get("/users", {
           params: {
-            id: cookies.growth_10_03142023.id,
+            id: cookies.growth_10_03142023?.id,
           },
         });
 
         const user: CurrentUser = singleUser.data[0];
 
-        setCurrentUser({
-          id: user.id,
-          last_sign_in: user.last_sign_in,
-          first_name: user.first_name,
-          last_name: user.last_name,
-          email: user.email,
-          employer_id: user.employer_id,
-          role: user.role,
-          city: user.city,
-          state: user.state,
-          photo_url: user.photo_url,
-          booking_url: user.booking_url,
-          linkedin_url: user.linkedin_url,
-          bio: user.bio,
-          instagram_url: user.instagram_url,
-          facebook_url: user.facebook_url,
-          website_url: user.website_url,
-          phone_number: user.phone_number,
-          achievements1: user.achievements[0],
-          achievements2: user.achievements[1],
-          achievements3: user.achievements[2],
-          hobbies1: user.hobbies[0],
-          hobbies2: user.hobbies[1],
-          hobbies3: user.hobbies[2],
-          hobbies4: user.hobbies[3],
-          hobbies5: user.hobbies[4],
-          hobbies6: user.hobbies[5],
-        })
+        cookies.growth_10_03142023 &&
+          setCurrentUser({
+            id: user.id,
+            last_sign_in: user.last_sign_in,
+            first_name: user.first_name,
+            last_name: user.last_name,
+            email: user.email,
+            employer_id: user.employer_id,
+            role: user.role,
+            city: user.city,
+            state: user.state,
+            photo_url: user.photo_url,
+            booking_url: user.booking_url,
+            linkedin_url: user.linkedin_url,
+            bio: user.bio,
+            instagram_url: user.instagram_url,
+            facebook_url: user.facebook_url,
+            website_url: user.website_url,
+            phone_number: user.phone_number,
+            achievements1: user.achievements[0],
+            achievements2: user.achievements[1],
+            achievements3: user.achievements[2],
+            hobbies1: user.hobbies[0],
+            hobbies2: user.hobbies[1],
+            hobbies3: user.hobbies[2],
+            hobbies4: user.hobbies[3],
+            hobbies5: user.hobbies[4],
+            hobbies6: user.hobbies[5],
+          })
       } catch (error) {
         console.log("Problem loading Coach Profile", error);
         throw new Error(error);
