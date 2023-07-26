@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { CoachType, CurrentUserProps } from "../../types";
 import { mixpanelEvent } from "../../helpers";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/Wrappers/PageWrapper";
 import { menApiAuthClient } from "../../clients/mentumm";
 import {
   ProfilePicture,
