@@ -74,7 +74,6 @@ function App() {
             id: cookies.growth_10_03142023.id,
           },
         });
-        console.log(singleUser);
 
         const user: CurrentUser = singleUser.data[0];
 
