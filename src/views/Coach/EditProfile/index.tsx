@@ -157,6 +157,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
 
   const handleSubmit = async (values: UserPublic) => {
     handleUpdate(values);
+    sessionStorage.removeItem('bio');
   };
 
   if (!currentUser) {
@@ -186,7 +187,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
               facebook_url: currentUser.facebook_url || "",
               website_url: currentUser.website_url || "",
               booking_url: currentUser.booking_url || "",
-              bio: currentUser.bio || "",
+              bio: sessionStorage.getItem('bio') || currentUser.bio || "",
               achievements1: currentUser.achievements1 || "",
               achievements2: currentUser.achievements2 || "",
               achievements3: currentUser.achievements3 || "",
@@ -556,7 +557,10 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
                           id="bio"
                           name="bio"
                           value={props.values.bio}
-                          onChange={props.handleChange}
+                          onChange={(e) => {
+                            sessionStorage.setItem('bio', e.target.value);
+                            props.handleChange(e);
+                          }}
                           onBlur={props.handleBlur}
                           placeholder="John resides in Nashville, TN where he loves to fish, golf, spend time with this family, and play the latest video games. He prides himself on human connection."
                         />
