@@ -6,7 +6,7 @@ import AppContainer from "./components/AppContainer";
 import Footer from "./components/Footer";
 import SignInWrapper from "./components/LoginWrapper";
 import NavBar from "./components/NavBar";
-import { CurrentUser, User } from "./types";
+import { CurrentUser } from "./types";
 import ActionPlan from "./views/ActionPlan";
 import { EditProfile } from "./views/Coach/EditProfile";
 import CoachBio from "./views/CoachBio";
@@ -67,44 +67,6 @@ function App() {
   const [cookies] = useCookies(["growth_10_03142023"]);
 
   useEffect(() => {
-    // if (cookies.growth_10_03142023) {
-    //   setCurrentUser({
-    //     id: cookies.growth_10_03142023.id,
-    //     last_sign_in: cookies.growth_10_03142023.last_sign_in,
-
-    //     // leaving backward compatibility for now
-    //     first_name: cookies.growth_10_03142023.name
-    //       ? cookies.growth_10_03142023.name.split(" ")[0]
-    //       : cookies.growth_10_03142023.first_name,
-    //     last_name: cookies.growth_10_03142023.name
-    //       ? cookies.growth_10_03142023.name.split(" ")[1]
-    //       : cookies.growth_10_03142023.last_name,
-    //     //
-
-    //     email: cookies.growth_10_03142023.email,
-    //     employer_id: cookies.growth_10_03142023.employer_id,
-    //     role: cookies.growth_10_03142023.role,
-    //     city: cookies.growth_10_03142023.city,
-    //     state: cookies.growth_10_03142023.state,
-    //     photo_url: cookies.growth_10_03142023.photo_url,
-    //     booking_url: cookies.growth_10_03142023.booking_url,
-    //     linkedin_url: cookies.growth_10_03142023.linkedin_url,
-    //     bio: cookies.growth_10_03142023.bio,
-    //     instagram_url: cookies.growth_10_03142023.instagram_url,
-    //     facebook_url: cookies.growth_10_03142023.facebook_url,
-    //     website_url: cookies.growth_10_03142023.website_url,
-    //     phone_number: cookies.growth_10_03142023.phone_number,
-    //     achievements1: cookies.growth_10_03142023.achievements1,
-    //     achievements2: cookies.growth_10_03142023.achievements2,
-    //     achievements3: cookies.growth_10_03142023.achievements3,
-    //     hobbies1: cookies.growth_10_03142023.hobbies1,
-    //     hobbies2: cookies.growth_10_03142023.hobbies2,
-    //     hobbies3: cookies.growth_10_03142023.hobbies3,
-    //     hobbies4: cookies.growth_10_03142023.hobbies4,
-    //     hobbies5: cookies.growth_10_03142023.hobbies5,
-    //     hobbies6: cookies.growth_10_03142023.hobbies6,
-    //   });
-    // }
     const loadUser = async () => {
       try {
         const singleUser = await menApiAuthClient().get("/users", {
@@ -112,10 +74,38 @@ function App() {
             id: cookies.growth_10_03142023.id,
           },
         });
+        console.log(singleUser);
 
-        const user: User = singleUser.data[0];
-        console.log(user);
+        const user: CurrentUser = singleUser.data[0];
 
+        setCurrentUser({
+          id: user.id,
+          last_sign_in: user.last_sign_in,
+          first_name: user.first_name,
+          last_name: user.last_name,
+          email: user.email,
+          employer_id: user.employer_id,
+          role: user.role,
+          city: user.city,
+          state: user.state,
+          photo_url: user.photo_url,
+          booking_url: user.booking_url,
+          linkedin_url: user.linkedin_url,
+          bio: user.bio,
+          instagram_url: user.instagram_url,
+          facebook_url: user.facebook_url,
+          website_url: user.website_url,
+          phone_number: user.phone_number,
+          achievements1: user.achievements[0],
+          achievements2: user.achievements[1],
+          achievements3: user.achievements[2],
+          hobbies1: user.hobbies[0],
+          hobbies2: user.hobbies[1],
+          hobbies3: user.hobbies[2],
+          hobbies4: user.hobbies[3],
+          hobbies5: user.hobbies[4],
+          hobbies6: user.hobbies[5],
+        })
       } catch (error) {
         console.log("Problem loading Coach Profile", error);
         throw new Error(error);
