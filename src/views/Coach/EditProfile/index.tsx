@@ -45,7 +45,7 @@ function ensureHttps(url: string) {
   }
 }
 
-export const EditProfile = ({ currentUser, setCurrentUser }) => {
+const EditProfile = ({ currentUser, setCurrentUser }) => {
   const navigate = useNavigate();
   const { coachId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
@@ -780,3 +780,5 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
     </PageWrapper>
   );
 };
+
+export default EditProfile;

@@ -18,7 +18,7 @@ type CoachExpertiseProps = {
   currentUser: CurrentUser;
 };
 
-export const CoachExpertise: React.FC<CoachExpertiseProps> = ({
+const CoachExpertise: React.FC<CoachExpertiseProps> = ({
   currentUser
 }) => {
   const navigate = useNavigate();
@@ -128,3 +128,5 @@ export const CoachExpertise: React.FC<CoachExpertiseProps> = ({
     </Container>
   )
 }
+
+export default CoachExpertise;

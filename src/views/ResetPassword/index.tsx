@@ -24,7 +24,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 const REACT_APP_NODE_API = process.env.REACT_APP_NODE_API || "";
 
-export const ResetPassword = () => {
+const ResetPassword = () => {
   const { tokenId } = useParams();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false)
@@ -172,3 +172,5 @@ export const ResetPassword = () => {
     </Container>
   );
 };
+
+export default ResetPassword;
