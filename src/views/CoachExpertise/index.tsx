@@ -13,7 +13,7 @@ import { Tag } from '../../types';
 import { CurrentUser } from '../../types';
 import { useNavigate } from 'react-router';
 import { TagsSection } from './components';
-import PageWrapper from '../../components/PageWrapper';
+import PageWrapper from '../../components/Wrappers/PageWrapper';
 
 
 type CoachExpertiseProps = {
