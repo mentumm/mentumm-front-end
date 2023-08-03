@@ -197,7 +197,9 @@ function App() {
             path="/coach/:coachId/expertise"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <CoachExpertise currentUser={currentUser} />
+                <Suspense fallback={<SuspenseFallback />}>
+                  <CoachExpertise currentUser={currentUser} />
+                </Suspense>
               </SignInWrapper>
             }
           />
