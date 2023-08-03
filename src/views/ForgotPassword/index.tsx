@@ -21,7 +21,7 @@ import { enqueueSnackbar } from "notistack";
 
 const REACT_APP_NODE_API = process.env.REACT_APP_NODE_API || "";
 
-export const ForgotPassword = () => {
+const ForgotPassword = () => {
   const [success, setSuccess] = useState(false);
 
   const handleSubmit = async (values, { setSubmitting }) => {
@@ -130,3 +130,5 @@ export const ForgotPassword = () => {
     </Container>
   );
 };
+
+export default ForgotPassword;

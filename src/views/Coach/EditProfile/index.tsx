@@ -34,7 +34,7 @@ import { Link } from "react-router-dom";
 import { EditProfileWrapper } from "../../../components/Wrappers/EditProfileWrapper";
 import { ensureHttps, urlRegex } from "../../../helpers/validators";
 
-export const EditProfile = ({ currentUser, setCurrentUser }) => {
+const EditProfile = ({ currentUser, setCurrentUser }) => {
   const navigate = useNavigate();
   const { coachId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
@@ -713,3 +713,5 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
     </EditProfileWrapper>
   );
 };
+
+export default EditProfile;
