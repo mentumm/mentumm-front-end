@@ -4,6 +4,7 @@ import {
   Container,
   Heading,
   Button,
+  Center,
   Spinner,
 } from "@chakra-ui/react";
 import { menApiAuthClient } from '../../clients/mentumm';
@@ -12,6 +13,7 @@ import { Tag } from '../../types';
 import { CurrentUser } from '../../types';
 import { useNavigate } from 'react-router';
 import { TagsSection } from './components';
+import PageWrapper from '../../components/PageWrapper';
 
 
 type CoachExpertiseProps = {
@@ -89,42 +91,44 @@ export const CoachExpertise: React.FC<CoachExpertiseProps> = ({
   };
 
   return (
-    <Container maxW={1270}>
-      <Heading size="lg" textAlign="left" my={8}>
-        Pick up to 6 Areas of Expertise
-      </Heading>
-      {loading ? <Spinner /> :
-        (<Box>
-          <TagsSection
-            tags={professionalTags}
-            selectedItems={selectedItems}
-            setSelectedItems={setSelectedItems}
-          />
-          <TagsSection
-            tags={leadershipTags}
-            selectedItems={selectedItems}
-            setSelectedItems={setSelectedItems}
-          />
-          <TagsSection
-            tags={personalTags}
-            selectedItems={selectedItems}
-            setSelectedItems={setSelectedItems}
-          />
-        </Box>)
-      }
+    <PageWrapper>
+      <Container maxW={1270}>
+        <Heading size="lg" textAlign="left" my={8}>
+          Pick up to 6 Areas of Expertise
+        </Heading>
+        {loading ? <Center><Spinner /></Center> :
+          (<Box>
+            <TagsSection
+              tags={professionalTags}
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
+            />
+            <TagsSection
+              tags={leadershipTags}
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
+            />
+            <TagsSection
+              tags={personalTags}
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
+            />
+          </Box>)
+        }
 
-      <Button
-        color="#fff"
-        w="232px"
-        _hover={{ bg: "#3CA8AB" }}
-        mt={8}
-        padding={7}
-        fontWeight="bold"
-        isDisabled={selectedItems.length < 6 || saving}
-        onClick={handleContinue}
-      >
-        SAVE {saving && <Spinner ml={1} size="xs" />}
-      </Button>
-    </Container>
+        <Button
+          color="#fff"
+          w="232px"
+          _hover={{ bg: "#3CA8AB" }}
+          mt={8}
+          padding={7}
+          fontWeight="bold"
+          isDisabled={selectedItems.length < 6 || saving}
+          onClick={handleContinue}
+        >
+          SAVE {saving && <Spinner ml={1} size="xs" />}
+        </Button>
+      </Container>
+    </PageWrapper>
   )
 }

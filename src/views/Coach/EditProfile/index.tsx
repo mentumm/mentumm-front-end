@@ -144,6 +144,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
 
   const handleSubmit = async (values: UserPublic) => {
     handleUpdate(values);
+    sessionStorage.removeItem('bio');
   };
 
   if (!currentUser) {
