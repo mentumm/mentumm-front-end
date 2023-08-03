@@ -101,9 +101,9 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
       booking_url: ensureHttps(values.booking_url),
       achievements: JSON.stringify([
         achievements1,
-        achievements2,
-        achievements3,
-      ]),
+        achievements2.trim(),
+        achievements3.trim(),
+      ].filter(achievement => achievement !== '')),
       hobbies: JSON.stringify([
         hobbies1,
         hobbies2,
@@ -111,7 +111,7 @@ export const EditProfile = ({ currentUser, setCurrentUser }) => {
         hobbies4,
         hobbies5,
         hobbies6,
-      ]),
+      ].filter(hobby => hobby !== '')),
       id: currentUser.id,
     };
     update_password && (updateValues.password = update_password);
