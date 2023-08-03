@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { CoachType, CurrentUserProps } from "../../types";
 import { mixpanelEvent } from "../../helpers";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/Wrappers/PageWrapper";
 import { menApiAuthClient } from "../../clients/mentumm";
 import {
   ProfilePicture,
@@ -83,24 +83,24 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
         >
           <ProfilePicture coach={coach} />
           <Spacer />
-          <Box maxW={{ base: "80%", md: "sm", lg: "sm" }}>
-            <Stack spacing="8">
-              <Stack mt={{ base: "4", md: "0", lg: "0" }} spacing="4">
-                <ProfileHeader coach={coach} />
-                {coach.styles.length && (
-                  <CoachingStyles coach={coach} />
-                )}
-                {coach.expertise.length && (
-                  <AreasOfExpertise coach={coach} />
-                )}
-                {!isCoach && (
-                  <BookCoachingButton
-                    coach={coach}
-                    calendlyOnOpen={calendlyOnOpen}
-                  />)}
-              </Stack>
-            </Stack>
-          </Box>
+          <Stack
+            maxW={{ base: "80%", md: "sm", lg: "sm" }}
+            mt={{ base: "4", md: "0", lg: "0" }}
+            spacing="8"
+          >
+            <ProfileHeader coach={coach} />
+            {coach.styles.length && (
+              <CoachingStyles coach={coach} />
+            )}
+            {coach.expertise.length && (
+              <AreasOfExpertise coach={coach} />
+            )}
+            {!isCoach && (
+              <BookCoachingButton
+                coach={coach}
+                calendlyOnOpen={calendlyOnOpen}
+              />)}
+          </Stack>
         </Flex>
         <VStack
           spacing={8}

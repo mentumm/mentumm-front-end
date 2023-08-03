@@ -63,13 +63,9 @@ const NavMenu = ({
         {generateUserInitials()}
       </MenuButton>
       <MenuList className={classes.menuItems}>
-        {currentUser.role === "coach" ? (
-          <Link to={`/coach/${currentUser.id}/profile`}>
-            <MenuItem icon={<FontAwesomeIcon icon={faUser} />}>
-              Profile
-            </MenuItem>
-          </Link>
-        ) : null}
+        <Link to={`/${currentUser.role}/${currentUser.id}/profile`}>
+          <MenuItem icon={<FontAwesomeIcon icon={faUser} />}>Profile</MenuItem>
+        </Link>
         <MenuItem
           icon={<FontAwesomeIcon icon={faArrowRightFromBracket} />}
           onClick={logoutUser}
