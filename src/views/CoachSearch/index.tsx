@@ -15,7 +15,7 @@ import { menApiAuthClient } from "../../clients/mentumm";
 import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-export const CoachSearch = ({ currentUser }) => {
+const CoachSearch = ({ currentUser }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [coaches, setCoaches] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
