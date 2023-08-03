@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { menApiAuthClient } from "../../clients/mentumm";
 import Coach from "../../components/Coach";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/Wrappers/PageWrapper";
 import { Tag, CoachType } from "../../types";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({

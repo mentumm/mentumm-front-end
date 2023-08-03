@@ -23,7 +23,7 @@ import {
 import axios from "axios";
 import envConfig from "../../envConfig";
 import { menApiAuthClient } from "../../clients/mentumm";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/Wrappers/PageWrapper";
 
 const useStyles = createUseStyles({
   form: {

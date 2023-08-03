@@ -23,6 +23,8 @@ import BookingConfirmation from "./views/BookingConfirmation";
 import { CoachExpertise } from "./views/CoachExpertise";
 import { ForgotPassword } from "./views/ForgotPassword";
 import { ResetPassword } from "./views/ResetPassword";
+import { EditUserProfile } from "./views/User/EditProfile";
+import { menApiAuthClient } from "./clients/mentumm";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -66,44 +68,72 @@ function App() {
   const [cookies] = useCookies(["growth_10_03142023"]);
 
   useEffect(() => {
-    if (cookies.growth_10_03142023) {
-      setCurrentUser({
-        id: cookies.growth_10_03142023.id,
-        last_sign_in: cookies.growth_10_03142023.last_sign_in,
+    const loadUser = async () => {
+      try {
+        const singleUser = await menApiAuthClient().get("/users", {
+          params: {
+            id: cookies.growth_10_03142023?.id,
+          },
+        });
 
-        // leaving backward compatibility for now
-        first_name: cookies.growth_10_03142023.name
-          ? cookies.growth_10_03142023.name.split(" ")[0]
-          : cookies.growth_10_03142023.first_name,
-        last_name: cookies.growth_10_03142023.name
-          ? cookies.growth_10_03142023.name.split(" ")[1]
-          : cookies.growth_10_03142023.last_name,
-        //
+        const {
+          id,
+          last_sign_in,
+          first_name,
+          last_name,
+          email,
+          employer_id,
+          role,
+          city,
+          state,
+          photo_url,
+          booking_url,
+          linkedin_url,
+          bio,
+          instagram_url,
+          facebook_url,
+          website_url,
+          phone_number,
+          achievements,
+          hobbies,
+        }: CurrentUser = singleUser.data[0];
 
-        email: cookies.growth_10_03142023.email,
-        employer_id: cookies.growth_10_03142023.employer_id,
-        role: cookies.growth_10_03142023.role,
-        city: cookies.growth_10_03142023.city,
-        state: cookies.growth_10_03142023.state,
-        photo_url: cookies.growth_10_03142023.photo_url,
-        booking_url: cookies.growth_10_03142023.booking_url,
-        linkedin_url: cookies.growth_10_03142023.linkedin_url,
-        bio: cookies.growth_10_03142023.bio,
-        instagram_url: cookies.growth_10_03142023.instagram_url,
-        facebook_url: cookies.growth_10_03142023.facebook_url,
-        website_url: cookies.growth_10_03142023.website_url,
-        phone_number: cookies.growth_10_03142023.phone_number,
-        achievements1: cookies.growth_10_03142023.achievements1,
-        achievements2: cookies.growth_10_03142023.achievements2,
-        achievements3: cookies.growth_10_03142023.achievements3,
-        hobbies1: cookies.growth_10_03142023.hobbies1,
-        hobbies2: cookies.growth_10_03142023.hobbies2,
-        hobbies3: cookies.growth_10_03142023.hobbies3,
-        hobbies4: cookies.growth_10_03142023.hobbies4,
-        hobbies5: cookies.growth_10_03142023.hobbies5,
-        hobbies6: cookies.growth_10_03142023.hobbies6,
-      });
-    }
+        cookies.growth_10_03142023 &&
+          setCurrentUser({
+            id,
+            last_sign_in,
+            first_name,
+            last_name,
+            email,
+            employer_id,
+            role,
+            city,
+            state,
+            photo_url,
+            booking_url,
+            linkedin_url,
+            bio,
+            instagram_url,
+            facebook_url,
+            website_url,
+            phone_number,
+            achievements1: achievements[0],
+            achievements2: achievements[1],
+            achievements3: achievements[2],
+            hobbies1: hobbies[0],
+            hobbies2: hobbies[1],
+            hobbies3: hobbies[2],
+            hobbies4: hobbies[3],
+            hobbies5: hobbies[4],
+            hobbies6: hobbies[5],
+          })
+      } catch (error) {
+        console.log("Problem loading Coach Profile", error);
+        throw new Error(error);
+      }
+    };
+
+    loadUser();
   }, [cookies]);
 
   return (
@@ -161,6 +191,17 @@ function App() {
             element={
               <SignInWrapper currentUser={currentUser}>
                 <CoachExpertise currentUser={currentUser} />
+              </SignInWrapper>
+            }
+          />
+          <Route
+            path="/user/:userId/profile"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <EditUserProfile
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                />
               </SignInWrapper>
             }
           />
@@ -251,18 +292,8 @@ function App() {
               </SignInWrapper>
             }
           />
-          <Route
-            path="/forgot-password"
-            element={
-              <ForgotPassword />
-            }
-          />
-          <Route
-            path="/reset-password/:tokenId"
-            element={
-              <ResetPassword />
-            }
-          />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/reset-password/:tokenId" element={<ResetPassword />} />
         </Routes>
         <Footer />
       </div>
