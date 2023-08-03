@@ -9,7 +9,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/Wrappers/PageWrapper";
 import Coach from "../../components/Coach";
 import { menApiAuthClient } from "../../clients/mentumm";
 import axios from "axios";
