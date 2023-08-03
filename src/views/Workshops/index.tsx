@@ -11,7 +11,7 @@ import {
   GridItem,
 } from "@chakra-ui/react";
 import envConfig from "../../envConfig";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/Wrappers/PageWrapper";
 
 const WorkshopsPage: React.FC = () => {
   const [workshops, setWorkshops] = useState<Workshop[]>([]);
