@@ -74,7 +74,7 @@ function App() {
         if (cookies.growth_10_03142023) {
           const singleUser = await menApiAuthClient().get("/users", {
             params: {
-              id: cookies.growth_10_03142023?.id,
+              id: cookies.growth_10_03142023.id,
             },
           });
 
