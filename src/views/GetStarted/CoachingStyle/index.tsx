@@ -16,7 +16,7 @@ import envConfig from "../../../envConfig";
 import { useNavigate } from "react-router";
 import { CurrentUser } from "../../../types";
 import { useCookies } from "react-cookie";
-import PageWrapper from "../../../components/PageWrapper";
+import PageWrapper from "../../../components/Wrappers/PageWrapper";
 
 type TagOptionProps = {
   tag: Tag;
