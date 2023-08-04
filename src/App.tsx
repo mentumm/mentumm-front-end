@@ -13,6 +13,7 @@ import Login from "./views/Login";
 import { menApiAuthClient } from "./clients/mentumm";
 const ActionPlan = lazy(() => import('./views/ActionPlan'));
 const EditProfile = lazy(() => import('./views/Coach/EditProfile'));
+const EditUserProfile = lazy(() => import('./views/User/EditProfile'));
 const CoachBio = lazy(() => import('./views/CoachBio'));
 const CoachResults = lazy(() => import('./views/CoachResults'));
 const CoachSearch = lazy(() => import('./views/CoachSearch'));
@@ -210,6 +211,19 @@ function App() {
               <SignInWrapper currentUser={currentUser}>
                 <Suspense fallback={<SuspenseFallback />}>
                   <EditProfile
+                    currentUser={currentUser}
+                    setCurrentUser={setCurrentUser}
+                  />
+                </Suspense>
+              </SignInWrapper>
+            }
+          />
+          <Route
+            path="/user/:userId/profile"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <Suspense fallback={<SuspenseFallback />}>
+                  <EditUserProfile
                     currentUser={currentUser}
                     setCurrentUser={setCurrentUser}
                   />
