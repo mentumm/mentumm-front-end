@@ -259,10 +259,12 @@ function App() {
             path="/get-started/coaching-style"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <CoachingStyle
-                  currentUser={currentUser}
-                  setCurrentUser={setCurrentUser}
-                />
+                <Suspense fallback={<SuspenseFallback />}>
+                  <CoachingStyle
+                    currentUser={currentUser}
+                    setCurrentUser={setCurrentUser}
+                  />
+                </Suspense>
               </SignInWrapper>
             }
           />
