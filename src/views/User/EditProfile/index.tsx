@@ -25,7 +25,7 @@ import { usStates } from "../../../utils/states";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import * as Yup from "yup";
 
-export const EditUserProfile = ({ currentUser, setCurrentUser }) => {
+const EditUserProfile = ({ currentUser, setCurrentUser }) => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
@@ -380,3 +380,5 @@ export const EditUserProfile = ({ currentUser, setCurrentUser }) => {
     </EditProfileWrapper>
   );
 };
+
+export default EditUserProfile

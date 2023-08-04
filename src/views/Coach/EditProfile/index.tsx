@@ -599,19 +599,22 @@ const EditProfile = ({ currentUser, setCurrentUser }) => {
                   <Box>
                     <Wrap mt={2} spacing={2}>
                       {coachExpertise.length ? (
-                        coachExpertise.map((style, i) => (
-                          <WrapItem>
-                            <Tag
-                              whiteSpace="nowrap"
-                              minW="auto"
+                        coachExpertise.map((style, i) => {
+                          return (
+                            <WrapItem
                               key={i}
-                              color="white"
-                              bg="blue.600"
                             >
-                              {style.name}
-                            </Tag>
-                          </WrapItem>
-                        ))
+                              <Tag
+                                whiteSpace="nowrap"
+                                minW="auto"
+                                color="white"
+                                bg="blue.600"
+                              >
+                                {style.name}
+                              </Tag>
+                            </WrapItem>
+                          )
+                        })
                       ) : (
                         <Link to={`/coach/${currentUser.id}/expertise`}>
                           <Tag

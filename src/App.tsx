@@ -13,6 +13,7 @@ import Login from "./views/Login";
 import { menApiAuthClient } from "./clients/mentumm";
 const ActionPlan = lazy(() => import('./views/ActionPlan'));
 const EditProfile = lazy(() => import('./views/Coach/EditProfile'));
+const EditUserProfile = lazy(() => import('./views/User/EditProfile'));
 const CoachBio = lazy(() => import('./views/CoachBio'));
 const CoachResults = lazy(() => import('./views/CoachResults'));
 const CoachSearch = lazy(() => import('./views/CoachSearch'));
@@ -71,35 +72,35 @@ function App() {
   useEffect(() => {
     const loadUser = async () => {
       try {
-        const singleUser = await menApiAuthClient().get("/users", {
-          params: {
-            id: cookies.growth_10_03142023?.id,
-          },
-        });
+        if (cookies.growth_10_03142023) {
+          const singleUser = await menApiAuthClient().get("/users", {
+            params: {
+              id: cookies.growth_10_03142023.id,
+            },
+          });
 
-        const {
-          id,
-          last_sign_in,
-          first_name,
-          last_name,
-          email,
-          employer_id,
-          role,
-          city,
-          state,
-          photo_url,
-          booking_url,
-          linkedin_url,
-          bio,
-          instagram_url,
-          facebook_url,
-          website_url,
-          phone_number,
-          achievements,
-          hobbies,
-        }: CurrentUser = singleUser.data[0];
+          const {
+            id,
+            last_sign_in,
+            first_name,
+            last_name,
+            email,
+            employer_id,
+            role,
+            city,
+            state,
+            photo_url,
+            booking_url,
+            linkedin_url,
+            bio,
+            instagram_url,
+            facebook_url,
+            website_url,
+            phone_number,
+            achievements,
+            hobbies,
+          }: CurrentUser = singleUser.data[0];
 
-        cookies.growth_10_03142023 &&
           setCurrentUser({
             id,
             last_sign_in,
@@ -127,7 +128,8 @@ function App() {
             hobbies4: hobbies[3],
             hobbies5: hobbies[4],
             hobbies6: hobbies[5],
-          })
+          });
+        }
       } catch (error) {
         console.log("Problem loading Coach Profile", error);
         throw new Error(error);
@@ -197,7 +199,9 @@ function App() {
             path="/coach/:coachId/expertise"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <CoachExpertise currentUser={currentUser} />
+                <Suspense fallback={<SuspenseFallback />}>
+                  <CoachExpertise currentUser={currentUser} />
+                </Suspense>
               </SignInWrapper>
             }
           />
@@ -207,6 +211,19 @@ function App() {
               <SignInWrapper currentUser={currentUser}>
                 <Suspense fallback={<SuspenseFallback />}>
                   <EditProfile
+                    currentUser={currentUser}
+                    setCurrentUser={setCurrentUser}
+                  />
+                </Suspense>
+              </SignInWrapper>
+            }
+          />
+          <Route
+            path="/user/:userId/profile"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <Suspense fallback={<SuspenseFallback />}>
+                  <EditUserProfile
                     currentUser={currentUser}
                     setCurrentUser={setCurrentUser}
                   />
