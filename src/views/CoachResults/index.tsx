@@ -78,7 +78,7 @@ const CoachResults: React.FC = () => {
           {!!coaches && coaches.length ? (
             coaches.map(
               (coach: CoachType) =>
-                coach.is_test ?? <Coach coachInfo={coach} slug={slug} />
+                !coach.is_test && <Coach coachInfo={coach} slug={slug} />
             )
           ) : (
             <Heading as="h1" size="2xl">

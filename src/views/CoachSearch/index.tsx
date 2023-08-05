@@ -148,7 +148,7 @@ const CoachSearch = ({ currentUser }) => {
           {!isLoading &&
             coaches.map(
               (coach) =>
-                coach.is_test ?? (
+                !coach.is_test && (
                   <Box key={coach.id} padding={4}>
                     <Coach coachInfo={coach} />
                   </Box>
