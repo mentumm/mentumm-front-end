@@ -146,12 +146,13 @@ const CoachSearch = ({ currentUser }) => {
           justifyContent="space-around"
         >
           {!isLoading &&
-            coaches.map((coach) =>
-              !coach.is_test ? (
-                <Box key={coach.id} padding={4}>
-                  <Coach coachInfo={coach} />
-                </Box>
-              ) : null
+            coaches.map(
+              (coach) =>
+                coach.is_test ?? (
+                  <Box key={coach.id} padding={4}>
+                    <Coach coachInfo={coach} />
+                  </Box>
+                )
             )}
         </Box>
       )}
