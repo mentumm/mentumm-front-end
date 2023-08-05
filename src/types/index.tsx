@@ -45,6 +45,7 @@ export interface User {
   hobbies4?: string;
   hobbies5?: string;
   hobbies6?: string;
+  is_test?: boolean;
 }
 
 type UserPrivateFields =
