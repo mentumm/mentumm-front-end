@@ -23,10 +23,10 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({ coach }) => {
         {coach && `${coach.first_name} ${coach.last_name}`}
       </Heading>
       <HStack spacing={8} fontSize="md">
-        {(coach && coach.location) && (
+        {(coach && coach.city && coach.state) && (
           <Box display='inherit' alignItems='center'>
             <Icon as={GoGlobe} color="gray.500" />
-            <Text ml={2} >{coach.location}</Text>
+            <Text ml={2} >{`${coach.city}, ${coach.state}`}</Text>
           </Box>
         )}
         <Box display='inherit' alignItems='center'>
