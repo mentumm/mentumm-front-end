@@ -68,6 +68,16 @@ const Coach: React.FC<CoachProps> = (props) => {
   const classes = useStyles();
   const { coachInfo, slug, booking, currentUser } = props;
   const { first_name, last_name, expertise, city, state, photo_url } = coachInfo;
+  const getLocationText = (city?: string, state?: string) => {
+    if (city && state) {
+      return `${city}, ${state}`;
+    } else if (city && !state) {
+      return city;
+    } else if (!city && state) {
+      return state;
+    }
+    return null;
+  }
 
   return (
     <Link to={`/coach/${generateCoachUrl(coachInfo)}`} className={classes.root}>
@@ -91,7 +101,9 @@ const Coach: React.FC<CoachProps> = (props) => {
               <Stack mt="1">
                 <HStack fontSize="md" mt={2}>
                   <Icon as={GoGlobe} color="gray.500" />
-                  <Text>{(city && state) && `${city}, ${state}`}</Text>
+                  <Text>
+                    {getLocationText(city, state)}
+                  </Text>
                 </HStack>
               </Stack>
               <Wrap shouldWrapChildren mt={4}>
