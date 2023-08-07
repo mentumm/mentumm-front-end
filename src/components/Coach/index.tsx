@@ -67,12 +67,13 @@ const generateCoachTags = (tags: TagType[], slug: string) => {
 const Coach: React.FC<CoachProps> = (props) => {
   const classes = useStyles();
   const { coachInfo, slug, booking, currentUser } = props;
-  const { first_name, last_name, expertise, location, photo_url } = coachInfo;
+  const { first_name, last_name, expertise, city, state, photo_url } = coachInfo;
 
   return (
     <Link to={`/coach/${generateCoachUrl(coachInfo)}`} className={classes.root}>
       <Box as="section" py="6">
-        <Card>
+        <Card
+        >
           <Stack
             direction={{ base: "column", md: "row" }}
             spacing={{ base: "4", md: "10" }}
@@ -90,7 +91,7 @@ const Coach: React.FC<CoachProps> = (props) => {
               <Stack mt="1">
                 <HStack fontSize="md" mt={2}>
                   <Icon as={GoGlobe} color="gray.500" />
-                  <Text>{location ? location : null}</Text>
+                  <Text>{(city && state) && `${city}, ${state}`}</Text>
                 </HStack>
               </Stack>
               <Wrap shouldWrapChildren mt={4}>

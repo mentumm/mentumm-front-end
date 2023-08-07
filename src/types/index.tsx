@@ -45,6 +45,7 @@ export interface User {
   hobbies4?: string;
   hobbies5?: string;
   hobbies6?: string;
+  is_test?: boolean;
 }
 
 type UserPrivateFields =
@@ -106,6 +107,8 @@ export interface CoachProps {
 export interface CoachType extends User {
   styles: Tag[];
   expertise: Tag[];
+  achievements?: string; // temp hack, need to adjust our types re: hobbies/achievements
+  hobbies?: string;
 }
 
 export interface CurrentUser {

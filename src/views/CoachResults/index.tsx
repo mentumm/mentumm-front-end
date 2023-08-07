@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { menApiAuthClient } from "../../clients/mentumm";
 import Coach from "../../components/Coach";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/Wrappers/PageWrapper";
 import { Tag, CoachType } from "../../types";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
@@ -76,9 +76,10 @@ const CoachResults: React.FC = () => {
       <div className={classes.root}>
         <div className={classes.coaches}>
           {!!coaches && coaches.length ? (
-            coaches.map((coach: CoachType) => (
-              <Coach coachInfo={coach} slug={slug} />
-            ))
+            coaches.map(
+              (coach: CoachType) =>
+                !coach.is_test && <Coach coachInfo={coach} slug={slug} />
+            )
           ) : (
             <Heading as="h1" size="2xl">
               Searching

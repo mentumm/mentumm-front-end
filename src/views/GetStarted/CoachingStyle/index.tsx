@@ -16,6 +16,7 @@ import envConfig from "../../../envConfig";
 import { useNavigate } from "react-router";
 import { CurrentUser } from "../../../types";
 import { useCookies } from "react-cookie";
+import PageWrapper from "../../../components/Wrappers/PageWrapper";
 
 type TagOptionProps = {
   tag: Tag;
@@ -174,51 +175,53 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
   };
 
   return (
-    <Container maxW={1270}>
-      <Heading size="lg" textAlign="left" mt={8}>
-        {isCoach
-          ? "Select Your Coaching Styles"
-          : "Select Your Desired Coaching Style"}
-      </Heading>
-
-      <Heading size="md" textAlign="left" mt={8}>
-        {isCoach
-          ? "Pick 2 coaching styles that describe you best"
-          : "Pick 2 coaching styles most conducive to your growth goals."}
-      </Heading>
-
-      {isCoach && (
-        <Heading size="sm">
-          These are used in guiding mentee-coach matches.
+    <PageWrapper>
+      <Container maxW={1270}>
+        <Heading size="lg" textAlign="left" mt={8}>
+          {isCoach
+            ? "Select Your Coaching Styles"
+            : "Select Your Desired Coaching Style"}
         </Heading>
-      )}
 
-      <Text mt={4} mb={6}>
-        You can update this later in your profile.
-      </Text>
+        <Heading size="md" textAlign="left" mt={8}>
+          {isCoach
+            ? "Pick 2 coaching styles that describe you best"
+            : "Pick 2 coaching styles most conducive to your growth goals."}
+        </Heading>
 
-      {loading ? (
-        <Spinner />
-      ) : (
-        <ContentContainer
-          checkedItems={checkedItems}
-          setCheckedItems={setCheckedItems}
-          tags={tags}
-        />
-      )}
+        {isCoach && (
+          <Heading size="sm">
+            These are used in guiding mentee-coach matches.
+          </Heading>
+        )}
 
-      <Button
-        color="#fff"
-        _hover={{ bg: "#3CA8AB" }}
-        mt={8}
-        padding={7}
-        fontWeight="bold"
-        isDisabled={checkedItems.length < 2 || saving}
-        onClick={handleContinue}
-      >
-        CONTINUE {saving && <Spinner ml={1} size="xs" />}
-      </Button>
-    </Container>
+        <Text mt={4} mb={6}>
+          You can update this later in your profile.
+        </Text>
+
+        {loading ? (
+          <Spinner />
+        ) : (
+          <ContentContainer
+            checkedItems={checkedItems}
+            setCheckedItems={setCheckedItems}
+            tags={tags}
+          />
+        )}
+
+        <Button
+          color="#fff"
+          _hover={{ bg: "#3CA8AB" }}
+          mt={8}
+          padding={7}
+          fontWeight="bold"
+          isDisabled={checkedItems.length < 2 || saving}
+          onClick={handleContinue}
+        >
+          CONTINUE {saving && <Spinner ml={1} size="xs" />}
+        </Button>
+      </Container>
+    </PageWrapper>
   );
 };
 

@@ -1,43 +1,30 @@
-import {
-  AspectRatio,
-  Box,
-  Button,
-  Heading,
-  HStack,
-  Icon,
-  Image,
-  Link,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  Stack,
-  Tag,
-  Text,
-  useDisclosure,
-  Wrap,
-} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import { InlineWidget } from "react-calendly";
+import {
+  Box,
+  Flex,
+  Spacer,
+  Stack,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
 import { CoachType, CurrentUserProps } from "../../types";
-import { GoGlobe } from "react-icons/go";
-import { SiLinkedin } from "react-icons/si";
 import { mixpanelEvent } from "../../helpers";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/Wrappers/PageWrapper";
 import { menApiAuthClient } from "../../clients/mentumm";
-import { createUseStyles } from "react-jss";
-
-const useStyles = createUseStyles({
-  hide: {
-    display: "none",
-  },
-});
+import {
+  ProfilePicture,
+  ProfileHeader,
+  CoachingStyles,
+  AreasOfExpertise,
+  Bio,
+  BookCoachingButton,
+  TopAchievements,
+  Hobbies,
+  Connect,
+  BookingModal,
+} from "./components";
 
 const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
-  const classes = useStyles();
   const [coach, setCoach] = useState<CoachType>(null);
   const {
     isOpen: calendlyIsOpen,
@@ -47,6 +34,8 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const windowUrl = window.location.toString().toLowerCase();
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
   const coachId = slug.split("-");
+
+  const isCoach = (currentUser && currentUser.role === "coach");
 
   useEffect(() => {
     const loadCoach = async () => {
@@ -88,110 +77,68 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
         px={{ base: "4", md: "8", lg: "12" }}
         pb={{ base: "6", md: "8", lg: "12" }}
       >
-        <Stack direction={{ base: "column", md: "row" }}>
-          <Box flex="1">
-            <AspectRatio maxW="450px" ratio={1}>
-              <Image
-                src={
-                  coach && coach.photo_url
-                    ? coach.photo_url
-                    : "https://mentumm.com/wp-content/uploads/2022/06/mentumm_profile.png"
-                }
-                alt="Coach image"
+        <Flex
+          flexDirection={{ base: "column", md: "row" }}
+          alignItems='center'
+        >
+          <ProfilePicture coach={coach} />
+          <Spacer />
+          <Stack
+            maxW={{ base: "80%", md: "sm", lg: "sm" }}
+            mt={{ base: "4", md: "0", lg: "0" }}
+            spacing="8"
+          >
+            <ProfileHeader coach={coach} />
+            {coach.styles.length && (
+              <CoachingStyles coach={coach} />
+            )}
+            {coach.expertise.length && (
+              <AreasOfExpertise coach={coach} />
+            )}
+            {!isCoach && (
+              <BookCoachingButton
+                coach={coach}
+                calendlyOnOpen={calendlyOnOpen}
+              />)}
+          </Stack>
+        </Flex>
+        <VStack
+          spacing={8}
+        >
+          {coach.bio && (
+            <Bio coach={coach}
+            />
+          )}
+          {coach.achievements && (
+            <TopAchievements coach={coach} />
+          )}
+          <Stack
+            direction={{ base: "column", md: "row" }}
+            width="100%"
+            spacing={4}
+          >
+            {coach.hobbies && (
+              <Hobbies coach={coach} />
+            )}
+            <Connect coach={coach} />
+          </Stack>
+          {!isCoach && (
+            <Box
+              mt={8}
+            >
+              <BookCoachingButton
+                coach={coach}
+                calendlyOnOpen={calendlyOnOpen}
               />
-            </AspectRatio>
-          </Box>
-          <Box maxW="sm">
-            <Stack spacing="8">
-              <Stack spacing="4">
-                <Stack>
-                  <Heading size="2xl" fontWeight="bold">
-                    {coach ? `${coach.first_name} ${coach.last_name}` : null}
-                  </Heading>
-                  <HStack fontSize="md">
-                    <Icon as={GoGlobe} color="gray.500" />
-                    <Text>{coach ? coach.location : null}</Text>
-                    <Icon as={SiLinkedin} color="gray.500" />
-                    <Link
-                      href={
-                        coach && coach.linkedin_url ? coach.linkedin_url : "#"
-                      }
-                      isExternal
-                    >
-                      {coach ? `${coach.first_name} ${coach.last_name}` : null}
-                    </Link>
-                  </HStack>
-                </Stack>
-                <Text color="black">{coach ? coach.bio : null}</Text>
-              </Stack>
-              <div
-                className={currentUser.role === "coach" ? classes.hide : null}
-              >
-                <Stack
-                  spacing="4"
-                  className={currentUser.role === "coach" ? classes.hide : null}
-                >
-                  <Button
-                    onClick={() => {
-                      mixpanelEvent("Clicked Book Coach", {
-                        "Coach Name": coach
-                          ? `${coach.first_name} ${coach.last_name}`
-                          : null,
-                        "Coach ID": coach ? coach.id : null,
-                      });
-                      calendlyOnOpen();
-                    }}
-                  >
-                    <Modal
-                      isOpen={calendlyIsOpen}
-                      onClose={calendlyOnClose}
-                      isCentered
-                      size="xl"
-                    >
-                      <ModalOverlay />
-                      <ModalContent>
-                        <ModalHeader>
-                          Book your session{" "}
-                          {coach
-                            ? `with ${`${coach.first_name} ${coach.last_name}`}`
-                            : null}
-                        </ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                          <InlineWidget
-                            url={coach ? coach.booking_url : null}
-                            utm={{
-                              utmSource: coach ? String(coach.id) : null,
-                            }}
-                            prefill={{
-                              email: currentUser?.email,
-                              name: `${currentUser?.first_name} ${currentUser?.last_name}`,
-                            }}
-                          />
-                        </ModalBody>
-                        <ModalFooter>
-                          <Button mr={3} onClick={calendlyOnClose}>
-                            Cancel
-                          </Button>
-                        </ModalFooter>
-                      </ModalContent>
-                    </Modal>
-                    Book Your Coaching Session
-                  </Button>
-                </Stack>
-              </div>
-              <Stack spacing="4">
-                <Wrap shouldWrapChildren>
-                  {coach && coach.expertise.length
-                    ? coach.expertise.map((expertise) => (
-                        <Tag key={expertise.id}>{expertise.name}</Tag>
-                      ))
-                    : null}
-                </Wrap>
-              </Stack>
-            </Stack>
-          </Box>
-        </Stack>
+            </Box>
+          )}
+        </VStack>
+        <BookingModal
+          coach={coach}
+          currentUser={currentUser}
+          calendlyIsOpen={calendlyIsOpen}
+          calendlyOnClose={calendlyOnClose}
+        />
       </Box>
     </PageWrapper>
   );

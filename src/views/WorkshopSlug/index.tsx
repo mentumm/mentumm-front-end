@@ -7,7 +7,7 @@ import VimeoVideo from "../../components/WorkshopSlug/VimeoVideo";
 import envConfig from "../../envConfig";
 import { mixpanelEvent } from "../../helpers";
 import { useParams } from "react-router";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/Wrappers/PageWrapper";
 
 const WorkshopSlug: React.FC = () => {
   const [workshop, setWorkshop] = useState<Workshop>(null);

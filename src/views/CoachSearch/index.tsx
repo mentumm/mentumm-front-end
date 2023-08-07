@@ -9,13 +9,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import PageWrapper from "../../components/PageWrapper";
+import PageWrapper from "../../components/Wrappers/PageWrapper";
 import Coach from "../../components/Coach";
 import { menApiAuthClient } from "../../clients/mentumm";
 import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
-export const CoachSearch = ({ currentUser }) => {
+const CoachSearch = ({ currentUser }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [coaches, setCoaches] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -146,11 +146,14 @@ export const CoachSearch = ({ currentUser }) => {
           justifyContent="space-around"
         >
           {!isLoading &&
-            coaches.map((coach) => (
-              <Box key={coach.id} padding={4}>
-                <Coach coachInfo={coach} />
-              </Box>
-            ))}
+            coaches.map(
+              (coach) =>
+                !coach.is_test && (
+                  <Box key={coach.id} padding={4}>
+                    <Coach coachInfo={coach} />
+                  </Box>
+                )
+            )}
         </Box>
       )}
       {!isLoading && coaches.length === 0 && (
