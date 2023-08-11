@@ -16,7 +16,7 @@ const HighlightedCoaches: React.FC<IProps> = ({ title, coaches }) => {
       </Heading>
       <Box display="flex" flexFlow="row wrap" gap={4}>
         {coaches.map((c) => {
-          return !c.is_test && <Coach coachInfo={c} key={c.id} />;
+          return <Coach coachInfo={c} key={c.id} />;
         })}
       </Box>
     </>
