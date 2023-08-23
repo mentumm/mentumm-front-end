@@ -39,8 +39,9 @@ const TagOption: React.FC<TagOptionProps> = ({
 
   return (
     <Checkbox
+      colorScheme="brand"
       value={tag.id}
-      isChecked={checkedItems.includes(Number(tag.id))}
+      isChecked={checkedItems.includes(Number(tag.id))} // #265390
       onChange={(e) =>
         setCheckedItems(toggleTagChecked(Number(e.target.value)))
       }
@@ -210,8 +211,6 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
         )}
 
         <Button
-          color="#fff"
-          _hover={{ bg: "#3CA8AB" }}
           mt={8}
           padding={7}
           fontWeight="bold"
