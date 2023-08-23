@@ -40,6 +40,9 @@ const customTheme = extendTheme({
               },
             },
           },
+          _active: {
+            bg: "#20467a",
+          }
         },
       },
       defaultProps: {
