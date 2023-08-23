@@ -25,9 +25,6 @@ const customTheme = extendTheme({
       baseStyle: {
         textTransform: "uppercase",
         color: "white",
-        _hover: {
-          bg: "#265390",
-        }
       },
       variants: {
         solid: {
@@ -44,11 +41,6 @@ const customTheme = extendTheme({
             bg: "#20467a",
           }
         },
-      },
-      defaultProps: {
-        size: 'lg',
-        colorScheme: 'brand',
-        variant: 'solid',
       },
     },
     Tag: {
