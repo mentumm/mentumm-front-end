@@ -41,7 +41,7 @@ const TagOption: React.FC<TagOptionProps> = ({
     <Checkbox
       colorScheme="brand"
       value={tag.id}
-      isChecked={checkedItems.includes(Number(tag.id))} // #265390
+      isChecked={checkedItems.includes(Number(tag.id))}
       onChange={(e) =>
         setCheckedItems(toggleTagChecked(Number(e.target.value)))
       }
