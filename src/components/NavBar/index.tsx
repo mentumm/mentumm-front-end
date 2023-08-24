@@ -13,7 +13,6 @@ const NavBar: React.FC<UserLoginProps> = (props) => {
   return (
     <Container
       minW="100%"
-      position="sticky"
       display="flex"
       backgroundColor="var(--chakra-colors-brand-300)"
       height="60px"
