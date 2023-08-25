@@ -47,14 +47,16 @@ const generateCoachTags = (tags: TagType[], slug: string, kind: string) => {
   }
 
   return trimmedTags.map(tag => {
-    const tagName = kind === 'style' ? tag.name.toUpperCase() : tag.name;
-    const tagFontSize = kind === 'style' ? 'sm' : 'xs';
+    const isStyle = kind === 'style';
+    const tagName = isStyle ? tag.name.toUpperCase() : tag.name;
+    const tagFontSize = isStyle ? 'sm' : 'xs';
+    const tagFontColor = isStyle ? 'white' : 'black';
 
     return (
       <Text
         fontSize={tagFontSize}
         key={tag.id}
-        color="white"
+        color={tagFontColor}
       >
         {tagName}
       </Text>
@@ -108,13 +110,13 @@ const Coach: React.FC<CoachProps> = (props) => {
             {expertise && generateCoachTags(expertise, slug, 'expertise')}
           </Wrap>
         </CardFooter>
-        {!!booking && (
+        {/* {!!booking && (
           <BookingInfo
             booking={booking}
             coach={coachInfo}
             currentUser={currentUser}
           />
-        )}
+        )} */}
       </Card>
     </Flex>
   );
