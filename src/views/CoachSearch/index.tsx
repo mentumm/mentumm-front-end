@@ -31,6 +31,8 @@ const CoachSearch = ({ currentUser }) => {
     setSearchTerm("");
   };
 
+  console.log(searchTerm);
+
   useEffect(() => {
     const controller = new AbortController();
 
