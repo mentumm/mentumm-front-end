@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Text,
+  Text, WrapItem,
 } from "@chakra-ui/react";
 import { Tag, CoachType } from "../../types";
 
@@ -17,13 +17,13 @@ export const generateCoachTags = (tags: Tag[], slug: string, kind: string) => {
       }
       trimmedTags = [...trimmedTags, ...remainingTags.slice(0, 2)];
     } else {
-      trimmedTags = remainingTags.slice(0, 2);
+      trimmedTags = remainingTags.slice(0, 4);
     }
 
     // the extra +3 more tag
     const moreTag: Partial<Tag> = {
       id: Math.floor(Math.random() * (2000 - 1000) + 1000),
-      name: `+ ${tags.length - 2} more`
+      name: `+ ${tags.length - 4} more`
     };
 
     trimmedTags.push(moreTag as Tag);
@@ -38,13 +38,15 @@ export const generateCoachTags = (tags: Tag[], slug: string, kind: string) => {
     const tagFontColor = isStyle ? 'white' : 'black';
 
     return (
-      <Text
-        fontSize={tagFontSize}
-        key={tag.id}
-        color={tagFontColor}
-      >
-        {tagName}
-      </Text>
+      <WrapItem lineHeight={1} >
+        <Text
+          fontSize={tagFontSize}
+          key={tag.id}
+          color={tagFontColor}
+        >
+          {tagName}
+        </Text>
+      </WrapItem>
     );
   });
 };

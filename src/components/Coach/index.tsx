@@ -5,6 +5,7 @@ import {
   Card,
   CardBody,
   CardFooter,
+  WrapItem,
 } from "@chakra-ui/react";
 import React from "react";
 import { CoachProps } from "../../types";
@@ -37,9 +38,9 @@ const Coach: React.FC<CoachProps> = (props) => {
             <CoachName title={`${first_name} ${last_name}`} />
           </Box>
           <Box>
-            {<Wrap shouldWrapChildren>
+            <Wrap shouldWrapChildren>
               {styles && generateCoachTags(styles, slug, 'style')}
-            </Wrap>}
+            </Wrap>
           </Box>
         </CardBody>
         <CardFooter
@@ -49,7 +50,7 @@ const Coach: React.FC<CoachProps> = (props) => {
           minH="2.625em"
           rounded="sm"
         >
-          <Wrap shouldWrapChildren mb={4}>
+          <Wrap shouldWrapChildren mb={0}  >
             {expertise && generateCoachTags(expertise, slug, 'expertise')}
           </Wrap>
         </CardFooter>
