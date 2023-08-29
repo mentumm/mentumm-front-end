@@ -1,11 +1,11 @@
 import React from "react";
+import { Box, Container, Flex, HStack, Image, Spacer } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { UserLoginProps } from "../../types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import logo from "../../assets/mentumm-nav-logo.svg";
 import NavMenu from "./NavMenu";
-import { Box, Container, Flex, HStack, Image, Spacer } from "@chakra-ui/react";
 
 const NavBar: React.FC<UserLoginProps> = (props) => {
   const { currentUser, setCurrentUser } = props;
@@ -14,6 +14,9 @@ const NavBar: React.FC<UserLoginProps> = (props) => {
     <Container
       minW="100%"
       display="flex"
+      position="sticky"
+      top="0em"
+      zIndex={2}
       backgroundColor="var(--chakra-colors-brand-300)"
       height="60px"
       padding="0 25px"
