@@ -16,6 +16,7 @@ import { UserLoginProps } from "../../types";
 import { useCookies } from "react-cookie";
 // import { menApiAuthClient } from "../../clients/mentumm";
 import axios from "axios";
+import { mixpanelEvent, mixpanelIdentify, mixpanelPeople } from "../../helpers";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
@@ -118,6 +119,16 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
         secure: true,
         expires: new Date(Date.now() + 3600 * 1000 * 48),
         sameSite: true,
+      });
+      mixpanelIdentify(String(createUser.data[0].id)); // sets user id
+      mixpanelPeople(createUser.data[0]); // sets user profile
+      mixpanelEvent("New User Registered", {
+        "User ID": createUser.data[0].id,
+        "First Name": createUser.data[0].first_name,
+        "Last Name": createUser.data[0].last_name,
+        "Employer ID": createUser.data[0].employer_id,
+        Email: createUser.data[0].email,
+        Role: createUser.data[0].role,
       });
 
       const handleAPICreds = async (email: string, password: string) => {

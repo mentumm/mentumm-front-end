@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import {
   Box,
   Button,
@@ -8,11 +9,12 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import React from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { CurrentUserProps } from "../../types";
 import ThankYouImage from "./thank-you.png";
 import { Link } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import { mixpanelEvent } from "../../helpers";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -32,6 +34,34 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 
 const BookingConfirmation: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const classes = useStyles();
+  const [searchParams] = useSearchParams();
+  const assignedTo = searchParams.get("assigned_to");
+  const eventTypeUUID = searchParams.get("event_type_uuid");
+  const eventTypeName = searchParams.get("event_type_name");
+  const eventStartTime = searchParams.get("event_start_time");
+  const eventEndTime = searchParams.get("event_end_time");
+  const inviteeUUID = searchParams.get("invitee_uuid");
+  const inviteeFullName = searchParams.get("invitee_full_name");
+  const inviteeEmail = searchParams.get("invitee_email");
+  const inviteeAnswer = searchParams.get("answer_1");
+  const utmSource = searchParams.get("utm_source");
+
+  useEffect(() => {
+    mixpanelEvent("Coaching Session Booked", {
+      Coach: assignedTo,
+      "User Name": inviteeFullName,
+      "User Email": inviteeEmail,
+      "Event Type": eventTypeName,
+      "Event Start Time": eventStartTime,
+      "Event End Time": eventEndTime,
+      "Invitee UUID": inviteeUUID,
+      "Invitee Booking Comments": inviteeAnswer,
+      "UTM Source": utmSource,
+      "Event UUID": eventTypeUUID,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className={classes.root}>
       <div className={classes.column}>
