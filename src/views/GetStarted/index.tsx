@@ -9,10 +9,9 @@ import {
   UnorderedList,
   ListItem,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { Link } from "react-router-dom";
-import { mixpanelIdentify } from "../../helpers";
 import { CurrentUserProps } from "../../types";
 import welcome from "./welcome.png";
 
