@@ -44,12 +44,8 @@ export const CoachingSection = ({ currentUser, coaches }: CoachingSeectionProps)
   }, [currentUser.id]);
 
   return (
-    <Box shadow="base">
-      <Container
-        minW="100%"
-        mt={4}
-        bgColor="#8A4FFF"
-      >
+    <Box id="coaching" shadow="base">
+      <Container minW="100%" mt={4} bgColor="#8A4FFF" >
         <Center>
           <Heading
             fontWeight="regular"

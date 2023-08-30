@@ -1,20 +1,12 @@
-import {
-  Box,
-  Button,
-  Container,
-  Heading,
-  Stack,
-  HStack,
-  Image,
-} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import HighlightedCoaches from "../../components/HighlightedCoaches";
-import PastCoachingSessions from "../../components/PastCoachingSessions";
+import {
+  Container,
+} from "@chakra-ui/react";
 import { ActionPlanForm, CoachType, CurrentUser } from "../../types";
 import { menApiAuthClient } from "../../clients/mentumm";
 import ActionPlanPrompt from "../../components/ActionPlanPrompt/ActionPlanPrompt";
-import { Link } from "react-router-dom";
 import { CoachingSection } from "./sections/coaching";
+import { HomeNav } from "./sections/homeNav";
 
 interface IProps {
   currentUser: CurrentUser;
@@ -58,10 +50,6 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
 
   return (
     <Container maxW={1270}>
-      {/* <Stack justifyContent="space-between" direction="row" mt={14} mb={8}>
-        <Heading>Welcome Back, {currentUser?.first_name}</Heading>
-      </Stack> */}
-
       {/* <HStack justifyContent="space-between">
         <Box>
           <HStack alignItems="flex-start" mb={12}>
@@ -106,6 +94,7 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
           <Image src={threePillar} alt="One-on-One Coaching" />
         </Box>
       </HStack> */}
+      <HomeNav />
       <CoachingSection currentUser={currentUser} coaches={coaches} />
     </Container>
   );
