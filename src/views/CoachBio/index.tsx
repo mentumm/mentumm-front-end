@@ -35,7 +35,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
   const coachId = slug.split("-");
 
-  const isCoach = (currentUser && currentUser.role === "coach");
+  const isCoach = currentUser && currentUser.role === "coach";
 
   useEffect(() => {
     const loadCoach = async () => {
@@ -53,6 +53,8 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
           "Coach ID": coach.id,
           "Coach Name": `${coach.first_name} ${coach.last_name}`,
           "Coach Expertise": coach.expertise.map((expertise) => expertise.name),
+          "Coach City": coach.city,
+          "Coach State": coach.state,
         });
       } catch (error) {
         console.log("Problem loading Coach Bio", error);
@@ -77,10 +79,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
         px={{ base: "4", md: "8", lg: "12" }}
         pb={{ base: "6", md: "8", lg: "12" }}
       >
-        <Flex
-          flexDirection={{ base: "column", md: "row" }}
-          alignItems='center'
-        >
+        <Flex flexDirection={{ base: "column", md: "row" }} alignItems="center">
           <ProfilePicture coach={coach} />
           <Spacer />
           <Stack
@@ -89,43 +88,29 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
             spacing="8"
           >
             <ProfileHeader coach={coach} />
-            {coach.styles.length && (
-              <CoachingStyles coach={coach} />
-            )}
-            {coach.expertise.length && (
-              <AreasOfExpertise coach={coach} />
-            )}
+            {coach.styles.length && <CoachingStyles coach={coach} />}
+            {coach.expertise.length && <AreasOfExpertise coach={coach} />}
             {!isCoach && (
               <BookCoachingButton
                 coach={coach}
                 calendlyOnOpen={calendlyOnOpen}
-              />)}
+              />
+            )}
           </Stack>
         </Flex>
-        <VStack
-          spacing={8}
-        >
-          {coach.bio && (
-            <Bio coach={coach}
-            />
-          )}
-          {coach.achievements && (
-            <TopAchievements coach={coach} />
-          )}
+        <VStack spacing={8}>
+          {coach.bio && <Bio coach={coach} />}
+          {coach.achievements && <TopAchievements coach={coach} />}
           <Stack
             direction={{ base: "column", md: "row" }}
             width="100%"
             spacing={4}
           >
-            {coach.hobbies && (
-              <Hobbies coach={coach} />
-            )}
+            {coach.hobbies && <Hobbies coach={coach} />}
             <Connect coach={coach} />
           </Stack>
           {!isCoach && (
-            <Box
-              mt={8}
-            >
+            <Box mt={8}>
               <BookCoachingButton
                 coach={coach}
                 calendlyOnOpen={calendlyOnOpen}
