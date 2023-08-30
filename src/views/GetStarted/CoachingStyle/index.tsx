@@ -187,7 +187,7 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
   return (
     <PageWrapper>
       <Container maxW={1270} pt={0} >
-        <Heading size="lg" textAlign="left" mt={8}>
+        <Heading size="lg" textAlign="left" >
           {isCoach
             ? "Select Your Coaching Styles"
             : "Select Your Desired Coaching Style"}
