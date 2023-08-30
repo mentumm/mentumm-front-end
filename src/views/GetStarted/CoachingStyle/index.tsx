@@ -158,6 +158,7 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
         clear: true,
       })
       .then(() => {
+        window.scrollTo(0, 0);
         isCoach
           ? navigate(`/coach/${currentUser.id}/${hasExpertiseTags ? 'profile' : 'expertise'}`)
           : navigate("/search");
@@ -186,8 +187,8 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
 
   return (
     <PageWrapper>
-      <Container maxW={1270}>
-        <Heading size="lg" textAlign="left" mt={8}>
+      <Container maxW={1270} pt={0} >
+        <Heading size="lg" textAlign="left" >
           {isCoach
             ? "Select Your Coaching Styles"
             : "Select Your Desired Coaching Style"}
