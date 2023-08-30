@@ -5,10 +5,11 @@ import { CoachBooking, CoachType } from "../../types";
 import Coach from "../Coach";
 import { createUseStyles } from "react-jss";
 
+
+type TCoachBooking = CoachBooking & { coach: CoachType };
 interface Iprops {
-  id: number;
+  upcoming: TCoachBooking[];
 }
-type TChoachBooking = CoachBooking & { coach: CoachType };
 
 const useStyles = createUseStyles({
   root: {
@@ -22,21 +23,8 @@ const useStyles = createUseStyles({
   },
 });
 
-const UpcomingCoachingSessions: FC<Iprops> = ({ id }) => {
+const UpcomingCoachingSessions: FC<Iprops> = ({ upcoming }) => {
   const classes = useStyles();
-  const [upcoming, setUpcoming] = useState<TChoachBooking[]>([]);
-
-  useEffect(() => {
-    async function loadUpcoming() {
-      const u = await menApiAuthClient().get("/user/upcoming", {
-        params: { id },
-      });
-
-      setUpcoming(u.data);
-    }
-
-    loadUpcoming();
-  }, [id]);
 
   return (
     <div className={classes.root}>

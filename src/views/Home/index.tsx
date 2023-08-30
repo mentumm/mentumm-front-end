@@ -10,46 +10,17 @@ import {
 import React, { useEffect, useState } from "react";
 import HighlightedCoaches from "../../components/HighlightedCoaches";
 import PastCoachingSessions from "../../components/PastCoachingSessions";
-import UpcomingCoachingSessions from "../../components/UpcomingCoachingSessions";
 import { ActionPlanForm, CoachType, CurrentUser } from "../../types";
-import getWeek from "date-fns/getWeek";
 import { menApiAuthClient } from "../../clients/mentumm";
 import ActionPlanPrompt from "../../components/ActionPlanPrompt/ActionPlanPrompt";
 import { Link } from "react-router-dom";
-import hexBlue from "./hex-blue.svg";
-import hexGreen from "./hex-green.svg";
-import hexPurple from "./hex-purple.svg";
-import threePillar from "./three-pillar.svg";
-import { createUseStyles } from "react-jss";
-
-const useStyles = createUseStyles({
-  hide: {
-    display: "none",
-  },
-});
-
-function getCurrentFeatured<T>(
-  objects: T[],
-  amount: number,
-  weekOffset = 0
-): T[] {
-  if (!objects.length) {
-    return objects;
-  }
-  const total = objects.length;
-  const sets = Math.ceil(total / amount);
-  const week = getWeek(new Date()) + weekOffset;
-  const endIndex = Math.min(((week % sets) + 1) * amount, total);
-  const startIndex = endIndex - amount;
-  return objects.slice(startIndex, endIndex);
-}
+import { CoachingSection } from "./sections/coaching";
 
 interface IProps {
   currentUser: CurrentUser;
 }
 
 const Home: React.FC<IProps> = ({ currentUser }) => {
-  const classes = useStyles();
   const [coaches, setCoaches] = useState<CoachType[]>([]);
   const [actionPlan, setActionPlan] = useState<ActionPlanForm>(null);
 
@@ -85,15 +56,13 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
     return null;
   }
 
-  const featuredCoaches = getCurrentFeatured(coaches, 2);
-
   return (
     <Container maxW={1270}>
-      <Stack justifyContent="space-between" direction="row" mt={14} mb={8}>
+      {/* <Stack justifyContent="space-between" direction="row" mt={14} mb={8}>
         <Heading>Welcome Back, {currentUser?.first_name}</Heading>
-      </Stack>
+      </Stack> */}
 
-      <HStack justifyContent="space-between">
+      {/* <HStack justifyContent="space-between">
         <Box>
           <HStack alignItems="flex-start" mb={12}>
             <Box>
@@ -136,15 +105,8 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
         <Box>
           <Image src={threePillar} alt="One-on-One Coaching" />
         </Box>
-      </HStack>
-      <div className={currentUser.role === "coach" ? classes.hide : null}>
-        <UpcomingCoachingSessions id={currentUser?.id} />
-        <HighlightedCoaches
-          title="Featured Coaches"
-          coaches={featuredCoaches}
-        />
-        <PastCoachingSessions currentUser={currentUser} />
-      </div>
+      </HStack> */}
+      <CoachingSection currentUser={currentUser} coaches={coaches} />
     </Container>
   );
 };

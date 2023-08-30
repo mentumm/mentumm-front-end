@@ -4,16 +4,12 @@ import { CoachType } from "../../types";
 import Coach from "../Coach";
 
 interface IProps {
-  title: string;
   coaches: CoachType[];
 }
 
-const HighlightedCoaches: React.FC<IProps> = ({ title, coaches }) => {
+const HighlightedCoaches: React.FC<IProps> = ({ coaches }) => {
   return (
     <>
-      <Heading fontWeight="normal" fontSize={24} mt={12}>
-        {title}
-      </Heading>
       <Box display="flex" flexFlow="row wrap" gap={4}>
         {coaches.map((c) => {
           return <Coach coachInfo={c} key={c.id} />;
