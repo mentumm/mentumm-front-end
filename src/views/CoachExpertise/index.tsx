@@ -92,7 +92,7 @@ const CoachExpertise: React.FC<CoachExpertiseProps> = ({
 
   return (
     <PageWrapper>
-      <Container maxW={1270}>
+      <Container maxW={1270} pt={0} >
         <Heading size="lg" textAlign="left" my={8}>
           Pick up to 6 Areas of Expertise
         </Heading>
