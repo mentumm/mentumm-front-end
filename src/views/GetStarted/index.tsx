@@ -9,10 +9,9 @@ import {
   UnorderedList,
   ListItem,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React from "react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { Link } from "react-router-dom";
-import { mixpanelIdentify } from "../../helpers";
 import { CurrentUserProps } from "../../types";
 import welcome from "./welcome.png";
 
@@ -49,12 +48,7 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 
 const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const classes = useStyles();
-
-  useEffect(() => {
-    if (currentUser) {
-      mixpanelIdentify(String(currentUser.id));
-    }
-  }, [currentUser]);
+  const isCoach = currentUser?.role === 'coach';
 
   return (
     <div className={classes.root}>
@@ -83,25 +77,53 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
                   className={classes.margin}
                   fontWeight="normal"
                 >
-                  Monthly Leadership Development, For You 😎
+                  {isCoach
+                    ? 'Great Coaching Opportunities, For You 😎'
+                    : 'Monthly Leadership Development, For You 😎'
+                  }
+
                 </Heading>
                 <UnorderedList className={classes.list}>
                   <ListItem>
-                    <strong>Leadership Workshop:</strong> learn a new skill each
-                    month
+                    <strong>
+                      {isCoach
+                        ? 'Your Profile: '
+                        : 'Leadership Workshop: '
+                      }
+                    </strong>
+                    {isCoach
+                      ? 'edit your public appearance'
+                      : 'learn a new skill each month'
+                    }
                   </ListItem>
                   <ListItem>
-                    <strong>One-on-One Coaching:</strong> work monthly with your
-                    own coach
+                    <strong>
+                      {isCoach
+                        ? 'Coaching Sessions: '
+                        : 'One-on-One Coaching: '
+                      }
+                    </strong>
+                    {isCoach
+                      ? 'access past & future sessions'
+                      : 'learn a new skill each month'
+                    }
                   </ListItem>
                   <ListItem>
-                    <strong>Action Planning:</strong> organize your key issues
-                    and goals each month
+                    <strong>
+                      {isCoach
+                        ? 'Leadership Workshops: '
+                        : 'Action Planning: '
+                      }
+                    </strong>
+                    {isCoach
+                      ? 'view the content users access'
+                      : 'organize your key issues and goals each month'
+                    }
                   </ListItem>
                 </UnorderedList>
                 <Button
                   as={Link}
-                  to="/get-started/coaching-style"
+                  to={isCoach ? `/coach/${currentUser.id}/coaching-style` : "/get-started/coaching-style"}
                   mt={2}
                   padding={7}
                   fontWeight="bold"

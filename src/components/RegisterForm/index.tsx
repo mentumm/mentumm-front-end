@@ -16,6 +16,7 @@ import { UserLoginProps } from "../../types";
 import { useCookies } from "react-cookie";
 // import { menApiAuthClient } from "../../clients/mentumm";
 import axios from "axios";
+import { mixpanelEvent, mixpanelIdentify, mixpanelPeople } from "../../helpers";
 
 const NODE_API = process.env.REACT_APP_NODE_API;
 
@@ -32,6 +33,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
   const [userLastNameError, setUserLastNameError] = useState<boolean>(false);
   const [inviteCodeError, setInviteCodeError] = useState<boolean>(false);
   const [, setCookie] = useCookies();
+  const userRole = inviteCode === 'Coach10Register23' ? 'coach' : 'user';
 
   const validateEmail = () => {
     if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -65,6 +67,18 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
     setInviteCodeError(e.target.value === "");
   };
 
+  const handleAPICreds = async (email: string, password: string) => {
+    try {
+      const tokenResponse = await axios.post(`${NODE_API}/v1/token/generate`, { email, password });
+      if (!tokenResponse || !tokenResponse.data) {
+        throw new Error(`[Could not get API Token]: ${tokenResponse.statusText}`);
+      }
+      return tokenResponse.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const login = async () => {
     setEmailError(!email || email === "" || !validateEmail());
     setPasswordError(!password || password === "");
@@ -88,8 +102,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
     }
 
     try {
-      // temporarily bypass menApiAuthClient until we fix auth
-      const createUser = await axios.post(`${NODE_API}/v1/user/register`, {
+      const createUser = await axios.post(`${NODE_API}/v1/${userRole}/register`, {
         email: email,
         password: password,
         invite_code: inviteCode,
@@ -113,39 +126,42 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
           return;
       }
 
-      setCookie("growth_10_03142023", createUser.data[0], {
+      const userData = createUser.data[0];
+      const cookieData = {
+        id: Number(userData.id),
+      }
+
+      const token = await handleAPICreds(email, password);
+
+      setCookie("growth_10_token", token, {
+        path: "/",
+        secure: true,
+        expires: new Date(Date.now() + 3600 * 1000 * 48),
+        sameSite: true,
+      });
+      mixpanelIdentify(String(createUser.data[0].id)); // sets user id
+      mixpanelPeople(createUser.data[0]); // sets user profile
+      mixpanelEvent("New User Registered", {
+        "User ID": createUser.data[0].id,
+        "First Name": createUser.data[0].first_name,
+        "Last Name": createUser.data[0].last_name,
+        "Employer ID": createUser.data[0].employer_id,
+        Email: createUser.data[0].email,
+        Role: createUser.data[0].role,
+      });
+
+      setCookie("growth_10_03142023", cookieData, {
         path: "/",
         secure: true,
         expires: new Date(Date.now() + 3600 * 1000 * 48),
         sameSite: true,
       });
 
-      const handleAPICreds = async (email: string, password: string) => {
-        try {
-          const token = await axios.post(`${NODE_API}/v1/token/generate`, {
-            email,
-            password,
-          });
-
-          if (!token || !token.data) {
-            throw new Error(`[Could not get API Token]: ${token.statusText}`);
-          }
-          setCookie("growth_10_token", token.data, {
-            path: "/",
-            secure: true,
-            expires: new Date(Date.now() + 3600 * 1000 * 48),
-            sameSite: true,
-          });
-        } catch (error) {
-          console.error(error);
-        }
-      };
-
-      handleAPICreds(email, password);
     } catch (error) {
       console.log(error);
     }
   };
+
 
   return (
     <Container maxW="md">
@@ -201,9 +217,9 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
                 roundedTop="0"
                 onChange={handleEmailChange}
               />
-              {!emailError ? null : (
+              {emailError && (
                 <FormErrorMessage style={{ marginBottom: "6px" }}>
-                  Something went wrong with your email address.
+                  {`A ${userRole} with that email address already exists.`}
                 </FormErrorMessage>
               )}
             </FormControl>

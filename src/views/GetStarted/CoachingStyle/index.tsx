@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { menApiAuthClient } from "../../../clients/mentumm";
-import { Tag } from "../../../types";
+import { CoachType, Tag } from "../../../types";
 import {
   Button,
   Checkbox,
@@ -39,6 +39,7 @@ const TagOption: React.FC<TagOptionProps> = ({
 
   return (
     <Checkbox
+      colorScheme="brand"
       value={tag.id}
       isChecked={checkedItems.includes(Number(tag.id))}
       onChange={(e) =>
@@ -113,17 +114,24 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
   const [saving, setSaving] = useState(false);
   const [checkedItems, setCheckedItems] = React.useState([]);
   const [, setCookie] = useCookies(["growth_10_03142023"]);
+  const [hasExpertiseTags, setHasExpertiseTags] = useState<Boolean>(false);
 
   useEffect(() => {
     const getTags = async () => {
       try {
         setLoading(true);
 
-        const results = await menApiAuthClient().get<Tag[]>(
+        const styleResults = await menApiAuthClient().get<Tag[]>(
           `${envConfig.API_URL}/v1/tags?kind=style`
         );
-
-        setTags(results.data.sort(() => (Math.random() > 0.5 ? 1 : -1)));
+        const singleCoach = await menApiAuthClient().get<CoachType>("/coaches", {
+          params: {
+            id: currentUser?.id,
+          },
+        });
+        const coachExpertise = singleCoach.data.expertise;
+        setHasExpertiseTags(!!coachExpertise);
+        setTags(styleResults.data.sort(() => (Math.random() > 0.5 ? 1 : -1)));
       } catch (error) {
         throw new Error("Could not load Style Tags!");
       } finally {
@@ -132,6 +140,8 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
     };
     getTags();
   }, []);
+
+
 
   const handleContinue = async () => {
     if (saving) {
@@ -148,8 +158,9 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
         clear: true,
       })
       .then(() => {
+        window.scrollTo(0, 0);
         isCoach
-          ? navigate(`/coach/${currentUser.id}/profile`)
+          ? navigate(`/coach/${currentUser.id}/${hasExpertiseTags ? 'profile' : 'expertise'}`)
           : navigate("/search");
       })
       .finally(() => {
@@ -176,8 +187,8 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
 
   return (
     <PageWrapper>
-      <Container maxW={1270}>
-        <Heading size="lg" textAlign="left" mt={8}>
+      <Container maxW={1270} pt={0} >
+        <Heading size="lg" textAlign="left" >
           {isCoach
             ? "Select Your Coaching Styles"
             : "Select Your Desired Coaching Style"}
@@ -210,8 +221,6 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
         )}
 
         <Button
-          color="#fff"
-          _hover={{ bg: "#3CA8AB" }}
           mt={8}
           padding={7}
           fontWeight="bold"

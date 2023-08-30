@@ -16,6 +16,7 @@ export const mixpanelIdentify = (userId: string) => {
 export const mixpanelPeople = (user: CurrentUser) => {
   mixpanel.people.set({
     "User ID": user.id,
+    Role: user.role,
     Email: user.email,
     "Employer ID": user.employer_id,
     "First Name": user.first_name,
