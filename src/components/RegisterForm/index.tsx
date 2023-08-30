@@ -206,7 +206,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
                 roundedTop="0"
                 onChange={handleEmailChange}
               />
-              {!emailError ? null : (
+              {emailError && (
                 <FormErrorMessage style={{ marginBottom: "6px" }}>
                   {`A ${userRole} with that email address already exists.`}
                 </FormErrorMessage>
