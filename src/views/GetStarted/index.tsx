@@ -51,12 +51,6 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const classes = useStyles();
   const isCoach = currentUser?.role === 'coach';
 
-  useEffect(() => {
-    if (currentUser) {
-      mixpanelIdentify(String(currentUser.id));
-    }
-  }, [currentUser]);
-
   return (
     <div className={classes.root}>
       <div className={classes.column}>
