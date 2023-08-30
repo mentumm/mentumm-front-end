@@ -15,6 +15,7 @@ import { menApiAuthClient } from "../../clients/mentumm";
 import ActionPlanPrompt from "../../components/ActionPlanPrompt/ActionPlanPrompt";
 import { Link } from "react-router-dom";
 import { CoachingSection } from "./sections/coaching";
+import { WorkshopsSection } from "./sections/workshops";
 
 interface IProps {
   currentUser: CurrentUser;
@@ -107,6 +108,7 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
         </Box>
       </HStack> */}
       <CoachingSection currentUser={currentUser} coaches={coaches} />
+      <WorkshopsSection />
     </Container>
   );
 };
