@@ -50,12 +50,6 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
 const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const classes = useStyles();
 
-  useEffect(() => {
-    if (currentUser) {
-      mixpanelIdentify(String(currentUser.id));
-    }
-  }, [currentUser]);
-
   return (
     <div className={classes.root}>
       <div className={classes.column}>

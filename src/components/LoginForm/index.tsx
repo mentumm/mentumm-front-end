@@ -113,17 +113,15 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
         expires: new Date(Date.now() + 3600 * 1000 * 48),
         sameSite: true,
       });
-      // identify connects mixpanel's uuid w/our user id to get any data
-      // that happened prior to login
-      mixpanelIdentify(String(user.id));
-      // set mixpanel profile, maybe this should be server side
-      mixpanelPeople(updatedUser);
+      mixpanelIdentify(String(user.id)); // sets user id
+      mixpanelPeople(updatedUser); // sets user profile
       mixpanelEvent("User Logged In", {
         "User ID": user.id,
         "First Name": user.first_name,
         "Last Name": user.last_name,
         "Employer ID": user.employer_id,
         Email: user.email,
+        Role: user.role,
       });
     } catch (error) {
       console.log(error);
@@ -203,10 +201,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
           <HStack justify="space-between">
             <Checkbox defaultChecked>Remember me</Checkbox>
             <Link to="/forgot-password">
-              <Button
-                variant="link"
-                size="sm"
-              >
+              <Button variant="link" size="sm">
                 Forgot password
               </Button>
             </Link>
