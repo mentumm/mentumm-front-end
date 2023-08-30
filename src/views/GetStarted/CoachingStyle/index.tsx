@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { menApiAuthClient } from "../../../clients/mentumm";
-import { Tag } from "../../../types";
+import { CoachType, Tag } from "../../../types";
 import {
   Button,
   Checkbox,
@@ -113,17 +113,24 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
   const [saving, setSaving] = useState(false);
   const [checkedItems, setCheckedItems] = React.useState([]);
   const [, setCookie] = useCookies(["growth_10_03142023"]);
+  const [hasExpertiseTags, setHasExpertiseTags] = useState<Boolean>(false);
 
   useEffect(() => {
     const getTags = async () => {
       try {
         setLoading(true);
 
-        const results = await menApiAuthClient().get<Tag[]>(
+        const styleResults = await menApiAuthClient().get<Tag[]>(
           `${envConfig.API_URL}/v1/tags?kind=style`
         );
-
-        setTags(results.data.sort(() => (Math.random() > 0.5 ? 1 : -1)));
+        const singleCoach = await menApiAuthClient().get<CoachType>("/coaches", {
+          params: {
+            id: currentUser?.id,
+          },
+        });
+        const coachExpertise = singleCoach.data.expertise;
+        setHasExpertiseTags(!!coachExpertise);
+        setTags(styleResults.data.sort(() => (Math.random() > 0.5 ? 1 : -1)));
       } catch (error) {
         throw new Error("Could not load Style Tags!");
       } finally {
@@ -132,6 +139,8 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
     };
     getTags();
   }, []);
+
+
 
   const handleContinue = async () => {
     if (saving) {
@@ -149,7 +158,7 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
       })
       .then(() => {
         isCoach
-          ? navigate(`/coach/${currentUser.id}/profile`)
+          ? navigate(`/coach/${currentUser.id}/${hasExpertiseTags ? 'profile' : 'expertise'}`)
           : navigate("/search");
       })
       .finally(() => {
