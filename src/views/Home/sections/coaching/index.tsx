@@ -51,19 +51,23 @@ export const CoachingSection = ({ currentUser, coaches }: CoachingSeectionProps)
         bgColor="#8A4FFF"
       >
         <Center>
-          <Heading fontWeight="regular" >
-            Coaching
+          <Heading
+            fontWeight="regular"
+            size="sm"
+            my={3}
+            color="white"
+          >
+            COACHING
           </Heading>
         </Center>
       </Container>
-      <Center>
+      <Center mt={4} >
         {currentUser.role === 'user' && (
           <HStack>
             <UpcomingCoachingSessions upcoming={upcoming} />
             <PastCoachingSessions currentUser={currentUser} past={past} />
           </HStack>
-        )
-        }
+        )}
         <HighlightedCoaches
           coaches={featuredCoaches}
         />
@@ -71,12 +75,16 @@ export const CoachingSection = ({ currentUser, coaches }: CoachingSeectionProps)
       <Center>
         <Button
           as={Link}
+          minW="25%"
           to="/search"
           size="lg"
           borderRadius="3xl"
           my={8}
+          bgColor="#8A4FFF"
+          fontSize="md"
+          fontWeight="regular"
         >
-          BOOK COACH
+          BOOK A COACH
         </Button>
       </Center>
     </Box>
