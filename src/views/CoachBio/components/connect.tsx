@@ -42,7 +42,7 @@ const Connect: React.FC<ConnectProps> = ({ coach }) => {
       name: 'Website',
       url: coach.website_url,
       icon: <WebsiteIcon />,
-      colorScheme: 'teal'
+      colorScheme: 'blue'
     }
   ];
 
@@ -76,6 +76,7 @@ const Connect: React.FC<ConnectProps> = ({ coach }) => {
                 >
                   <Button
                     w="10em"
+                    variant="ghost"
                     colorScheme={connection.colorScheme}
                     leftIcon={connection.icon}
                   >

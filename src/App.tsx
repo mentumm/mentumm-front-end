@@ -34,22 +34,16 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   },
 }));
 
-// coaches skip user onboarding on register
 function RedirectOnSignup({ currentUser }: { currentUser: CurrentUser }) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (currentUser.role === "coach") {
-      navigate(`/coach/${currentUser.id}/coaching-style`, { replace: true });
-    } else {
-      navigate("/get-started", { replace: true });
-    }
+    currentUser && navigate("/get-started", { replace: true });
   }, [currentUser, navigate]);
 
   return null;
 }
 
-// coaches skip user onboarding on first-time sign in
 function RedirectOnSignIn({ currentUser }: { currentUser: CurrentUser }) {
   const navigate = useNavigate();
 
