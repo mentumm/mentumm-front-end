@@ -15,6 +15,7 @@ import ThankYouImage from "./thank-you.png";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import { mixpanelEvent } from "../../helpers";
+import { menApiAuthClient } from "../../clients/mentumm";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -47,18 +48,39 @@ const BookingConfirmation: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const utmSource = searchParams.get("utm_source");
 
   useEffect(() => {
-    mixpanelEvent("Coaching Session Booked", {
-      Coach: assignedTo,
-      "User Name": inviteeFullName,
-      "User Email": inviteeEmail,
-      "Event Type": eventTypeName,
-      "Event Start Time": eventStartTime,
-      "Event End Time": eventEndTime,
-      "Invitee UUID": inviteeUUID,
-      "Invitee Booking Comments": inviteeAnswer,
-      "UTM Source": utmSource,
-      "Event UUID": eventTypeUUID,
-    });
+    const confirmBooking = async () => {
+      try {
+        const booking = await menApiAuthClient().post("/user/book-coach", {
+          user_id: currentUser.id,
+          coach_id: utmSource,
+          event_end_time: eventEndTime,
+          event_start_time: eventStartTime,
+          event_type_name: eventTypeName,
+          event_type_uuid: eventTypeUUID,
+          invitee_email: inviteeEmail,
+          invitee_full_name: inviteeFullName,
+          invitee_uuid: inviteeUUID,
+        });
+
+        if (booking) {
+          mixpanelEvent("Coaching Session Booked", {
+            Coach: assignedTo,
+            "User Name": inviteeFullName,
+            "User Email": inviteeEmail,
+            "Event Type": eventTypeName,
+            "Event Start Time": eventStartTime,
+            "Event End Time": eventEndTime,
+            "Invitee UUID": inviteeUUID,
+            "Invitee Booking Comments": inviteeAnswer,
+            "UTM Source": utmSource,
+            "Event UUID": eventTypeUUID,
+          });
+        }
+      } catch (error) {
+        throw new Error("Could not record booking");
+      }
+    };
+    confirmBooking();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
