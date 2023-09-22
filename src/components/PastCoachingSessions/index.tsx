@@ -1,28 +1,15 @@
 import { Box, Heading } from "@chakra-ui/react";
-import React, { FC, useEffect, useState } from "react";
-import { menApiAuthClient } from "../../clients/mentumm";
+import React, { FC } from "react";
 import { CoachBooking, CoachType, CurrentUser } from "../../types";
 import Coach from "../Coach";
 
+type TCoachBooking = CoachBooking & { coach: CoachType };
 interface Iprops {
   currentUser: CurrentUser;
+  past: TCoachBooking[];
 }
-type TChoachBooking = CoachBooking & { coach: CoachType };
 
-const PastCoachingSessions: FC<Iprops> = ({ currentUser }) => {
-  const [past, setPast] = useState<TChoachBooking[]>([]);
-
-  useEffect(() => {
-    async function loadPast() {
-      const u = await menApiAuthClient().get("/user/past", {
-        params: { id: currentUser.id },
-      });
-
-      setPast(u.data);
-    }
-
-    loadPast();
-  }, [currentUser.id]);
+const PastCoachingSessions: FC<Iprops> = ({ currentUser, past }) => {
 
   if (!past.length) {
     return null;
