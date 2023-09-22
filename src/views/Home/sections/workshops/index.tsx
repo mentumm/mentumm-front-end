@@ -17,12 +17,12 @@ export const WorkshopsSection = () => {
             my={3}
             color="white"
           >
-            COACHING
+            WORKSHOPS
           </Heading>
         </Center>
       </Container>
       <Center mt={4} >
-
+        where is this
       </Center>
       <Center>
         <Button
