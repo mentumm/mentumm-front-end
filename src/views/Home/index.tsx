@@ -6,6 +6,7 @@ import { ActionPlanForm, CoachType, CurrentUser } from "../../types";
 import { menApiAuthClient } from "../../clients/mentumm";
 import ActionPlanPrompt from "../../components/ActionPlanPrompt/ActionPlanPrompt";
 import { CoachingSection } from "./sections/coaching";
+import { WorkshopsSection } from "./sections/workshops";
 import { HomeNav } from "./sections/homeNav";
 
 interface IProps {
@@ -96,6 +97,7 @@ const Home: React.FC<IProps> = ({ currentUser }) => {
       </HStack> */}
       <HomeNav />
       <CoachingSection currentUser={currentUser} coaches={coaches} />
+      <WorkshopsSection />
     </Container>
   );
 };
