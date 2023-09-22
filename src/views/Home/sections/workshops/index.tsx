@@ -22,7 +22,7 @@ export const WorkshopsSection = () => {
         </Center>
       </Container>
       <Center mt={4} >
-        where is this
+
       </Center>
       <Center>
         <Button
