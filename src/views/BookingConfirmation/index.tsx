@@ -61,7 +61,7 @@ const BookingConfirmation: React.FC<CurrentUserProps> = ({ currentUser }) => {
         </AbsoluteCenter>
       )}
 
-      {bookingRes.data && (
+      {bookingRes && (
         <Success currentUser={currentUser} />
       )}
 
