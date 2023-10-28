@@ -53,6 +53,8 @@ const BookingConfirmation: React.FC<CurrentUserProps> = ({ currentUser }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  console.log(bookingRes);
+
   return (
     <Box>
       {isLoading && (
