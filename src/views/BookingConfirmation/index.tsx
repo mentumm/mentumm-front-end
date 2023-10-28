@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import {
-  AbsoluteCenter,
+  Center,
   Box,
   Spinner,
+  VStack,
+  Heading,
 } from "@chakra-ui/react";
 import { CurrentUserProps } from "../../types";
 import { useSearchParams } from "react-router-dom";
 import { menApiAuthClient } from "../../clients/mentumm";
-import Success from "./success";
+import BookingSuccess from "./success";
+import BookingError from "./error";
 
 const BookingConfirmation: React.FC<CurrentUserProps> = ({ currentUser }) => {
   const [bookingRes, setBookingRes] = useState(null);
@@ -53,23 +56,29 @@ const BookingConfirmation: React.FC<CurrentUserProps> = ({ currentUser }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  console.log(bookingRes);
-
   return (
     <Box>
       {isLoading && (
-        <AbsoluteCenter>
-          <Spinner />
-        </AbsoluteCenter>
+        <Center pt={8}>
+          <VStack>
+            <Heading as='h2' size='xl' pb={8} >
+              Confirming your session...
+            </Heading>
+            <Spinner size='xl' colorScheme='brand' color="brand.500" />
+          </VStack>
+        </Center>
       )}
 
-      {bookingRes && (
-        <Success currentUser={currentUser} />
+      {bookingRes?.data[0] && (
+        <BookingSuccess currentUser={currentUser} />
       )}
 
       {bookingError && (
         <Box>
-          An error occurred
+          <BookingError
+            currentUser={currentUser}
+            assignedTo={assignedTo}
+            coachId={utmSource} />
         </Box>
       )}
     </Box>
