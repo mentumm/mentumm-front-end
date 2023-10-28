@@ -5,13 +5,12 @@ import {
   Container,
   Flex,
   Heading,
-  Image,
   Stack,
   Text,
+  Center,
 } from "@chakra-ui/react";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { CurrentUserProps } from "../../types";
-import ThankYouImage from "./thank-you.png";
 import { Link } from "react-router-dom";
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
@@ -30,8 +29,12 @@ const useStyles = createUseStyles((theme: DefaultTheme) => ({
   },
 }));
 
-const BookingSuccess: React.FC<CurrentUserProps> = ({ currentUser }) => {
+const BookingError: React.FC<CurrentUserProps> = ({ currentUser, assignedTo, coachId }) => {
   const classes = useStyles();
+  const hyphenatedCoachName = assignedTo?.toLowerCase().split(' ').join('-');
+  const buttonPath = (assignedTo || coachId)
+    ? `/coach/${hyphenatedCoachName}-${coachId}`
+    : '/search';
 
   return (
     <div className={classes.root}>
@@ -51,34 +54,19 @@ const BookingSuccess: React.FC<CurrentUserProps> = ({ currentUser }) => {
             >
               <Box maxW="750px" position="relative">
                 <Heading as="h1" size="xl" className={classes.margin}>
-                  {currentUser ? currentUser.first_name : null}, your coaching
-                  session with mentumm is booked!
+                  Oops! There was a problem confirming your coaching session
                 </Heading>
                 <Text fontSize="2xl" className={classes.margin}>
-                  Check your email (and junk) for a confirmation from your
-                  coach.
+                  We apologize about the inconvenience
                 </Text>
                 <Text fontSize="large" className={classes.margin}>
-                  Add the session to your calendar by clicking the link at the
-                  bottom of the email or click Reschedule if you need to modify
-                  your session.
+                  Please click the button below to return to the Coach's profile to try booking again
                 </Text>
-                <Text fontSize="large" className={classes.margin}>
-                  We look forward to seeing you soon! &#128522;
-                </Text>
-                <Button as={Link} to="/home">
-                  BACK TO HOME
-                </Button>
-              </Box>
-            </Stack>
-            <Stack>
-              <Box maxW="md">
-                <Image
-                  src={ThankYouImage}
-                  alt="Person Searching for a Coach"
-                  maxW={{ base: "100%", md: "85%", lg: "100%" }}
-                  objectFit="cover"
-                />
+                <Center>
+                  <Button as={Link} to={buttonPath}>
+                    COACH PROFILE
+                  </Button>
+                </Center>
               </Box>
             </Stack>
           </Flex>
@@ -88,4 +76,4 @@ const BookingSuccess: React.FC<CurrentUserProps> = ({ currentUser }) => {
   );
 };
 
-export default BookingSuccess;
+export default BookingError;
