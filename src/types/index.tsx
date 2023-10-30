@@ -6,6 +6,8 @@ export interface AppContainerProps {
 
 export interface CurrentUserProps {
   currentUser: CurrentUser;
+  assignedTo?: string;
+  coachId?: string;
 }
 
 export type UserRoles = "user" | "coach";

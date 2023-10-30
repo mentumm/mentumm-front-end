@@ -20,7 +20,6 @@ const CoachSearch = ({ currentUser }) => {
   const [coaches, setCoaches] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams] = useSearchParams();
-  const [coachBooked, setCoachBooked] = useState<boolean>(null);
   const navigate = useNavigate();
 
   const handleChange = (value: string) => {
@@ -70,47 +69,23 @@ const CoachSearch = ({ currentUser }) => {
 
   useEffect(() => {
     // these are for the calendly redirect url params
-    const event_type_uuid = searchParams.get("event_type_uuid");
-    const event_type_name = searchParams.get("event_type_name");
-    const event_start_time = searchParams.get("event_start_time");
-    const event_end_time = searchParams.get("event_end_time");
-    const invitee_uuid = searchParams.get("invitee_uuid");
-    const invitee_full_name = searchParams.get("invitee_full_name");
-    const invitee_email = searchParams.get("invitee_email");
+    const assignedTo = searchParams.get("assigned_to");
+    const eventTypeUUID = searchParams.get("event_type_uuid");
+    const eventTypeName = searchParams.get("event_type_name");
+    const eventStartTime = searchParams.get("event_start_time");
+    const eventEndTime = searchParams.get("event_end_time");
+    const inviteeUUID = searchParams.get("invitee_uuid");
+    const inviteeFullName = searchParams.get("invitee_full_name");
+    const inviteeEmail = searchParams.get("invitee_email");
+    const inviteeAnswer = searchParams.get("answer_1");
     const utmSource = searchParams.get("utm_source");
 
-    const bookCoach = async () => {
-      try {
-        const bookedCoach = await menApiAuthClient().post("/user/book-coach", {
-          user_id: currentUser.id,
-          coach_id: utmSource,
-          event_end_time,
-          event_start_time,
-          event_type_name,
-          event_type_uuid,
-          invitee_email,
-          invitee_full_name,
-          invitee_uuid,
-        });
-
-        if (bookedCoach) {
-          setCoachBooked(true);
-        }
-      } catch (error) {
-        throw new Error("Could not save booking!");
-      }
-    };
-
-    if (!coachBooked && invitee_email && currentUser?.id) {
-      bookCoach();
-    } else if (!invitee_email) {
-      setCoachBooked(false);
+    if (eventTypeUUID) {
+      navigate(
+        `/booking-confirmation?utm_source=${utmSource}&assigned_to=${assignedTo}&event_type_uuid=${eventTypeUUID}&event_type_name=${eventTypeName}&event_start_time=${eventStartTime}&event_end_time=${eventEndTime}&invitee_uuid=${inviteeUUID}&invitee_full_name=${inviteeFullName}&invitee_email=${inviteeEmail}&answer_1=${inviteeAnswer}`
+      );
     }
-  }, [searchParams, coachBooked, currentUser]);
-
-  if (coachBooked) {
-    navigate("/booking-confirmation");
-  }
+  }, [navigate, searchParams]);
 
   return (
     <PageWrapper title="All Mentumm Coaches" backTo="/home">
