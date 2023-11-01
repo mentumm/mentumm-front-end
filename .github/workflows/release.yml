@@ -26,7 +26,7 @@ jobs:
 
       - name: Release
         env:
-          GITHUB_TOKEN: ${{ secrets.MENTUMM_GITHUB_RV }}
+          GITHUB_TOKEN: ${{ secrets.MENTUMM_RELEASE }}
         run: npx semantic-release
 
       - name: Checkout
@@ -37,7 +37,7 @@ jobs:
       - name: Merge main into develop
         uses: everlytic/branch-merge@1.1.0
         with:
-          github_token: ${{ secrets.MENTUMM_GITHUB_RV }}
+          github_token: ${{ secrets.MENTUMM_RELEASE }}
           source_ref: ${{ github.ref }}
           target_branch: "develop"
           commit_message_template: "[Automated] Merged {source_ref} into target {target_branch} [skip release]"
