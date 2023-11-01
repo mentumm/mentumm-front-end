@@ -1,4 +1,5 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
+import { Spinner } from "@chakra-ui/react";
 import { useCookies } from "react-cookie";
 import { createUseStyles, DefaultTheme } from "react-jss";
 import { Routes, Route, useNavigate } from "react-router-dom";
@@ -310,11 +311,15 @@ function App() {
           <Route
             path="/booking-confirmation"
             element={
-              <SignInWrapper currentUser={currentUser}>
-                <Suspense fallback={<SuspenseFallback />}>
-                  <BookingConfirmation currentUser={currentUser} />
-                </Suspense>
-              </SignInWrapper>
+              currentUser ? (
+                <SignInWrapper currentUser={currentUser}>
+                  <Suspense fallback={<SuspenseFallback />}>
+                    <BookingConfirmation currentUser={currentUser} />
+                  </Suspense>
+                </SignInWrapper>
+              ) : (
+                <Spinner />
+              )
             }
           />
           <Route
