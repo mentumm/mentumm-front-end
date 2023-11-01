@@ -49,7 +49,7 @@ const BookingConfirmation: React.FC<CurrentUserProps> = ({ currentUser }) => {
       } catch (error) {
         setBookingError(true);
         setIsLoading(false);
-        throw new Error("Could not record booking");
+        throw new Error(error);
       }
     };
     confirmBooking();
