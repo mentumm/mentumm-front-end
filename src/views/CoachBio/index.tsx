@@ -51,7 +51,7 @@ const CoachBio: React.FC<CurrentUserProps> = ({ currentUser }) => {
         setCoach(singleCoach.data[0]);
         mixpanelEvent("Coach Bio Viewed", {
           "Coach ID": coach.id,
-          "Coach Name": `${coach.first_name} ${coach.last_name}`,
+          "Coach": `${coach.first_name} ${coach.last_name}`,
           "Coach Expertise": coach.expertise.map((expertise) => expertise.name),
           "Coach City": coach.city,
           "Coach State": coach.state,

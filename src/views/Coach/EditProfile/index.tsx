@@ -65,7 +65,7 @@ const EditProfile = ({ currentUser, setCurrentUser }) => {
 
         mixpanelEvent("Coach Edit Profile Viewed", {
           "Coach ID": coach.id,
-          "Coach Name": `${coach.first_name} ${coach.last_name}`,
+          "Coach": `${coach.first_name} ${coach.last_name}`,
           "Coach Styles": coach.styles.map((style) => style.name),
           "Coach Expertise": coach.expertise.map((expertise) => expertise.name),
         });
