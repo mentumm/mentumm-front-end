@@ -19,7 +19,7 @@ const BookCoachingButton: React.FC<BookCoachingButtonProps> = ({
       size='lg'
       onClick={() => {
         mixpanelEvent("Clicked Book Coach", {
-          "Coach Name": coach &&
+          "Coach": coach &&
             (`${coach.first_name} ${coach.last_name}`),
           "Coach ID": coach && coach.id,
         });
