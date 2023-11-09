@@ -43,6 +43,7 @@ const BookingConfirmation: React.FC<CurrentUserProps> = ({ currentUser }) => {
           invitee_uuid: inviteeUUID,
           assignedTo,
           inviteeAnswer,
+          employer_id: currentUser.employer_id,
         });
         setBookingRes(booking);
         setIsLoading(false);
