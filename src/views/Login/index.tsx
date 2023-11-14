@@ -1,80 +1,48 @@
 import {
+  Box,
   Button,
   Center,
   Container,
   Divider,
+  Flex,
+  Heading,
   Hide,
   Image,
   Show,
+  Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { createUseStyles } from "react-jss";
 import { useNavigate } from "react-router";
 import LoginForm from "../../components/LoginForm";
 import RegisterAction from "../../components/RegisterAction";
 import { UserLoginProps } from "../../types";
 import logo from "../../assets/mentumm-logo.svg";
 
-const useStyles = createUseStyles({
-  root: {
-    position: "relative",
-    width: "100%",
-    textAlign: "center",
-  },
-  parentColumn: {
-    display: "inline-block",
-    width: "100%",
-  },
-  container: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "row",
-  },
-});
-
 const Login: React.FC<UserLoginProps> = (props) => {
-  const classes = useStyles();
   const navigate = useNavigate();
 
   return (
-    <div className={classes.root}>
-      <div className={classes.parentColumn}>
+    <Box position="relative" w="100%" textAlign="center">
+      <Box display="inline-block" width="100%" >
         <Container
           paddingTop={{ base: "4", md: "8" }}
           paddingBottom={{ base: "2", md: "6" }}
         >
           <Center>
-            <Image
-              src={logo}
-              alt="mentumm banner"
-              w={{ base: "auto", lg: "500px" }}
-            />
+            <Heading as="h2" fontWeight="normal">
+              Welcome to <Text fontWeight="bold">mentumm</Text>
+            </Heading>
           </Center>
         </Container>
-      </div>
-      <div className={classes.container}>
+      </Box>
+      <Flex position="relative" flexDirection="row" >
         <LoginForm
           currentUser={props.currentUser}
           setCurrentUser={props.setCurrentUser}
         />
-        <Hide below="md">
-          <div style={{ paddingTop: "20px" }}>
-            <Center height="350px">
-              <Divider orientation="vertical" />
-            </Center>
-          </div>
-          <RegisterAction />
-        </Hide>
-      </div>
-      <Show below="lg">
-        <Container paddingTop={{ base: "4" }}>
-          Not a current user?{" "}
-          <Button variant="link" size="sm" onClick={() => navigate("/sign-up")}>
-            Register now!
-          </Button>
-        </Container>
-      </Show>
-    </div>
+        {/* <RegisterAction /> */}
+      </Flex>
+    </Box>
   );
 };
 
