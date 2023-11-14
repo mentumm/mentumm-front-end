@@ -137,7 +137,7 @@ function App() {
   return (
     <AppContainer>
       <div className={classes.root}>
-        <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
+        {currentUser && <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />}
         <Routes>
           <Route
             path="/"
