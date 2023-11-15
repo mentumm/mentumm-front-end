@@ -155,18 +155,14 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
   };
 
   return (
-    <Container as="form" onSubmit={onSubmit} maxW="md">
+    <Container
+      as="form"
+      onSubmit={onSubmit}
+      maxW="md"
+      mt="10em"
+      zIndex="1"
+    >
       <Stack spacing="8">
-        <Stack spacing="6">
-          <Stack spacing={{ base: "2", md: "3" }} textAlign="left">
-            <Heading size="lg" textAlign="left">
-              Registered Members
-            </Heading>
-            <HStack spacing="1" justify="left">
-              <Text>Book your next coaching session!</Text>
-            </HStack>
-          </Stack>
-        </Stack>
         <Stack spacing="6">
           <Stack spacing="-px">
             <FormControl id="email" isInvalid={emailError}>

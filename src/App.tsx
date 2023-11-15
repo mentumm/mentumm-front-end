@@ -339,7 +339,6 @@ function App() {
             }
           />
         </Routes>
-        <Footer />
       </div>
     </AppContainer>
   );

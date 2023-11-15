@@ -18,22 +18,24 @@ import RegisterAction from "../../components/RegisterAction";
 import { UserLoginProps } from "../../types";
 import logo from "../../assets/minimal-mentumm-logo.svg";
 import bgImage from '../../assets/mentumm-splash.jpeg';
-import waveImage from '../../assets/login-bottom-wave.svg'
+import tealWave from '../../assets/teal-wave.svg'
+import marineWave from '../../assets/marine-wave.svg';
+import marineWaveSmall from '../../assets/marine-wave-small.svg';
 
 const Login: React.FC<UserLoginProps> = (props) => {
-  // Responsive background size for the wave SVG
-  const waveSize = useBreakpointValue({ base: '200%', md: '100%' });
 
   return (
     <Flex
       direction="column"
       align="center"
       justify="center"
-      minH="100vh"
+      h="100vh"
+      width="100vw"
       bgImage={`url(${bgImage})`}
       bgPos="center center"
       bgSize="cover"
       position="relative"
+      w="100vw"
     >
       <VStack spacing={10} w="full" maxW="md" p={8} textAlign="center">
         <Image src={logo} boxSize="120px" />
@@ -44,22 +46,36 @@ const Login: React.FC<UserLoginProps> = (props) => {
           Customized Coaching, For You!
         </Text>
       </VStack>
-
-      {/* Login Form Component */}
       <LoginForm {...props} />
-
-      {/* Wave SVG at the bottom of the page */}
       <Box
         position="absolute"
         bottom="0"
         left="0"
         right="0"
-        height="150px" // Adjust the height to fit your wave SVG
-        bgImage={`url(${waveImage})`}
+        height="500px"
+        bgImage={`url(${marineWave})`}
         bgRepeat="no-repeat"
-        bgSize={waveSize}
-        bgPos="bottom center"
-        width="full"
+        bgSize="cover"
+      />
+      <Box
+        position="absolute"
+        bottom="0"
+        left="0"
+        right="0"
+        height="500px"
+        bgImage={`url(${tealWave})`}
+        bgRepeat="no-repeat"
+        bgSize="cover"
+      />
+      <Box
+        position="absolute"
+        bottom="0"
+        left="0"
+        right="0"
+        height="250px"
+        bgImage={`url(${marineWaveSmall})`}
+        bgRepeat="no-repeat"
+        bgSize="cover"
       />
     </Flex>
   );
