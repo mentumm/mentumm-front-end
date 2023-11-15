@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import {
   Button,
-  Checkbox,
   Container,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Heading,
   HStack,
+  Center,
   Input,
   Stack,
   Text,
@@ -170,8 +170,10 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
               <Input
                 name="email"
                 type="email"
+                size="sm"
                 placeholder="Email"
-                roundedBottom="0"
+                borderRadius="30px"
+                mb="1em"
                 onChange={handleEmailChange}
               />
               {!emailError ? null : (
@@ -185,8 +187,9 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
               <Input
                 name="password"
                 type="password"
+                size="sm"
                 placeholder="Password"
-                roundedTop="0"
+                borderRadius="30px"
                 onChange={handlePasswordChange}
               />
               {!passwordError ? null : (
@@ -194,16 +197,23 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
               )}
             </FormControl>
           </Stack>
-          <HStack justify="space-between">
-            <Checkbox defaultChecked>Remember me</Checkbox>
-            <Link to="/forgot-password">
-              <Button variant="link" size="sm">
-                Forgot password
+          <Link to="/forgot-password">
+            <Center>
+              <Button variant="link" size="sm" fontWeight="400" color="#002F6F">
+                Forgot password?
               </Button>
-            </Link>
-          </HStack>
+            </Center>
+          </Link>
           <Stack spacing="4">
-            <Button type="submit" onClick={() => login(email, password)}>
+            <Button
+              type="submit"
+              borderRadius="30px"
+              bgColor="white"
+              colorScheme="brand"
+              color="brand.500"
+              fontWeight="bold"
+              onClick={() => login(email, password)}
+            >
               Sign In
             </Button>
           </Stack>

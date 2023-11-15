@@ -21,6 +21,7 @@ import bgImage from '../../assets/mentumm-splash.jpeg';
 import tealWave from '../../assets/teal-wave.svg'
 import marineWave from '../../assets/marine-wave.svg';
 import marineWaveSmall from '../../assets/marine-wave-small.svg';
+import marineRectangle from '../../assets/marine-rectangle.svg';
 
 const Login: React.FC<UserLoginProps> = (props) => {
 
@@ -55,6 +56,14 @@ const Login: React.FC<UserLoginProps> = (props) => {
         w="100vw"
         src={marineWave}
       />
+      {/* <Image
+        position="absolute"
+        bottom="0"
+        left="0"
+        right="0"
+        w="100vw"
+        src={marineRectangle}
+      /> */}
       <Image
         position="absolute"
         bottom="0"
