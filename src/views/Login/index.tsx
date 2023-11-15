@@ -47,35 +47,29 @@ const Login: React.FC<UserLoginProps> = (props) => {
         </Text>
       </VStack>
       <LoginForm {...props} />
-      <Box
+      <Image
         position="absolute"
         bottom="0"
         left="0"
         right="0"
-        height="500px"
-        bgImage={`url(${marineWave})`}
-        bgRepeat="no-repeat"
-        bgSize="cover"
+        w="100vw"
+        src={marineWave}
       />
-      <Box
+      <Image
         position="absolute"
         bottom="0"
         left="0"
         right="0"
-        height="500px"
-        bgImage={`url(${tealWave})`}
-        bgRepeat="no-repeat"
-        bgSize="cover"
+        w="100vw"
+        src={tealWave}
       />
-      <Box
+      <Image
         position="absolute"
         bottom="0"
         left="0"
         right="0"
-        height="250px"
-        bgImage={`url(${marineWaveSmall})`}
-        bgRepeat="no-repeat"
-        bgSize="cover"
+        w="100vw"
+        src={marineWaveSmall}
       />
     </Flex>
   );
