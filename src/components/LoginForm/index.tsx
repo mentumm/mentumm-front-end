@@ -204,6 +204,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
             bgColor="white"
             colorScheme="brand"
             color="brand.500"
+            size="sm"
             fontWeight="bold"
             onClick={() => login(email, password)}
           >
