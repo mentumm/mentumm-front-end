@@ -9,7 +9,6 @@ import {
   Center,
   Input,
   Stack,
-  Box,
   Flex,
 } from "@chakra-ui/react";
 import { CurrentUser, UserLoginProps } from "../../types";
