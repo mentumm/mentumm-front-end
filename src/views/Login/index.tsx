@@ -1,15 +1,11 @@
 import {
   Box,
-  Button,
-  Center,
-  Container,
   Flex,
   Heading,
   VStack,
   Image,
   Text,
   HStack,
-  useBreakpointValue,
 } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router";
@@ -30,56 +26,64 @@ const Login: React.FC<UserLoginProps> = (props) => {
       direction="column"
       align="center"
       justify="center"
-      h="100vh"
       width="100vw"
       bgImage={`url(${bgImage})`}
       bgPos="center center"
       bgSize="cover"
-      position="relative"
       w="100vw"
     >
-      <VStack spacing={10} w="full" maxW="md" p={8} textAlign="center">
-        <Image src={logo} boxSize="120px" />
-        <Heading as="h1" size="xl" fontWeight="normal" color="white">
-          Welcome to mentumm
+      <VStack
+        w="full"
+        pt={8}
+        textAlign="center"
+        position="relative"
+        top="5rem">
+        <Image src={logo} boxSize="150px" />
+        <Heading size="4xl" fontWeight="400" color="white">
+          Welcome to <b>mentumm</b>
         </Heading>
-        <Text color="white" fontSize="md" fontStyle="italic">
+        <Text fontFamily="Montserrat" color="white" fontSize="2xl" fontStyle="italic" pt="4">
           Customized Coaching, For You!
         </Text>
       </VStack>
-      <LoginForm {...props} />
-      <Image
-        position="absolute"
-        bottom="0"
-        left="0"
-        right="0"
-        w="100vw"
-        src={marineWave}
-      />
-      {/* <Image
-        position="absolute"
-        bottom="0"
-        left="0"
-        right="0"
-        w="100vw"
-        src={marineRectangle}
-      /> */}
-      <Image
-        position="absolute"
-        bottom="0"
-        left="0"
-        right="0"
-        w="100vw"
-        src={tealWave}
-      />
-      <Image
-        position="absolute"
-        bottom="0"
-        left="0"
-        right="0"
-        w="100vw"
-        src={marineWaveSmall}
-      />
+      <Box>
+        <Image
+          position="fixed"
+          bottom="0"
+          left="0"
+          right="0"
+          w="100vw"
+          src={marineRectangle}
+        />
+        <Image
+          position="absolute"
+          bottom="0"
+          left="0"
+          right="0"
+          w="100vw"
+          mb="2em"
+          src={marineWave}
+        />
+        <Image
+          position="absolute"
+          bottom="0"
+          left="0"
+          right="0"
+          w="100vw"
+          mb="2em"
+          src={tealWave}
+        />
+        <Image
+          position="absolute"
+          bottom="0"
+          left="0"
+          right="0"
+          w="100vw"
+          mb="2em"
+          src={marineWaveSmall}
+        />
+        <LoginForm {...props} />
+      </Box>
     </Flex>
   );
 };

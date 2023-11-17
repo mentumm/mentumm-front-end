@@ -6,11 +6,11 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
-  HStack,
   Center,
   Input,
   Stack,
-  Text,
+  Box,
+  Flex,
 } from "@chakra-ui/react";
 import { CurrentUser, UserLoginProps } from "../../types";
 import axios from "axios";
@@ -158,66 +158,84 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
     <Container
       as="form"
       onSubmit={onSubmit}
-      maxW="md"
-      mt="10em"
+      minW="md"
+      mt="20em"
       zIndex="1"
     >
-      <Stack spacing="8">
-        <Stack spacing="6">
-          <Stack spacing="-px">
-            <FormControl id="email" isInvalid={emailError}>
-              <FormLabel srOnly>Email address</FormLabel>
-              <Input
-                name="email"
-                type="email"
-                size="sm"
-                placeholder="Email"
-                borderRadius="30px"
-                mb="1em"
-                onChange={handleEmailChange}
-              />
-              {!emailError ? null : (
-                <FormErrorMessage style={{ marginBottom: "6px" }}>
-                  Email is required.
-                </FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl id="password" isInvalid={passwordError}>
-              <FormLabel srOnly>Password</FormLabel>
-              <Input
-                name="password"
-                type="password"
-                size="sm"
-                placeholder="Password"
-                borderRadius="30px"
-                onChange={handlePasswordChange}
-              />
-              {!passwordError ? null : (
-                <FormErrorMessage>Password is required.</FormErrorMessage>
-              )}
-            </FormControl>
-          </Stack>
+      <Stack spacing="4">
+        <Stack spacing="2">
+          <FormControl id="email" isInvalid={emailError}>
+            <FormLabel srOnly>Email address</FormLabel>
+            <Input
+              name="email"
+              type="email"
+              size="sm"
+              bgColor="white"
+              placeholder="Email"
+              borderRadius="30px"
+              onChange={handleEmailChange}
+            />
+            {!emailError ? null : (
+              <FormErrorMessage style={{ marginBottom: "6px" }}>
+                Email is required.
+              </FormErrorMessage>
+            )}
+          </FormControl>
+          <FormControl id="password" isInvalid={passwordError}>
+            <FormLabel srOnly>Password</FormLabel>
+            <Input
+              name="password"
+              type="password"
+              size="sm"
+              bgColor="white"
+              placeholder="Password"
+              borderRadius="30px"
+              onChange={handlePasswordChange}
+            />
+            {!passwordError ? null : (
+              <FormErrorMessage>Password is required.</FormErrorMessage>
+            )}
+          </FormControl>
+        </Stack>
+        <Stack spacing="1">
+          <Button
+            type="submit"
+            borderRadius="30px"
+            bgColor="white"
+            colorScheme="brand"
+            color="brand.500"
+            fontWeight="bold"
+            onClick={() => login(email, password)}
+          >
+            Sign In
+          </Button>
           <Link to="/forgot-password">
             <Center>
-              <Button variant="link" size="sm" fontWeight="400" color="#002F6F">
+              <Button
+                mt="1em"
+                variant="link"
+                size="xs"
+                fontWeight="400"
+                color="#002F6F"
+                fontFamily="Montserrat"
+              >
                 Forgot password?
               </Button>
             </Center>
           </Link>
-          <Stack spacing="4">
-            <Button
-              type="submit"
-              borderRadius="30px"
-              bgColor="white"
-              colorScheme="brand"
-              color="brand.500"
-              fontWeight="bold"
-              onClick={() => login(email, password)}
-            >
-              Sign In
-            </Button>
-          </Stack>
         </Stack>
+        <Center>
+          <Flex position="absolute" bottom="2em">
+            <Heading size="lg" color="white" fontWeight="400">
+              New To mentumm?
+            </Heading>
+            <Link to="/sign-up">
+              <Heading size="lg" pl="0.5em" colorScheme="brand" color="brand.200">
+                Register Now!
+              </Heading>
+            </Link>
+          </Flex>
+        </Center>
       </Stack>
     </Container>
   );

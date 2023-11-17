@@ -15,6 +15,9 @@ const customTheme = extendTheme({
       900: "#3168B2",
     },
   },
+  fonts: {
+    heading: `'Saira', sans-serif`,
+  },
   components: {
     Link: {
       baseStyle: {
