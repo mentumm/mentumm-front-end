@@ -17,7 +17,6 @@ import bgImage from '../../assets/mentumm-splash.jpeg';
 import tealWave from '../../assets/teal-wave.svg'
 import marineWave from '../../assets/marine-wave.svg';
 import marineWaveSmall from '../../assets/marine-wave-small.svg';
-import marineRectangle from '../../assets/marine-rectangle.svg';
 
 const Login: React.FC<UserLoginProps> = (props) => {
 
@@ -26,18 +25,17 @@ const Login: React.FC<UserLoginProps> = (props) => {
       direction="column"
       align="center"
       justify="center"
-      width="100vw"
+      height="100vh"
       bgImage={`url(${bgImage})`}
       bgPos="center center"
       bgSize="cover"
-      w="100vw"
     >
       <VStack
-        w="full"
+        position="absolute"
+        top="0"
         pt={8}
         textAlign="center"
-        position="relative"
-        top="5rem">
+      >
         <Image src={logo} boxSize="150px" />
         <Heading size="4xl" fontWeight="400" color="white">
           Welcome to <b>mentumm</b>
@@ -48,20 +46,11 @@ const Login: React.FC<UserLoginProps> = (props) => {
       </VStack>
       <Box>
         <Image
-          position="fixed"
-          bottom="0"
-          left="0"
-          right="0"
-          w="100vw"
-          src={marineRectangle}
-        />
-        <Image
           position="absolute"
           bottom="0"
           left="0"
           right="0"
           w="100vw"
-          mb="2em"
           src={marineWave}
         />
         <Image
@@ -70,7 +59,6 @@ const Login: React.FC<UserLoginProps> = (props) => {
           left="0"
           right="0"
           w="100vw"
-          mb="2em"
           src={tealWave}
         />
         <Image
@@ -79,7 +67,6 @@ const Login: React.FC<UserLoginProps> = (props) => {
           left="0"
           right="0"
           w="100vw"
-          mb="2em"
           src={marineWaveSmall}
         />
         <LoginForm {...props} />
