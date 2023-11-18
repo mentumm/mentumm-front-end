@@ -7,9 +7,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { useNavigate } from "react-router";
 import LoginForm from "../../components/LoginForm";
-import RegisterAction from "../../components/RegisterAction";
 import { UserLoginProps } from "../../types";
 import logo from "../../assets/minimal-mentumm-logo.svg";
 import bgImage from '../../assets/mentumm-splash.jpeg';
