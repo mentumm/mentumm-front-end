@@ -10,12 +10,12 @@ import React from "react";
 import LoginForm from "../../components/LoginForm";
 import { UserLoginProps } from "../../types";
 import logo from "../../assets/minimal-mentumm-logo.svg";
-import bgImage from '../../assets/mentumm-splash.jpeg';
 import tealWave from '../../assets/teal-wave.svg'
 import marineWave from '../../assets/marine-wave.svg';
 import marineWaveSmall from '../../assets/marine-wave-small.svg';
 
 const Login: React.FC<UserLoginProps> = (props) => {
+  const bgImage = 'https://mentummportal.sfo3.digitaloceanspaces.com/mentumm-splash.jpeg';
 
   return (
     <Flex
