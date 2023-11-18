@@ -166,7 +166,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
       <Stack spacing="4" alignItems="center">
         <Stack
           position="absolute"
-          minW="30%"
+          minW="md"
           bottom="10em"
         >
           <Stack spacing="2">
