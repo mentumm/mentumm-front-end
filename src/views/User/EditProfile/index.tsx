@@ -1,36 +1,58 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { menApiAuthClient } from "../../../clients/mentumm";
 import { EditProfileWrapper } from "../../../components/Wrappers/EditProfileWrapper";
-import { ensureHttps, urlRegex } from "../../../helpers/validators";
+import { urlRegex } from "../../../helpers/validators";
 import { useNavigate, useParams } from "react-router";
 import { useSnackbar } from "notistack";
-import { useCookies } from "react-cookie";
 import { Form, Formik, FormikHelpers } from "formik";
 import { UserPublic } from "../../../types";
 import {
   Box,
   Button,
+  ButtonGroup,
   Center,
   Flex,
   FormControl,
   FormErrorMessage,
+  FormHelperText,
   FormLabel,
   Heading,
+  IconButton,
   Input,
   InputGroup,
   InputRightElement,
   Select,
 } from "@chakra-ui/react";
 import { usStates } from "../../../utils/states";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import * as Yup from "yup";
+import { useCookies } from "react-cookie";
+import { createUseStyles } from "react-jss";
+
+const useStyles = createUseStyles({
+  profileImageContainer: {
+    display: "flex",
+    alignItems: "center",
+    height: 200,
+    width: 400,
+    overflow: "hidden",
+  },
+  profileImage: {
+    width: "100%",
+    height: "auto",
+    objectFit: "cover",
+  },
+});
 
 const EditUserProfile = ({ currentUser, setCurrentUser }) => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
-  const [, setCookie] = useCookies(["growth_10_03142023"]);
   const [showPassword, setShowPassword] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [profileImage, setProfileImage] = useState(null);
+  const [, setCookie] = useCookies(["growth_10_03142023"]);
+  const classes = useStyles();
 
   useEffect(() => {
     if (currentUser && currentUser.id !== userId) {
@@ -41,43 +63,71 @@ const EditUserProfile = ({ currentUser, setCurrentUser }) => {
   const handlePasswordShowClick = () => setShowPassword(!showPassword);
 
   const handleUpdate = async (values: UserPublic) => {
-    const { update_password, retype_password, ...rest } = values;
+    const { update_password } = values;
+    const formData = new FormData();
 
-    const updateValues = {
-      ...rest,
-      linkedin_url: ensureHttps(values.linkedin_url),
-      id: currentUser.id,
-    };
-    update_password && (updateValues.password = update_password);
+    if (profileImage) {
+      formData.append("avatar", profileImage);
+    }
 
-    await menApiAuthClient()
-      .put("/user", updateValues)
-      .then(() => {
-        const user = {
-          ...currentUser,
-          ...values,
-        };
-        setCurrentUser(user);
-        setCookie("growth_10_03142023", user, {
-          path: "/",
-          secure: true,
-          expires: new Date(Date.now() + 3600 * 1000 * 48),
-          sameSite: true,
+    for (const key in values) {
+      if (key !== "update_password" && key !== "retype_password") {
+        formData.append(key, values[key]);
+      }
+    }
+
+    formData.append("id", currentUser.id);
+    update_password && formData.append("password", update_password);
+
+    console.log({ formData });
+
+    try {
+      await menApiAuthClient()
+        .put("/user", formData)
+        .then(() => {
+          const user = {
+            ...currentUser,
+            ...values,
+          };
+          setCurrentUser(user);
+          setCookie("growth_10_03142023", user, {
+            path: "/",
+            secure: true,
+            expires: new Date(Date.now() + 3600 * 1000 * 48),
+            sameSite: true,
+          });
+          enqueueSnackbar("Profile updated successfully!", {
+            variant: "success",
+          });
         });
-        enqueueSnackbar("Profile updated successfully!", {
-          variant: "success",
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-        enqueueSnackbar("Something went wrong. Please try again.", {
-          variant: "error",
-        });
+    } catch (err) {
+      console.error(err);
+      enqueueSnackbar("Something went wrong. Please try again.", {
+        variant: "error",
       });
+    }
   };
 
   const handleSubmit = async (values: UserPublic) => {
     handleUpdate(values);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      if (profileImage) {
+        URL.revokeObjectURL(profileImage);
+      }
+
+      setProfileImage(e.target.files[0]);
+    }
+  };
+
+  const handleFileClear = (props: FormikHelpers<UserPublic>) => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+    setProfileImage(null);
+    props.setFieldValue("photo_url", "");
   };
 
   if (!currentUser) {
@@ -95,6 +145,7 @@ const EditUserProfile = ({ currentUser, setCurrentUser }) => {
           email: currentUser?.email || "",
           phone_number: currentUser?.phone_number || "",
           linkedin_url: currentUser?.linkedin_url || "",
+          photo_url: currentUser?.photo_url || "",
         }}
         validationSchema={Yup.object().shape({
           first_name: Yup.string().required("Required"),
@@ -142,6 +193,52 @@ const EditUserProfile = ({ currentUser, setCurrentUser }) => {
                 flexDirection="row"
                 flexWrap="wrap"
               >
+                <Box flexBasis="100%" marginY="6">
+                  <Heading as="h2" size="md" fontWeight="normal">
+                    Profile Picture
+                  </Heading>
+                </Box>
+                <FormControl>
+                  <div className={classes.profileImageContainer}>
+                    {profileImage && (
+                      <img
+                        src={URL.createObjectURL(profileImage)}
+                        alt="profile"
+                      />
+                    )}
+                    {!profileImage && props.values.photo_url && (
+                      <img src={props.values.photo_url} alt="profile" />
+                    )}
+                    {!profileImage && !props.values.photo_url && (
+                      <div>nothin</div>
+                    )}
+                  </div>
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    onChange={handleFileChange}
+                    style={{ display: "none" }}
+                  />
+                  <ButtonGroup isAttached>
+                    <Button
+                      type="button"
+                      onClick={() => fileInputRef.current.click()}
+                    >
+                      Upload Image
+                    </Button>
+                    {(profileImage || props.values.photo_url) && (
+                      <IconButton
+                        aria-label="Clear Image"
+                        icon={<CloseIcon />}
+                        onClick={() => handleFileClear(props)}
+                      />
+                    )}
+                  </ButtonGroup>
+                  <FormHelperText>
+                    Choose a photo that best fits the landscape aspect radio
+                    shown above.
+                  </FormHelperText>
+                </FormControl>
                 <Box flexBasis="100%" marginY="6">
                   <Heading as="h2" size="md" fontWeight="normal">
                     Personal Information
@@ -381,4 +478,4 @@ const EditUserProfile = ({ currentUser, setCurrentUser }) => {
   );
 };
 
-export default EditUserProfile
+export default EditUserProfile;
