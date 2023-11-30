@@ -32,7 +32,7 @@ import Hobbies from "./Hobbies";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { EditProfileWrapper } from "../../../components/Wrappers/EditProfileWrapper";
-import { ensureHttps, urlRegex } from "../../../helpers/validators";
+import { urlRegex } from "../../../helpers/validators";
 import FileInput from "../../../components/FileInput";
 
 const EditProfile = ({ currentUser, setCurrentUser }) => {
@@ -91,8 +91,6 @@ const EditProfile = ({ currentUser, setCurrentUser }) => {
       hobbies5,
       hobbies6,
       update_password,
-      retype_password,
-      ...rest
     } = values;
     const formData = new FormData();
 
