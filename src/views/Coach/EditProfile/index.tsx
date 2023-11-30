@@ -17,7 +17,7 @@ import {
   Wrap,
   WrapItem,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { Form, Formik, FormikHelpers } from "formik";
 import * as Yup from "yup";
@@ -33,6 +33,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { EditProfileWrapper } from "../../../components/Wrappers/EditProfileWrapper";
 import { ensureHttps, urlRegex } from "../../../helpers/validators";
+import FileInput from "../../../components/FileInput";
 
 const EditProfile = ({ currentUser, setCurrentUser }) => {
   const navigate = useNavigate();
@@ -43,6 +44,8 @@ const EditProfile = ({ currentUser, setCurrentUser }) => {
   const [coachStyles, setCoachStyles] = useState([]);
   const handlePasswordShowClick = () => setShowPassword(!showPassword);
   const [coachExpertise, setCoachExpertise] = useState([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [profileImage, setProfileImage] = useState(null);
 
   useEffect(() => {
     // ensure that only coaches can edit their own profiles
@@ -65,7 +68,7 @@ const EditProfile = ({ currentUser, setCurrentUser }) => {
 
         mixpanelEvent("Coach Edit Profile Viewed", {
           "Coach ID": coach.id,
-          "Coach": `${coach.first_name} ${coach.last_name}`,
+          Coach: `${coach.first_name} ${coach.last_name}`,
           "Coach Styles": coach.styles.map((style) => style.name),
           "Coach Expertise": coach.expertise.map((expertise) => expertise.name),
         });
@@ -91,33 +94,39 @@ const EditProfile = ({ currentUser, setCurrentUser }) => {
       retype_password,
       ...rest
     } = values;
+    const formData = new FormData();
 
-    const updateValues = {
-      ...rest,
-      linkedin_url: ensureHttps(values.linkedin_url),
-      instagram_url: ensureHttps(values.instagram_url),
-      facebook_url: ensureHttps(values.facebook_url),
-      website_url: ensureHttps(values.website_url),
-      booking_url: ensureHttps(values.booking_url),
-      achievements: JSON.stringify([
-        achievements1,
-        achievements2.trim(),
-        achievements3.trim(),
-      ].filter(achievement => achievement !== '')),
-      hobbies: JSON.stringify([
-        hobbies1,
-        hobbies2,
-        hobbies3,
-        hobbies4,
-        hobbies5,
-        hobbies6,
-      ].filter(hobby => hobby !== '')),
-      id: currentUser.id,
-    };
-    update_password && (updateValues.password = update_password);
+    if (profileImage) {
+      formData.append("avatar", profileImage);
+    }
+
+    for (const key in values) {
+      if (key !== "update_password" && key !== "retype_password") {
+        formData.append(key, values[key]);
+      }
+    }
+
+    formData.append("id", currentUser.id);
+    update_password && formData.append("password", update_password);
+    formData.append(
+      "achievements",
+      JSON.stringify(
+        [achievements1, achievements2.trim(), achievements3.trim()].filter(
+          (achievement) => achievement !== ""
+        )
+      )
+    );
+    formData.append(
+      "hobbies",
+      JSON.stringify(
+        [hobbies1, hobbies2, hobbies3, hobbies4, hobbies5, hobbies6].filter(
+          (hobby) => hobby !== ""
+        )
+      )
+    );
 
     await menApiAuthClient()
-      .put("/user", updateValues)
+      .put("/user", formData)
       .then(() => {
         const user = {
           ...currentUser,
@@ -144,7 +153,44 @@ const EditProfile = ({ currentUser, setCurrentUser }) => {
 
   const handleSubmit = async (values: UserPublic) => {
     handleUpdate(values);
-    sessionStorage.removeItem('bio');
+    sessionStorage.removeItem("bio");
+  };
+
+  const handleFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    props: FormikHelpers<UserPublic>
+  ) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const fileType = file.type;
+      const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+      if (!validImageTypes.includes(fileType)) {
+        props.setFieldError(
+          "photo_url",
+          "Invalid file type. Must be a .jpg, .jpeg, or .png."
+        );
+        props.setFieldTouched("photo_url", true, false);
+        return;
+      }
+      if (file.size > 12000000) {
+        props.setFieldError(
+          "photo_url",
+          "File size too large. Must be less than 12MB."
+        );
+        props.setFieldTouched("photo_url", true, false);
+        return;
+      }
+      props.setFieldError("photo_url", "");
+      setProfileImage(file);
+    }
+  };
+
+  const handleFileClear = (props: FormikHelpers<UserPublic>) => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+    setProfileImage(null);
+    props.setFieldValue("photo_url", "");
   };
 
   if (!currentUser) {
@@ -176,6 +222,7 @@ const EditProfile = ({ currentUser, setCurrentUser }) => {
           hobbies4: currentUser.hobbies4 || "",
           hobbies5: currentUser.hobbies5 || "",
           hobbies6: currentUser.hobbies6 || "",
+          photo_url: currentUser?.photo_url || "",
         }}
         validationSchema={Yup.object().shape({
           first_name: Yup.string().required("Required"),
@@ -256,6 +303,20 @@ const EditProfile = ({ currentUser, setCurrentUser }) => {
                 flexDirection="row"
                 flexWrap="wrap"
               >
+                <Box flexBasis="100%" marginY="6">
+                  <Heading as="h2" size="md" fontWeight="normal">
+                    Profile Picture
+                  </Heading>
+                </Box>
+                <FormControl isInvalid={!!props.errors.photo_url}>
+                  <FileInput
+                    props={props}
+                    currentUser={currentUser}
+                    handleFileChange={handleFileChange}
+                    handleFileClear={handleFileClear}
+                    profileImage={profileImage}
+                  />
+                </FormControl>
                 <Box flexBasis="100%" marginY="6">
                   <Heading as="h2" size="md" fontWeight="normal">
                     Personal Information
@@ -601,9 +662,7 @@ const EditProfile = ({ currentUser, setCurrentUser }) => {
                       {coachExpertise.length ? (
                         coachExpertise.map((style, i) => {
                           return (
-                            <WrapItem
-                              key={i}
-                            >
+                            <WrapItem key={i}>
                               <Tag
                                 whiteSpace="nowrap"
                                 minW="auto"
@@ -613,7 +672,7 @@ const EditProfile = ({ currentUser, setCurrentUser }) => {
                                 {style.name}
                               </Tag>
                             </WrapItem>
-                          )
+                          );
                         })
                       ) : (
                         <Link to={`/coach/${currentUser.id}/expertise`}>

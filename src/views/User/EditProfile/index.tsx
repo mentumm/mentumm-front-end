@@ -9,40 +9,22 @@ import { UserPublic } from "../../../types";
 import {
   Box,
   Button,
-  ButtonGroup,
   Center,
   Flex,
   FormControl,
   FormErrorMessage,
-  FormHelperText,
   FormLabel,
   Heading,
-  IconButton,
   Input,
   InputGroup,
   InputRightElement,
   Select,
 } from "@chakra-ui/react";
 import { usStates } from "../../../utils/states";
-import { CloseIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import * as Yup from "yup";
 import { useCookies } from "react-cookie";
-import { createUseStyles } from "react-jss";
-
-const useStyles = createUseStyles({
-  profileImageContainer: {
-    display: "flex",
-    alignItems: "center",
-    height: 200,
-    width: 400,
-    overflow: "hidden",
-  },
-  profileImage: {
-    width: "100%",
-    height: "auto",
-    objectFit: "cover",
-  },
-});
+import FileInput from "../../../components/FileInput";
 
 const EditUserProfile = ({ currentUser, setCurrentUser }) => {
   const navigate = useNavigate();
@@ -52,7 +34,6 @@ const EditUserProfile = ({ currentUser, setCurrentUser }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [profileImage, setProfileImage] = useState(null);
   const [, setCookie] = useCookies(["growth_10_03142023"]);
-  const classes = useStyles();
 
   useEffect(() => {
     if (currentUser && currentUser.id !== userId) {
@@ -78,8 +59,6 @@ const EditUserProfile = ({ currentUser, setCurrentUser }) => {
 
     formData.append("id", currentUser.id);
     update_password && formData.append("password", update_password);
-
-    console.log({ formData });
 
     try {
       await menApiAuthClient()
@@ -112,13 +91,32 @@ const EditUserProfile = ({ currentUser, setCurrentUser }) => {
     handleUpdate(values);
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    props: FormikHelpers<UserPublic>
+  ) => {
     if (e.target.files && e.target.files[0]) {
-      if (profileImage) {
-        URL.revokeObjectURL(profileImage);
+      const file = e.target.files[0];
+      const fileType = file.type;
+      const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+      if (!validImageTypes.includes(fileType)) {
+        props.setFieldError(
+          "photo_url",
+          "Invalid file type. Must be a .jpg, .jpeg, or .png."
+        );
+        props.setFieldTouched("photo_url", true, false);
+        return;
       }
-
-      setProfileImage(e.target.files[0]);
+      if (file.size > 12000000) {
+        props.setFieldError(
+          "photo_url",
+          "File size too large. Must be less than 12MB."
+        );
+        props.setFieldTouched("photo_url", true, false);
+        return;
+      }
+      props.setFieldError("photo_url", "");
+      setProfileImage(file);
     }
   };
 
@@ -198,46 +196,14 @@ const EditUserProfile = ({ currentUser, setCurrentUser }) => {
                     Profile Picture
                   </Heading>
                 </Box>
-                <FormControl>
-                  <div className={classes.profileImageContainer}>
-                    {profileImage && (
-                      <img
-                        src={URL.createObjectURL(profileImage)}
-                        alt="profile"
-                      />
-                    )}
-                    {!profileImage && props.values.photo_url && (
-                      <img src={props.values.photo_url} alt="profile" />
-                    )}
-                    {!profileImage && !props.values.photo_url && (
-                      <div>nothin</div>
-                    )}
-                  </div>
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    onChange={handleFileChange}
-                    style={{ display: "none" }}
+                <FormControl isInvalid={!!props.errors.photo_url}>
+                  <FileInput
+                    props={props}
+                    currentUser={currentUser}
+                    handleFileChange={handleFileChange}
+                    handleFileClear={handleFileClear}
+                    profileImage={profileImage}
                   />
-                  <ButtonGroup isAttached>
-                    <Button
-                      type="button"
-                      onClick={() => fileInputRef.current.click()}
-                    >
-                      Upload Image
-                    </Button>
-                    {(profileImage || props.values.photo_url) && (
-                      <IconButton
-                        aria-label="Clear Image"
-                        icon={<CloseIcon />}
-                        onClick={() => handleFileClear(props)}
-                      />
-                    )}
-                  </ButtonGroup>
-                  <FormHelperText>
-                    Choose a photo that best fits the landscape aspect radio
-                    shown above.
-                  </FormHelperText>
                 </FormControl>
                 <Box flexBasis="100%" marginY="6">
                   <Heading as="h2" size="md" fontWeight="normal">
