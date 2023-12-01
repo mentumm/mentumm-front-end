@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { menApiAuthClient } from "../../../clients/mentumm";
 import { EditProfileWrapper } from "../../../components/Wrappers/EditProfileWrapper";
-import { ensureHttps, urlRegex } from "../../../helpers/validators";
+import { urlRegex } from "../../../helpers/validators";
 import { useNavigate, useParams } from "react-router";
 import { useSnackbar } from "notistack";
-import { useCookies } from "react-cookie";
 import { Form, Formik, FormikHelpers } from "formik";
 import { UserPublic } from "../../../types";
 import {
@@ -24,13 +23,17 @@ import {
 import { usStates } from "../../../utils/states";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import * as Yup from "yup";
+import { useCookies } from "react-cookie";
+import FileInput from "../../../components/FileInput";
 
 const EditUserProfile = ({ currentUser, setCurrentUser }) => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const { enqueueSnackbar } = useSnackbar();
-  const [, setCookie] = useCookies(["growth_10_03142023"]);
   const [showPassword, setShowPassword] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [profileImage, setProfileImage] = useState(null);
+  const [, setCookie] = useCookies(["growth_10_03142023"]);
 
   useEffect(() => {
     if (currentUser && currentUser.id !== userId) {
@@ -41,43 +44,88 @@ const EditUserProfile = ({ currentUser, setCurrentUser }) => {
   const handlePasswordShowClick = () => setShowPassword(!showPassword);
 
   const handleUpdate = async (values: UserPublic) => {
-    const { update_password, retype_password, ...rest } = values;
+    const { update_password } = values;
+    const formData = new FormData();
 
-    const updateValues = {
-      ...rest,
-      linkedin_url: ensureHttps(values.linkedin_url),
-      id: currentUser.id,
-    };
-    update_password && (updateValues.password = update_password);
+    if (profileImage) {
+      formData.append("avatar", profileImage);
+    }
 
-    await menApiAuthClient()
-      .put("/user", updateValues)
-      .then(() => {
-        const user = {
-          ...currentUser,
-          ...values,
-        };
-        setCurrentUser(user);
-        setCookie("growth_10_03142023", user, {
-          path: "/",
-          secure: true,
-          expires: new Date(Date.now() + 3600 * 1000 * 48),
-          sameSite: true,
+    for (const key in values) {
+      if (key !== "update_password" && key !== "retype_password") {
+        formData.append(key, values[key]);
+      }
+    }
+
+    formData.append("id", currentUser.id);
+    update_password && formData.append("password", update_password);
+
+    try {
+      await menApiAuthClient()
+        .put("/user", formData)
+        .then(() => {
+          const user = {
+            ...currentUser,
+            ...values,
+          };
+          setCurrentUser(user);
+          setCookie("growth_10_03142023", user, {
+            path: "/",
+            secure: true,
+            expires: new Date(Date.now() + 3600 * 1000 * 48),
+            sameSite: true,
+          });
+          enqueueSnackbar("Profile updated successfully!", {
+            variant: "success",
+          });
         });
-        enqueueSnackbar("Profile updated successfully!", {
-          variant: "success",
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-        enqueueSnackbar("Something went wrong. Please try again.", {
-          variant: "error",
-        });
+    } catch (err) {
+      console.error(err);
+      enqueueSnackbar("Something went wrong. Please try again.", {
+        variant: "error",
       });
+    }
   };
 
   const handleSubmit = async (values: UserPublic) => {
     handleUpdate(values);
+  };
+
+  const handleFileChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    props: FormikHelpers<UserPublic>
+  ) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      const fileType = file.type;
+      const validImageTypes = ["image/jpeg", "image/png", "image/jpg"];
+      if (!validImageTypes.includes(fileType)) {
+        props.setFieldError(
+          "photo_url",
+          "Invalid file type. Must be a .jpg, .jpeg, or .png."
+        );
+        props.setFieldTouched("photo_url", true, false);
+        return;
+      }
+      if (file.size > 12000000) {
+        props.setFieldError(
+          "photo_url",
+          "File size too large. Must be less than 12MB."
+        );
+        props.setFieldTouched("photo_url", true, false);
+        return;
+      }
+      props.setFieldError("photo_url", "");
+      setProfileImage(file);
+    }
+  };
+
+  const handleFileClear = (props: FormikHelpers<UserPublic>) => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+    setProfileImage(null);
+    props.setFieldValue("photo_url", "");
   };
 
   if (!currentUser) {
@@ -95,6 +143,7 @@ const EditUserProfile = ({ currentUser, setCurrentUser }) => {
           email: currentUser?.email || "",
           phone_number: currentUser?.phone_number || "",
           linkedin_url: currentUser?.linkedin_url || "",
+          photo_url: currentUser?.photo_url || "",
         }}
         validationSchema={Yup.object().shape({
           first_name: Yup.string().required("Required"),
@@ -142,6 +191,20 @@ const EditUserProfile = ({ currentUser, setCurrentUser }) => {
                 flexDirection="row"
                 flexWrap="wrap"
               >
+                <Box flexBasis="100%" marginY="6">
+                  <Heading as="h2" size="md" fontWeight="normal">
+                    Profile Picture
+                  </Heading>
+                </Box>
+                <FormControl isInvalid={!!props.errors.photo_url}>
+                  <FileInput
+                    props={props}
+                    currentUser={currentUser}
+                    handleFileChange={handleFileChange}
+                    handleFileClear={handleFileClear}
+                    profileImage={profileImage}
+                  />
+                </FormControl>
                 <Box flexBasis="100%" marginY="6">
                   <Heading as="h2" size="md" fontWeight="normal">
                     Personal Information
@@ -381,4 +444,4 @@ const EditUserProfile = ({ currentUser, setCurrentUser }) => {
   );
 };
 
-export default EditUserProfile
+export default EditUserProfile;
