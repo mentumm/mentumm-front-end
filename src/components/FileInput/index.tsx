@@ -2,41 +2,15 @@ import { CloseIcon } from "@chakra-ui/icons";
 import {
   Button,
   ButtonGroup,
+  Flex,
   FormErrorMessage,
   FormHelperText,
   IconButton,
+  Image,
 } from "@chakra-ui/react";
 import { FormikHelpers, FormikProps } from "formik";
 import React, { useRef } from "react";
-import { createUseStyles } from "react-jss";
 import { UserPublic } from "../../types";
-
-const useStyles = createUseStyles({
-  profileImageContainer: {
-    display: "flex",
-    alignItems: "center",
-    height: 200,
-    width: 400,
-    overflow: "hidden",
-    marginBottom: 10,
-  },
-  profileImage: {
-    width: "100%",
-    height: "auto",
-    objectFit: "cover",
-  },
-  profileImageDefault: {
-    width: "100%",
-    height: "100%",
-    objectFit: "cover",
-    backgroundColor: "#E2E8F0",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    color: "#718096",
-    fontSize: 80,
-  },
-});
 
 interface FileInputProps {
   props: FormikProps<UserPublic>;
@@ -56,24 +30,36 @@ const FileInput = ({
   handleFileChange,
   handleFileClear,
 }: FileInputProps) => {
-  const classes = useStyles();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <>
-      <div className={classes.profileImageContainer}>
+      <Flex alignItems="center" h={200} w={400} overflow="hidden" mb="10px">
         {profileImage && (
-          <img src={URL.createObjectURL(profileImage)} alt="profile" />
+          <Image
+            src={URL.createObjectURL(profileImage)}
+            alt="profile"
+            objectFit="cover"
+          />
         )}
         {!profileImage && props.values.photo_url && (
-          <img src={props.values.photo_url} alt="profile" />
+          <Image src={props.values.photo_url} alt="profile" objectFit="cover" />
         )}
         {!profileImage && !props.values.photo_url && (
-          <div className={classes.profileImageDefault}>
+          <Flex
+            h="100%"
+            w="100%"
+            objectFit="cover"
+            background="#E2E8F0"
+            alignItems="center"
+            justifyContent="center"
+            color="#718096"
+            fontSize={80}
+          >
             {`${currentUser.first_name[0]}${currentUser.last_name[0]}`}
-          </div>
+          </Flex>
         )}
-      </div>
+      </Flex>
       <input
         type="file"
         ref={fileInputRef}
