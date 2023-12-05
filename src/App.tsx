@@ -5,7 +5,6 @@ import { createUseStyles, DefaultTheme } from "react-jss";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import SuspenseFallback from "./components/Loaders/suspenseFallback";
 import AppContainer from "./components/AppContainer";
-import Footer from "./components/Footer";
 import SignInWrapper from "./components/LoginWrapper";
 import NavBar from "./components/NavBar";
 import { CurrentUser } from "./types";
@@ -137,7 +136,7 @@ function App() {
   return (
     <AppContainer>
       <div className={classes.root}>
-        <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
+        {currentUser && <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />}
         <Routes>
           <Route
             path="/"
@@ -339,7 +338,6 @@ function App() {
             }
           />
         </Routes>
-        <Footer />
       </div>
     </AppContainer>
   );

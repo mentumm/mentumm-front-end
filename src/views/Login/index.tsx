@@ -1,80 +1,74 @@
 import {
-  Button,
-  Center,
-  Container,
-  Divider,
-  Hide,
+  Box,
+  Flex,
+  Heading,
+  VStack,
   Image,
-  Show,
+  Text,
 } from "@chakra-ui/react";
 import React from "react";
-import { createUseStyles } from "react-jss";
-import { useNavigate } from "react-router";
 import LoginForm from "../../components/LoginForm";
-import RegisterAction from "../../components/RegisterAction";
 import { UserLoginProps } from "../../types";
-import logo from "../../assets/mentumm-logo.svg";
-
-const useStyles = createUseStyles({
-  root: {
-    position: "relative",
-    width: "100%",
-    textAlign: "center",
-  },
-  parentColumn: {
-    display: "inline-block",
-    width: "100%",
-  },
-  container: {
-    position: "relative",
-    display: "flex",
-    flexDirection: "row",
-  },
-});
+import logo from "../../assets/minimal-mentumm-logo.svg";
+import tealWave from '../../assets/teal-wave.svg'
+import marineWave from '../../assets/marine-wave.svg';
+import marineWaveSmall from '../../assets/marine-wave-small.svg';
 
 const Login: React.FC<UserLoginProps> = (props) => {
-  const classes = useStyles();
-  const navigate = useNavigate();
+  const bgImage = 'https://mentummportal.sfo3.digitaloceanspaces.com/mentumm-splash.jpeg';
 
   return (
-    <div className={classes.root}>
-      <div className={classes.parentColumn}>
-        <Container
-          paddingTop={{ base: "4", md: "8" }}
-          paddingBottom={{ base: "2", md: "6" }}
-        >
-          <Center>
-            <Image
-              src={logo}
-              alt="mentumm banner"
-              w={{ base: "auto", lg: "500px" }}
-            />
-          </Center>
-        </Container>
-      </div>
-      <div className={classes.container}>
-        <LoginForm
-          currentUser={props.currentUser}
-          setCurrentUser={props.setCurrentUser}
+    <Flex
+      direction="column"
+      align="center"
+      justify="center"
+      height="100vh"
+      bgImage={`url(${bgImage})`}
+      bgPos="center center"
+      bgSize="cover"
+    >
+      <VStack
+        position="absolute"
+        top="0"
+        pt={8}
+        textAlign="center"
+      >
+        <Image src={logo} boxSize="150px" />
+        <Heading size="4xl" fontWeight="400" color="white">
+          Welcome to <b>mentumm</b>
+        </Heading>
+        <Text fontFamily="Montserrat" color="white" fontSize="2xl" fontStyle="italic" pt="4">
+          Customized Coaching, For You!
+        </Text>
+      </VStack>
+      <Box>
+        <Image
+          position="absolute"
+          bottom="0"
+          left="0"
+          right="0"
+          w="100vw"
+          src={marineWave}
         />
-        <Hide below="md">
-          <div style={{ paddingTop: "20px" }}>
-            <Center height="350px">
-              <Divider orientation="vertical" />
-            </Center>
-          </div>
-          <RegisterAction />
-        </Hide>
-      </div>
-      <Show below="lg">
-        <Container paddingTop={{ base: "4" }}>
-          Not a current user?{" "}
-          <Button variant="link" size="sm" onClick={() => navigate("/sign-up")}>
-            Register now!
-          </Button>
-        </Container>
-      </Show>
-    </div>
+        <Image
+          position="absolute"
+          bottom="0"
+          left="0"
+          right="0"
+          w="100vw"
+          src={tealWave}
+        />
+        <Image
+          position="absolute"
+          bottom="0"
+          left="0"
+          right="0"
+          w="100vw"
+          src={marineWaveSmall}
+        />
+        <LoginForm {...props} />
+      </Box>
+    </Flex>
   );
 };
 

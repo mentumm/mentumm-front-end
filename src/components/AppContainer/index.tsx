@@ -13,7 +13,7 @@ const useStyles = createUseStyles({
     minHeight: "100vh",
     padding: 0,
     margin: 0,
-    paddingBottom: "125px",
+    // paddingBottom: "125px",
   },
 });
 
