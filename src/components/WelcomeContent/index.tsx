@@ -7,14 +7,14 @@ import {
   Text,
 } from '@chakra-ui/react'
 
-export const WelcomeContent = () => {
-  const contentText = [
+export const WelcomeContent = ({ isCoach }) => {
+  const userText = [
     {
       heading: 'One-on-One Coaching',
       description: 'Work with dedicated coach of your choice'
     },
     {
-      heading: 'Leadership Workshop',
+      heading: 'Leadership Workshops',
       description: 'Develop your skills in critical areas'
     },
     {
@@ -22,6 +22,23 @@ export const WelcomeContent = () => {
       description: 'Organize your key issues and goals'
     },
   ]
+
+  const coachText = [
+    {
+      heading: 'Coaching Sessions: ',
+      description: 'access past & future sessions'
+    },
+    {
+      heading: 'Your Profile: ',
+      description: 'Edit your public appearance'
+    },
+    {
+      heading: 'Leadership Workshop:',
+      description: 'view the content users access'
+    },
+  ]
+
+  const dynamicText = isCoach ? coachText : userText;
 
   return (
     <Container
@@ -36,7 +53,7 @@ export const WelcomeContent = () => {
         <Heading color='white' mx="auto" pb={8}>
           You now have access to ...
         </Heading>
-        {contentText.map(content => (
+        {dynamicText.map(content => (
           <Box
             pt={4}
             borderBottom="1px solid #2CBBBC"

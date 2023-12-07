@@ -10,13 +10,12 @@ import React from "react";
 import LoginForm from "../../components/LoginForm";
 import { UserLoginProps } from "../../types";
 import logo from "../../assets/minimal-mentumm-logo.svg";
-import { WaveLayer } from "../../components/WaveLayer";
-import tealWave from '../../assets/teal-wave.svg'
-import marineWave from '../../assets/marine-wave.svg';
-import marineWaveSmall from '../../assets/marine-wave-small.svg';
+import { SvgLayer } from "../../components/Waves/svgLayer";
 
 const Login: React.FC<UserLoginProps> = (props) => {
   const bgImage = 'https://mentummportal.sfo3.digitaloceanspaces.com/mentumm-splash.jpeg';
+  // const smallSvgHeight = '252';
+  // const largeSvgHeight = '527';
 
   return (
     <Flex
@@ -43,9 +42,28 @@ const Login: React.FC<UserLoginProps> = (props) => {
         </Text>
       </VStack>
       <Box>
-        <WaveLayer src={marineWave} />
-        <WaveLayer src={tealWave} />
-        <WaveLayer src={marineWaveSmall} />
+        <SvgLayer
+          vbHeight="527"
+        >
+          <path
+            d="M0 55.0362V252H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z"
+            fill="#0D1C31"
+          />
+        </SvgLayer>
+        <SvgLayer
+          vbHeight="527"
+        >
+          <path
+            d="M1440 55.0362V492H0V0C160.575 75.0766 406.2 180.288 710.55 182.008C1024.35 183.878 1277.1 131.234 1440 55.0362Z"
+            fill="#2CBBBC"
+          />
+        </SvgLayer>
+        <SvgLayer
+          vbHeight="275"
+        >
+          <path
+            d="M0 55.0362V275H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z" fill="#0D1C31" />
+        </SvgLayer>
         <LoginForm {...props} />
       </Box>
     </Flex>

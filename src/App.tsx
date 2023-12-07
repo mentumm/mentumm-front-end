@@ -6,7 +6,7 @@ import { Routes, Route, useNavigate } from "react-router-dom";
 import SuspenseFallback from "./components/Loaders/suspenseFallback";
 import AppContainer from "./components/AppContainer";
 import SignInWrapper from "./components/LoginWrapper";
-import NavBar from "./components/NavBar";
+// import NavBar from "./components/NavBar";
 import { CurrentUser } from "./types";
 import Home from "./views/Home";
 import Login from "./views/Login";
