@@ -33,7 +33,8 @@ const customTheme = extendTheme({
         solid: {
           bg: "brand.900",
           _hover: {
-            bg: "#265390",
+            bg: "#0D1C31",
+            color: "white",
             _disabled: {
               _hover: {
                 bg: "red",

@@ -10,6 +10,7 @@ import React from "react";
 import LoginForm from "../../components/LoginForm";
 import { UserLoginProps } from "../../types";
 import logo from "../../assets/minimal-mentumm-logo.svg";
+import { WaveLayer } from "../../components/WaveLayer";
 import tealWave from '../../assets/teal-wave.svg'
 import marineWave from '../../assets/marine-wave.svg';
 import marineWaveSmall from '../../assets/marine-wave-small.svg';
@@ -42,30 +43,9 @@ const Login: React.FC<UserLoginProps> = (props) => {
         </Text>
       </VStack>
       <Box>
-        <Image
-          position="absolute"
-          bottom="0"
-          left="0"
-          right="0"
-          w="100vw"
-          src={marineWave}
-        />
-        <Image
-          position="absolute"
-          bottom="0"
-          left="0"
-          right="0"
-          w="100vw"
-          src={tealWave}
-        />
-        <Image
-          position="absolute"
-          bottom="0"
-          left="0"
-          right="0"
-          w="100vw"
-          src={marineWaveSmall}
-        />
+        <WaveLayer src={marineWave} />
+        <WaveLayer src={tealWave} />
+        <WaveLayer src={marineWaveSmall} />
         <LoginForm {...props} />
       </Box>
     </Flex>
