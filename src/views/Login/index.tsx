@@ -29,15 +29,14 @@ const Login: React.FC<UserLoginProps> = (props) => {
     >
       <VStack
         position="absolute"
-        top="0"
-        pt={8}
+        top="8em"
         textAlign="center"
       >
         <Image src={logo} boxSize="150px" />
-        <Heading size="4xl" fontWeight="400" color="white">
+        <Heading size="4xl" fontWeight="400" color="white" mt="-10px !important">
           Welcome to <b>mentumm</b>
         </Heading>
-        <Text fontFamily="Montserrat" color="white" fontSize="2xl" fontStyle="italic" pt="4">
+        <Text fontFamily="Montserrat" color="white" fontSize="2xl" fontStyle="italic">
           Customized Coaching, For You!
         </Text>
       </VStack>
@@ -59,13 +58,13 @@ const Login: React.FC<UserLoginProps> = (props) => {
           />
         </SvgLayer>
         <SvgLayer
-          vbHeight="275"
+          vbHeight="300"
         >
           <path
-            d="M0 55.0362V275H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z" fill="#0D1C31" />
+            d="M0 55.0362V300H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z" fill="#0D1C31" />
         </SvgLayer>
-        <LoginForm {...props} />
       </Box>
+      <LoginForm {...props} />
     </Flex>
   );
 };

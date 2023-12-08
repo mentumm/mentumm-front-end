@@ -167,7 +167,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
         <Stack
           position="absolute"
           minW="md"
-          bottom="10em"
+          bottom="8rem"
         >
           <Stack spacing="2">
             <FormControl id="email" isInvalid={emailError}>
@@ -175,10 +175,8 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
               <Input
                 name="email"
                 type="email"
-                size="sm"
                 bgColor="white"
                 placeholder="Email"
-                borderRadius="30px"
                 onChange={handleEmailChange}
               />
               {!emailError ? null : (
@@ -195,7 +193,6 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
                 size="sm"
                 bgColor="white"
                 placeholder="Password"
-                borderRadius="30px"
                 onChange={handlePasswordChange}
               />
               {!passwordError ? null : (
@@ -205,14 +202,10 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
           </Stack>
           <Stack spacing="1">
             <Button
+              variant="onTeal"
               type="submit"
               mt="2"
-              borderRadius="30px"
-              bgColor="white"
-              colorScheme="brand"
-              color="brand.500"
               size="sm"
-              fontWeight="bold"
               onClick={() => login(email, password)}
             >
               Sign In

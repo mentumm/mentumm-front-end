@@ -51,7 +51,7 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
       </VStack>
       <Box>
         <SvgLayer
-          vbHeight="700"
+          vbHeight="825"
         >
           <path
             d="M1440 55.0362V492H0V0C160.575 75.0766 406.2 180.288 710.55 182.008C1024.35 183.878 1277.1 131.234 1440 55.0362Z"
@@ -59,10 +59,10 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
           />
         </SvgLayer>
         <SvgLayer
-          vbHeight="700"
+          vbHeight="825"
         >
           <path
-            d="M0 55.0362V700H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z"
+            d="M0 55.0362V825H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z"
             fill="#0D1C31"
           />
         </SvgLayer>
@@ -80,20 +80,14 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
         </SvgLayer>
       </Box>
       <WelcomeContent isCoach={isCoach} />
-      <Box max-height="38px" mt="2em">
+      <Box mt="2em">
         <Link
           to={isCoach ? `/coach/${currentUser.id}/coaching-style` : "/get-started/coaching-style"}
         >
           <Button
             borderRadius="30px"
-            bgColor="white"
-            colorScheme="brand"
-            color="brand.500"
-            _hover={{
-              backgroundColor: "#2CBBBC",
-              color: "white",
-            }}
-            max-height="38px"
+            variant="onBlue"
+            border="2px solid #2CBBBC"
             width="360px"
             fontWeight="bold"
             mt={2}

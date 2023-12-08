@@ -5,36 +5,48 @@ import {
   Heading,
   Stack,
   Text,
+  Flex,
+  Image,
+  Divider,
 } from '@chakra-ui/react'
+import signpostIcon from '../../assets/Icons/signposts.svg';
+import gamePsIcon from '../../assets/Icons/game-ps.svg';
+import successIcon from '../../assets/Icons/success.svg';
 
 export const WelcomeContent = ({ isCoach }) => {
   const userText = [
     {
       heading: 'One-on-One Coaching',
-      description: 'Work with dedicated coach of your choice'
+      description: 'Work with dedicated coach of your choice',
+      icon: signpostIcon
     },
     {
       heading: 'Leadership Workshops',
-      description: 'Develop your skills in critical areas'
+      description: 'Develop your skills in critical areas',
+      icon: successIcon,
     },
     {
       heading: 'Action Planning',
-      description: 'Organize your key issues and goals'
+      description: 'Organize your key issues and goals',
+      icon: gamePsIcon
     },
   ]
 
   const coachText = [
     {
       heading: 'Coaching Sessions: ',
-      description: 'access past & future sessions'
+      description: 'access past & future sessions',
+      icon: signpostIcon
     },
     {
       heading: 'Your Profile: ',
-      description: 'Edit your public appearance'
+      description: 'Edit your public appearance',
+      icon: successIcon
     },
     {
       heading: 'Leadership Workshop:',
-      description: 'view the content users access'
+      description: 'view the content users access',
+      icon: gamePsIcon,
     },
   ]
 
@@ -43,7 +55,7 @@ export const WelcomeContent = ({ isCoach }) => {
   return (
     <Container
       centerContent
-      mt="16em"
+      mt="20em"
       display="flex"
       maxW="container.lg"
       zIndex="2"
@@ -54,17 +66,22 @@ export const WelcomeContent = ({ isCoach }) => {
           You now have access to ...
         </Heading>
         {dynamicText.map(content => (
-          <Box
-            pt={4}
-            borderBottom="1px solid #2CBBBC"
-            minW="container.sm"
-          >
-            <Text fontSize="2xl" fontWeight="700" color="white" fontFamily="Montserrat">
-              {content.heading}
-            </Text>
-            <Text pb={1} color="white">
-              {content.description}
-            </Text>
+          <Box>
+            <Flex justifyContent="space-evently">
+              <Box
+                pt={4}
+                minW="container.sm"
+              >
+                <Text fontSize="2xl" fontWeight="700" color="white" fontFamily="Montserrat">
+                  {content.heading}
+                </Text>
+                <Text pb={1} color="white">
+                  {content.description}
+                </Text>
+              </Box>
+              <Image src={content.icon} />
+            </Flex>
+            <Divider borderColor="#2CBBBC" opacity={1} />
           </Box>
         ))}
       </Stack>
