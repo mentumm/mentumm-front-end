@@ -21,7 +21,6 @@ import { mixpanelEvent, mixpanelIdentify, mixpanelPeople } from "../../helpers";
 const NODE_API = process.env.REACT_APP_NODE_API;
 
 const RegisterForm: React.FC<UserLoginProps> = (props) => {
-  const { setCurrentUser } = props;
   const [email, setEmail] = useState<string>(null);
   const [password, setPassword] = useState<string>(null);
   const [userFirstName, setUserFirstName] = useState<string>(null);
@@ -33,7 +32,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
   const [userLastNameError, setUserLastNameError] = useState<boolean>(false);
   const [inviteCodeError, setInviteCodeError] = useState<boolean>(false);
   const [, setCookie] = useCookies();
-  const userRole = inviteCode === 'Coach10Register23' ? 'coach' : 'user';
+  const userRole = inviteCode === "Coach10Register23" ? "coach" : "user";
 
   const validateEmail = () => {
     if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
@@ -69,9 +68,14 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
 
   const handleAPICreds = async (email: string, password: string) => {
     try {
-      const tokenResponse = await axios.post(`${NODE_API}/v1/token/generate`, { email, password });
+      const tokenResponse = await axios.post(`${NODE_API}/v1/token/generate`, {
+        email,
+        password,
+      });
       if (!tokenResponse || !tokenResponse.data) {
-        throw new Error(`[Could not get API Token]: ${tokenResponse.statusText}`);
+        throw new Error(
+          `[Could not get API Token]: ${tokenResponse.statusText}`
+        );
       }
       return tokenResponse.data;
     } catch (error) {
@@ -102,13 +106,16 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
     }
 
     try {
-      const createUser = await axios.post(`${NODE_API}/v1/${userRole}/register`, {
-        email: email,
-        password: password,
-        invite_code: inviteCode,
-        first_name: userFirstName,
-        last_name: userLastName,
-      });
+      const createUser = await axios.post(
+        `${NODE_API}/v1/${userRole}/register`,
+        {
+          email: email,
+          password: password,
+          invite_code: inviteCode,
+          first_name: userFirstName,
+          last_name: userLastName,
+        }
+      );
 
       if (!createUser) {
         throw Error("Unable to login");
@@ -129,7 +136,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
       const userData = createUser.data[0];
       const cookieData = {
         id: Number(userData.id),
-      }
+      };
 
       const token = await handleAPICreds(email, password);
 
@@ -156,12 +163,10 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
         expires: new Date(Date.now() + 3600 * 1000 * 48),
         sameSite: true,
       });
-
     } catch (error) {
       console.log(error);
     }
   };
-
 
   return (
     <Container maxW="md">
