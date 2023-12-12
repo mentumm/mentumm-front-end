@@ -171,7 +171,7 @@ const RegisterForm: React.FC<UserLoginProps> = (props) => {
   };
 
   return (
-    <Container mt="30em" maxW="lg" centerContent position="absolute">
+    <Container mt="25em" maxW="lg" centerContent position="absolute">
       <Stack>
         <Flex justifyContent="center" mb={12}>
           <Heading colorScheme="brand" color="brand.400">New Member</Heading>

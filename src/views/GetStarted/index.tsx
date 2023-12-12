@@ -35,7 +35,7 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
         textAlign="center"
       >
         <Image src={logo} boxSize="150px" />
-        <Heading size="4xl" fontWeight="400" color="white">
+        <Heading zIndex={1} size="4xl" fontWeight="400" color="white">
           Welcome to mentumm,{' '}
           {currentUser
             ? (

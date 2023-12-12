@@ -167,7 +167,7 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
         <Stack
           position="absolute"
           minW="md"
-          bottom="8rem"
+          bottom="10rem"
         >
           <Stack spacing="2">
             <FormControl id="email" isInvalid={emailError}>

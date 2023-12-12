@@ -86,14 +86,14 @@ const Register: React.FC<UserLoginProps> = (props) => {
     >
       <VStack
         position="absolute"
-        top="8em"
+        top="6em"
         textAlign="center"
       >
         <Image src={logo} boxSize="150px" />
         <Stack
           position="relative"
           zIndex={2}
-          mt="6.5em !important"
+          mt="3em !important"
         >
           <Link to="/">
             <Button
@@ -110,7 +110,6 @@ const Register: React.FC<UserLoginProps> = (props) => {
                 size="xs"
                 fontWeight="400"
                 color="#002F6F"
-                fontFamily="Montserrat"
               >
                 Forgot password?
               </Button>
@@ -120,7 +119,7 @@ const Register: React.FC<UserLoginProps> = (props) => {
       </VStack>
       <Box>
         <SvgLayer
-          vbHeight="850"
+          vbHeight="800"
         >
           <path
             d="M0 55.0362V252H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z"
@@ -128,7 +127,7 @@ const Register: React.FC<UserLoginProps> = (props) => {
           />
         </SvgLayer>
         <SvgLayer
-          vbHeight="850"
+          vbHeight="800"
         >
           <path
             d="M1440 55.0362V400H0V0C160.575 75.0766 406.2 180.288 710.55 182.008C1024.35 183.878 1277.1 131.234 1440 55.0362Z"
@@ -136,10 +135,10 @@ const Register: React.FC<UserLoginProps> = (props) => {
           />
         </SvgLayer>
         <SvgLayer
-          vbHeight="750"
+          vbHeight="700"
         >
           <path
-            d="M0 55.0362V775H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z" fill="#0D1C31" />
+            d="M0 55.0362V700H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z" fill="#0D1C31" />
         </SvgLayer>
       </Box>
       <RegisterForm

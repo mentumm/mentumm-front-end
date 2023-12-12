@@ -64,6 +64,7 @@ const customTheme = extendTheme({
           color: "brand.300",
           fontWeight: "bold",
           fontSize: "lg",
+          fontFamily: "Montserrat",
           _hover: {
             backgroundColor: "brand.300",
             color: "white",
@@ -76,6 +77,7 @@ const customTheme = extendTheme({
           colorScheme: "brand",
           color: "brand.500",
           fontWeight: "bold",
+          fontFamily: "Montserrat",
           _hover: {
             bg: "#brand.800",
             color: "white",
@@ -90,6 +92,7 @@ const customTheme = extendTheme({
           colorScheme: "brand",
           color: "white",
           fontWeight: "bold",
+          fontFamily: "Montserrat",
           _hover: {
             bg: "#brand.800",
             color: "white",
