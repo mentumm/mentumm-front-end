@@ -79,7 +79,7 @@ const customTheme = extendTheme({
           fontWeight: "bold",
           fontFamily: "Montserrat",
           _hover: {
-            bg: "#brand.800",
+            bg: "brand.800",
             color: "white",
           },
         },
