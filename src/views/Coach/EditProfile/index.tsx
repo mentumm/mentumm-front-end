@@ -99,7 +99,12 @@ const EditProfile = ({ currentUser, setCurrentUser }) => {
     }
 
     for (const key in values) {
-      if (key !== "update_password" && key !== "retype_password") {
+      if (
+        key !== "update_password" &&
+        key !== "retype_password" &&
+        !key.startsWith("achievements") &&
+        !key.startsWith("hobbies")
+      ) {
         formData.append(key, values[key]);
       }
     }
