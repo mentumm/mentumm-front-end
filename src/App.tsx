@@ -136,7 +136,7 @@ function App() {
   return (
     <AppContainer>
       <div className={classes.root}>
-        {currentUser && <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />}
+        {/* {currentUser && <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />} */}
         <Routes>
           <Route
             path="/"
