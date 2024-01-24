@@ -20,7 +20,6 @@ export const TagOption: React.FC<TagOptionProps> = ({
 }) => {
   const isSelected = selectedItems.includes(Number(tag.id));
   const isSelectable = selectedItems.length < 2;
-  // const hoverColor = isSelected || !isSelectable ? "#4A4A4A" : "white";
 
   return (
     <Card
