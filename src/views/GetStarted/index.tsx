@@ -85,11 +85,8 @@ const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
           to={isCoach ? `/coach/${currentUser.id}/coaching-style` : "/get-started/coaching-style"}
         >
           <Button
-            borderRadius="30px"
             variant="onBlue"
-            border="2px solid #2CBBBC"
             width="360px"
-            fontWeight="bold"
             mt={2}
             padding={7}
           >
