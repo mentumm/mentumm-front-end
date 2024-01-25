@@ -54,7 +54,7 @@ export const TagOption: React.FC<TagOptionProps> = ({
         <Box>
           <Text
             fontFamily="Saira"
-            fontSize="18px"
+            fontSize="20px"
             fontWeight="700"
           >
             {tag.name}

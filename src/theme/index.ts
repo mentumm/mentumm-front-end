@@ -68,6 +68,9 @@ const customTheme = extendTheme({
           _hover: {
             backgroundColor: "brand.300",
             color: "white",
+            _disabled: {
+              bg: "red",
+            },
           },
         },
         onTeal: {

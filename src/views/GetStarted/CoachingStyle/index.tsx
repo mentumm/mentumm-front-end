@@ -11,7 +11,9 @@ import {
   Spinner,
   Center,
   Text,
+  Link,
 } from "@chakra-ui/react";
+import { ArrowBackIcon } from "@chakra-ui/icons";
 import envConfig from "../../../envConfig";
 import { useNavigate } from "react-router";
 import { CurrentUser } from "../../../types";
@@ -110,86 +112,102 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
     }
   };
 
-  return (
-    <Flex
-      direction="column"
-      align="center"
-      height="100vh"
-      bgImage={`url(${bgImage})`}
-      bgPos="center center"
-      bgSize="cover"
-      id="PLUMBUS"
+  const backButton = (
+    <Link
+      position="absolute"
+      zIndex={1}
+      mt="3em"
+      ml="4em"
+      onClick={() => (navigate(-1))}
     >
-      <VStack
-        position="relative"
-        my="3em"
-        textAlign="center"
+      <ArrowBackIcon mr={2} fontSize="3em" color="white" />
+    </Link>
+  );
+
+  const isDisabledButton = selectedItems.length < 2 ? "red" : "brand.500";
+
+  return (
+    <Box>
+      {backButton}
+      <Flex
+        direction="column"
+        align="center"
+        height="100vh"
+        bgImage={`url(${bgImage})`}
+        bgPos="center center"
+        bgSize="cover"
       >
-        <Image src={logo} boxSize="150px" />
-        <Heading zIndex={1} size="3xl" fontWeight="400" mb="2em !important" color="white">
-          <Text>Select Your <b>coaching style</b></Text>
-        </Heading>
-        <Heading zIndex={1} size="lg" color="white">
-          {isCoach
-            ? <Text fontWeight="400"><b style={{ color: "#2CBBBC" }}>Pick 2 coaching styles</b> that describe you best</Text>
-            : <Text fontWeight="400"><b style={{ color: "#2CBBBC" }}>Pick 2 coaching styles</b> most conducive to your growth goals...</Text>}
-        </Heading>
-      </VStack>
-      <Box>
-        <SvgLayer
-          vbHeight="825"
+        <VStack
+          position="relative"
+          my="3em"
+          textAlign="center"
         >
-          <path
-            d="M1440 55.0362V492H0V0C160.575 75.0766 406.2 180.288 710.55 182.008C1024.35 183.878 1277.1 131.234 1440 55.0362Z"
-            fill="#2CBBBC"
-          />
-        </SvgLayer>
-        <SvgLayer
-          vbHeight="825"
-        >
-          <path
-            d="M0 55.0362V825H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z"
-            fill="#0D1C31"
-          />
-        </SvgLayer>
-        <SvgLayer
-          vbHeight="230"
-        >
-          <path
-            d="M1440 55.0362V252H0V0C160.575 75.0766 406.2 180.288 710.55 182.008C1024.35 183.878 1277.1 131.234 1440 55.0362Z" fill="#2CBBBC" />
-        </SvgLayer>
-        <SvgLayer
-          vbHeight="230"
-        >
-          <path
-            d="M0 55.0362V550H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z" fill="#0D1C31" />
-        </SvgLayer>
-      </Box>
-      <Box>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <ContentContainer
-            selectedItems={selectedItems}
-            setSelectedItems={setSelectedItems}
-            tags={tags}
-          />
-        )}
-        <Center mt="2em">
-          <Button
-            variant="onBlue"
-            w="lg"
-            mt={8}
-            padding={7}
-            fontWeight="bold"
-            isDisabled={selectedItems.length < 2 || saving}
-            onClick={handleContinue}
+          <Image src={logo} boxSize="150px" />
+          <Heading zIndex={1} size="3xl" fontWeight="400" mb="2em !important" color="white">
+            <Text>Select Your <b>coaching style</b></Text>
+          </Heading>
+          <Heading zIndex={1} size="lg" color="white">
+            {isCoach
+              ? <Text fontWeight="400"><b style={{ color: "#2CBBBC" }}>Pick 2 coaching styles</b> that describe you best</Text>
+              : <Text fontWeight="400"><b style={{ color: "#2CBBBC" }}>Pick 2 coaching styles</b> most conducive to your growth goals...</Text>}
+          </Heading>
+        </VStack>
+        <Box>
+          <SvgLayer
+            vbHeight="825"
           >
-            CONTINUE {saving && <Spinner ml={1} size="xs" />}
-          </Button>
-        </Center>
-      </Box>
-    </Flex>
+            <path
+              d="M1440 55.0362V492H0V0C160.575 75.0766 406.2 180.288 710.55 182.008C1024.35 183.878 1277.1 131.234 1440 55.0362Z"
+              fill="#2CBBBC"
+            />
+          </SvgLayer>
+          <SvgLayer
+            vbHeight="825"
+          >
+            <path
+              d="M0 55.0362V825H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z"
+              fill="#0D1C31"
+            />
+          </SvgLayer>
+          <SvgLayer
+            vbHeight="230"
+          >
+            <path
+              d="M1440 55.0362V252H0V0C160.575 75.0766 406.2 180.288 710.55 182.008C1024.35 183.878 1277.1 131.234 1440 55.0362Z" fill="#2CBBBC" />
+          </SvgLayer>
+          <SvgLayer
+            vbHeight="230"
+          >
+            <path
+              d="M0 55.0362V550H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z" fill="#0D1C31" />
+          </SvgLayer>
+        </Box>
+        <Box>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <ContentContainer
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
+              tags={tags}
+            />
+          )}
+          <Center mt="2em">
+            <Button
+              variant="onBlue"
+              w="lg"
+              mt={8}
+              padding={7}
+              fontWeight="bold"
+              isDisabled={selectedItems.length < 2 || saving}
+              onClick={handleContinue}
+            >
+              CONTINUE {saving && <Spinner ml={1} size="xs" />}
+            </Button>
+          </Center>
+        </Box>
+      </Flex>
+    </Box>
   );
 };
 
