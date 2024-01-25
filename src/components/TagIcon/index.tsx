@@ -14,6 +14,7 @@ import { IconProps } from "@chakra-ui/react";
 type TagIconProps = IconProps & {
   isHovered?: boolean;
   isSelected?: boolean;
+  isSelectable?: boolean;
   icon: string;
 };
 
@@ -27,11 +28,11 @@ const iconComponents = {
   crown: CrownIcon,
 };
 
-export const TagIcon = ({ isHovered, isSelected, icon, ...rest }: TagIconProps) => {
+export const TagIcon = ({ isHovered, isSelected, isSelectable, icon, ...rest }: TagIconProps) => {
 
   const IconComponent = iconComponents[icon];
 
   return (
-    <Icon as={IconComponent} mr={2} isHovered={isHovered} isSelected={isSelected} {...rest} />
+    <Icon as={IconComponent} mr={2} isHovered={isHovered} isSelected={isSelected} isSelectable={isSelectable} {...rest} />
   );
 };

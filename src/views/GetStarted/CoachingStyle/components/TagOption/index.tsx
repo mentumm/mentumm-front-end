@@ -37,6 +37,9 @@ export const TagOption: React.FC<TagOptionProps> = ({
       bg={isSelected ? "white" : "#0D1C31"}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      style={{
+        opacity: !isSelectable && !isSelected ? 0.4 : 1,
+      }}
       _hover={{
         color: isSelected || !isSelectable ? "" : "brand.500",
         boxShadow: isSelectable && 'inset 0 0 0 2px white',
@@ -68,6 +71,7 @@ export const TagOption: React.FC<TagOptionProps> = ({
         <TagIcon
           isHovered={isHovered}
           isSelected={isSelected}
+          isSelectable={isSelectable}
           icon={tag.icon}
           height="50px"
           width="50px"
