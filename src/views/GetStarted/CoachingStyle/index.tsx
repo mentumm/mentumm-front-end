@@ -9,6 +9,8 @@ import {
   Box,
   VStack,
   Spinner,
+  Center,
+  Text,
 } from "@chakra-ui/react";
 import envConfig from "../../../envConfig";
 import { useNavigate } from "react-router";
@@ -112,28 +114,25 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
     <Flex
       direction="column"
       align="center"
-      justify="center"
       height="100vh"
       bgImage={`url(${bgImage})`}
       bgPos="center center"
       bgSize="cover"
+      id="PLUMBUS"
     >
       <VStack
-        position="absolute"
-        top="0"
-        pt={8}
+        position="relative"
+        my="3em"
         textAlign="center"
       >
         <Image src={logo} boxSize="150px" />
-        <Heading zIndex={1} size="2xl" fontWeight="400" color="white">
-          {isCoach
-            ? "Select Your Coaching Styles"
-            : "Select Your Desired Coaching Style"}
+        <Heading zIndex={1} size="3xl" fontWeight="400" mb="2em !important" color="white">
+          <Text>Select Your <b>coaching style</b></Text>
         </Heading>
-        <Heading zIndex={1} size="md" textAlign="left" mt={8} color="white">
+        <Heading zIndex={1} size="lg" color="white">
           {isCoach
-            ? "Pick 2 coaching styles that describe you best"
-            : "Pick 2 coaching styles most conducive to your growth goals."}
+            ? <Text fontWeight="400"><b style={{ color: "#2CBBBC" }}>Pick 2 coaching styles</b> that describe you best</Text>
+            : <Text fontWeight="400"><b style={{ color: "#2CBBBC" }}>Pick 2 coaching styles</b> most conducive to your growth goals...</Text>}
         </Heading>
       </VStack>
       <Box>
@@ -166,27 +165,29 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
             d="M0 55.0362V550H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z" fill="#0D1C31" />
         </SvgLayer>
       </Box>
-      {loading ? (
-        <Spinner />
-      ) : (
-        <ContentContainer
-          selectedItems={selectedItems}
-          setSelectedItems={setSelectedItems}
-          tags={tags}
-        />
-      )}
-      <Box mt="2em">
-        <Button
-          variant="onBlue"
-          w="lg"
-          mt={8}
-          padding={7}
-          fontWeight="bold"
-          isDisabled={selectedItems.length < 2 || saving}
-          onClick={handleContinue}
-        >
-          CONTINUE {saving && <Spinner ml={1} size="xs" />}
-        </Button>
+      <Box>
+        {loading ? (
+          <Spinner />
+        ) : (
+          <ContentContainer
+            selectedItems={selectedItems}
+            setSelectedItems={setSelectedItems}
+            tags={tags}
+          />
+        )}
+        <Center mt="2em">
+          <Button
+            variant="onBlue"
+            w="lg"
+            mt={8}
+            padding={7}
+            fontWeight="bold"
+            isDisabled={selectedItems.length < 2 || saving}
+            onClick={handleContinue}
+          >
+            CONTINUE {saving && <Spinner ml={1} size="xs" />}
+          </Button>
+        </Center>
       </Box>
     </Flex>
   );

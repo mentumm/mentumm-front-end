@@ -30,7 +30,6 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   }
   return (
     <Flex
-      pl={8}
       wrap='wrap'
       maxW='container.xl'
       gap={8}

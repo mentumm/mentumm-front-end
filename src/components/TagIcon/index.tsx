@@ -33,6 +33,13 @@ export const TagIcon = ({ isHovered, isSelected, isSelectable, icon, ...rest }: 
   const IconComponent = iconComponents[icon];
 
   return (
-    <Icon as={IconComponent} mr={2} isHovered={isHovered} isSelected={isSelected} isSelectable={isSelectable} {...rest} />
+    <Icon
+      as={IconComponent}
+      mr={2}
+      isHovered={isHovered}
+      isSelected={isSelected}
+      isSelectable={isSelectable}
+      {...rest}
+    />
   );
 };
