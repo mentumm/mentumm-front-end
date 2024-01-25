@@ -124,8 +124,6 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
     </Link>
   );
 
-  const isDisabledButton = selectedItems.length < 2 ? "red" : "brand.500";
-
   return (
     <Box>
       {backButton}
