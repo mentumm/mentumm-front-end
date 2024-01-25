@@ -177,6 +177,8 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
       )}
       <Box mt="2em">
         <Button
+          variant="onBlue"
+          w="lg"
           mt={8}
           padding={7}
           fontWeight="bold"
