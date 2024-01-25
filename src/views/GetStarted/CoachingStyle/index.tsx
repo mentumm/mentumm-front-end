@@ -16,7 +16,7 @@ import { CurrentUser } from "../../../types";
 import { useCookies } from "react-cookie";
 import { SvgLayer } from "../../../components/Waves/svgLayer";
 import logo from "../../../assets/minimal-mentumm-logo.svg";
-import { ContentContainer } from "./ContentContainer";
+import { ContentContainer } from "./components/ContentContainer";
 
 
 type CoachingStyleProps = {

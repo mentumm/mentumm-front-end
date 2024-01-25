@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Card,
+  Spacer,
+  Text,
+  Flex,
+  Box,
 } from "@chakra-ui/react";
-import { TagIcon } from '../../../../components/TagIcon';
-import { Tag } from '../../../../types';
+import { TagIcon } from '../../../../../components/TagIcon';
+import { Tag } from '../../../../../types';
 
 type TagOptionProps = {
   tag: Tag;
@@ -18,6 +22,7 @@ export const TagOption: React.FC<TagOptionProps> = ({
   selectedItems,
   setSelectedItems,
 }) => {
+  const [isHovered, setIsHovered] = useState(false);
   const isSelected = selectedItems.includes(Number(tag.id));
   const isSelectable = selectedItems.length < 2;
 
@@ -30,6 +35,8 @@ export const TagOption: React.FC<TagOptionProps> = ({
       border="1px solid rgba(255, 255, 255, 1)"
       color={isSelected ? "#4A4A4A" : "white"}
       bg={isSelected ? "white" : "#0D1C31"}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
       _hover={{
         color: isSelected || !isSelectable ? "" : "brand.500",
         boxShadow: isSelectable && 'inset 0 0 0 2px white',
@@ -40,7 +47,32 @@ export const TagOption: React.FC<TagOptionProps> = ({
       key={tag.id}
       onClick={() => setSelectedItems(toggleTag(Number(tag.id)))}
     >
-      {tag.name}
+      <Flex>
+        <Box>
+          <Text
+            fontFamily="Saira"
+            fontSize="18px"
+            fontWeight="700"
+          >
+            {tag.name}
+          </Text>
+          <Text
+            fontFamily="Saira"
+            fontSize="16px"
+            fontWeight="400"
+          >
+            {tag.description.replace(/\s+/g, '')}
+          </Text>
+        </Box>
+        <Spacer />
+        <TagIcon
+          isHovered={isHovered}
+          isSelected={isSelected}
+          icon={tag.icon}
+          height="50px"
+          width="50px"
+        />
+      </Flex>
     </Card>
   );
 };

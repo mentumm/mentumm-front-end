@@ -1,12 +1,9 @@
 import React from 'react';
 import {
-  Box,
-  Container,
   Flex,
-  Grid,
 } from '@chakra-ui/react';
 import { TagOption } from '../TagOption';
-import { Tag } from '../../../../types';
+import { Tag } from '../../../../../types';
 
 type ContentContainerProps = {
   tags: Tag[];
