@@ -42,7 +42,7 @@ const Coach: React.FC<CoachProps> = ({ coachInfo, slug, booking, currentUser }) 
                   : "https://mentumm.com/wp-content/uploads/2022/06/mentumm_profile.png"
               }
             />
-            <CardContent mt='2 !important' >
+            <CardContent mt='3 !important' >
               <CardHeader title={`${first_name} ${last_name}`} />
               <Stack mt={2}>
                 <HStack fontSize="md" mt={2}>
