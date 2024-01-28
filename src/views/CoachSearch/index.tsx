@@ -4,7 +4,8 @@ import {
   Button,
   Input,
   InputGroup,
-  InputLeftAddon,
+  InputLeftElement,
+  InputRightElement,
   Spinner,
   Text,
 } from "@chakra-ui/react";
@@ -91,22 +92,29 @@ const CoachSearch = ({ currentUser }) => {
     <PageWrapper title="Book Your Coach" backTo="/home">
       <Box display="flex" flexDir="row" paddingX={4}>
         <InputGroup>
-          <InputLeftAddon children={<SearchIcon />} />
+          <InputLeftElement
+            pointerEvents="none"
+            children={<SearchIcon ml={2} color='gray.300' />}
+          />
           <Input
-            placeholder="Search by coach name..."
+            placeholder="search by name"
+            _placeholder={{ color: '#B3B3B3' }}
             onChange={(e) => handleChange(e.target.value)}
             flex={1}
             mr="4"
             value={searchTerm}
           />
+          <InputRightElement children={
+            <CloseIcon
+              w="14px"
+              color='#B3B3B3'
+              _hover={{ cursor: 'pointer' }}
+              mr={10}
+              // disabled={searchTerm.length === 0}
+              onClick={handleReset}
+            />
+          } />
         </InputGroup>
-        <Button
-          disabled={searchTerm.length === 0}
-          onClick={handleReset}
-          leftIcon={<CloseIcon />}
-        >
-          Reset
-        </Button>
       </Box>
       {isLoading && (
         <Box textAlign={"center"} mt="8">
