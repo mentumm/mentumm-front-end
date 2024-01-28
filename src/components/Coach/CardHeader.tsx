@@ -10,7 +10,7 @@ export const CardHeader = (props: CardHeaderProps) => {
   const { title, action, ...flexProps } = props;
   return (
     <Flex justifyContent="space-between" alignItems="center" {...flexProps}>
-      <Heading size="lg" fontWeight="bold" letterSpacing="tight" marginEnd="6">
+      <Heading size="md" color='white' fontWeight="400" letterSpacing="tight" marginEnd="6">
         {title}
       </Heading>
       {action ? action : null}

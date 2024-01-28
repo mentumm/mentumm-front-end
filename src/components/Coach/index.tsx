@@ -1,94 +1,40 @@
 import {
   Box,
+  Divider,
   HStack,
   Icon,
   Stack,
-  Tag,
-  TagLabel,
   Text,
-  Wrap,
+  VStack,
 } from "@chakra-ui/react";
 import React from "react";
-import { createUseStyles, DefaultTheme } from "react-jss";
-import { CoachProps, Tag as TagType } from "../../types";
+import { CoachProps } from "../../types";
 import { Card } from "./Card";
 import { CardContent } from "./CardContent";
 import { CardHeader } from "./CardHeader";
 import { UserAvatar } from "./UserAvatar";
-import { GoGlobe } from "react-icons/go";
 import BookingInfo from "./BookingInfo";
 import { Link } from "react-router-dom";
-import { TagIcon } from "../TagIcon";
-import { CoachType } from "../../types";
+import LocalPin from "../../assets/Icons/LocalPin";
+import { generateCoachTags, getLocationText, generateCoachUrl } from "./utils";
 
-const useStyles = createUseStyles((theme: DefaultTheme) => ({
-  root: {
-    display: "flex",
-  },
-}));
-
-export const generateCoachUrl = (coach: CoachType) => {
-  const name = `${coach.first_name} ${coach.last_name}`;
-  return name.replace(/\W|_/g, "-").toLowerCase() + `-${coach.id}`;
-};
-
-const generateCoachTags = (tags: TagType[], slug: string) => {
-  let trimmedTags = [];
-
-  if (tags.length > 2) {
-    const remainingTags = tags.filter((tag: TagType) => tag.slug !== slug);
-
-    // make sure to show the tag that the user searched for
-    if (slug) {
-      trimmedTags.push(tags.find((tag) => tag.slug === slug));
-      remainingTags.slice(0, 2).map((tag) => trimmedTags.push(tag));
-    } else {
-      remainingTags.slice(0, 2).map((tag) => trimmedTags.push(tag));
-    }
-    // the extra +3 more tag
-    trimmedTags.push({
-      id: Math.floor(Math.random() * (2000 - 1000) + 1000),
-      name: `+ ${tags.length - 2} more`,
-    });
-  } else {
-    trimmedTags = tags;
-  }
-  return trimmedTags.map(
-    (tag) =>
-      !!tag && (
-        <Tag key={tag.id} backgroundColor={tag.color} size="lg">
-          <TagIcon icon={tag.icon} />
-          <TagLabel>{tag.name}</TagLabel>
-        </Tag>
-      )
-  );
-};
-
-const Coach: React.FC<CoachProps> = (props) => {
-  const classes = useStyles();
-  const { coachInfo, slug, booking, currentUser } = props;
-  const { first_name, last_name, expertise, city, state, photo_url } = coachInfo;
-  const getLocationText = (city?: string, state?: string) => {
-    if (city && state) {
-      return `${city}, ${state}`;
-    } else if (city && !state) {
-      return city;
-    } else if (!city && state) {
-      return state;
-    }
-    return null;
-  }
+const Coach: React.FC<CoachProps> = ({ coachInfo, slug, booking, currentUser }) => {
+  const { first_name, last_name, styles, city, state, photo_url } = coachInfo;
 
   return (
-    <Link to={`/coach/${generateCoachUrl(coachInfo)}`} className={classes.root}>
-      <Box as="section" py="6">
+    <Link to={`/coach/${generateCoachUrl(coachInfo)}`} style={{ display: 'flex' }}>
+      <Box w="26em" as="section" py="6">
         <Card
+          minW='md'
+          bgColor='transparent'
         >
           <Stack
             direction={{ base: "column", md: "row" }}
-            spacing={{ base: "4", md: "10" }}
+            spacing={4}
           >
             <UserAvatar
+              boxSize='150px'
+              borderRadius='8px'
               name={`${first_name} ${last_name}`}
               src={
                 photo_url
@@ -96,19 +42,22 @@ const Coach: React.FC<CoachProps> = (props) => {
                   : "https://mentumm.com/wp-content/uploads/2022/06/mentumm_profile.png"
               }
             />
-            <CardContent>
+            <CardContent mt='2 !important' >
               <CardHeader title={`${first_name} ${last_name}`} />
-              <Stack mt="1">
+              <Stack mt={2}>
                 <HStack fontSize="md" mt={2}>
-                  <Icon as={GoGlobe} color="gray.500" />
-                  <Text>
+                  <Icon as={LocalPin} color='white' />
+                  <Text
+                    color='white'
+                  >
                     {getLocationText(city, state)}
                   </Text>
                 </HStack>
+                <Divider colorScheme='brand' maxW='95%' borderColor='brand.500' />
               </Stack>
-              <Wrap shouldWrapChildren mt={4}>
-                {expertise ? generateCoachTags(expertise, slug) : null}
-              </Wrap>
+              <VStack alignItems='baseline' mt={2}>
+                {styles ? generateCoachTags(styles, slug) : null}
+              </VStack>
             </CardContent>
             {!!booking && (
               <BookingInfo

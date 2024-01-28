@@ -88,7 +88,7 @@ const CoachSearch = ({ currentUser }) => {
   }, [navigate, searchParams]);
 
   return (
-    <PageWrapper title="All Mentumm Coaches" backTo="/home">
+    <PageWrapper title="Book Your Coach" backTo="/home">
       <Box display="flex" flexDir="row" paddingX={4}>
         <InputGroup>
           <InputLeftAddon children={<SearchIcon />} />
@@ -122,7 +122,7 @@ const CoachSearch = ({ currentUser }) => {
         >
           {!isLoading &&
             coaches.map((coach) => (
-              <Box key={coach.id} padding={4}>
+              <Box key={coach.id} padding={2}>
                 <Coach coachInfo={coach} />
               </Box>
             ))}
