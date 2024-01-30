@@ -1,34 +1,45 @@
 import React from "react";
 import { Icon } from "@chakra-ui/react";
 import {
-  FaRocket,
-  FaHatWizard,
-  FaSeedling,
-  FaAnchor,
-  FaLightbulb,
-  FaFire,
-  FaChessKing,
-} from "react-icons/fa";
+  AnchorIcon,
+  BookIcon,
+  CrownIcon,
+  DroneIcon,
+  FireworksIcon,
+  ShieldIcon,
+  SubsetIcon,
+} from "../../assets/Icons/StyleIcons";
+import { IconProps } from "@chakra-ui/react";
 
-type TagIconProps = {
+type TagIconProps = IconProps & {
+  isHovered?: boolean;
+  isSelected?: boolean;
+  isSelectable?: boolean;
   icon: string;
 };
 
-export const TagIcon = ({ icon }: TagIconProps) => {
-  switch (icon) {
-    case "fa-solid fa-rocket":
-      return <Icon as={FaRocket} mr={1} />;
-    case "fa-solid fa-hat-wizard":
-      return <Icon as={FaHatWizard} mr={1} />;
-    case "fa-solid fa-seedling":
-      return <Icon as={FaSeedling} mr={1} />;
-    case "fa-solid fa-anchor":
-      return <Icon as={FaAnchor} mr={1} />;
-    case "fa-solid fa-lightbulb":
-      return <Icon as={FaLightbulb} mr={1} />;
-    case "fa-solid fa-fire-flame-curved":
-      return <Icon as={FaFire} mr={1} />;
-    case "fa-solid fa-chess-king":
-      return <Icon as={FaChessKing} mr={1} />;
-  }
+const iconComponents = {
+  shield: ShieldIcon,
+  book: BookIcon,
+  drone: DroneIcon,
+  anchor: AnchorIcon,
+  subset: SubsetIcon,
+  fireworks: FireworksIcon,
+  crown: CrownIcon,
+};
+
+export const TagIcon = ({ isHovered, isSelected, isSelectable, icon, ...rest }: TagIconProps) => {
+
+  const IconComponent = iconComponents[icon];
+
+  return (
+    <Icon
+      as={IconComponent}
+      mr={2}
+      isHovered={isHovered}
+      isSelected={isSelected}
+      isSelectable={isSelectable}
+      {...rest}
+    />
+  );
 };
