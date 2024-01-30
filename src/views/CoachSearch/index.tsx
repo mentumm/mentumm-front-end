@@ -19,7 +19,6 @@ import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { TagOption } from "../../components/TagOption";
 import { toggleTag } from "../../components/TagOption/utils";
-import BackButton from "../../components/BackButton";
 
 const CoachSearch = ({ currentUser }) => {
   const [searchTerm, setSearchTerm] = useState("");

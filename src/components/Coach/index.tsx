@@ -23,7 +23,7 @@ const Coach: React.FC<CoachProps> = ({ coachInfo, slug, booking, currentUser }) 
 
   return (
     <Link to={`/coach/${generateCoachUrl(coachInfo)}`} style={{ display: 'flex' }}>
-      <Box w="26em " as="section" >
+      <Box w='26em' as='section' >
         <Card
           bgColor='transparent'
         >
@@ -43,7 +43,7 @@ const Coach: React.FC<CoachProps> = ({ coachInfo, slug, booking, currentUser }) 
             />
             <CardContent mt='3 !important' >
               <CardHeader title={`${first_name} ${last_name}`} />
-              <Stack mt={2}>
+              <Stack mt={1}>
                 <HStack fontSize="md" mt={2}>
                   <Icon as={LocalPin} color='white' />
                   <Text
