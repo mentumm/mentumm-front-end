@@ -80,6 +80,8 @@ const CoachSearch = ({ currentUser }) => {
       });
   }, [coaches, searchTerm, selectedTags]);
 
+  console.log(filteredCoaches.length)
+
 
   // fetch style tags from API
   useEffect(() => {
@@ -181,10 +183,10 @@ const CoachSearch = ({ currentUser }) => {
             ))}
         </Box>
       )}
-      {!isLoading && coaches.length === 0 && (
+      {!isLoading && filteredCoaches.length === 0 && (
         <Box p="32" textAlign="center" >
-          <Text>
-            Sorry, no coaches were found. Try a different search term.
+          <Text color='white'>
+            Sorry, no coaches were found. Try a different search term or Coach Style.
           </Text>
         </Box>
       )}
