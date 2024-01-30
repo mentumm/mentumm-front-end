@@ -6,14 +6,15 @@ import {
   Flex,
   Box,
 } from "@chakra-ui/react";
-import { TagIcon } from '../../../../../components/TagIcon';
-import { Tag } from '../../../../../types';
+import { TagIcon } from '../TagIcon';
+import { Tag } from '../../types';
 
 type TagOptionProps = {
   tag: Tag;
   selectedItems: Number[];
   setSelectedItems: Function;
   toggleTag: Function;
+  isMin?: boolean;
 };
 
 export const TagOption: React.FC<TagOptionProps> = ({
@@ -21,15 +22,16 @@ export const TagOption: React.FC<TagOptionProps> = ({
   toggleTag,
   selectedItems,
   setSelectedItems,
+  isMin,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
   const isSelected = selectedItems.includes(Number(tag.id));
-  const isSelectable = selectedItems.length < 2;
+  const isSelectable = isMin ? true : selectedItems.length < 2;
 
   return (
     <Card
-      h="74px"
-      w="285px"
+      h={isMin ? '70px' : '74px'}
+      w={isMin ? '204px' : '285px'}
       pl={4}
       pt={2}
       border="1px solid rgba(255, 255, 255, 1)"
@@ -48,7 +50,7 @@ export const TagOption: React.FC<TagOptionProps> = ({
       fontWeight="bold"
       fontSize="sm"
       key={tag.id}
-      onClick={() => setSelectedItems(toggleTag(Number(tag.id)))}
+      onClick={() => setSelectedItems(toggleTag(selectedItems, Number(tag.id), isMin))}
     >
       <Flex>
         <Box>
@@ -59,13 +61,15 @@ export const TagOption: React.FC<TagOptionProps> = ({
           >
             {tag.name}
           </Text>
-          <Text
-            fontFamily="Saira"
-            fontSize="16px"
-            fontWeight="400"
-          >
-            {tag.description.replace(/\s+/g, '')}
-          </Text>
+          {!isMin && (
+            <Text
+              fontFamily="Saira"
+              fontSize="16px"
+              fontWeight="400"
+            >
+              {tag.description.replace(/\s+/g, '')}
+            </Text>
+          )}
         </Box>
         <Spacer />
         <TagIcon

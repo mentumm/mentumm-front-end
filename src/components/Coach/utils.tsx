@@ -19,7 +19,7 @@ export const generateCoachTags = (tags: TagType[], slug: string) => {
           border='0.5px solid'
         >
           <TagIcon icon={tag.icon} />
-          <TagLabel>{tag.name}</TagLabel>
+          <TagLabel>{tag.name.toUpperCase()}</TagLabel>
         </Tag>
       )
   );
