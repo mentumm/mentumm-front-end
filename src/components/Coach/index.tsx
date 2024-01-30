@@ -23,7 +23,7 @@ const Coach: React.FC<CoachProps> = ({ coachInfo, slug, booking, currentUser }) 
 
   return (
     <Link to={`/coach/${generateCoachUrl(coachInfo)}`} style={{ display: 'flex' }}>
-      <Box w="26em" as="section" py="6">
+      <Box w="26em" as="section" >
         <Card
           minW='md'
           bgColor='transparent'

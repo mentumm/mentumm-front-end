@@ -11,6 +11,7 @@ const useStyles = createUseStyles({
     justifyContent: "flex-start",
     alignItems: "center",
     minHeight: "100vh",
+    backgroundColor: '#0D1C31',
     padding: 0,
     margin: 0,
     // paddingBottom: "125px",

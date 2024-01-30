@@ -1,7 +1,6 @@
 import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import {
   Box,
-  Button,
   Input,
   InputGroup,
   InputLeftElement,
@@ -98,7 +97,7 @@ const CoachSearch = ({ currentUser }) => {
           />
           <Input
             placeholder="search by name"
-            _placeholder={{ color: '#B3B3B3' }}
+            _placeholder={{ color: '#B3B3B3', fontSize: '18px' }}
             onChange={(e) => handleChange(e.target.value)}
             flex={1}
             mr="4"
@@ -110,7 +109,6 @@ const CoachSearch = ({ currentUser }) => {
               color='#B3B3B3'
               _hover={{ cursor: 'pointer' }}
               mr={10}
-              // disabled={searchTerm.length === 0}
               onClick={handleReset}
             />
           } />
@@ -126,6 +124,7 @@ const CoachSearch = ({ currentUser }) => {
           display="flex"
           flexDir="row"
           flexWrap="wrap"
+          pt={4}
           justifyContent="space-around"
         >
           {!isLoading &&
@@ -137,7 +136,7 @@ const CoachSearch = ({ currentUser }) => {
         </Box>
       )}
       {!isLoading && coaches.length === 0 && (
-        <Box p="32" textAlign="center">
+        <Box p="32" textAlign="center" >
           <Text>
             Sorry, no coaches were found. Try a different search term.
           </Text>
