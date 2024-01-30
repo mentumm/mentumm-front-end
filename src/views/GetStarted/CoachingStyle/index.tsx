@@ -11,7 +11,6 @@ import {
   Spinner,
   Center,
   Text,
-  Link,
 } from "@chakra-ui/react";
 import envConfig from "../../../envConfig";
 import { useNavigate } from "react-router";

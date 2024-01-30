@@ -31,7 +31,7 @@ export const TagOption: React.FC<TagOptionProps> = ({
   return (
     <Card
       h={isMin ? '70px' : '74px'}
-      w={isMin ? '204px' : '285px'}
+      w={isMin ? 'auto' : '285px'}
       pl={4}
       pt={2}
       border="1px solid rgba(255, 255, 255, 1)"
@@ -53,7 +53,10 @@ export const TagOption: React.FC<TagOptionProps> = ({
       onClick={() => setSelectedItems(toggleTag(selectedItems, Number(tag.id), isMin))}
     >
       <Flex>
-        <Box>
+        <Box
+          display={isMin ? 'flex' : ''}
+          alignItems={isMin ? 'center' : ''}
+        >
           <Text
             fontFamily="Saira"
             fontSize="20px"
@@ -73,6 +76,7 @@ export const TagOption: React.FC<TagOptionProps> = ({
         </Box>
         <Spacer />
         <TagIcon
+          ml={isMin ? '1em' : ''}
           isHovered={isHovered}
           isSelected={isSelected}
           isSelectable={isSelectable}

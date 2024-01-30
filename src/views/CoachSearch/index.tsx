@@ -122,7 +122,7 @@ const CoachSearch = ({ currentUser }) => {
 
   return (
     <PageWrapper title="Book Your Coach" backTo="/home">
-      <Box display="flex" flexDir="row" paddingX={4}>
+      <Box id='PLUMBUS' px='4em'>
         <InputGroup>
           <InputLeftElement
             pointerEvents="none"
@@ -133,7 +133,6 @@ const CoachSearch = ({ currentUser }) => {
             _placeholder={{ color: '#B3B3B3', fontSize: '18px' }}
             onChange={(e) => handleChange(e.target.value)}
             flex={1}
-            mr="4"
             value={searchTerm}
           />
           <InputRightElement children={
@@ -141,7 +140,7 @@ const CoachSearch = ({ currentUser }) => {
               w="14px"
               color='#B3B3B3'
               _hover={{ cursor: 'pointer' }}
-              mr={10}
+              mr={6}
               onClick={handleReset}
             />
           } />
@@ -151,6 +150,7 @@ const CoachSearch = ({ currentUser }) => {
         <Flex mt={8} gap={1} justify='center' wrap='wrap'>
           {styleTags.map((tag) => (
             <TagOption
+              key={tag.id}
               tag={tag}
               toggleTag={toggleTag}
               selectedItems={selectedTags}
@@ -171,6 +171,7 @@ const CoachSearch = ({ currentUser }) => {
           flexDir="row"
           flexWrap="wrap"
           pt={4}
+          mx={8}
           justifyContent="space-around"
         >
           {!isLoading &&
