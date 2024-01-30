@@ -13,12 +13,12 @@ import {
   Text,
   Link,
 } from "@chakra-ui/react";
-import { ArrowBackIcon } from "@chakra-ui/icons";
 import envConfig from "../../../envConfig";
 import { useNavigate } from "react-router";
 import { CurrentUser } from "../../../types";
 import { useCookies } from "react-cookie";
 import { SvgLayer } from "../../../components/Waves/svgLayer";
+import BackButton from "../../../components/BackButton";
 import logo from "../../../assets/minimal-mentumm-logo.svg";
 import { ContentContainer } from "./components/ContentContainer";
 
@@ -112,21 +112,9 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
     }
   };
 
-  const backButton = (
-    <Link
-      position="absolute"
-      zIndex={1}
-      mt="3em"
-      ml="4em"
-      onClick={() => (navigate(-1))}
-    >
-      <ArrowBackIcon mr={2} fontSize="3em" color="white" />
-    </Link>
-  );
-
   return (
     <Box>
-      {backButton}
+      <BackButton />
       <Flex
         direction="column"
         align="center"

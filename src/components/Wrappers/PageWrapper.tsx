@@ -16,9 +16,9 @@ const PageWrapper: FC<IProps> = ({ title, backTo = "", children }) => {
   const back = (
     <Link
       onClick={() => (backTo ? navigate(backTo) : navigate(-1))}
-      style={{ float: "left" }}
+      style={{ float: "left", zIndex: '1', color: '#3067B0' }}
     >
-      <ArrowBackIcon ml={-12} mr={2} fontSize={30} />
+      <ArrowBackIcon boxSize={10} position='absolute' ml={6} />
     </Link>
   );
 

@@ -19,6 +19,7 @@ import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { TagOption } from "../../components/TagOption";
 import { toggleTag } from "../../components/TagOption/utils";
+import BackButton from "../../components/BackButton";
 
 const CoachSearch = ({ currentUser }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -79,9 +80,6 @@ const CoachSearch = ({ currentUser }) => {
         return coach.styles.some((style: Tag) => selectedTags.includes(style.id));
       });
   }, [coaches, searchTerm, selectedTags]);
-
-  console.log(filteredCoaches.length)
-
 
   // fetch style tags from API
   useEffect(() => {
@@ -150,7 +148,7 @@ const CoachSearch = ({ currentUser }) => {
         </InputGroup>
       </Box>
       {!isLoading && (
-        <Flex mt={8} gap={1} justify='center'>
+        <Flex mt={8} gap={1} justify='center' wrap='wrap'>
           {styleTags.map((tag) => (
             <TagOption
               tag={tag}
