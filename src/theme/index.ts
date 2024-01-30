@@ -65,9 +65,13 @@ const customTheme = extendTheme({
           fontWeight: "bold",
           fontSize: "lg",
           fontFamily: "Montserrat",
+          border: "2px solid #2CBBBC",
           _hover: {
             backgroundColor: "brand.300",
             color: "white",
+            _disabled: {
+              bg: "red",
+            },
           },
         },
         onTeal: {
