@@ -1,4 +1,4 @@
-import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Input,
@@ -8,7 +8,7 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import PageWrapper from "../../components/Wrappers/PageWrapper";
 import Coach from "../../components/Coach";
 import { menApiAuthClient } from "../../clients/mentumm";
