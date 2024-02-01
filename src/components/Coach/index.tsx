@@ -14,9 +14,8 @@ import { CardContent } from "./CardContent";
 import { CardHeader } from "./CardHeader";
 import { UserAvatar } from "./UserAvatar";
 import BookingInfo from "./BookingInfo";
-import { Link } from "react-router-dom";
 import LocalPin from "../../assets/Icons/LocalPin";
-import { generateCoachTags, getLocationText, generateCoachUrl } from "./utils";
+import { generateCoachTags, getLocationText } from "./utils";
 
 const Coach: React.FC<CoachProps> = ({ coachInfo, slug, booking, currentUser }) => {
   const [isHovered, setIsHovered] = useState(false);
