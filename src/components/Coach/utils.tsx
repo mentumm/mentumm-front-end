@@ -6,7 +6,7 @@ import {
 import { TagIcon } from '../TagIcon';
 import { Tag as TagType, CoachType } from '../../types';
 
-export const generateCoachTags = (tags: TagType[], slug: string) => {
+export const generateCoachTags = (tags: TagType[], slug: string, isHovered: boolean) => {
 
   return tags.map(
     (tag) =>
@@ -19,7 +19,7 @@ export const generateCoachTags = (tags: TagType[], slug: string) => {
           border='0.5px solid'
         >
           <TagIcon icon={tag.icon} />
-          <TagLabel>{tag.name.toUpperCase()}</TagLabel>
+          <TagLabel fontWeight={isHovered ? '700' : '400'}>{tag.name.toUpperCase()}</TagLabel>
         </Tag>
       )
   );
