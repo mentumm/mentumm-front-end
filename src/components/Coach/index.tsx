@@ -55,9 +55,14 @@ const Coach: React.FC<CoachProps> = ({ coachInfo, slug, booking, currentUser }) 
                   {getLocationText(city, state)}
                 </Text>
               </HStack>
-              <Divider colorScheme='brand' maxW='95%' borderColor='brand.500' />
+              <Divider
+                colorScheme='brand'
+                maxW='95%'
+                borderColor='brand.300'
+                borderBottomWidth={isHovered ? '2px' : '1px'}
+              />
             </Stack>
-            <VStack alignItems='baseline' mt={2}>
+            <VStack alignItems='baseline' mt={isHovered ? '7px' : '8px'}>
               {styles ? generateCoachTags(styles, slug, isHovered) : null}
             </VStack>
           </CardContent>

@@ -8,20 +8,19 @@ import { Tag as TagType, CoachType } from '../../types';
 
 export const generateCoachTags = (tags: TagType[], slug: string, isHovered: boolean) => {
 
-  return tags.map(
-    (tag) =>
-      !!tag && (
-        <Tag
-          key={tag.id}
-          backgroundColor='transparent'
-          size="sm"
-          color='white'
-          border='0.5px solid'
-        >
-          <TagIcon icon={tag.icon} />
-          <TagLabel fontWeight={isHovered ? '700' : '400'}>{tag.name.toUpperCase()}</TagLabel>
-        </Tag>
-      )
+  return tags.map((tag) =>
+    !!tag && (
+      <Tag
+        key={tag.id}
+        backgroundColor='transparent'
+        size="sm"
+        color='white'
+        border='0.5px solid'
+      >
+        <TagIcon icon={tag.icon} />
+        <TagLabel fontWeight={isHovered ? '700' : '400'}>{tag.name.toUpperCase()}</TagLabel>
+      </Tag>
+    )
   );
 };
 
