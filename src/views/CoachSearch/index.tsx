@@ -1,23 +1,30 @@
-import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
+import React, { useEffect, useState, useMemo } from "react";
 import {
   Box,
-  Button,
+  Flex,
   Input,
   InputGroup,
-  InputLeftAddon,
+  InputLeftElement,
+  InputRightElement,
   Spinner,
   Text,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import PageWrapper from "../../components/Wrappers/PageWrapper";
 import Coach from "../../components/Coach";
+import { Tag } from "../../types";
 import { menApiAuthClient } from "../../clients/mentumm";
+import envConfig from "../../envConfig";
 import axios from "axios";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import { TagOption } from "../../components/TagOption";
+import { toggleTag } from "../../components/TagOption/utils";
 
 const CoachSearch = ({ currentUser }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [coaches, setCoaches] = useState([]);
+  const [styleTags, setStyleTags] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
@@ -37,35 +44,60 @@ const CoachSearch = ({ currentUser }) => {
       setIsLoading(true);
 
       try {
-        const coaches = await menApiAuthClient().get(
-          `/coaches${searchTerm ? `?search=${searchTerm}` : ""}`,
-          {
-            signal: controller.signal,
-          }
-        );
-        if (!coaches || !coaches.data) {
-          throw new Error("Could not get Coaches from API");
+        const response = await menApiAuthClient().get(`/coaches`, {
+          signal: controller.signal,
+        });
+
+        if (!response || !response.data) {
+          throw new Error('Could not get Coaches from API');
         }
-        setCoaches(coaches.data);
+
+        setCoaches(response.data);
         setIsLoading(false);
       } catch (err) {
-        if (axios.isCancel(err)) {
-          return;
+        if (!axios.isCancel(err)) {
+          console.error(err);
         }
         setIsLoading(false);
-        console.error(err);
       }
     };
 
-    const timeoutId = setTimeout(() => {
-      getCoaches();
-    }, 250);
+    getCoaches();
+  }, []);
 
-    return () => {
-      clearTimeout(timeoutId);
-      controller.abort();
+  //memoized coaches to remove need for multiple API calls on search
+  const filteredCoaches = useMemo(() => {
+    return coaches
+      .filter((coach) => {
+        const name = `${coach.first_name} ${coach.last_name}` || '';
+        return searchTerm === '' || (name && name.toLowerCase().includes(searchTerm.toLowerCase()));
+      })
+      .filter((coach) => {
+        if (selectedTags.length === 0) {
+          return true;
+        }
+        return coach.styles.some((style: Tag) => selectedTags.includes(style.id));
+      });
+  }, [coaches, searchTerm, selectedTags]);
+
+  // fetch style tags from API
+  useEffect(() => {
+    const getTags = async () => {
+      try {
+        setIsLoading(true);
+
+        const { data } = await menApiAuthClient().get<Tag[]>(
+          `${envConfig.API_URL}/v1/tags?kind=style`
+        );
+        setStyleTags(data);
+      } catch (error) {
+        throw new Error("Could not load Expertise Tags!");
+      } finally {
+        setIsLoading(false);
+      }
     };
-  }, [searchTerm]);
+    getTags();
+  }, [])
 
   useEffect(() => {
     // these are for the calendly redirect url params
@@ -88,26 +120,45 @@ const CoachSearch = ({ currentUser }) => {
   }, [navigate, searchParams]);
 
   return (
-    <PageWrapper title="All Mentumm Coaches" backTo="/home">
-      <Box display="flex" flexDir="row" paddingX={4}>
+    <PageWrapper title="Book Your Coach" backTo="/home">
+      <Box id='PLUMBUS' px='4em'>
         <InputGroup>
-          <InputLeftAddon children={<SearchIcon />} />
+          <InputLeftElement
+            pointerEvents="none"
+            children={<SearchIcon ml={2} color='gray.300' />}
+          />
           <Input
-            placeholder="Search by coach name..."
+            placeholder="search by name"
+            _placeholder={{ color: '#B3B3B3', fontSize: '18px' }}
             onChange={(e) => handleChange(e.target.value)}
             flex={1}
-            mr="4"
             value={searchTerm}
           />
+          <InputRightElement children={
+            <CloseIcon
+              w="14px"
+              color='#B3B3B3'
+              _hover={{ cursor: 'pointer' }}
+              mr={6}
+              onClick={handleReset}
+            />
+          } />
         </InputGroup>
-        <Button
-          disabled={searchTerm.length === 0}
-          onClick={handleReset}
-          leftIcon={<CloseIcon />}
-        >
-          Reset
-        </Button>
       </Box>
+      {!isLoading && (
+        <Flex mt={8} gap={1} justify='center' wrap='wrap'>
+          {styleTags.map((tag) => (
+            <TagOption
+              key={tag.id}
+              tag={tag}
+              toggleTag={toggleTag}
+              selectedItems={selectedTags}
+              setSelectedItems={setSelectedTags}
+              isMin
+            />
+          ))}
+        </Flex>
+      )}
       {isLoading && (
         <Box textAlign={"center"} mt="8">
           <Spinner size="xl" />
@@ -118,20 +169,22 @@ const CoachSearch = ({ currentUser }) => {
           display="flex"
           flexDir="row"
           flexWrap="wrap"
+          pt={4}
+          mx={8}
           justifyContent="space-around"
         >
           {!isLoading &&
-            coaches.map((coach) => (
-              <Box key={coach.id} padding={4}>
+            filteredCoaches.map((coach) => (
+              <Box key={coach.id} padding={2}>
                 <Coach coachInfo={coach} />
               </Box>
             ))}
         </Box>
       )}
-      {!isLoading && coaches.length === 0 && (
-        <Box p="32" textAlign="center">
-          <Text>
-            Sorry, no coaches were found. Try a different search term.
+      {!isLoading && filteredCoaches.length === 0 && (
+        <Box p="32" textAlign="center" >
+          <Text color='white'>
+            Sorry, no coaches were found. Try a different search term or Coach Style.
           </Text>
         </Box>
       )}

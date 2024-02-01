@@ -2,7 +2,8 @@ import React from 'react';
 import {
   Flex,
 } from '@chakra-ui/react';
-import { TagOption } from '../TagOption';
+import { TagOption } from '../../../../../components/TagOption';
+import { toggleTag } from '../../../../../components/TagOption/utils';
 import { Tag } from '../../../../../types';
 
 type ContentContainerProps = {
@@ -16,18 +17,6 @@ export const ContentContainer: React.FC<ContentContainerProps> = ({
   selectedItems,
   setSelectedItems,
 }) => {
-
-  const toggleTag = (id: number) => {
-    if (selectedItems.includes(id)) {
-      return selectedItems.filter((item) => item !== id);
-    }
-
-    if (selectedItems.length < 2) {
-      return [...selectedItems, id];
-    }
-
-    return selectedItems;
-  }
   return (
     <Flex
       wrap='wrap'
