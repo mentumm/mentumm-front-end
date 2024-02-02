@@ -6,7 +6,7 @@ import {
 import { TagIcon } from '../TagIcon';
 import { Tag as TagType, CoachType } from '../../types';
 
-export const generateCoachTags = (tags: TagType[], slug: string, isHovered: boolean) => {
+export const generateCoachTags = (tags: TagType[], slug?: string, isHovered?: boolean, isOnWhite?: boolean) => {
 
   return tags.map((tag) =>
     !!tag && (
@@ -14,7 +14,7 @@ export const generateCoachTags = (tags: TagType[], slug: string, isHovered: bool
         key={tag.id}
         backgroundColor='transparent'
         size="sm"
-        color='white'
+        color={isOnWhite ? 'brand.900' : 'white'}
         border='0.5px solid'
       >
         <TagIcon icon={tag.icon} />

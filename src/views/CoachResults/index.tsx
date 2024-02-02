@@ -39,6 +39,7 @@ const CoachResults: React.FC = () => {
   const windowUrl = window.location.toString().toLowerCase();
   const slug = windowUrl.substring(windowUrl.lastIndexOf("/") + 1);
   const [coaches, setCoaches] = useState<CoachType[] | null>(null);
+  console.log(slug)
 
   const pageHeading = () => {
     return coaches.length

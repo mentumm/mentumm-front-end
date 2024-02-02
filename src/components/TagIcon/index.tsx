@@ -15,6 +15,7 @@ type TagIconProps = IconProps & {
   isHovered?: boolean;
   isSelected?: boolean;
   isSelectable?: boolean;
+  isBgWhite?: boolean;
   icon: string;
 };
 
@@ -28,7 +29,7 @@ const iconComponents = {
   crown: CrownIcon,
 };
 
-export const TagIcon = ({ isHovered, isSelected, isSelectable, icon, ...rest }: TagIconProps) => {
+export const TagIcon = ({ isHovered, isSelected, isSelectable, icon, isBgWhite, ...rest }: TagIconProps) => {
 
   const IconComponent = iconComponents[icon];
 
@@ -39,6 +40,7 @@ export const TagIcon = ({ isHovered, isSelected, isSelectable, icon, ...rest }: 
       isHovered={isHovered}
       isSelected={isSelected}
       isSelectable={isSelectable}
+      isBgWhite={isBgWhite}
       {...rest}
     />
   );

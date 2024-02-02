@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { SiLinkedin, SiFacebook, SiInstagram } from "react-icons/si";
-import WebsiteIcon from '../assets/websiteIcon';
+import WebsiteIcon from '../../../assets/Icons/websiteIcon';
 import { CoachType } from '../../../types';
 import { FaUserCircle } from 'react-icons/fa';
 
