@@ -17,7 +17,7 @@ import { UserAvatar } from "./UserAvatar";
 import BookingInfo from "./BookingInfo";
 import LocalPin from "../../assets/Icons/LocalPin";
 import { generateCoachTags, getLocationText } from "./utils";
-import CoachProfileDrawer from "./CoachProfileDrawer";
+import CoachProfileDrawer from "../CoachProfileDrawer";
 
 const Coach: React.FC<CoachProps> = ({ coachInfo, slug, booking, currentUser }) => {
   const [isHovered, setIsHovered] = useState(false);
