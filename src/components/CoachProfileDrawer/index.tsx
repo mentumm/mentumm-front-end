@@ -60,6 +60,15 @@ const CoachProfileDrawer = ({
     website_url,
   }
 
+  const mixpanelTrack = () => {
+    mixpanelEvent("Clicked Book Coach", {
+      "Coach": coachInfo &&
+        (`${first_name} ${last_name}`),
+      "Coach ID": coachInfo && coachId,
+    });
+    calendlyOnOpen();
+  }
+
   const achievementsArray = JSON.parse(achievements);
   const hobbiesArray = JSON.parse(hobbies);
 
@@ -92,14 +101,7 @@ const CoachProfileDrawer = ({
             />
             <Button
               variant='onBlue'
-              onClick={() => {
-                mixpanelEvent("Clicked Book Coach", {
-                  "Coach": coachInfo &&
-                    (`${first_name} ${last_name}`),
-                  "Coach ID": coachInfo && coachId,
-                });
-                calendlyOnOpen();
-              }}
+              onClick={mixpanelTrack}
             >
               Book a Session
             </Button>
