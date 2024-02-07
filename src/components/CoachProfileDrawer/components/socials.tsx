@@ -12,16 +12,16 @@ const Socials = ({ socialUrls }) => {
   const { facebook_url, linkedin_url, instagram_url, website_url } = socialUrls;
   const connectUrls = [
     {
-      name: 'Facebook',
-      url: facebook_url,
-      icon: <SiFacebook size='25px' />,
-      colorScheme: 'facebook',
-    },
-    {
       name: 'LinkedIn',
       url: linkedin_url,
       icon: <SiLinkedin size='25px' />,
       colorScheme: 'linkedin'
+    },
+    {
+      name: 'Facebook',
+      url: facebook_url,
+      icon: <SiFacebook size='25px' />,
+      colorScheme: 'facebook',
     },
     {
       name: 'Instagram',
@@ -49,11 +49,11 @@ const Socials = ({ socialUrls }) => {
               p='0px'
             >
               <Button
-                w="25px"
-                variant="ghost"
+                w="30px"
+                variant='ghost'
                 colorScheme={connection.colorScheme}
               >
-                <Icon viewBox='0 0 25 25'>
+                <Icon w='7' h='7' >
                   {connection.icon}
                 </Icon>
               </Button>

@@ -7,16 +7,17 @@ import {
   Text,
   Button,
   Grid,
+  IconButton,
+  Box,
 } from '@chakra-ui/react'
 import { UserAvatar } from '../Coach/UserAvatar';
 import StyleTags from './components/styleTags';
 import { CoachProfileDrawerProps } from '../../types';
-import AreasOfExpertise from './components/areasOfExpertise';
 import About from './components/about';
-import TopAchievements from './components/topAchievements';
 import Socials from './components/socials';
-import Hobbies from './components/hobbies';
 import ContentDivider from './components/contentDivider';
+import { CloseIcon } from '@chakra-ui/icons';
+import DrawerList from './components/drawerList';
 
 const CoachProfileDrawer = ({ onClose, isOpen, coachInfo }: CoachProfileDrawerProps) => {
   const {
@@ -82,25 +83,44 @@ const CoachProfileDrawer = ({ onClose, isOpen, coachInfo }: CoachProfileDrawerPr
               <Text fontSize="2xl" fontWeight="bold">{`${first_name} ${last_name}`}</Text>
               <Text fontSize="md">{`${city}, ${state}`}</Text>
               <Socials socialUrls={socialUrls} />
+              <ContentDivider />
               {!!styles.length && (
                 <>
-                  <ContentDivider />
                   <StyleTags styles={styles} />
                   <ContentDivider />
                 </>
               )}
-              <AreasOfExpertise expertise={expertise} />
+              <DrawerList heading='Areas of Expertise' items={expertise} />
               <ContentDivider />
               <About bio={bio} />
-              <ContentDivider />
               {achievementsArray && (
                 <>
-                  <TopAchievements achievements={achievementsArray} />
+                  <ContentDivider />
+                  <DrawerList heading={'Top Achievements'} items={achievementsArray} />
                   <ContentDivider />
                 </>
               )}
-              {hobbiesArray && <Hobbies hobbies={hobbiesArray} />}
+              {hobbiesArray && <DrawerList heading='Favorite Hobbies' items={hobbiesArray} />}
+
             </VStack>
+            <Box
+              position='absolute'
+              top='0'
+              right='0'
+            >
+              <IconButton
+                aria-label="Close drawer"
+                icon={<CloseIcon w='8px' strokeWidth='3px' />}
+                onClick={onClose}
+                mr={4}
+                size="xs"
+                isRound
+                bgColor="white"
+                border="2px solid"
+                borderColor="brand.800"
+                color="brand.800"
+              />
+            </Box>d
           </VStack>
         </Grid>
       </DrawerContent>
