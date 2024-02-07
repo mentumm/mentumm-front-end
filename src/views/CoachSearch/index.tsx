@@ -122,7 +122,7 @@ const CoachSearch = ({ currentUser }) => {
 
   return (
     <PageWrapper title="Book Your Coach" backTo="/home">
-      <Box id='PLUMBUS' px='4em'>
+      <Box px='4em'>
         <InputGroup>
           <InputLeftElement
             pointerEvents="none"
@@ -177,7 +177,7 @@ const CoachSearch = ({ currentUser }) => {
           {!isLoading &&
             filteredCoaches.map((coach) => (
               <Box key={coach.id} padding={2}>
-                <Coach coachInfo={coach} />
+                <Coach coachInfo={coach} currentUser={currentUser} />
               </Box>
             ))}
         </Box>

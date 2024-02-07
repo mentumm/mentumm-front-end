@@ -233,6 +233,7 @@ export interface ActionPlanForm {
 }
 
 export interface CoachProfileDrawerProps {
+  currentUser: CurrentUser;
   coachInfo: CoachType;
   onClose: () => void;
   isOpen: boolean;

@@ -26,6 +26,7 @@ const BookingModal: React.FC<BookingMoalProps> = ({
   calendlyIsOpen,
   calendlyOnClose,
 }) => {
+  // console.log({ currentUser });
   return (
     <Modal
       isOpen={calendlyIsOpen}

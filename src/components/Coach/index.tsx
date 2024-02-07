@@ -81,7 +81,12 @@ const Coach: React.FC<CoachProps> = ({ coachInfo, slug, booking, currentUser }) 
           </Stack>
         </Card>
       </Box>
-      <CoachProfileDrawer onClose={onClose} isOpen={isOpen} coachInfo={coachInfo} />
+      <CoachProfileDrawer
+        onClose={onClose}
+        isOpen={isOpen}
+        coachInfo={coachInfo}
+        currentUser={currentUser}
+      />
     </>
   );
 };

@@ -9,6 +9,7 @@ import {
   Grid,
   IconButton,
   Box,
+  useDisclosure,
 } from '@chakra-ui/react'
 import { UserAvatar } from '../Coach/UserAvatar';
 import StyleTags from './components/styleTags';
@@ -18,9 +19,18 @@ import Socials from './components/socials';
 import ContentDivider from './components/contentDivider';
 import { CloseIcon } from '@chakra-ui/icons';
 import DrawerList from './components/drawerList';
+import { mixpanelEvent } from '../../helpers';
+import { BookingModal } from '../../views/CoachBio/components';
 
-const CoachProfileDrawer = ({ onClose, isOpen, coachInfo }: CoachProfileDrawerProps) => {
+const CoachProfileDrawer = ({
+  onClose,
+  isOpen,
+  coachInfo,
+  currentUser
+}: CoachProfileDrawerProps) => {
+
   const {
+    id: coachId,
     first_name,
     last_name,
     styles,
@@ -36,6 +46,12 @@ const CoachProfileDrawer = ({ onClose, isOpen, coachInfo }: CoachProfileDrawerPr
     achievements,
     hobbies,
   } = coachInfo;
+
+  const {
+    isOpen: calendlyIsOpen,
+    onOpen: calendlyOnOpen,
+    onClose: calendlyOnClose,
+  } = useDisclosure();
 
   const socialUrls = {
     linkedin_url,
@@ -74,7 +90,17 @@ const CoachProfileDrawer = ({ onClose, isOpen, coachInfo }: CoachProfileDrawerPr
                   : "https://mentumm.com/wp-content/uploads/2022/06/mentumm_profile.png"
               }
             />
-            <Button>
+            <Button
+              variant='onBlue'
+              onClick={() => {
+                mixpanelEvent("Clicked Book Coach", {
+                  "Coach": coachInfo &&
+                    (`${first_name} ${last_name}`),
+                  "Coach ID": coachInfo && coachId,
+                });
+                calendlyOnOpen();
+              }}
+            >
               Book a Session
             </Button>
           </VStack>
@@ -101,7 +127,6 @@ const CoachProfileDrawer = ({ onClose, isOpen, coachInfo }: CoachProfileDrawerPr
                 </>
               )}
               {hobbiesArray && <DrawerList heading='Favorite Hobbies' items={hobbiesArray} />}
-
             </VStack>
             <Box
               position='absolute'
@@ -110,7 +135,7 @@ const CoachProfileDrawer = ({ onClose, isOpen, coachInfo }: CoachProfileDrawerPr
             >
               <IconButton
                 aria-label="Close drawer"
-                icon={<CloseIcon w='8px' strokeWidth='3px' />}
+                icon={<CloseIcon w='8px' />}
                 onClick={onClose}
                 mr={4}
                 size="xs"
@@ -120,9 +145,15 @@ const CoachProfileDrawer = ({ onClose, isOpen, coachInfo }: CoachProfileDrawerPr
                 borderColor="brand.800"
                 color="brand.800"
               />
-            </Box>d
+            </Box>
           </VStack>
         </Grid>
+        <BookingModal
+          coach={coachInfo}
+          currentUser={currentUser}
+          calendlyIsOpen={calendlyIsOpen}
+          calendlyOnClose={calendlyOnClose}
+        />
       </DrawerContent>
     </Drawer>
   )
