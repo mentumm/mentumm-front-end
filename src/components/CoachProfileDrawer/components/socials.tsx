@@ -14,25 +14,25 @@ const Socials = ({ socialUrls }) => {
     {
       name: 'LinkedIn',
       url: linkedin_url,
-      icon: <SiLinkedin size='25px' />,
+      icon: <SiLinkedin size='24px' />,
       colorScheme: 'linkedin'
     },
     {
       name: 'Facebook',
       url: facebook_url,
-      icon: <SiFacebook size='25px' />,
+      icon: <SiFacebook size='24px' />,
       colorScheme: 'facebook',
     },
     {
       name: 'Instagram',
       url: instagram_url,
-      icon: <SiInstagram size='25px' />,
+      icon: <SiInstagram size='24px' />,
       colorScheme: 'pink'
     },
     {
       name: 'Website',
       url: website_url,
-      icon: <FaChrome size='25px' />,
+      icon: <FaChrome size='24px' />,
       colorScheme: 'blue'
     }
   ];

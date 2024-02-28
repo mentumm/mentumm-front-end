@@ -60,6 +60,7 @@ const CoachProfileDrawer = ({
     website_url,
   }
 
+  // doesn't seem to work if you have adblocker or privacy focused browser extensions
   const mixpanelTrack = () => {
     mixpanelEvent("Clicked Book Coach", {
       "Coach": coachInfo &&
@@ -69,6 +70,7 @@ const CoachProfileDrawer = ({
     calendlyOnOpen();
   }
 
+  // achievements & hobbies are strings of arrays from the DB
   const achievementsArray = JSON.parse(achievements);
   const hobbiesArray = JSON.parse(hobbies);
 
