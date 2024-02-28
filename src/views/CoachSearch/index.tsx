@@ -12,7 +12,7 @@ import {
 import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import PageWrapper from "../../components/Wrappers/PageWrapper";
 import Coach from "../../components/Coach";
-import { Tag } from "../../types";
+import { CoachType, CurrentUser, Tag } from "../../types";
 import { menApiAuthClient } from "../../clients/mentumm";
 import envConfig from "../../envConfig";
 import axios from "axios";
@@ -37,6 +37,7 @@ const CoachSearch = ({ currentUser }) => {
     setSearchTerm("");
   };
 
+  // fetch coaches
   useEffect(() => {
     const controller = new AbortController();
 
@@ -44,7 +45,7 @@ const CoachSearch = ({ currentUser }) => {
       setIsLoading(true);
 
       try {
-        const response = await menApiAuthClient().get(`/coaches`, {
+        const response = await menApiAuthClient().get<CoachType[]>(`/coaches`, {
           signal: controller.signal,
         });
 
@@ -68,7 +69,7 @@ const CoachSearch = ({ currentUser }) => {
   //memoized coaches to remove need for multiple API calls on search
   const filteredCoaches = useMemo(() => {
     return coaches
-      .filter((coach) => {
+      .filter((coach: CoachType) => {
         const name = `${coach.first_name} ${coach.last_name}` || '';
         return searchTerm === '' || (name && name.toLowerCase().includes(searchTerm.toLowerCase()));
       })
@@ -121,7 +122,7 @@ const CoachSearch = ({ currentUser }) => {
 
   return (
     <PageWrapper title="Book Your Coach" backTo="/home">
-      <Box id='PLUMBUS' px='4em'>
+      <Box px='4em'>
         <InputGroup>
           <InputLeftElement
             pointerEvents="none"
@@ -176,7 +177,7 @@ const CoachSearch = ({ currentUser }) => {
           {!isLoading &&
             filteredCoaches.map((coach) => (
               <Box key={coach.id} padding={2}>
-                <Coach coachInfo={coach} />
+                <Coach coachInfo={coach} currentUser={currentUser} />
               </Box>
             ))}
         </Box>
