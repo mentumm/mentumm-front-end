@@ -11,6 +11,7 @@ import { CurrentUser } from "./types";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import { menApiAuthClient } from "./clients/mentumm";
+import Dashboard from "./views/Dashboard";
 const ActionPlan = lazy(() => import('./views/ActionPlan'));
 const EditProfile = lazy(() => import('./views/Coach/EditProfile'));
 const EditUserProfile = lazy(() => import('./views/User/EditProfile'));
@@ -155,7 +156,7 @@ function App() {
             path="/home"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <Home currentUser={currentUser} />
+                <Dashboard currentUser={currentUser} />
               </SignInWrapper>
             }
           />
