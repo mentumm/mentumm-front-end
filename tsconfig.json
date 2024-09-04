@@ -3,8 +3,8 @@
     "outDir": "./dist/",
     "noImplicitAny": false,
     "module": "commonjs",
-    "target": "es5",
-    "jsx": "react",
+    "target": "es6", // or 'esnext'
+    "jsx": "react", // or 'react-jsx' for React 17+ with the new JSX transform
     "allowJs": true,
     "moduleResolution": "node",
     "sourceMap": true,
@@ -12,8 +12,18 @@
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "removeComments": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": [
+      "dom",
+      "es6"
+    ]
   },
-  "include": ["./src/**/*"],
-  "exclude": ["node_modules"]
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
