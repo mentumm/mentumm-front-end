@@ -1,4 +1,4 @@
-import { Box, VStack } from '@chakra-ui/react';
+import { Box, Heading, VStack } from '@chakra-ui/react';
 import React from 'react';
 
 const SideContent = () => {
@@ -11,7 +11,11 @@ const SideContent = () => {
       my="2em"
     >
       <VStack>
-
+        <Box>
+          <Heading>
+            Ryan M.
+          </Heading>
+        </Box>
       </VStack>
     </Box>
   )
