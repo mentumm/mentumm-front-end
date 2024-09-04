@@ -14,8 +14,8 @@ import PastCoachingSessions from '../../components/PastCoachingSessions';
 import { CurrentUser, CoachType, ActionPlanForm } from '../../types';
 import { menApiAuthClient } from '../../clients/mentumm';
 import { getCurrentFeatured } from './utils';
-import MainContent from './components/MainContent';
-import SideContent from './components/SideContent';
+import MainContent from './components/mainContent';
+import SideContent from './components/sideContent';
 
 interface IProps {
   currentUser: CurrentUser;
@@ -85,7 +85,7 @@ const Dashboard: React.FC<IProps> = ({ currentUser }) => {
       </Box>
       {/* Dashbaord content goes here. main/side content components stubbed out but incomplete */}
       <MainContent />
-      <SideContent />
+      <SideContent currentUser={currentUser} />
     </Flex>
   )
 }

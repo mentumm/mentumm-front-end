@@ -1,29 +1,14 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Divider, Heading, Text, Flex, VStack } from "@chakra-ui/react";
 import React, { FC, useEffect, useState } from "react";
 import { menApiAuthClient } from "../../clients/mentumm";
 import { CoachBooking, CoachType } from "../../types";
-import Coach from "../Coach";
-import { createUseStyles } from "react-jss";
 
 interface Iprops {
   id: number;
 }
 type TChoachBooking = CoachBooking & { coach: CoachType };
 
-const useStyles = createUseStyles({
-  root: {
-    display: "flex",
-    flexDirection: "column",
-  },
-  buttonRow: {
-    display: "flex",
-    flexDirection: "row",
-    marginTop: 10,
-  },
-});
-
 const UpcomingCoachingSessions: FC<Iprops> = ({ id }) => {
-  const classes = useStyles();
   const [upcoming, setUpcoming] = useState<TChoachBooking[]>([]);
 
   useEffect(() => {
@@ -38,24 +23,42 @@ const UpcomingCoachingSessions: FC<Iprops> = ({ id }) => {
     loadUpcoming();
   }, [id]);
 
+  console.log(upcoming)
+
   return (
-    <div className={classes.root}>
-      {upcoming.length ? (
-        <>
-          <Heading fontWeight="normal" fontSize={24} mt={12} mb={2}>
-            Upcoming Coaching Sessions
-          </Heading>
-          <Box display="flex" flexFlow="row wrap" gap={4}>
-            {upcoming.map((u) => {
-              const { coach, ...booking } = u;
-              return (
-                <Coach key={booking.id} coachInfo={coach} booking={booking} />
-              );
-            })}
+    <>
+      <Heading fontWeight="normal" size='md' mt={12} mb={2} color='white'>
+        Upcoming Coaching Sessions
+      </Heading>
+      {
+        upcoming.length > 0 && (
+          <Box>
+            <Box display="flex" flexFlow="row wrap" gap={4}>
+              {upcoming.map((u) => {
+                const { coach, ...booking } = u;
+                const startTime = new Date(u.event_start_time).toLocaleTimeString('en-GB');
+                const endTime = new Date(u.event_end_time).toLocaleTimeString('en-GB');
+
+                return (
+                  <Box bgColor='red' borderRadius='1em' w='100%'>
+                    <Heading size='md' color='#3067B0'>
+                      Coaching Session
+                    </Heading>
+                    <Divider />
+                    <Text>
+                      {`With ${u.coach.first_name} ${u.coach.last_name}`}
+                    </Text>
+                    <Text>
+                      {`Time ${startTime} - ${endTime}`}
+                    </Text>
+                  </Box>
+                );
+              })}
+            </Box>
           </Box>
-        </>
-      ) : null}
-    </div>
+        )
+      }
+    </>
   );
 };
 
