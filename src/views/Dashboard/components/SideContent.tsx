@@ -16,7 +16,6 @@ const SideContent = ({
       px='2em'
     >
       <SideContentHeader currentUser={currentUser} />
-      <Divider />
       <UpcomingCoachingSessions id={currentUser?.id} />
     </Box>
   )

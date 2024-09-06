@@ -1,15 +1,18 @@
-import { Box, Divider, Heading, Text, Flex, VStack } from "@chakra-ui/react";
+import { Box, Divider, Heading, } from "@chakra-ui/react";
 import React, { FC, useEffect, useState } from "react";
 import { menApiAuthClient } from "../../clients/mentumm";
 import { CoachBooking, CoachType } from "../../types";
 
+import CoachingSessionCard from "../CoachingSessionCard";
+
 interface Iprops {
   id: number;
 }
-type TChoachBooking = CoachBooking & { coach: CoachType };
+export type TCoachBooking = CoachBooking & { coach: CoachType };
 
 const UpcomingCoachingSessions: FC<Iprops> = ({ id }) => {
-  const [upcoming, setUpcoming] = useState<TChoachBooking[]>([]);
+  const [upcoming, setUpcoming] = useState<TCoachBooking[]>([]);
+  const [past, setPast] = useState<TCoachBooking[]>([]);
 
   useEffect(() => {
     async function loadUpcoming() {
@@ -20,44 +23,49 @@ const UpcomingCoachingSessions: FC<Iprops> = ({ id }) => {
       setUpcoming(u.data);
     }
 
+    async function loadPast() {
+      const p = await menApiAuthClient().get("/user/past", {
+        params: { id },
+      });
+      setPast(p.data);
+    }
+
     loadUpcoming();
   }, [id]);
 
-  console.log(upcoming)
-
   return (
     <>
-      <Heading fontWeight="normal" size='md' mt={12} mb={2} color='white'>
-        Upcoming Coaching Sessions
-      </Heading>
-      {
-        upcoming.length > 0 && (
-          <Box>
-            <Box display="flex" flexFlow="row wrap" gap={4}>
-              {upcoming.map((u) => {
-                const { coach, ...booking } = u;
-                const startTime = new Date(u.event_start_time).toLocaleTimeString('en-GB');
-                const endTime = new Date(u.event_end_time).toLocaleTimeString('en-GB');
+      <Box mb='0.5em' px='1em'>
+        <Heading fontWeight="normal" size="sm" mt={12} mb={2} color="white">
+          Upcoming Coaching Sessions
+        </Heading>
+        <Divider borderBottomColor='#2CBBBC' />
+      </Box>
+      {upcoming.length > 0 && (
+        <Box>
+          <Box display="flex" flexFlow="row wrap" gap={4}>
+            {upcoming.map((u) => {
 
-                return (
-                  <Box bgColor='red' borderRadius='1em' w='100%'>
-                    <Heading size='md' color='#3067B0'>
-                      Coaching Session
-                    </Heading>
-                    <Divider />
-                    <Text>
-                      {`With ${u.coach.first_name} ${u.coach.last_name}`}
-                    </Text>
-                    <Text>
-                      {`Time ${startTime} - ${endTime}`}
-                    </Text>
-                  </Box>
-                );
-              })}
-            </Box>
+              return (
+                <CoachingSessionCard session={u} isPrevious={false} key={u.event_type_uuid} />
+              );
+            })}
           </Box>
-        )
-      }
+          <Box mb='0.5em' px='1em'>
+            <Heading fontWeight="normal" size="sm" mt={12} mb={2} color="white">
+              Previous Coaching Sessions
+            </Heading>
+            <Divider borderBottomColor='#2CBBBC' />
+          </Box>
+          <Box display="flex" flexFlow="row wrap" gap={4}>
+            {past.map((p) => {
+              return (
+                <CoachingSessionCard session={p} isPrevious={true} key={p.event_type_uuid} />
+              );
+            })}
+          </Box>
+        </Box>
+      )}
     </>
   );
 };
