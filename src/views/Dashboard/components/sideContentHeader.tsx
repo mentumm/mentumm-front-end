@@ -1,13 +1,20 @@
 import { Flex, VStack, Heading, Spacer, Avatar, Text, Divider, Box } from '@chakra-ui/react';
 import React from 'react';
 import { CurrentUser } from '../../../types';
+import { useCookies } from 'react-cookie';
 
 type SideContentHeaderProps = {
   currentUser: CurrentUser
+  setCurrentUser: (currentUser: CurrentUser) => void;
 }
 
-const SideContentHeader = ({ currentUser }: SideContentHeaderProps) => {
+const SideContentHeader = ({ currentUser, setCurrentUser }: SideContentHeaderProps) => {
   const userDisplayName = `${currentUser?.first_name} ${currentUser?.last_name[0]}.`
+  const removeCookie = useCookies(["growth_10_03142023"])[2];
+  const logoutUser = () => {
+    removeCookie("growth_10_03142023", { path: "/" });
+    setCurrentUser(null);
+  };
 
   return (
     <Box mx='1em' >
@@ -16,7 +23,7 @@ const SideContentHeader = ({ currentUser }: SideContentHeaderProps) => {
           <Heading size='md' color='#2CBBBC'>
             {userDisplayName}
           </Heading>
-          <Text size='md' color='#3067B0'>
+          <Text size='md' color='#3067B0' onClick={logoutUser} _hover={{ cursor: 'pointer' }}>
             Logout
           </Text>
         </VStack>

@@ -156,7 +156,7 @@ function App() {
             path="/home"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <Dashboard currentUser={currentUser} />
+                <Dashboard currentUser={currentUser} setCurrentUser={setCurrentUser} />
               </SignInWrapper>
             }
           />

@@ -19,9 +19,10 @@ import SideContent from './components/sideContent';
 
 interface IProps {
   currentUser: CurrentUser;
+  setCurrentUser: (currentUser: CurrentUser) => void;
 }
 
-const Dashboard: React.FC<IProps> = ({ currentUser }) => {
+const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
   const [coaches, setCoaches] = useState<CoachType[]>([]);
   const [actionPlan, setActionPlan] = useState<ActionPlanForm>(null);
   const bgImage = 'https://mentummportal.sfo3.digitaloceanspaces.com/mentumm-splash.jpeg';
@@ -85,7 +86,7 @@ const Dashboard: React.FC<IProps> = ({ currentUser }) => {
       </Box>
       {/* Dashbaord content goes here. main/side content components stubbed out but incomplete */}
       <MainContent />
-      <SideContent currentUser={currentUser} />
+      <SideContent currentUser={currentUser} setCurrentUser={setCurrentUser} />
     </Flex>
   )
 }

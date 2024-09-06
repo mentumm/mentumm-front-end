@@ -1,7 +1,7 @@
 import { Box, Divider, Heading, } from "@chakra-ui/react";
 import React, { FC, useEffect, useState } from "react";
 import { menApiAuthClient } from "../../clients/mentumm";
-import { CoachBooking, CoachType } from "../../types";
+import { CoachBooking, CoachType, User } from "../../types";
 
 import CoachingSessionCard from "../CoachingSessionCard";
 

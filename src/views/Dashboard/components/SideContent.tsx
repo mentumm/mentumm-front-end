@@ -5,6 +5,7 @@ import SideContentHeader from './sideContentHeader';
 
 const SideContent = ({
   currentUser,
+  setCurrentUser,
 }) => {
   return (
     <Box
@@ -15,7 +16,7 @@ const SideContent = ({
       my='2em'
       px='2em'
     >
-      <SideContentHeader currentUser={currentUser} />
+      <SideContentHeader currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <UpcomingCoachingSessions id={currentUser?.id} />
     </Box>
   )
