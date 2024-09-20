@@ -1,4 +1,4 @@
-import { Box, Divider } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import React from 'react';
 import UpcomingCoachingSessions from '../../../components/UpcomingCoachingSessions';
 import SideContentHeader from './sideContentHeader';

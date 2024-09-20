@@ -3,8 +3,14 @@ import React from 'react';
 
 const MainContent = () => {
   return (
-    <Box>
-      main content
+    <Box
+      bgColor='#061223'
+      w='60vw'
+      h='76vh'
+      zIndex={20}
+      mb='2em'
+      borderRadius='2em'
+    >
     </Box>
   )
 }
