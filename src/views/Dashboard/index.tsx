@@ -14,8 +14,8 @@ import PastCoachingSessions from '../../components/PastCoachingSessions';
 import { CurrentUser, CoachType, ActionPlanForm } from '../../types';
 import { menApiAuthClient } from '../../clients/mentumm';
 import { getCurrentFeatured } from './utils';
-import MainContent from './components/mainContent';
-import SideContent from './components/sideContent';
+import MainContent from './components/MainContent';
+import SideContent from './components/SideContent';
 
 interface IProps {
   currentUser: CurrentUser;
