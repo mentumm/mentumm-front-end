@@ -5,6 +5,7 @@ import {
   Heading,
   Box,
   Spacer,
+  VStack,
 } from '@chakra-ui/react';
 import { SvgLayer } from '../../components/Waves/svgLayer';
 import logo from "../../assets/minimal-mentumm-logo.svg";
@@ -64,18 +65,20 @@ const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
       bgPos="center center"
       bgSize="cover"
     >
-      <Flex
-        w="55%"
-        h="20%"
-        alignItems='center'
-        ml='4em'
-      >
-        <Image src={logo} boxSize="120px" />
-        <Spacer />
-        <Heading size="2xl" fontWeight="400" color="white" >
-          Your <b>Dashboard</b>
-        </Heading>
-      </Flex>
+      <VStack>
+        <Flex
+          w="55%"
+          h="20%"
+          alignItems='center'
+          ml='4em'
+        >
+          <Image src={logo} boxSize="120px" />
+          <Heading size="2xl" fontWeight="400" color="white" >
+            Your <b>Dashboard</b>
+          </Heading>
+        </Flex>
+        <MainContent />
+      </VStack>
       <Box>
         <SvgLayer
           vbHeight="300"
@@ -85,7 +88,6 @@ const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
         </SvgLayer>
       </Box>
       {/* Dashbaord content goes here. main/side content components stubbed out but incomplete */}
-      <MainContent />
       <SideContent currentUser={currentUser} setCurrentUser={setCurrentUser} />
     </Flex>
   )
