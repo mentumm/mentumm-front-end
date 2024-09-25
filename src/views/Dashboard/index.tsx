@@ -10,7 +10,6 @@ import {
 import { SvgLayer } from '../../components/Waves/svgLayer';
 import logo from "../../assets/minimal-mentumm-logo.svg";
 import UpcomingCoachingSessions from '../../components/UpcomingCoachingSessions';
-import HighlightedCoaches from '../../components/HighlightedCoaches';
 import PastCoachingSessions from '../../components/PastCoachingSessions';
 import { CurrentUser, CoachType, ActionPlanForm } from '../../types';
 import { menApiAuthClient } from '../../clients/mentumm';
@@ -79,7 +78,7 @@ const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
             Your <b>Dashboard</b>
           </Heading>
         </Flex>
-        <MainContent />
+        <MainContent coaches={coaches} />
       </VStack>
       <Box>
         <SvgLayer

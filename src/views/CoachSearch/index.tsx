@@ -12,7 +12,7 @@ import {
 import { CloseIcon, SearchIcon } from "@chakra-ui/icons";
 import PageWrapper from "../../components/Wrappers/PageWrapper";
 import Coach from "../../components/Coach";
-import { CoachType, CurrentUser, Tag } from "../../types";
+import { CoachType, Tag } from "../../types";
 import { menApiAuthClient } from "../../clients/mentumm";
 import envConfig from "../../envConfig";
 import axios from "axios";

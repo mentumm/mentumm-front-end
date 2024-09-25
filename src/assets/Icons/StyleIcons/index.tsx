@@ -183,3 +183,43 @@ export const BookIcon = (props) => {
     </svg>
   )
 };
+
+export const StreetSignIcon = (props) => {
+  return (
+    <svg
+      width="147"
+      height="164"
+      viewBox="0 0 147 164"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <path
+        d="M82.5508 -3.75V155.812"
+        stroke="white"
+        stroke-width="8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M82.5508 13.5H131.623L142.214 30.75L131.623 48H82.5508V13.5Z"
+        stroke="white"
+        stroke-width="8"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M82.5508 73.875H15.4784L4.88806 91.125L15.4784 108.375H82.5508V73.875Z"
+        stroke="white"
+        stroke-width="8"
+        stroke-linejoin="round"
+      />
+      <path
+        d="M58 160H108"
+        stroke="white"
+        stroke-width="8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  )
+}
