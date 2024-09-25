@@ -29,13 +29,13 @@ export const ServicesForYou = () => {
           <CardBody display='flex' flexDirection='column' justifyContent='space-between' position='relative'>
             <Box maxW='70%' mb={2}>
               {/* Top text */}
-              <Text fontSize='sm' color='gray.400' mb={2} fontFamily='Montserrat' maxW='80%' lineHeight='16px'>
+              <Text fontSize='sm' color='gray.400' mt={2} mb={2} fontFamily='Montserrat' maxW='80%' lineHeight='16px'>
                 Work with the dedicated coach of your choice
               </Text>
             </Box>
             <Box pb='10px' >
               {/* Middle text */}
-              <Text fontSize='20px' fontWeight='400' color='white' mb={1} fontFamily='Saira' lineHeight='shorter'>
+              <Text fontSize='20px' fontWeight='400' color='white' mb={1} fontFamily='Saira' lineHeight='32px'>
                 Book Your Next
               </Text>
               {/* Bottom text */}

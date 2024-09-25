@@ -17,7 +17,7 @@ const MainContent = ({
   return (
     <Box
       bgColor='#061223'
-      w='60vw'
+      w='65vw'
       h='76vh'
       zIndex={20}
       mb='2em'
