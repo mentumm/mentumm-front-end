@@ -19,7 +19,7 @@ import LocalPin from "../../assets/Icons/LocalPin";
 import { generateCoachTags, getLocationText } from "./utils";
 import CoachProfileDrawer from "../CoachProfileDrawer";
 
-const Coach: React.FC<CoachProps> = ({ coachInfo, slug, booking, currentUser }) => {
+const Coach = ({ coachInfo, slug, booking, currentUser }: CoachProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const { first_name, last_name, styles, city, state, photo_url } = coachInfo;
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -28,6 +28,7 @@ const Coach: React.FC<CoachProps> = ({ coachInfo, slug, booking, currentUser }) 
     <>
       <Box
         w='26em'
+        minW='24em'
         as='section'
         cursor={isHovered ? 'pointer' : 'null'}
         onMouseEnter={() => setIsHovered(true)}

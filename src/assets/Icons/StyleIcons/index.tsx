@@ -223,3 +223,28 @@ export const StreetSignIcon = (props) => {
     </svg>
   )
 }
+
+export const SuccessIcon = (props) => {
+  return (
+    <svg width="111" height="110" viewBox="0 0 111 110" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <path d="M0.300781 0H110.301V110H0.300781V0Z" fill="white" fill-opacity="0.01" />
+      <path d="M55.301 9.16602L67.3398 17.9478L82.2412 17.9194L86.819 32.1003L98.891 40.8362L94.2594 54.9993L98.891 69.1625L86.819 77.8984L82.2412 92.0792L67.3398 92.051L55.301 100.833L43.2622 92.051L28.3609 92.0792L23.783 77.8984L11.7109 69.1625L16.3427 54.9993L11.7109 40.8362L23.783 32.1003L28.3609 17.9194L43.2622 17.9478L55.301 9.16602Z" stroke="white" stroke-opacity="0.1" stroke-width="9.85827" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M39.2578 54.9993L50.7161 66.4577L73.6328 43.541" stroke="white" stroke-opacity="0.1" stroke-width="9.85827" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  )
+}
+
+export const GamePS = (props) => {
+  return (
+    <svg width="81" height="146" viewBox="0 0 81 146" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
+      <g opacity="0.1">
+        <path d="M0.164062 0.107422L115.838 0.107422V115.781H0.164062L0.164062 0.107422Z" fill="white" fill-opacity="0.01" />
+        <path d="M16.957 60.9629H49.443V93.4489H16.957L16.957 60.9629Z" stroke="white" stroke-width="8" stroke-linejoin="round" />
+        <path d="M33.2 44.7204C42.1708 44.7204 49.443 37.4482 49.443 28.4774C49.443 19.5066 42.1708 12.2344 33.2 12.2344C24.2292 12.2344 16.957 19.5066 16.957 28.4774C16.957 37.4482 24.2292 44.7204 33.2 44.7204Z" stroke="white" stroke-width="8" stroke-linejoin="round" />
+        <path d="M17.1055 109.514L49.5915 142" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M49.5915 109.514L17.1055 142" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
+      </g>
+    </svg>
+
+  )
+}

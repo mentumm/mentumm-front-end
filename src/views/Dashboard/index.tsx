@@ -66,7 +66,7 @@ const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
       justify='space-evenly'
       px='3em'
     >
-      <VStack>
+      <VStack h='80%'>
         <Flex
           w="100%"
           h="20%"

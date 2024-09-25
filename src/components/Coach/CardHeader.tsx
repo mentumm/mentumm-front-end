@@ -17,6 +17,7 @@ export const CardHeader = ({ title, action, isHovered, ...flexProps }: CardHeade
         fontWeight={isHovered ? '700' : '400'}
         letterSpacing="tight"
         marginEnd="6"
+        sx={{ 'text-wrap': 'nowrap' }}
       >
         {title}
       </Heading>

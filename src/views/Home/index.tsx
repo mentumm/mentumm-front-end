@@ -8,7 +8,7 @@ import {
   Image,
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-import HighlightedCoaches from "../../components/HighlightedCoaches";
+import HighlightedCoaches from "../../components/FeaturedCoaches";
 import PastCoachingSessions from "../../components/PastCoachingSessions";
 import UpcomingCoachingSessions from "../../components/UpcomingCoachingSessions";
 import { ActionPlanForm, CoachType, CurrentUser } from "../../types";
