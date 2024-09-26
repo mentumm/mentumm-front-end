@@ -82,22 +82,22 @@ const ForgotPassword = () => {
         }) => {
           return (
             <Form>
-              <Heading as="label" size="lg" fontWeight="normal">
+              <Heading as="label" size="lg" fontWeight="normal" color='white'>
                 Recover Password
               </Heading>
               <FormControl isInvalid={touched.email && !!errors.email}>
-                <FormHelperText>
+                <FormHelperText color='gray.500'>
                   Don't worry. Happens to the best of us.
                 </FormHelperText>
                 <Box mt={8}>
                   {success ? (
-                    <Text>
+                    <Text color='white'>
                       An email has been sent. Please click the link when you get
                       it.
                     </Text>
                   ) : (
                     <Box>
-                      <FormLabel>Your Email</FormLabel>
+                      <FormLabel color='white'>Your Email</FormLabel>
                       <Input
                         id="email"
                         name="email"
