@@ -9,7 +9,7 @@ type CoachingSessionCardProps = {
   session: TCoachBooking,
   isPrevious: boolean,
 }
-const CoachingSessionCard = ({
+export const CoachingSessionCard = ({
   session,
   isPrevious,
 }: CoachingSessionCardProps) => {
@@ -85,4 +85,17 @@ const CoachingSessionCard = ({
   )
 }
 
-export default CoachingSessionCard;
+export const EmptyCoachingSessionCard = () => {
+  return (
+    <Box bgColor="#0D1C31" borderRadius="1em" w="100%" p="1em" h='128px'>
+      <Heading display='flex' justifyContent='center' mb={1} fontFamily='Montserrat' size="sm" color="#3067B0" fontWeight="normal">
+        No upcoming sessions
+      </Heading>
+      <Divider borderBottomColor="#3067B0" />
+      <HStack mt='0.5em'>
+      </HStack>
+      <Flex align="center">
+      </Flex>
+    </Box>
+  )
+}

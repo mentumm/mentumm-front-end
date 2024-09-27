@@ -10,6 +10,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { GamePS, StreetSignIcon, SuccessIcon } from '../../../assets/Icons/StyleIcons';
+import { Link } from 'react-router-dom';
 
 export const ServicesForYou = () => {
   return (
@@ -25,7 +26,7 @@ export const ServicesForYou = () => {
         Services for You
       </Heading>
       <Flex mt='1em' justifyContent='space-evenly' gap='0.25em'>
-        <Card bgColor='brand.700' w='100%' pl={2} borderRadius='lg' position='relative' overflow='hidden' h='200px'>
+        <Card bgColor='brand.700' w='100%' pl={2} borderRadius='lg' position='relative' overflow='hidden' h='200px' as={Link} to='/search'>
           <CardBody display='flex' flexDirection='column' justifyContent='space-between' position='relative'>
             <Box maxW='70%' mb={2}>
               {/* Top text */}

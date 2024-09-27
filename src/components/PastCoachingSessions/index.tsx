@@ -1,8 +1,9 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading, Divider, } from "@chakra-ui/react";
 import React, { FC, useEffect, useState } from "react";
 import { menApiAuthClient } from "../../clients/mentumm";
 import { CoachBooking, CoachType, CurrentUser } from "../../types";
 import Coach from "../Coach";
+import { CoachingSessionCard } from "../CoachingSessionCard";
 
 interface Iprops {
   currentUser: CurrentUser;
@@ -30,22 +31,23 @@ const PastCoachingSessions: FC<Iprops> = ({ currentUser }) => {
 
   return (
     <>
-      <Heading fontWeight="normal" fontSize={24} mt={12}>
-        Past Coaching Sessions
-      </Heading>
-      <Box display="flex" flexFlow="row wrap" gap={4}>
-        {past.map((b) => {
-          const { coach, ...booking } = b;
-          return (
-            <Coach
-              key={booking.id}
-              coachInfo={coach}
-              booking={booking}
-              currentUser={currentUser}
-            />
-          );
-        })}
+      <Box mb='0.5em' px='1em'>
+        <Heading fontWeight="normal" size="sm" mt={12} mb={2} color="white">
+          Previous Coaching Sessions
+        </Heading>
+        <Divider borderBottomColor='#2CBBBC' />
       </Box>
+      {past.length > 0 && (
+        <Box>
+          <Flex display="flex" flexDirection='column' gap={4}>
+            {past.map((u) => {
+              return (
+                <CoachingSessionCard session={u} isPrevious={true} key={u.event_type_uuid} />
+              );
+            })}
+          </Flex>
+        </Box>
+      )}
     </>
   );
 };

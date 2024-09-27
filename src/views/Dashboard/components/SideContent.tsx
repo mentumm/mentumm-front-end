@@ -1,5 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import React from 'react';
+import PastCoachingSessions from '../../../components/PastCoachingSessions';
 import UpcomingCoachingSessions from '../../../components/UpcomingCoachingSessions';
 import SideContentHeader from './sideContentHeader';
 
@@ -18,6 +19,7 @@ const SideContent = ({
     >
       <SideContentHeader currentUser={currentUser} setCurrentUser={setCurrentUser} />
       <UpcomingCoachingSessions id={currentUser?.id} />
+      <PastCoachingSessions currentUser={currentUser} />
     </Box>
   )
 }
