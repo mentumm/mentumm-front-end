@@ -26,7 +26,7 @@ const MainContent = ({
     >
       <ServicesForYou />
       <HighlightedCoaches title='Featured Coaches' coaches={featuredCoaches} />
-      {/* <FeaturedCertificatePrograms /> */}
+      <FeaturedCertificatePrograms />
     </Box>
   )
 }

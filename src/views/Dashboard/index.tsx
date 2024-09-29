@@ -4,7 +4,6 @@ import {
   Image,
   Heading,
   Box,
-  Spacer,
   VStack,
 } from '@chakra-ui/react';
 import { SvgLayer } from '../../components/Waves/svgLayer';

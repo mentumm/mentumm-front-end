@@ -2,7 +2,6 @@ import { Box, Flex, Heading, Divider, } from "@chakra-ui/react";
 import React, { FC, useEffect, useState } from "react";
 import { menApiAuthClient } from "../../clients/mentumm";
 import { CoachBooking, CoachType, CurrentUser } from "../../types";
-import Coach from "../Coach";
 import { CoachingSessionCard } from "../CoachingSessionCard";
 
 interface Iprops {
@@ -16,14 +15,14 @@ const PastCoachingSessions: FC<Iprops> = ({ currentUser }) => {
   useEffect(() => {
     async function loadPast() {
       const u = await menApiAuthClient().get("/user/past", {
-        params: { id: currentUser.id },
+        params: { id: currentUser?.id },
       });
 
       setPast(u.data);
     }
 
     loadPast();
-  }, [currentUser.id]);
+  }, [currentUser?.id]);
 
   if (!past.length) {
     return null;
