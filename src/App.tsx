@@ -171,26 +171,6 @@ function App() {
             }
           />
           <Route
-            path="/coaches/:slug"
-            element={
-              <SignInWrapper currentUser={currentUser}>
-                <Suspense fallback={<SuspenseFallback />}>
-                  <CoachResults />
-                </Suspense>
-              </SignInWrapper>
-            }
-          />
-          <Route
-            path="/coach/:coachId"
-            element={
-              <SignInWrapper currentUser={currentUser}>
-                <Suspense fallback={<SuspenseFallback />}>
-                  <CoachBio currentUser={currentUser} />
-                </Suspense>
-              </SignInWrapper>
-            }
-          />
-          <Route
             path="/coach/:coachId/expertise"
             element={
               <SignInWrapper currentUser={currentUser}>

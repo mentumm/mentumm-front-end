@@ -4,12 +4,11 @@ import {
   Image,
   Heading,
   Box,
-  Spacer,
+  VStack,
 } from '@chakra-ui/react';
 import { SvgLayer } from '../../components/Waves/svgLayer';
 import logo from "../../assets/minimal-mentumm-logo.svg";
 import UpcomingCoachingSessions from '../../components/UpcomingCoachingSessions';
-import HighlightedCoaches from '../../components/HighlightedCoaches';
 import PastCoachingSessions from '../../components/PastCoachingSessions';
 import { CurrentUser, CoachType, ActionPlanForm } from '../../types';
 import { menApiAuthClient } from '../../clients/mentumm';
@@ -63,19 +62,23 @@ const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
       bgImage={`linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${bgImage})`}
       bgPos="center center"
       bgSize="cover"
+      justify='space-evenly'
+      px='3em'
     >
-      <Flex
-        w="55%"
-        h="20%"
-        alignItems='center'
-        ml='4em'
-      >
-        <Image src={logo} boxSize="120px" />
-        <Spacer />
-        <Heading size="2xl" fontWeight="400" color="white" >
-          Your <b>Dashboard</b>
-        </Heading>
-      </Flex>
+      <VStack h='80%'>
+        <Flex
+          w="100%"
+          h="20%"
+          alignItems='center'
+          justifyContent='space-evenly'
+        >
+          <Image src={logo} boxSize="120px" />
+          <Heading size="2xl" fontWeight="400" color="white" ml='5em' mr='3em' >
+            Your <b>Dashboard</b>
+          </Heading>
+        </Flex>
+        <MainContent coaches={coaches} />
+      </VStack>
       <Box>
         <SvgLayer
           vbHeight="300"
@@ -84,8 +87,6 @@ const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
             d="M0 55.0362V300H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z" fill="#0D1C31" />
         </SvgLayer>
       </Box>
-      {/* Dashbaord content goes here. main/side content components stubbed out but incomplete */}
-      <MainContent />
       <SideContent currentUser={currentUser} setCurrentUser={setCurrentUser} />
     </Flex>
   )
