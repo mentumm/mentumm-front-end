@@ -1,20 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import {
-  Flex,
-  Image,
-  Heading,
-  Box,
-  VStack,
-} from '@chakra-ui/react';
-import { SvgLayer } from '../../components/Waves/svgLayer';
+import React, { useState, useEffect } from "react";
+import { Flex, Image, Heading, Box, VStack } from "@chakra-ui/react";
+import { SvgLayer } from "../../components/Waves/svgLayer";
 import logo from "../../assets/minimal-mentumm-logo.svg";
-import UpcomingCoachingSessions from '../../components/UpcomingCoachingSessions';
-import PastCoachingSessions from '../../components/PastCoachingSessions';
-import { CurrentUser, CoachType, ActionPlanForm } from '../../types';
-import { menApiAuthClient } from '../../clients/mentumm';
-import { getCurrentFeatured } from './utils';
-import MainContent from './components/mainContent';
-import SideContent from './components/sideContent';
+import UpcomingCoachingSessions from "../../components/UpcomingCoachingSessions";
+import PastCoachingSessions from "../../components/PastCoachingSessions";
+import { CurrentUser, CoachType, ActionPlanForm } from "../../types";
+import { menApiAuthClient } from "../../clients/mentumm";
+import { getCurrentFeatured } from "./utils";
+import MainContent from "./components/MainContent";
+import SideContent from "./components/SideContent";
 
 interface IProps {
   currentUser: CurrentUser;
@@ -24,7 +18,8 @@ interface IProps {
 const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
   const [coaches, setCoaches] = useState<CoachType[]>([]);
   const [actionPlan, setActionPlan] = useState<ActionPlanForm>(null);
-  const bgImage = 'https://mentummportal.sfo3.digitaloceanspaces.com/mentumm-splash.jpeg';
+  const bgImage =
+    "https://mentummportal.sfo3.digitaloceanspaces.com/mentumm-splash.jpeg";
 
   useEffect(() => {
     const getCoaches = async () => {
@@ -62,34 +57,34 @@ const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
       bgImage={`linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${bgImage})`}
       bgPos="center center"
       bgSize="cover"
-      justify='space-evenly'
-      px='3em'
+      justify="space-evenly"
+      px="3em"
     >
-      <VStack h='80%'>
+      <VStack h="80%">
         <Flex
           w="100%"
           h="20%"
-          alignItems='center'
-          justifyContent='space-evenly'
+          alignItems="center"
+          justifyContent="space-evenly"
         >
           <Image src={logo} boxSize="120px" />
-          <Heading size="2xl" fontWeight="400" color="white" ml='5em' mr='3em' >
+          <Heading size="2xl" fontWeight="400" color="white" ml="5em" mr="3em">
             Your <b>Dashboard</b>
           </Heading>
         </Flex>
         <MainContent coaches={coaches} />
       </VStack>
       <Box>
-        <SvgLayer
-          vbHeight="300"
-        >
+        <SvgLayer vbHeight="300">
           <path
-            d="M0 55.0362V300H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z" fill="#0D1C31" />
+            d="M0 55.0362V300H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z"
+            fill="#0D1C31"
+          />
         </SvgLayer>
       </Box>
       <SideContent currentUser={currentUser} setCurrentUser={setCurrentUser} />
     </Flex>
-  )
-}
+  );
+};
 
 export default Dashboard;
