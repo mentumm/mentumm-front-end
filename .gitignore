@@ -12,6 +12,7 @@ dump.rdb
 
 # Ignore all contents of .yarn folder except specific subdirectories
 .yarn/*
+.yarn/cache/*
 !.yarn/cache
 !.yarn/patches
 !.yarn/plugins
