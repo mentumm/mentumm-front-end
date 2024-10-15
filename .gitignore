@@ -9,10 +9,16 @@ build
 .vscode
 .idea
 dump.rdb
+
+# Ignore all contents of .yarn folder except specific subdirectories
 .yarn/*
+.yarn/cache/*
 !.yarn/cache
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Ignore .yarn_backup folder completely
+.yarn_backup/
