@@ -1,6 +1,6 @@
 import getWeek from "date-fns/getWeek";
 
-export const getCurrentFeatured = <T,>(
+export const getCurrentFeatured = <T>(
   objects: T[],
   amount: number,
   weekOffset = 0
