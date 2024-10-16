@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Flex, Image, Heading, Box, VStack } from "@chakra-ui/react";
 import { SvgLayer } from "../../components/Waves/svgLayer";
 import logo from "../../assets/minimal-mentumm-logo.svg";
-import UpcomingCoachingSessions from "../../components/UpcomingCoachingSessions";
-import PastCoachingSessions from "../../components/PastCoachingSessions";
+// import UpcomingCoachingSessions from "../../components/UpcomingCoachingSessions";
+// import PastCoachingSessions from "../../components/PastCoachingSessions";
 import { CurrentUser, CoachType, ActionPlanForm } from "../../types";
 import { menApiAuthClient } from "../../clients/mentumm";
-import { getCurrentFeatured } from "./utils";
-import MainContent from "./components/MainContent";
-import SideContent from "./components/SideContent";
+// import { getCurrentFeatured } from "../../utils/dashboard";
+import MainContent from "../../components/Dashboard/MainContent";
+import SideContent from "../../components/Dashboard/SideContent";
 
 interface IProps {
   currentUser: CurrentUser;
@@ -17,7 +17,7 @@ interface IProps {
 
 const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
   const [coaches, setCoaches] = useState<CoachType[]>([]);
-  const [actionPlan, setActionPlan] = useState<ActionPlanForm>(null);
+  const [, setActionPlan] = useState<ActionPlanForm>(null);
   const bgImage =
     "https://mentummportal.sfo3.digitaloceanspaces.com/mentumm-splash.jpeg";
 
@@ -49,7 +49,7 @@ const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
     getCoaches();
   }, [currentUser]);
 
-  const featuredCoaches = getCurrentFeatured(coaches, 2);
+  // const featuredCoaches = getCurrentFeatured(coaches, 2);
 
   return (
     <Flex

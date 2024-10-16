@@ -1,10 +1,10 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import HighlightedCoaches from "../../../components/FeaturedCoaches";
-import { CoachType } from "../../../types";
-import { getCurrentFeatured } from "../utils";
-import { FeaturedCertificatePrograms } from "./featuredCertificatePrograms";
-import { ServicesForYou } from "./servicesForYou";
+import HighlightedCoaches from "../FeaturedCoaches";
+import { CoachType } from "../../types";
+import { getCurrentFeatured } from "../../utils/dashboard";
+import { FeaturedCertificatePrograms } from "./FeaturedCertificatePrograms";
+import { ServicesForYou } from "./ServicesForYou";
 
 interface MainContentProps {
   coaches: CoachType[];
@@ -24,7 +24,7 @@ const MainContent = ({ coaches }: MainContentProps) => {
     >
       <ServicesForYou />
       <HighlightedCoaches title="Featured Coaches" coaches={featuredCoaches} />
-      <FeaturedCertificatePrograms title="Featured Certificate Programs" />
+      <FeaturedCertificatePrograms />
     </Box>
   );
 };

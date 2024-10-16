@@ -1,8 +1,8 @@
 import { Box } from "@chakra-ui/react";
 import React from "react";
-import PastCoachingSessions from "../../../components/PastCoachingSessions";
-import UpcomingCoachingSessions from "../../../components/UpcomingCoachingSessions";
-import SideContentHeader from "./sideContentHeader";
+import PastCoachingSessions from "../PastCoachingSessions";
+import UpcomingCoachingSessions from "../UpcomingCoachingSessions";
+import SideContentHeader from "./SideContentHeader";
 
 const SideContent = ({ currentUser, setCurrentUser }) => {
   return (

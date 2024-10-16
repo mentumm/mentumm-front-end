@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Flex, Heading } from "@chakra-ui/react";
-import CertificateProgram from "../../../components/CertificateProgram";
+import CertificateProgram from "../CertificateProgram";
 
 const certificatePrograms = [
   {
