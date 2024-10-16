@@ -24,7 +24,7 @@ const MainContent = ({ coaches }: MainContentProps) => {
     >
       <ServicesForYou />
       <HighlightedCoaches title="Featured Coaches" coaches={featuredCoaches} />
-      <FeaturedCertificatePrograms />
+      <FeaturedCertificatePrograms title="Featured Certificate Programs" />
     </Box>
   );
 };
