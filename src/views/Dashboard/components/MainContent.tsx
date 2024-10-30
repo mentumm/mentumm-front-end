@@ -1,17 +1,19 @@
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 import HighlightedCoaches from '../../../components/FeaturedCoaches';
-import { CoachType } from '../../../types';
+import { CoachType, CurrentUser, User } from '../../../types';
 import { getCurrentFeatured } from '../utils';
 import { FeaturedCertificatePrograms } from './featuredCertificatePrograms';
 import { ServicesForYou } from './servicesForYou';
 
 interface MainContentProps {
   coaches: CoachType[]
+  currentUser: CurrentUser
 }
 
 const MainContent = ({
-  coaches
+  coaches,
+  currentUser,
 }: MainContentProps) => {
   const featuredCoaches = getCurrentFeatured(coaches, 3);
   return (
@@ -24,7 +26,7 @@ const MainContent = ({
       borderRadius='2em'
       p='2em'
     >
-      <ServicesForYou />
+      <ServicesForYou currentUser={currentUser} />
       <HighlightedCoaches title='Featured Coaches' coaches={featuredCoaches} />
       <FeaturedCertificatePrograms />
     </Box>

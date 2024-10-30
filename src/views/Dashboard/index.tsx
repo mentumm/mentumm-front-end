@@ -8,11 +8,8 @@ import {
 } from '@chakra-ui/react';
 import { SvgLayer } from '../../components/Waves/svgLayer';
 import logo from "../../assets/minimal-mentumm-logo.svg";
-import UpcomingCoachingSessions from '../../components/UpcomingCoachingSessions';
-import PastCoachingSessions from '../../components/PastCoachingSessions';
 import { CurrentUser, CoachType, ActionPlanForm } from '../../types';
 import { menApiAuthClient } from '../../clients/mentumm';
-import { getCurrentFeatured } from './utils';
 import MainContent from './components/mainContent';
 import SideContent from './components/sideContent';
 
@@ -21,7 +18,10 @@ interface IProps {
   setCurrentUser: (currentUser: CurrentUser) => void;
 }
 
-const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
+const Dashboard = ({
+  currentUser,
+  setCurrentUser,
+}: IProps) => {
   const [coaches, setCoaches] = useState<CoachType[]>([]);
   const [actionPlan, setActionPlan] = useState<ActionPlanForm>(null);
   const bgImage = 'https://mentummportal.sfo3.digitaloceanspaces.com/mentumm-splash.jpeg';
@@ -54,8 +54,6 @@ const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
     getCoaches();
   }, [currentUser]);
 
-  const featuredCoaches = getCurrentFeatured(coaches, 2);
-
   return (
     <Flex
       height="100vh"
@@ -77,7 +75,7 @@ const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
             Your <b>Dashboard</b>
           </Heading>
         </Flex>
-        <MainContent coaches={coaches} />
+        <MainContent coaches={coaches} currentUser={currentUser} />
       </VStack>
       <Box>
         <SvgLayer

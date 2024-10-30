@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { MutableRefObject, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createUseStyles } from "react-jss";
 import { ActionPlanForm, CurrentUser } from "../../types";
 import { Form, Formik, FormikValues } from "formik";
 import * as Yup from "yup";
@@ -8,7 +7,6 @@ import { useSnackbar } from "notistack";
 import {
   Button,
   FormLabel,
-  Heading,
   Textarea,
   Slider,
   SliderFilledTrack,
@@ -19,62 +17,54 @@ import {
   Text,
   Input,
   FormControl,
+  Drawer,
+  DrawerBody,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  DrawerHeader,
+  Box,
 } from "@chakra-ui/react";
 import axios from "axios";
 import envConfig from "../../envConfig";
 import { menApiAuthClient } from "../../clients/mentumm";
-import PageWrapper from "../../components/Wrappers/PageWrapper";
-
-const useStyles = createUseStyles({
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    textAlign: "flex-start",
-    "& > div": {
-      padding: [10, 0],
-    },
-  },
-  sliders: {
-    "& > label": {
-      paddingBottom: 15,
-    },
-  },
-  errors: {
-    color: "red",
-    padding: [5, 0],
-  },
-});
 
 type ActionPlanProps = {
+  isOpen: boolean;
   currentUser: CurrentUser;
+  onClose: () => void;
 };
 
-const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
-  const classes = useStyles();
+const ActionPlan = ({
+  isOpen,
+  onClose,
+  currentUser,
+}: ActionPlanProps) => {
   const { enqueueSnackbar } = useSnackbar();
   const navigate = useNavigate();
-  const [actionPlan, setActionPlan] = useState<ActionPlanForm>(null);
+  const [actionPlan, setActionPlan] = useState<ActionPlanForm | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const getActionPlan = async () => {
       try {
-        const actionPlan = await menApiAuthClient().get<ActionPlanForm>(
+        const actionPlanResponse = await menApiAuthClient().get<ActionPlanForm>(
           `/action-plans/${currentUser.id}/${new Date().toISOString()}`
         );
-        if (actionPlan.data) {
-          setActionPlan(actionPlan.data);
+        if (actionPlanResponse.data) {
+          setActionPlan(actionPlanResponse.data);
         }
         setLoading(false);
       } catch (error) {
-        throw new Error("Could not fetch Action Plan!");
+        enqueueSnackbar("Could not fetch Action Plan!", { variant: "error" });
+        setLoading(false);
       }
     };
 
     if (currentUser) {
       getActionPlan();
     }
-  }, [currentUser]);
+  }, [currentUser, enqueueSnackbar]);
 
   const handleSubmit = async (values: FormikValues) => {
     const keyActionItems = [
@@ -100,390 +90,454 @@ const ActionPlan = ({ currentUser }: ActionPlanProps): JSX.Element => {
       key_action_items: keyActionItems,
     };
 
-    if (actionPlan) {
-      await axios
-        .patch(`${envConfig.API_URL}/v1/action-plans`, {
+    try {
+      if (actionPlan) {
+        await axios.patch(`${envConfig.API_URL}/v1/action-plans`, {
           ...actionPlanValues,
           action_plan_id: actionPlan.id,
-        })
-        .then(() => {
-          enqueueSnackbar("Action Plan updated!", {
-            variant: "success",
-          });
-          setTimeout(() => {
-            navigate("/home");
-          }, 2000);
-        })
-        .catch(() => {
-          enqueueSnackbar("Something went wrong. Please try again.", {
-            variant: "error",
-          });
         });
-    } else {
-      await axios
-        .post(`${envConfig.API_URL}/v1/action-plans`, {
+        enqueueSnackbar("Action Plan updated!", { variant: "success" });
+      } else {
+        await axios.post(`${envConfig.API_URL}/v1/action-plans`, {
           ...actionPlanValues,
-        })
-        .then(() => {
-          enqueueSnackbar("Your Action Plan Has Been Submitted!", {
-            variant: "success",
-          });
-          setTimeout(() => {
-            navigate("/home");
-          }, 2000);
-        })
-        .catch(() => {
-          enqueueSnackbar("Something went wrong. Please try again.", {
-            variant: "error",
-          });
         });
+        enqueueSnackbar("Your Action Plan Has Been Submitted!", { variant: "success" });
+      }
+      setTimeout(() => {
+        navigate("/home");
+      }, 2000);
+    } catch (error) {
+      enqueueSnackbar("Something went wrong. Please try again.", { variant: "error" });
     }
   };
 
   if (loading) return null;
 
   return (
-    <PageWrapper>
-      <Formik
-        initialValues={{
-          personalRank: actionPlan?.personal_rank || 1,
-          professionalRank: actionPlan?.professional_rank || 1,
-          healthWellnessRank: actionPlan?.health_wellness_rank || 1,
-          workLifeBalanceRank: actionPlan?.work_life_balance_rank || 1,
-          motivationRank: actionPlan?.motivation_rank || 1,
-          relationshipsRank: actionPlan?.relationships_rank || 1,
-          personalIssues: actionPlan?.personal_issues_field || "",
-          professionalIssues: actionPlan?.professional_issues_field || "",
-          decisions: actionPlan?.decisions_field || "",
-          leadershipProcess: actionPlan?.leadership_process_field || "",
-          keyActionItem1: actionPlan?.key_action_items[0] || "",
-          keyActionItem2: actionPlan?.key_action_items[1] || "",
-          keyActionItem3: actionPlan?.key_action_items[2] || "",
-          keyActionItem4: actionPlan?.key_action_items[3] || "",
-          keyActionItem5: actionPlan?.key_action_items[4] || "",
-        }}
-        validationSchema={Yup.object({
-          personalRank: Yup.number(),
-          professionalRank: Yup.number(),
-          healthWellnessRank: Yup.number(),
-          workLifeBalanceRank: Yup.number(),
-          motivationRank: Yup.number(),
-          relationshipsRank: Yup.number(),
-          personalIssues: Yup.string().required("Please fill out this field"),
-          professionalIssues: Yup.string().required(
-            "Please fill out this field"
-          ),
-          decisions: Yup.string().required("Please fill out this field"),
-          leadershipProcess: Yup.string().required(
-            "Please fill out this field"
-          ),
-          keyActionItem1: Yup.string().required(
-            "Please fill out at least one key action item"
-          ),
-          keyActionItem2: Yup.string(),
-          keyActionItem3: Yup.string(),
-          keyActionItem4: Yup.string(),
-          keyActionItem5: Yup.string(),
-        })}
-        onSubmit={async (values, { setSubmitting }) => {
-          await handleSubmit(values);
-          setSubmitting(false);
-        }}
+    <Drawer
+      placement="bottom"
+      onClose={onClose}
+      isOpen={isOpen}
+      size="full"
+    >
+      <DrawerOverlay />
+      <DrawerContent
+        w="960px"
+        h="487px"
+        mt={3}
+        borderTopRadius="24px"
+        mx="auto"
+        maxW="100%"
+        bgColor='#2CBBBC'
       >
-        {({ isSubmitting, handleChange, values, errors, touched }) => (
-          <Form className={classes.form}>
-            <Heading size="lg" textAlign="left">
-              Your Monthly Action Plan
-            </Heading>
-            <Text mt={4} mb={4}>
-              Rank yourself 1-10 in the following areas:
-            </Text>
-            <FormControl className={classes.sliders}>
-              <FormLabel>Personal</FormLabel>
-              <Slider
-                id="personalRank"
-                name="personalRank"
-                defaultValue={values.personalRank}
-                min={1}
-                max={10}
-                onChange={(value) =>
-                  handleChange({ target: { value, name: "personalRank" } })
-                }
-              >
-                <SliderMark
-                  value={values.personalRank}
-                  mt="-8"
-                  ml="-1"
-                  fontSize="sm"
+        <DrawerCloseButton
+          size="lg"
+          top="20px"
+          right="20px"
+          zIndex={1}
+        />
+        <DrawerHeader
+          pb={4}
+          textAlign="center"
+          fontSize="2xl"
+          fontWeight="bold"
+        >
+          Your Monthly Action Plan
+        </DrawerHeader>
+        <DrawerBody
+          p={6}
+          overflowY="auto"
+          maxH="calc(100% - 80px)"
+          bgColor='#0D1C31'
+          color='white'
+        >
+          <Formik
+            initialValues={{
+              personalRank: actionPlan?.personal_rank || 1,
+              professionalRank: actionPlan?.professional_rank || 1,
+              healthWellnessRank: actionPlan?.health_wellness_rank || 1,
+              workLifeBalanceRank: actionPlan?.work_life_balance_rank || 1,
+              motivationRank: actionPlan?.motivation_rank || 1,
+              relationshipsRank: actionPlan?.relationships_rank || 1,
+              personalIssues: actionPlan?.personal_issues_field || "",
+              professionalIssues: actionPlan?.professional_issues_field || "",
+              decisions: actionPlan?.decisions_field || "",
+              leadershipProcess: actionPlan?.leadership_process_field || "",
+              keyActionItem1: actionPlan?.key_action_items[0] || "",
+              keyActionItem2: actionPlan?.key_action_items[1] || "",
+              keyActionItem3: actionPlan?.key_action_items[2] || "",
+              keyActionItem4: actionPlan?.key_action_items[3] || "",
+              keyActionItem5: actionPlan?.key_action_items[4] || "",
+            }}
+            validationSchema={Yup.object({
+              personalRank: Yup.number().min(1).max(10).required("Required"),
+              professionalRank: Yup.number().min(1).max(10).required("Required"),
+              healthWellnessRank: Yup.number().min(1).max(10).required("Required"),
+              workLifeBalanceRank: Yup.number().min(1).max(10).required("Required"),
+              motivationRank: Yup.number().min(1).max(10).required("Required"),
+              relationshipsRank: Yup.number().min(1).max(10).required("Required"),
+              personalIssues: Yup.string().required("Please fill out this field"),
+              professionalIssues: Yup.string().required("Please fill out this field"),
+              decisions: Yup.string().required("Please fill out this field"),
+              leadershipProcess: Yup.string().required("Please fill out this field"),
+              keyActionItem1: Yup.string().required("Please fill out at least one key action item"),
+              keyActionItem2: Yup.string(),
+              keyActionItem3: Yup.string(),
+              keyActionItem4: Yup.string(),
+              keyActionItem5: Yup.string(),
+            })}
+            onSubmit={async (values, { setSubmitting }) => {
+              await handleSubmit(values);
+              setSubmitting(false);
+              onClose();
+            }}
+          >
+            {({ isSubmitting, handleChange, values, errors, touched }) => (
+              <Form>
+                {/* Personal Rank */}
+                <FormControl mb={4}>
+                  <FormLabel>Personal</FormLabel>
+                  <Slider
+                    id="personalRank"
+                    name="personalRank"
+                    value={values.personalRank}
+                    min={1}
+                    max={10}
+                    mt={3}
+                    onChange={(value) =>
+                      handleChange({ target: { value, name: "personalRank" } })
+                    }
+                  >
+                    <SliderMark value={values.personalRank} mt="-8" ml="-1" fontSize="sm">
+                      {values.personalRank}
+                    </SliderMark>
+                    <SliderTrack>
+                      <SliderFilledTrack bg="#3182CE" />
+                    </SliderTrack>
+                    <SliderThumb />
+                  </Slider>
+                  {errors.personalRank && touched.personalRank && (
+                    <Text color="red.500" fontSize="sm">
+                      {errors.personalRank}
+                    </Text>
+                  )}
+                </FormControl>
+
+                {/* Professional Rank */}
+                <FormControl mb={4}>
+                  <FormLabel>Professional</FormLabel>
+                  <Slider
+                    id="professionalRank"
+                    name="professionalRank"
+                    value={values.professionalRank}
+                    min={1}
+                    max={10}
+                    mt={3}
+                    onChange={(value) =>
+                      handleChange({ target: { value, name: "professionalRank" } })
+                    }
+                  >
+                    <SliderMark value={values.professionalRank} mt="-8" ml="-1" fontSize="sm">
+                      {values.professionalRank}
+                    </SliderMark>
+                    <SliderTrack>
+                      <SliderFilledTrack bg="#3182CE" />
+                    </SliderTrack>
+                    <SliderThumb />
+                  </Slider>
+                  {errors.professionalRank && touched.professionalRank && (
+                    <Text color="red.500" fontSize="sm">
+                      {errors.professionalRank}
+                    </Text>
+                  )}
+                </FormControl>
+
+                {/* Health and Wellness Rank */}
+                <FormControl mb={4}>
+                  <FormLabel>Health and Wellness</FormLabel>
+                  <Slider
+                    id="healthWellnessRank"
+                    name="healthWellnessRank"
+                    value={values.healthWellnessRank}
+                    min={1}
+                    max={10}
+                    mt={3}
+                    onChange={(value) =>
+                      handleChange({
+                        target: { value, name: "healthWellnessRank" },
+                      })
+                    }
+                  >
+                    <SliderMark value={values.healthWellnessRank} mt="-8" ml="-1" fontSize="sm">
+                      {values.healthWellnessRank}
+                    </SliderMark>
+                    <SliderTrack>
+                      <SliderFilledTrack bg="#3182CE" />
+                    </SliderTrack>
+                    <SliderThumb />
+                  </Slider>
+                  {errors.healthWellnessRank && touched.healthWellnessRank && (
+                    <Text color="red.500" fontSize="sm">
+                      {errors.healthWellnessRank}
+                    </Text>
+                  )}
+                </FormControl>
+
+                {/* Work-Life Balance Rank */}
+                <FormControl mb={4}>
+                  <FormLabel>Work-Life Balance</FormLabel>
+                  <Slider
+                    id="workLifeBalanceRank"
+                    name="workLifeBalanceRank"
+                    value={values.workLifeBalanceRank}
+                    min={1}
+                    max={10}
+                    mt={3}
+                    onChange={(value) =>
+                      handleChange({
+                        target: { value, name: "workLifeBalanceRank" },
+                      })
+                    }
+                  >
+                    <SliderMark value={values.workLifeBalanceRank} mt="-8" ml="-1" fontSize="sm">
+                      {values.workLifeBalanceRank}
+                    </SliderMark>
+                    <SliderTrack>
+                      <SliderFilledTrack bg="#3182CE" />
+                    </SliderTrack>
+                    <SliderThumb />
+                  </Slider>
+                  {errors.workLifeBalanceRank && touched.workLifeBalanceRank && (
+                    <Text color="red.500" fontSize="sm">
+                      {errors.workLifeBalanceRank}
+                    </Text>
+                  )}
+                </FormControl>
+
+                {/* Motivation Rank */}
+                <FormControl mb={4}>
+                  <FormLabel>Motivation</FormLabel>
+                  <Slider
+                    id="motivationRank"
+                    name="motivationRank"
+                    value={values.motivationRank}
+                    min={1}
+                    max={10}
+                    mt={3}
+                    onChange={(value) =>
+                      handleChange({ target: { value, name: "motivationRank" } })
+                    }
+                  >
+                    <SliderMark value={values.motivationRank} mt="-8" ml="-1" fontSize="sm">
+                      {values.motivationRank}
+                    </SliderMark>
+                    <SliderTrack>
+                      <SliderFilledTrack bg="#3182CE" />
+                    </SliderTrack>
+                    <SliderThumb />
+                  </Slider>
+                  {errors.motivationRank && touched.motivationRank && (
+                    <Text color="red.500" fontSize="sm">
+                      {errors.motivationRank}
+                    </Text>
+                  )}
+                </FormControl>
+
+                {/* Relationships Rank */}
+                <FormControl mb={4}>
+                  <FormLabel>Relationships</FormLabel>
+                  <Slider
+                    id="relationshipsRank"
+                    name="relationshipsRank"
+                    value={values.relationshipsRank}
+                    min={1}
+                    max={10}
+                    mt={3}
+                    onChange={(value) =>
+                      handleChange({ target: { value, name: "relationshipsRank" } })
+                    }
+                  >
+                    <SliderMark value={values.relationshipsRank} mt="-8" ml="-1" fontSize="sm">
+                      {values.relationshipsRank}
+                    </SliderMark>
+                    <SliderTrack>
+                      <SliderFilledTrack bg="#3182CE" />
+                    </SliderTrack>
+                    <SliderThumb />
+                  </Slider>
+                  {errors.relationshipsRank && touched.relationshipsRank && (
+                    <Text color="red.500" fontSize="sm">
+                      {errors.relationshipsRank}
+                    </Text>
+                  )}
+                </FormControl>
+
+                {/* Personal Issues */}
+                <FormControl mb={4}>
+                  <FormLabel>
+                    What are the most important personal issues you are currently navigating?
+                  </FormLabel>
+                  <Textarea
+                    id="personalIssues"
+                    name="personalIssues"
+                    onChange={handleChange}
+                    value={values.personalIssues}
+                  />
+                  {errors.personalIssues && touched.personalIssues && (
+                    <Text color="red.500" fontSize="sm">
+                      {errors.personalIssues}
+                    </Text>
+                  )}
+                </FormControl>
+
+                {/* Professional Issues */}
+                <FormControl mb={4}>
+                  <FormLabel>
+                    What are the most important professional issues you are currently navigating?
+                  </FormLabel>
+                  <Textarea
+                    id="professionalIssues"
+                    name="professionalIssues"
+                    onChange={handleChange}
+                    value={values.professionalIssues}
+                  />
+                  {errors.professionalIssues && touched.professionalIssues && (
+                    <Text color="red.500" fontSize="sm">
+                      {errors.professionalIssues}
+                    </Text>
+                  )}
+                </FormControl>
+
+                {/* Decisions */}
+                <FormControl mb={4}>
+                  <FormLabel>
+                    What are the most important decisions you need to make in the next 90 days?
+                  </FormLabel>
+                  <Textarea
+                    id="decisions"
+                    name="decisions"
+                    onChange={handleChange}
+                    value={values.decisions}
+                  />
+                  {errors.decisions && touched.decisions && (
+                    <Text color="red.500" fontSize="sm">
+                      {errors.decisions}
+                    </Text>
+                  )}
+                </FormControl>
+
+                {/* Leadership Process */}
+                <FormControl mb={4}>
+                  <FormLabel>
+                    What is working and not working right now with your leadership process?
+                  </FormLabel>
+                  <Textarea
+                    id="leadershipProcess"
+                    name="leadershipProcess"
+                    onChange={handleChange}
+                    value={values.leadershipProcess}
+                  />
+                  {errors.leadershipProcess && touched.leadershipProcess && (
+                    <Text color="red.500" fontSize="sm">
+                      {errors.leadershipProcess}
+                    </Text>
+                  )}
+                </FormControl>
+
+                {/* Key Action Items */}
+                <FormControl mb={4}>
+                  <FormLabel>
+                    What are the key action items you are focused on accomplishing?
+                  </FormLabel>
+                  <Stack spacing={3}>
+                    <Input
+                      id="keyActionItem1"
+                      name="keyActionItem1"
+                      type="text"
+                      color='black'
+                      onChange={handleChange}
+                      value={values.keyActionItem1}
+                      placeholder="Key Action Item 1"
+                    />
+                    {errors.keyActionItem1 && touched.keyActionItem1 && (
+                      <Text color="red.500" fontSize="sm">
+                        {errors.keyActionItem1}
+                      </Text>
+                    )}
+                    <Input
+                      id="keyActionItem2"
+                      name="keyActionItem2"
+                      type="text"
+                      color='black'
+                      onChange={handleChange}
+                      value={values.keyActionItem2}
+                      placeholder="Key Action Item 2"
+                    />
+                    {errors.keyActionItem2 && touched.keyActionItem2 && (
+                      <Text color="red.500" fontSize="sm">
+                        {errors.keyActionItem2}
+                      </Text>
+                    )}
+                    <Input
+                      id="keyActionItem3"
+                      name="keyActionItem3"
+                      type="text"
+                      color='black'
+                      onChange={handleChange}
+                      value={values.keyActionItem3}
+                      placeholder="Key Action Item 3"
+                    />
+                    {errors.keyActionItem3 && touched.keyActionItem3 && (
+                      <Text color="red.500" fontSize="sm">
+                        {errors.keyActionItem3}
+                      </Text>
+                    )}
+                    <Input
+                      id="keyActionItem4"
+                      name="keyActionItem4"
+                      type="text"
+                      color='black'
+                      onChange={handleChange}
+                      value={values.keyActionItem4}
+                      placeholder="Key Action Item 4"
+                    />
+                    {errors.keyActionItem4 && touched.keyActionItem4 && (
+                      <Text color="red.500" fontSize="sm">
+                        {errors.keyActionItem4}
+                      </Text>
+                    )}
+                    <Input
+                      id="keyActionItem5"
+                      name="keyActionItem5"
+                      type="text"
+                      color='black'
+                      onChange={handleChange}
+                      value={values.keyActionItem5}
+                      placeholder="Key Action Item 5"
+                    />
+                    {errors.keyActionItem5 && touched.keyActionItem5 && (
+                      <Text color="red.500" fontSize="sm">
+                        {errors.keyActionItem5}
+                      </Text>
+                    )}
+                  </Stack>
+                </FormControl>
+
+                <Button
+                  type="submit"
+                  variant='onBlue'
+                  isLoading={isSubmitting}
+                  mt={4}
+                  width="100%"
                 >
-                  {values.personalRank}
-                </SliderMark>
-                <SliderTrack>
-                  <SliderFilledTrack bg="#3182CE" />
-                </SliderTrack>
-                <SliderThumb />
-              </Slider>
-            </FormControl>
-            <FormControl className={classes.sliders}>
-              <FormLabel>Professional</FormLabel>
-              <Slider
-                id="professionalRank"
-                name="professionalRank"
-                defaultValue={values.professionalRank}
-                min={1}
-                max={10}
-                onChange={(value) =>
-                  handleChange({ target: { value, name: "professionalRank" } })
-                }
-              >
-                <SliderMark
-                  value={values.professionalRank}
-                  mt="-8"
-                  ml="-1"
-                  fontSize="sm"
-                >
-                  {values.professionalRank}
-                </SliderMark>
-                <SliderTrack>
-                  <SliderFilledTrack bg="#3182CE" />
-                </SliderTrack>
-                <SliderThumb />
-              </Slider>
-            </FormControl>
-            <FormControl className={classes.sliders}>
-              <FormLabel>Health and Wellness</FormLabel>
-              <Slider
-                id="healthWellnessRank"
-                name="healthWellnessRank"
-                defaultValue={values.healthWellnessRank}
-                min={1}
-                max={10}
-                onChange={(value) =>
-                  handleChange({
-                    target: { value, name: "healthWellnessRank" },
-                  })
-                }
-              >
-                <SliderMark
-                  value={values.healthWellnessRank}
-                  mt="-8"
-                  ml="-1"
-                  fontSize="sm"
-                >
-                  {values.healthWellnessRank}
-                </SliderMark>
-                <SliderTrack>
-                  <SliderFilledTrack bg="#3182CE" />
-                </SliderTrack>
-                <SliderThumb />
-              </Slider>
-            </FormControl>
-            <FormControl className={classes.sliders}>
-              <FormLabel>Work-Life Balance</FormLabel>
-              <Slider
-                id="workLifeBalanceRank"
-                name="workLifeBalanceRank"
-                defaultValue={values.workLifeBalanceRank}
-                min={1}
-                max={10}
-                onChange={(value) =>
-                  handleChange({
-                    target: { value, name: "workLifeBalanceRank" },
-                  })
-                }
-              >
-                <SliderMark
-                  value={values.workLifeBalanceRank}
-                  mt="-8"
-                  ml="-1"
-                  fontSize="sm"
-                >
-                  {values.workLifeBalanceRank}
-                </SliderMark>
-                <SliderTrack>
-                  <SliderFilledTrack bg="#3182CE" />
-                </SliderTrack>
-                <SliderThumb />
-              </Slider>
-            </FormControl>
-            <FormControl className={classes.sliders}>
-              <FormLabel>Motivation</FormLabel>
-              <Slider
-                id="motivationRank"
-                name="motivationRank"
-                defaultValue={values.motivationRank}
-                min={1}
-                max={10}
-                onChange={(value) =>
-                  handleChange({ target: { value, name: "motivationRank" } })
-                }
-              >
-                <SliderMark
-                  value={values.motivationRank}
-                  mt="-8"
-                  ml="-1"
-                  fontSize="sm"
-                >
-                  {values.motivationRank}
-                </SliderMark>
-                <SliderTrack>
-                  <SliderFilledTrack bg="#3182CE" />
-                </SliderTrack>
-                <SliderThumb />
-              </Slider>
-            </FormControl>
-            <FormControl className={classes.sliders}>
-              <FormLabel>Relationships</FormLabel>
-              <Slider
-                id="relationshipsRank"
-                name="relationshipsRank"
-                defaultValue={values.relationshipsRank}
-                min={1}
-                max={10}
-                onChange={(value) =>
-                  handleChange({ target: { value, name: "relationshipsRank" } })
-                }
-              >
-                <SliderMark
-                  value={values.relationshipsRank}
-                  mt="-8"
-                  ml="-1"
-                  fontSize="sm"
-                >
-                  {values.relationshipsRank}
-                </SliderMark>
-                <SliderTrack>
-                  <SliderFilledTrack bg="#3182CE" />
-                </SliderTrack>
-                <SliderThumb />
-              </Slider>
-            </FormControl>
-            <FormControl>
-              <FormLabel>
-                What are the most important personal issues you are currently
-                navigating?
-              </FormLabel>
-              <Textarea
-                id="personalIssues"
-                name="personalIssues"
-                onChange={handleChange}
-                value={values.personalIssues}
-              />
-              {errors.personalIssues && touched.personalIssues && (
-                <div className={classes.errors}>{errors.personalIssues}</div>
-              )}
-            </FormControl>
-            <FormControl>
-              <FormLabel>
-                What are the most important professional issues you are
-                currently navigating?
-              </FormLabel>
-              <Textarea
-                id="professionalIssues"
-                name="professionalIssues"
-                onChange={handleChange}
-                value={values.professionalIssues}
-              />
-              {errors.professionalIssues && touched.professionalIssues && (
-                <div className={classes.errors}>
-                  {errors.professionalIssues}
-                </div>
-              )}
-            </FormControl>
-            <FormControl>
-              <FormLabel>
-                What are the most important decisions you need to make in the
-                next 90 days?
-              </FormLabel>
-              <Textarea
-                id="decisions"
-                name="decisions"
-                onChange={handleChange}
-                value={values.decisions}
-              />
-              {errors.decisions && touched.decisions && (
-                <div className={classes.errors}>{errors.decisions}</div>
-              )}
-            </FormControl>
-            <FormControl>
-              <FormLabel>
-                What is working and not working right now with your leadership
-                process?
-              </FormLabel>
-              <Textarea
-                id="leadershipProcess"
-                name="leadershipProcess"
-                onChange={handleChange}
-                value={values.leadershipProcess}
-              />
-              {errors.leadershipProcess && touched.leadershipProcess && (
-                <div className={classes.errors}>{errors.leadershipProcess}</div>
-              )}
-            </FormControl>
-            <FormControl>
-              <FormLabel>
-                What are the key action items you are focused on accomplishing?
-              </FormLabel>
-              <Stack>
-                <Input
-                  id="keyActionItem1"
-                  name="keyActionItem1"
-                  type="text"
-                  onChange={handleChange}
-                  value={values.keyActionItem1}
-                />
-                {errors.keyActionItem1 && touched.keyActionItem1 && (
-                  <div className={classes.errors}>{errors.keyActionItem1}</div>
-                )}
-                <Input
-                  id="keyActionItem2"
-                  name="keyActionItem2"
-                  type="text"
-                  onChange={handleChange}
-                  value={values.keyActionItem2}
-                />
-                {errors.keyActionItem2 && touched.keyActionItem2 && (
-                  <div className={classes.errors}>{errors.keyActionItem2}</div>
-                )}
-                <Input
-                  id="keyActionItem3"
-                  name="keyActionItem3"
-                  type="text"
-                  onChange={handleChange}
-                  value={values.keyActionItem3}
-                />
-                {errors.keyActionItem3 && touched.keyActionItem3 && (
-                  <div className={classes.errors}>{errors.keyActionItem3}</div>
-                )}
-                <Input
-                  id="keyActionItem4"
-                  name="keyActionItem4"
-                  type="text"
-                  onChange={handleChange}
-                  value={values.keyActionItem4}
-                />
-                {errors.keyActionItem4 && touched.keyActionItem4 && (
-                  <div className={classes.errors}>{errors.keyActionItem4}</div>
-                )}
-                <Input
-                  id="keyActionItem5"
-                  name="keyActionItem5"
-                  type="text"
-                  onChange={handleChange}
-                  value={values.keyActionItem5}
-                />
-                {errors.keyActionItem5 && touched.keyActionItem5 && (
-                  <div className={classes.errors}>{errors.keyActionItem5}</div>
-                )}
-              </Stack>
-            </FormControl>
-            <Button type="submit" disabled={isSubmitting}>
-              Submit
-            </Button>
-          </Form>
-        )}
-      </Formik>
-    </PageWrapper>
+                  Submit
+                </Button>
+              </Form>
+            )}
+          </Formik>
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
   );
 };
 
