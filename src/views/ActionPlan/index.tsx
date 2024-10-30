@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ActionPlanForm, CurrentUser } from "../../types";
 import { Form, Formik, FormikValues } from "formik";
@@ -23,7 +23,6 @@ import {
   DrawerContent,
   DrawerCloseButton,
   DrawerHeader,
-  Box,
 } from "@chakra-ui/react";
 import axios from "axios";
 import envConfig from "../../envConfig";

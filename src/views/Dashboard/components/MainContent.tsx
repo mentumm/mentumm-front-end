@@ -1,9 +1,9 @@
 import { Box } from '@chakra-ui/react';
 import React from 'react';
 import HighlightedCoaches from '../../../components/FeaturedCoaches';
-import { CoachType, CurrentUser, User } from '../../../types';
-import { getCurrentFeatured } from '../utils';
-import { FeaturedCertificatePrograms } from './featuredCertificatePrograms';
+import { CoachType, CurrentUser } from '../../../types';
+import { getCurrentFeatured } from '../../../utils/dashboard';
+import { FeaturedCertificatePrograms } from '../../../components/Dashboard/FeaturedCertificatePrograms';
 import { ServicesForYou } from './servicesForYou';
 
 interface MainContentProps {
