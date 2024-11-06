@@ -4,7 +4,7 @@ import { SvgLayer } from "../../components/Waves/svgLayer";
 import logo from "../../assets/minimal-mentumm-logo.svg";
 import { CurrentUser, CoachType, ActionPlanForm } from '../../types';
 import { menApiAuthClient } from '../../clients/mentumm';
-import MainContent from "./components/MainContent";
+import MainContent from "./components/mainContent";
 import SideContent from "../../components/Dashboard/SideContent";
 
 interface IProps {
