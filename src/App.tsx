@@ -259,16 +259,6 @@ function App() {
             }
           />
           <Route
-            path="/action-plan"
-            element={
-              <SignInWrapper currentUser={currentUser}>
-                <Suspense fallback={<SuspenseFallback />}>
-                  <ActionPlan currentUser={currentUser} />
-                </Suspense>
-              </SignInWrapper>
-            }
-          />
-          <Route
             path="/workshops"
             element={
               <SignInWrapper currentUser={currentUser}>

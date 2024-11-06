@@ -2,12 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Flex, Image, Heading, Box, VStack } from "@chakra-ui/react";
 import { SvgLayer } from "../../components/Waves/svgLayer";
 import logo from "../../assets/minimal-mentumm-logo.svg";
-// import UpcomingCoachingSessions from "../../components/UpcomingCoachingSessions";
-// import PastCoachingSessions from "../../components/PastCoachingSessions";
-import { CurrentUser, CoachType, ActionPlanForm } from "../../types";
-import { menApiAuthClient } from "../../clients/mentumm";
-// import { getCurrentFeatured } from "../../utils/dashboard";
-import MainContent from "../../components/Dashboard/MainContent";
+import { CurrentUser, CoachType, ActionPlanForm } from '../../types';
+import { menApiAuthClient } from '../../clients/mentumm';
+import MainContent from "./components/mainContent";
 import SideContent from "../../components/Dashboard/SideContent";
 
 interface IProps {
@@ -15,7 +12,10 @@ interface IProps {
   setCurrentUser: (currentUser: CurrentUser) => void;
 }
 
-const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
+const Dashboard = ({
+  currentUser,
+  setCurrentUser,
+}: IProps) => {
   const [coaches, setCoaches] = useState<CoachType[]>([]);
   const [, setActionPlan] = useState<ActionPlanForm>(null);
   const bgImage =
@@ -49,8 +49,6 @@ const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
     getCoaches();
   }, [currentUser]);
 
-  // const featuredCoaches = getCurrentFeatured(coaches, 2);
-
   return (
     <Flex
       height="100vh"
@@ -72,7 +70,7 @@ const Dashboard: React.FC<IProps> = ({ currentUser, setCurrentUser }) => {
             Your <b>Dashboard</b>
           </Heading>
         </Flex>
-        <MainContent coaches={coaches} />
+        <MainContent coaches={coaches} currentUser={currentUser} />
       </VStack>
       <Box>
         <SvgLayer vbHeight="300">
