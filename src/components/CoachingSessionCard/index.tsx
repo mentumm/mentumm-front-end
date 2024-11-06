@@ -1,4 +1,4 @@
-import { Heading, Divider, HStack, Flex, Icon, Spacer, Text, Box } from '@chakra-ui/react';
+import { Heading, Divider, HStack, Flex, Icon, Spacer, Text, Box, Center, Button } from '@chakra-ui/react';
 import { faClockRotateLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
@@ -50,37 +50,50 @@ export const CoachingSessionCard = ({
       : `${minutes} mins`
     : null;
 
+  const handleOpenReviewDrawer = () => {
+    console.log('fuckshitpissass')
+  }
+
   return (
     <Box bgColor="#0D1C31" borderRadius="1em" w="100%" p="1em" >
-      <Heading fontFamily='Montserrat' size="sm" color="#3067B0" fontWeight="normal">
+      <Heading fontFamily='Montserrat' size="sm" color="brand.1000" fontWeight="normal">
         {isPrevious ? 'Rate Your Experience' : 'Coaching Session'}
       </Heading>
-      <Divider borderBottomColor="#3067B0" />
+      <Divider borderBottomColor="brand.1000" />
       <HStack mt='0.5em'>
-        <Text fontSize="xs" color="#3067B0" >
+        <Text fontSize="xs" color="brand.1000" >
           With:
         </Text>
-        <Text color="#3067B0" fontSize='xs'>
+        <Text color="brand.1000" fontSize='xs'>
           {`${session.coach.first_name} ${session.coach.last_name}`}
         </Text>
       </HStack>
       <HStack mb='0.5em'>
-        <Text fontSize="xs" color="#3067B0" >
+        <Text fontSize="xs" color="brand.1000" >
           Time:
         </Text>
-        <Text color="#3067B0" fontSize='xs'>
+        <Text color="brand.1000" fontSize='xs'>
           {isPrevious ? `${previousTimeFormat}` : `${futureTimeFrame}`}
         </Text>
       </HStack>
-      <Flex align="center">
-        <Icon as={FontAwesomeIcon} icon={faClockRotateLeft} color="#3067B0" size="lg" />
+      {!isPrevious && <Flex align="center">
+        <Icon as={FontAwesomeIcon} icon={faClockRotateLeft} color="brand.1000" size="lg" />
         <Spacer />
-        <Heading size='md' color="#3067B0">
+        <Heading size='md' color="brand.1000">
           {isSameDay
             ? timeDifferenceDisplay
             : futureEventFormat}
         </Heading>
-      </Flex>
+      </Flex>}
+      {isPrevious && (
+        <Button
+          variant='onBlueAlt'
+          w='100%'
+          onClick={handleOpenReviewDrawer}
+        >
+          REVIEW
+        </Button>
+      )}
     </Box>
   )
 }
@@ -88,10 +101,10 @@ export const CoachingSessionCard = ({
 export const EmptyCoachingSessionCard = () => {
   return (
     <Box bgColor="#0D1C31" borderRadius="1em" w="100%" p="1em" h='128px'>
-      <Heading display='flex' justifyContent='center' mb={1} fontFamily='Montserrat' size="sm" color="#3067B0" fontWeight="normal">
+      <Heading display='flex' justifyContent='center' mb={1} fontFamily='Montserrat' size="sm" color="brand.1000" fontWeight="normal">
         No upcoming sessions
       </Heading>
-      <Divider borderBottomColor="#3067B0" />
+      <Divider borderBottomColor="brand.1000" />
       <HStack mt='0.5em'>
       </HStack>
       <Flex align="center">

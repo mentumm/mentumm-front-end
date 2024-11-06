@@ -9,7 +9,9 @@ interface Iprops {
 }
 type TChoachBooking = CoachBooking & { coach: CoachType };
 
-const PastCoachingSessions: FC<Iprops> = ({ currentUser }) => {
+const PastCoachingSessions = ({
+  currentUser
+}: Iprops) => {
   const [past, setPast] = useState<TChoachBooking[]>([]);
 
   useEffect(() => {

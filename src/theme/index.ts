@@ -12,7 +12,9 @@ const customTheme = extendTheme({
       600: "#00938e",
       700: "#002F6F",
       800: "#0D1C31",
+      //these 2 below look nearly identical but the figma designs had these in different areas cuz the designer was insane
       900: "#3168B2",
+      1000: "#3067B0"
     },
   },
   fonts: {
@@ -66,6 +68,22 @@ const customTheme = extendTheme({
           fontSize: "lg",
           fontFamily: "Montserrat",
           border: "2px solid #2CBBBC",
+          _hover: {
+            backgroundColor: "brand.300",
+            color: "white",
+            _disabled: {
+              bg: "red",
+            },
+          },
+        },
+        onBlueAlt: {
+          borderRadius: "30px",
+          bgColor: "brand.800",
+          colorScheme: "brand",
+          color: "brand.300",
+          fontWeight: "bold",
+          fontSize: "lg",
+          fontFamily: "Montserrat",
           _hover: {
             backgroundColor: "brand.300",
             color: "white",
