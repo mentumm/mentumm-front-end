@@ -1,7 +1,16 @@
 import { Flex, Image, Text } from "@chakra-ui/react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const CertificateProgram = ({ image, title, description }) => {
+const CertificateProgram = ({ id, image, title, description }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigate(`/certificate-program/${id}`);
+  };
+
   return (
     <Flex
       minWidth={355}
@@ -20,6 +29,8 @@ const CertificateProgram = ({ image, title, description }) => {
           opacity: 1,
         },
       }}
+      cursor="pointer"
+      onClick={handleClick}
     >
       <Image
         src={image}

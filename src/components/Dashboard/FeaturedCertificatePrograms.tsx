@@ -104,6 +104,7 @@ export const FeaturedCertificatePrograms = ({ title }: any) => {
           {certificatePrograms.map((c) => (
             <CertificateProgram
               key={c.id}
+              id={c.id}
               image={c.image}
               title={c.title}
               description={c.description}
