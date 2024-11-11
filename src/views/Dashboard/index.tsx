@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Flex, Image, Heading, Box, VStack } from "@chakra-ui/react";
 import { SvgLayer } from "../../components/Waves/svgLayer";
 import logo from "../../assets/minimal-mentumm-logo.svg";
-import { CurrentUser, CoachType, ActionPlanForm } from '../../types';
-import { menApiAuthClient } from '../../clients/mentumm';
-import MainContent from "./components/mainContent";
+import { CurrentUser, CoachType, ActionPlanForm } from "../../types";
+import { menApiAuthClient } from "../../clients/mentumm";
+import MainContent from "./components/MainContent";
 import SideContent from "../../components/Dashboard/SideContent";
 
 interface IProps {
@@ -12,10 +12,7 @@ interface IProps {
   setCurrentUser: (currentUser: CurrentUser) => void;
 }
 
-const Dashboard = ({
-  currentUser,
-  setCurrentUser,
-}: IProps) => {
+const Dashboard = ({ currentUser, setCurrentUser }: IProps) => {
   const [coaches, setCoaches] = useState<CoachType[]>([]);
   const [, setActionPlan] = useState<ActionPlanForm>(null);
   const bgImage =

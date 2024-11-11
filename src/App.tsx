@@ -12,22 +12,23 @@ import Home from "./views/Home";
 import Login from "./views/Login";
 import { menApiAuthClient } from "./clients/mentumm";
 import Dashboard from "./views/Dashboard";
-const ActionPlan = lazy(() => import('./views/ActionPlan'));
-const EditProfile = lazy(() => import('./views/Coach/EditProfile'));
-const EditUserProfile = lazy(() => import('./views/User/EditProfile'));
-const CoachBio = lazy(() => import('./views/CoachBio'));
-const CoachResults = lazy(() => import('./views/CoachResults'));
-const CoachSearch = lazy(() => import('./views/CoachSearch'));
-const GetStarted = lazy(() => import('./views/GetStarted'));
-const CoachingStyle = lazy(() => import('./views/GetStarted/CoachingStyle'));
-const Workshops = lazy(() => import('./views/Workshops'));
-const CoachExpertise = lazy(() => import('./views/CoachExpertise'));
-const ForgotPassword = lazy(() => import('./views/ForgotPassword'));
-const ResetPassword = lazy(() => import('./views/ResetPassword'));
-const WorkshopSlug = lazy(() => import('./views/WorkshopSlug'))
-const BookingConfirmation = lazy(() => import('./views/BookingConfirmation'))
-const Register = lazy(() => import('./views/Register'));
+import CertificateProgram from "./views/CertificateProgram";
 
+const ActionPlan = lazy(() => import("./views/ActionPlan"));
+const EditProfile = lazy(() => import("./views/Coach/EditProfile"));
+const EditUserProfile = lazy(() => import("./views/User/EditProfile"));
+const CoachBio = lazy(() => import("./views/CoachBio"));
+const CoachResults = lazy(() => import("./views/CoachResults"));
+const CoachSearch = lazy(() => import("./views/CoachSearch"));
+const GetStarted = lazy(() => import("./views/GetStarted"));
+const CoachingStyle = lazy(() => import("./views/GetStarted/CoachingStyle"));
+const Workshops = lazy(() => import("./views/Workshops"));
+const CoachExpertise = lazy(() => import("./views/CoachExpertise"));
+const ForgotPassword = lazy(() => import("./views/ForgotPassword"));
+const ResetPassword = lazy(() => import("./views/ResetPassword"));
+const WorkshopSlug = lazy(() => import("./views/WorkshopSlug"));
+const BookingConfirmation = lazy(() => import("./views/BookingConfirmation"));
+const Register = lazy(() => import("./views/Register"));
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -156,7 +157,10 @@ function App() {
             path="/home"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <Dashboard currentUser={currentUser} setCurrentUser={setCurrentUser} />
+                <Dashboard
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                />
               </SignInWrapper>
             }
           />
@@ -306,6 +310,16 @@ function App() {
               <Suspense fallback={<SuspenseFallback />}>
                 <ResetPassword />
               </Suspense>
+            }
+          />
+          <Route
+            path="/certificate-program/:id"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <Suspense fallback={<SuspenseFallback />}>
+                  <CertificateProgram />
+                </Suspense>
+              </SignInWrapper>
             }
           />
         </Routes>
