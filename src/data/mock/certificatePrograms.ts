@@ -1,4 +1,23 @@
-export const certificatePrograms = [
+export interface Point {
+  subTitle: string;
+  description: string;
+}
+
+export interface Module {
+  title: string;
+  description: string;
+  points: Point[];
+}
+
+export interface CertificateProgram {
+  id: number;
+  title: string;
+  description: string;
+  modules: Module[];
+  image: string;
+}
+
+export const certificatePrograms: CertificateProgram[] = [
   {
     id: 1,
     title: "Leadership",
@@ -7,11 +26,9 @@ export const certificatePrograms = [
     modules: [
       {
         title: "Building Relationships",
+        description:
+          "Build and maintain strong professional relationships through intentional trust-building, authentic communication, and mutual respect while maintaining appropriate boundaries.",
         points: [
-          {
-            subTitle: "subTitle",
-            description: "description",
-          },
           {
             subTitle: "Prioritize Intentional Relationship Building",
             description:
@@ -66,6 +83,8 @@ export const certificatePrograms = [
       },
       {
         title: "Coaching Conversations",
+        description:
+          "Conduct effective coaching sessions through regular structured meetings, active listening, and solution-oriented discussions while maintaining accountability and fostering a supportive coaching culture.",
         points: [
           {
             subTitle: "Establish Regular Coaching Sessions",
@@ -121,6 +140,8 @@ export const certificatePrograms = [
       },
       {
         title: "Delivering Feedback",
+        description:
+          "Create a strong feedback culture by providing frequent, specific, and balanced feedback in appropriate settings while maintaining empathy and focusing on solutions.",
         points: [
           {
             subTitle: "Give Feedback Frequently to Build a Feedback Culture",
@@ -176,6 +197,8 @@ export const certificatePrograms = [
       },
       {
         title: "Driving Engagement",
+        description:
+          "Foster employee engagement through personalized strategies, meaningful relationships, and continuous development while maintaining proactive communication throughout the employee lifecycle.",
         points: [
           {
             subTitle: "Create Individualized Engagement Strategies",
@@ -231,6 +254,8 @@ export const certificatePrograms = [
       },
       {
         title: "Effective Delegation",
+        description:
+          "Master delegation by clearly defining ownership, matching tasks to skills, providing necessary resources, and maintaining appropriate oversight while using delegation as a development tool.",
         points: [
           {
             subTitle: "Clearly Define Ownership of Tasks",
@@ -286,6 +311,8 @@ export const certificatePrograms = [
       },
       {
         title: "Emotional Intelligence",
+        description:
+          "Develop emotional intelligence through self-awareness, emotional regulation, empathy, and effective relationship management while modeling desired behaviors.",
         points: [
           {
             subTitle: "Prioritize Self-Awareness",
@@ -341,6 +368,8 @@ export const certificatePrograms = [
       },
       {
         title: "Managing Change",
+        description:
+          "Guide teams through change by acknowledging its inevitability, communicating benefits clearly, providing emotional support, and addressing resistance proactively.",
         points: [
           {
             subTitle: "Assess Your Relationship with Change",
@@ -396,6 +425,8 @@ export const certificatePrograms = [
       },
       {
         title: "Managing Performance",
+        description:
+          "Drive performance through clear goal-setting, continuous monitoring, objective metrics, and regular feedback while fostering accountability and development.",
         points: [
           {
             subTitle: "Set SMART Goals Aligned with Organizational Objectives",
@@ -451,6 +482,8 @@ export const certificatePrograms = [
       },
       {
         title: "Managing Priorities",
+        description:
+          "Optimize productivity by identifying high-impact tasks, using effective time management techniques, and establishing clear boundaries while maintaining work-life balance.",
         points: [
           {
             subTitle: "Identify and Focus on High-Impact Tasks",
@@ -506,6 +539,8 @@ export const certificatePrograms = [
       },
       {
         title: "Resolving Conflict",
+        description:
+          "Address conflicts effectively by intervening early, maintaining neutrality, facilitating open communication, and focusing on collaborative solutions while documenting agreements.",
         points: [
           {
             subTitle: "Address Conflict Early to Prevent Escalation",
@@ -562,6 +597,8 @@ export const certificatePrograms = [
       },
       {
         title: "Setting Goals",
+        description:
+          "Create effective goals through SMART criteria, individual alignment, and regular monitoring while celebrating progress and maintaining flexibility.",
         points: [
           {
             subTitle: "Establish SMART Goals",
@@ -617,6 +654,8 @@ export const certificatePrograms = [
       },
       {
         title: "Team Execution",
+        description:
+          "Drive team success through strategic alignment, clear roles, frequent communication, and proactive problem-solving while maintaining a balance between execution and innovation.",
         points: [
           {
             subTitle: "Foster Strategic Alignment Across the Team",
