@@ -28,8 +28,10 @@ export const CoachingSessionCard = ({
 }: CoachingSessionCardProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const eventDate = new Date(session.event_start_time);
-  const endDate = new Date(session.event_end_time);
+  const { coach, event_start_time, event_end_time } = session;
+
+  const eventDate = new Date(event_start_time);
+  const endDate = new Date(event_end_time);
   const today = new Date();
   const isSameDay =
     eventDate.getFullYear() === today.getFullYear() &&
@@ -85,7 +87,7 @@ export const CoachingSessionCard = ({
             With:
           </Text>
           <Text color="brand.1000" fontSize="xs">
-            {`${session.coach.first_name} ${session.coach.last_name}`}
+            {`${coach.first_name} ${coach.last_name}`}
           </Text>
         </HStack>
         <HStack mb="0.5em">
@@ -128,7 +130,9 @@ export const CoachingSessionCard = ({
         <RateYourExperienceDrawer
           isOpen={isOpen}
           onClose={onClose}
-          coachInfo={session.coach}
+          coachInfo={coach}
+          session={session}
+          currentUser={currentUser}
         />
       )}
     </>

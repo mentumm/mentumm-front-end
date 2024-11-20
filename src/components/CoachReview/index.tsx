@@ -84,7 +84,6 @@ const CoachReview: React.FC<CoachReviewProps> = ({
               {coach ? `${coach.first_name} ${coach.last_name}` : null}
             </Heading>
             <ReviewForm
-              submitForm={submitForm}
               currentUser={currentUser}
               coach={coach}
               userCoachId={userCoachId}

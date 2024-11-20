@@ -165,7 +165,6 @@ export interface ReviewFormType {
 }
 
 export interface ReviewFormProps {
-  submitForm: (form: ReviewFormType) => void;
   currentUser: CurrentUser;
   coach: CoachType;
   userCoachId?: number;

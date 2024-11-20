@@ -1,39 +1,67 @@
 import { CloseIcon } from '@chakra-ui/icons';
-import { Box, Button, Drawer, DrawerContent, DrawerOverlay, Grid, IconButton, VStack, Text } from '@chakra-ui/react';
+import { Box, Button, Drawer, DrawerContent, DrawerOverlay, Grid, IconButton, VStack, Text, useToast } from '@chakra-ui/react';
 import React from 'react';
-import { CoachType } from '../../types';
-import bio from '../../views/CoachBio/components/bio';
+import { menApiAuthClient } from '../../clients/mentumm';
+import { CoachType, ReviewFormType } from '../../types';
 import { UserAvatar } from '../Coach/UserAvatar';
 import About from '../CoachProfileDrawer/components/about';
 import ContentDivider from '../CoachProfileDrawer/components/contentDivider';
 import DrawerList from '../CoachProfileDrawer/components/drawerList';
-import Socials from '../CoachProfileDrawer/components/socials';
 import StyleTags from '../CoachProfileDrawer/components/styleTags';
+import { TCoachBooking } from '../UpcomingCoachingSessions';
 
 interface props {
   isOpen: boolean,
   onClose: () => void
   coachInfo: CoachType
+  session: TCoachBooking
 }
 
 const RateYourExperienceDrawer = ({
   isOpen,
   onClose,
-  coachInfo
+  coachInfo,
+  session,
 }: props) => {
 
   const {
     id: coachId,
     first_name,
     last_name,
-    styles,
-    city,
-    state,
     photo_url,
-
-    expertise,
-    bio,
   } = coachInfo;
+
+  const toast = useToast();
+
+  const submitForm = async (rating: ReviewFormType) => {
+    try {
+      const reviewCoach = await menApiAuthClient().post(
+        "/coach/rating",
+        rating
+      );
+
+      if (reviewCoach) {
+        toast({
+          title: "Review Submitted!",
+          description: `We've submitted your review for ${`${first_name} ${last_name}`}.`,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+          position: "bottom-right",
+        });
+        onClose();
+      }
+    } catch (error) {
+      throw new error("Unable to submit Coach review");
+    }
+  };
+
+  const eventDate = new Date(session.event_start_time);
+  const previousTimeFormat = eventDate.toLocaleDateString('en-US', {
+    year: '2-digit',
+    month: 'numeric',
+    day: 'numeric',
+  });
 
   return (
     <Drawer
@@ -64,25 +92,18 @@ const RateYourExperienceDrawer = ({
               />
               <Button
                 variant='onBlue'
-              // TODO: handle review submission logic
               >
                 SUBMIT REVIEW
               </Button>
             </VStack>
             <VStack spacing={4} align="stretch" p={6} overflowY='scroll' >
               <VStack overflowY='auto' alignItems='baseline'>
-                <Text fontSize="2xl" fontWeight="bold">{`${first_name} ${last_name}`}</Text>
-                <Text fontSize="md">{`${city}, ${state}`}</Text>
+                <Text fontSize="2xl" fontWeight="bold">{`Rate your Experience with ${first_name} ${last_name}`}</Text>
+                <Text fontSize="md">{`Date of session: ${previousTimeFormat}`}</Text>
                 <ContentDivider />
-                {!!styles.length && (
-                  <>
-                    <StyleTags styles={styles} />
-                    <ContentDivider />
-                  </>
-                )}
-                <DrawerList heading='Areas of Expertise' items={expertise} />
-                <ContentDivider />
-                <About bio={bio} />
+                <Box>
+                  plumbus
+                </Box>
               </VStack>
               <Box
                 position='absolute'

@@ -20,12 +20,11 @@ import { useGetTags } from "../../helpers/tagHelpers";
 import { ReviewFormProps } from "../../types";
 import Rating from "./Rating";
 
-const ReviewForm: React.FC<ReviewFormProps> = ({
-  submitForm,
+const ReviewForm = ({
   coach,
   currentUser,
   userCoachId,
-}) => {
+}: ReviewFormProps) => {
   const coachTags = useGetTags();
   const [topic, setTopic] = useState<string>("");
   const [listeningRating, setListeningRating] = useState<number>(0);
@@ -44,36 +43,6 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
   const handleCommentChange = (e) => {
     const inputValue = e.target.value;
     setAddtionalComments(inputValue);
-  };
-
-  const validateForm = (e) => {
-    e.preventDefault();
-
-    if (overallRating === 0) setOverallRatingError(true);
-    if (listeningRating === 0) setListeningError(true);
-    if (!topic) setTagError(true);
-
-    if (overallRating === 0 || listeningRating === 0 || !topic) return;
-    if (overallRatingError || listeningError || tagError) return;
-
-    // submit form information
-    const review = {
-      user_id: currentUser.id,
-      coach_id: coach.id,
-      rating_overall: overallRating,
-      rating_listening: listeningRating,
-      additional_comments: additionalComments,
-      primary_topic: topic,
-      user_learned: learnFromCoach === "yes" ? true : false,
-      user_would_book_again: bookCoachAgain === "yes" ? true : false,
-      user_coach_id: userCoachId,
-    };
-
-    mixpanelEvent("Coach Review", {
-      ...review,
-      coach_name: `${coach.first_name} ${coach.last_name}`,
-    });
-    submitForm(review);
   };
 
   return (
@@ -147,10 +116,10 @@ const ReviewForm: React.FC<ReviewFormProps> = ({
           >
             {coachTags && coachTags.length
               ? coachTags.map((tag) => (
-                  <option value={tag.slug} key={tag.id}>
-                    {tag.name}
-                  </option>
-                ))
+                <option value={tag.slug} key={tag.id}>
+                  {tag.name}
+                </option>
+              ))
               : null}
           </Select>
 
