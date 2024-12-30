@@ -7,6 +7,7 @@ export interface Module {
   title: string;
   description: string;
   points: Point[];
+  vimeoId: string;
 }
 
 export interface CertificateProgram {
@@ -25,6 +26,7 @@ export const certificatePrograms: CertificateProgram[] = [
       "Learn the basics of digital marketing and how to apply them to your business.",
     modules: [
       {
+        vimeoId: "825595386",
         title: "Building Relationships",
         description:
           "Build and maintain strong professional relationships through intentional trust-building, authentic communication, and mutual respect while maintaining appropriate boundaries.",
@@ -82,6 +84,7 @@ export const certificatePrograms: CertificateProgram[] = [
         ],
       },
       {
+        vimeoId: "825614275",
         title: "Coaching Conversations",
         description:
           "Conduct effective coaching sessions through regular structured meetings, active listening, and solution-oriented discussions while maintaining accountability and fostering a supportive coaching culture.",
@@ -139,6 +142,7 @@ export const certificatePrograms: CertificateProgram[] = [
         ],
       },
       {
+        vimeoId: "825618156",
         title: "Delivering Feedback",
         description:
           "Create a strong feedback culture by providing frequent, specific, and balanced feedback in appropriate settings while maintaining empathy and focusing on solutions.",
@@ -196,6 +200,7 @@ export const certificatePrograms: CertificateProgram[] = [
         ],
       },
       {
+        vimeoId: "825624342",
         title: "Driving Engagement",
         description:
           "Foster employee engagement through personalized strategies, meaningful relationships, and continuous development while maintaining proactive communication throughout the employee lifecycle.",
@@ -253,6 +258,7 @@ export const certificatePrograms: CertificateProgram[] = [
         ],
       },
       {
+        vimeoId: "825627382",
         title: "Effective Delegation",
         description:
           "Master delegation by clearly defining ownership, matching tasks to skills, providing necessary resources, and maintaining appropriate oversight while using delegation as a development tool.",
@@ -310,6 +316,7 @@ export const certificatePrograms: CertificateProgram[] = [
         ],
       },
       {
+        vimeoId: "825632299",
         title: "Emotional Intelligence",
         description:
           "Develop emotional intelligence through self-awareness, emotional regulation, empathy, and effective relationship management while modeling desired behaviors.",
@@ -367,6 +374,7 @@ export const certificatePrograms: CertificateProgram[] = [
         ],
       },
       {
+        vimeoId: "825647817",
         title: "Managing Change",
         description:
           "Guide teams through change by acknowledging its inevitability, communicating benefits clearly, providing emotional support, and addressing resistance proactively.",
@@ -424,6 +432,7 @@ export const certificatePrograms: CertificateProgram[] = [
         ],
       },
       {
+        vimeoId: "825649270",
         title: "Managing Performance",
         description:
           "Drive performance through clear goal-setting, continuous monitoring, objective metrics, and regular feedback while fostering accountability and development.",
@@ -481,6 +490,7 @@ export const certificatePrograms: CertificateProgram[] = [
         ],
       },
       {
+        vimeoId: "825651917",
         title: "Managing Priorities",
         description:
           "Optimize productivity by identifying high-impact tasks, using effective time management techniques, and establishing clear boundaries while maintaining work-life balance.",
@@ -538,6 +548,7 @@ export const certificatePrograms: CertificateProgram[] = [
         ],
       },
       {
+        vimeoId: "825656128",
         title: "Resolving Conflict",
         description:
           "Address conflicts effectively by intervening early, maintaining neutrality, facilitating open communication, and focusing on collaborative solutions while documenting agreements.",
@@ -596,6 +607,7 @@ export const certificatePrograms: CertificateProgram[] = [
         ],
       },
       {
+        vimeoId: "825658285",
         title: "Setting Goals",
         description:
           "Create effective goals through SMART criteria, individual alignment, and regular monitoring while celebrating progress and maintaining flexibility.",
@@ -654,6 +666,7 @@ export const certificatePrograms: CertificateProgram[] = [
       },
       {
         title: "Team Execution",
+        vimeoId: "825661979",
         description:
           "Drive team success through strategic alignment, clear roles, frequent communication, and proactive problem-solving while maintaining a balance between execution and innovation.",
         points: [
