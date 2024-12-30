@@ -5,9 +5,10 @@ import {
   certificatePrograms,
   CertificateProgram as CertificateProgramType,
   Module,
-} from "../../data/mock/certificatePrograms";
+} from "../../data/certificatePrograms";
 import PageWrapper from "../../components/Wrappers/PageWrapper";
 import ModuleModal from "./ModuleModal";
+
 const CertificateProgram = () => {
   const { id } = useParams<{ id: string }>();
   const [program, setProgram] = useState<CertificateProgramType | null>(null);

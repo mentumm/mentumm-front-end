@@ -12,7 +12,7 @@ import {
   Text,
   Box,
 } from "@chakra-ui/react";
-import { Module, Point } from "../../data/mock/certificatePrograms";
+import { Module, Point } from "../../data/certificatePrograms";
 
 const ModuleModal = ({ module }: { module: Module }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,14 +28,28 @@ const ModuleModal = ({ module }: { module: Module }) => {
           <ModalHeader fontSize="24px">{module.title}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {/* VIMEO PLACEHOLDER */}
             <Box
               width="100%"
-              paddingBottom="56.25%" // 16:9 aspect ratio
+              paddingBottom="56.25%"
               position="relative"
-              backgroundColor="gray.100"
               mb={4}
-            />
+              backgroundColor="gray.100"
+            >
+              <iframe
+                title={`${module.title} Video`}
+                src={`https://player.vimeo.com/video/${module.vimeoId}`}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                  border: 0,
+                }}
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+              />
+            </Box>
             {module.points.map((point: Point) => (
               <Box key={point.subTitle} mb={4}>
                 <Text fontWeight="bold">{point.subTitle}</Text>

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { Box, Flex, Heading, IconButton } from "@chakra-ui/react";
 import CertificateProgram from "../CertificateProgram";
-import { certificatePrograms } from "../../data/mock/certificatePrograms";
+import { certificatePrograms } from "../../data/certificatePrograms";
 import { ArrowRightIcon, ArrowLeftIcon } from "@chakra-ui/icons";
 
 export const FeaturedCertificatePrograms = ({ title }: any) => {
