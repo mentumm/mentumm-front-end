@@ -1,3 +1,5 @@
+import leadershipCertHero from "../assets/leadership-cert-hero.jpg";
+
 export interface Point {
   subTitle: string;
   description: string;
@@ -723,6 +725,6 @@ export const certificatePrograms: CertificateProgram[] = [
         ],
       },
     ],
-    image: "https://via.placeholder.com/300",
+    image: leadershipCertHero,
   },
 ];

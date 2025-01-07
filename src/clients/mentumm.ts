@@ -18,14 +18,16 @@ function getCookie(name: string): string | null {
   );
 }
 
-// creates authenticated API requests with user's JWT Token
 export const menApiAuthClient = () => {
   try {
     const authToken = getCookie("growth_10_token");
 
     if (!authToken) {
-      throw new Error("Could not retrieve auth token from cookie!");
+      return axios.create({
+        baseURL: API_URL + "/v1",
+      });
     }
+
     const instance = axios.create({
       baseURL: API_URL + "/v1",
       headers: {
@@ -35,5 +37,9 @@ export const menApiAuthClient = () => {
     return instance;
   } catch (error) {
     console.error(error);
+    // Return a basic axios instance as fallback
+    return axios.create({
+      baseURL: API_URL + "/v1",
+    });
   }
 };
