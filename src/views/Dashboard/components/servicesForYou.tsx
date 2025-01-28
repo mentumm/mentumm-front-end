@@ -86,6 +86,8 @@ export const ServicesForYou = ({ currentUser }: Props) => {
           overflow='hidden'
           h='200px'
           _hover={{ cursor: 'pointer' }}
+          as={Link}
+          to='/certificate-program/1'
         >
           <CardBody display='flex' flexDirection='column' justifyContent='space-between' position='relative'>
             <Box maxW='70%' mb={2}>

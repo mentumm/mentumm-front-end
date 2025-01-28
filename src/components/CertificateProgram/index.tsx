@@ -10,7 +10,7 @@ const CertificateProgram = ({ id, image, title, description }) => {
     e.stopPropagation();
     navigate(`/certificate-program/${id}`);
   };
-
+  console.log(image);
   return (
     <Flex
       minWidth={355}
