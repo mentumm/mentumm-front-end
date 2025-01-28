@@ -24,6 +24,7 @@ export const certificatePrograms: CertificateProgram[] = [
     title: "Leadership",
     description:
       "Learn the basics of digital marketing and how to apply them to your business.",
+    image: "/leadership.jpg",
     modules: [
       {
         vimeoId: "825595386",
@@ -723,6 +724,5 @@ export const certificatePrograms: CertificateProgram[] = [
         ],
       },
     ],
-    image: "https://via.placeholder.com/300",
   },
 ];
