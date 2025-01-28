@@ -17,7 +17,7 @@ export const generateCoachTags = (tags: TagType[], slug?: string, isHovered?: bo
         color={isOnWhite ? 'brand.900' : 'white'}
         border='0.5px solid'
       >
-        <TagIcon icon={tag.icon} />
+        <TagIcon icon={tag.slug} />
         <TagLabel fontWeight={isHovered ? '700' : '400'}>{tag.name.toUpperCase()}</TagLabel>
       </Tag>
     )

@@ -20,7 +20,7 @@ const StyleTags = ({ styles }) => {
               color='brand.700'
               border='0.5px solid'
             >
-              <TagIcon icon={tag.icon} isBgWhite={true} />
+              <TagIcon icon={tag.slug} isBgWhite={true} />
               <TagLabel fontWeight='700'>{tag.name.toUpperCase()}</TagLabel>
             </Tag>
           )

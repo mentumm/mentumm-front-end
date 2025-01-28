@@ -80,7 +80,7 @@ export const TagOption: React.FC<TagOptionProps> = ({
           isHovered={isHovered}
           isSelected={isSelected}
           isSelectable={isSelectable}
-          icon={tag.icon}
+          icon={tag.slug}
           height="50px"
           width="50px"
         />
