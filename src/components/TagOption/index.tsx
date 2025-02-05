@@ -81,8 +81,8 @@ export const TagOption: React.FC<TagOptionProps> = ({
           isSelected={isSelected}
           isSelectable={isSelectable}
           icon={tag.slug}
-          height="50px"
-          width="50px"
+          height="30px"
+          width="30px"
         />
       </Flex>
     </Card>
