@@ -30,10 +30,9 @@ export const TagOption: React.FC<TagOptionProps> = ({
 
   return (
     <Card
-      h={isMin ? '70px' : '74px'}
-      w={isMin ? 'auto' : '285px'}
       pl={4}
       pt={2}
+      pb={2}
       border="1px solid rgba(255, 255, 255, 1)"
       color={isSelected ? "#4A4A4A" : "white"}
       bg={isSelected ? "white" : "#0D1C31"}
