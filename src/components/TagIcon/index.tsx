@@ -1,34 +1,66 @@
 import React from "react";
-import { Icon } from "@chakra-ui/react";
-import {
-  FaRocket,
-  FaHatWizard,
-  FaSeedling,
-  FaAnchor,
-  FaLightbulb,
-  FaFire,
-  FaChessKing,
-} from "react-icons/fa";
+import { IconProps } from "@chakra-ui/react";
+import AnchorIcon from '../../assets/Icons/MentummIcons/anchor.svg';
+import ChallengerIcon from '../../assets/Icons/MentummIcons/challenger.svg';
+import CheerleaderIcon from '../../assets/Icons/MentummIcons/cheerleader.svg';
+import EducatorIcon from '../../assets/Icons/MentummIcons/educator.svg';
+import IdeatorIcon from '../../assets/Icons/MentummIcons/ideator.svg';
+import ProtectorIcon from '../../assets/Icons/MentummIcons/protector.svg';
+import SponsorIcon from '../../assets/Icons/MentummIcons/sponsor.svg';
 
-type TagIconProps = {
-  icon: string;
+const iconComponents = {
+  anchor: AnchorIcon,
+  challenger: ChallengerIcon,
+  cheerleader: CheerleaderIcon,
+  educator: EducatorIcon,
+  ideator: IdeatorIcon,
+  protector: ProtectorIcon,
+  sponsor: SponsorIcon,
 };
 
-export const TagIcon = ({ icon }: TagIconProps) => {
-  switch (icon) {
-    case "fa-solid fa-rocket":
-      return <Icon as={FaRocket} mr={1} />;
-    case "fa-solid fa-hat-wizard":
-      return <Icon as={FaHatWizard} mr={1} />;
-    case "fa-solid fa-seedling":
-      return <Icon as={FaSeedling} mr={1} />;
-    case "fa-solid fa-anchor":
-      return <Icon as={FaAnchor} mr={1} />;
-    case "fa-solid fa-lightbulb":
-      return <Icon as={FaLightbulb} mr={1} />;
-    case "fa-solid fa-fire-flame-curved":
-      return <Icon as={FaFire} mr={1} />;
-    case "fa-solid fa-chess-king":
-      return <Icon as={FaChessKing} mr={1} />;
+type TagIconProps = IconProps & {
+  isHovered?: boolean;
+  isSelected?: boolean;
+  isSelectable?: boolean;
+  isBgWhite?: boolean;
+  icon: string;
+  ml?: string;
+  width?: string;
+  height?: string;
+};
+
+export const TagIcon = ({
+  isSelected,
+  isBgWhite,
+  icon,
+  ml,
+  width,
+  height,
+}: TagIconProps) => {
+  const IconComponent = iconComponents[icon];
+
+  const color = () => {
+    if (isSelected) {
+      return "#4A4A4A";
+    }
+    if (isBgWhite) {
+      return "brand.700";
+    }
+    return "white"
   }
+
+  return (
+    <img
+      src={IconComponent}
+      alt={`${icon} icon`}
+      style={{
+        width: width || '14px',
+        height: height || '14px',
+        marginRight: '1rem',
+        marginLeft: ml,
+        filter: color() === 'white' ? 'invert(1)' : 'invert(0.7)',
+        pointerEvents: 'none'
+      }}
+    />
+  );
 };

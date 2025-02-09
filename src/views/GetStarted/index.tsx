@@ -1,151 +1,100 @@
 import {
   Box,
-  Container,
   Flex,
   Heading,
+  VStack,
   Image,
+  Text,
   Button,
-  Stack,
-  UnorderedList,
-  ListItem,
 } from "@chakra-ui/react";
 import React from "react";
-import { createUseStyles, DefaultTheme } from "react-jss";
 import { Link } from "react-router-dom";
 import { CurrentUserProps } from "../../types";
-import welcome from "./welcome.png";
-
-const useStyles = createUseStyles((theme: DefaultTheme) => ({
-  root: {
-    display: "flex",
-    width: "100%",
-  },
-  column: {
-    width: "100%",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  image: {
-    position: "relative",
-    width: "75%",
-    margin: "0 auto",
-  },
-  margin: {
-    marginBottom: "24px",
-  },
-  list: {
-    paddingLeft: 24,
-    fontSize: 24,
-    "& > li": {
-      marginBottom: 24,
-    },
-    "& > li::marker": {
-      fontWeight: "bold",
-    },
-  },
-}));
+import logo from "../../assets/minimal-mentumm-logo.svg";
+import { SvgLayer } from "../../components/Waves/svgLayer";
+import { WelcomeContent } from "../../components/WelcomeContent";
 
 const GetStarted: React.FC<CurrentUserProps> = ({ currentUser }) => {
-  const classes = useStyles();
+  const bgImage = 'https://mentummportal.sfo3.digitaloceanspaces.com/mentumm-splash.jpeg';
   const isCoach = currentUser?.role === 'coach';
 
   return (
-    <div className={classes.root}>
-      <div className={classes.column}>
-        <Container maxW="100%">
-          <Flex
-            dir="row"
-            alignItems="center"
-            justifyContent="center"
-            gap={{ base: "0", md: "12" }}
-            direction={{ base: "column-reverse", md: "row" }}
-            minH="calc(100vh - 200px)"
+    <Flex
+      direction="column"
+      align="center"
+      justify="center"
+      height="100vh"
+      bgImage={`url(${bgImage})`}
+      bgPos="center center"
+      bgSize="cover"
+    >
+      <VStack
+        position="absolute"
+        top="0"
+        pt={8}
+        textAlign="center"
+      >
+        <Image src={logo} boxSize="150px" />
+        <Heading zIndex={1} size="4xl" fontWeight="400" color="white">
+          Welcome to mentumm,{' '}
+          {currentUser
+            ? (
+              <Box as="span">
+                <Text as="b">
+                  {currentUser.first_name}
+                </Text>
+                {`!`}
+              </Box>
+            )
+            : null}
+        </Heading>
+      </VStack>
+      <Box>
+        <SvgLayer
+          vbHeight="825"
+        >
+          <path
+            d="M1440 55.0362V492H0V0C160.575 75.0766 406.2 180.288 710.55 182.008C1024.35 183.878 1277.1 131.234 1440 55.0362Z"
+            fill="#2CBBBC"
+          />
+        </SvgLayer>
+        <SvgLayer
+          vbHeight="825"
+        >
+          <path
+            d="M0 55.0362V825H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z"
+            fill="#0D1C31"
+          />
+        </SvgLayer>
+        <SvgLayer
+          vbHeight="230"
+        >
+          <path
+            d="M1440 55.0362V252H0V0C160.575 75.0766 406.2 180.288 710.55 182.008C1024.35 183.878 1277.1 131.234 1440 55.0362Z" fill="#2CBBBC" />
+        </SvgLayer>
+        <SvgLayer
+          vbHeight="230"
+        >
+          <path
+            d="M0 55.0362V550H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z" fill="#0D1C31" />
+        </SvgLayer>
+      </Box>
+      <WelcomeContent isCoach={isCoach} />
+      <Box mt="2em">
+        <Link
+          to={isCoach ? `/coach/${currentUser.id}/coaching-style` : "/get-started/coaching-style"}
+        >
+          <Button
+            variant="onBlue"
+            width="360px"
+            mt={2}
+            padding={7}
           >
-            <Stack
-              align={["center", "center", "flex-start", "flex-start"]}
-              alignItems="center"
-            >
-              <Box maxW="750px" position="relative">
-                <Heading as="h2" size="xl" className={classes.margin}>
-                  Welcome to mentumm,{" "}
-                  {currentUser ? `${currentUser.first_name}!` : null}
-                </Heading>
-                <Heading
-                  as="h1"
-                  size="lg"
-                  className={classes.margin}
-                  fontWeight="normal"
-                >
-                  {isCoach
-                    ? 'Great Coaching Opportunities, For You 😎'
-                    : 'Monthly Leadership Development, For You 😎'
-                  }
-
-                </Heading>
-                <UnorderedList className={classes.list}>
-                  <ListItem>
-                    <strong>
-                      {isCoach
-                        ? 'Your Profile: '
-                        : 'Leadership Workshop: '
-                      }
-                    </strong>
-                    {isCoach
-                      ? 'edit your public appearance'
-                      : 'learn a new skill each month'
-                    }
-                  </ListItem>
-                  <ListItem>
-                    <strong>
-                      {isCoach
-                        ? 'Coaching Sessions: '
-                        : 'One-on-One Coaching: '
-                      }
-                    </strong>
-                    {isCoach
-                      ? 'access past & future sessions'
-                      : 'learn a new skill each month'
-                    }
-                  </ListItem>
-                  <ListItem>
-                    <strong>
-                      {isCoach
-                        ? 'Leadership Workshops: '
-                        : 'Action Planning: '
-                      }
-                    </strong>
-                    {isCoach
-                      ? 'view the content users access'
-                      : 'organize your key issues and goals each month'
-                    }
-                  </ListItem>
-                </UnorderedList>
-                <Button
-                  as={Link}
-                  to={isCoach ? `/coach/${currentUser.id}/coaching-style` : "/get-started/coaching-style"}
-                  mt={2}
-                  padding={7}
-                  fontWeight="bold"
-                >
-                  GET STARTED
-                </Button>
-              </Box>
-            </Stack>
-            <Stack>
-              <Box maxW="md" width="448px">
-                <Image
-                  src={welcome}
-                  alt="Person Searching for a Coach"
-                  maxW={{ base: "100%", md: "85%", lg: "100%" }}
-                  objectFit="cover"
-                />
-              </Box>
-            </Stack>
-          </Flex>
-        </Container>
-      </div>
-    </div>
+            GET STARTED
+          </Button>
+        </Link>
+      </Box>
+    </Flex>
   );
 };
 

@@ -3,14 +3,22 @@ import * as React from "react";
 
 interface CardHeaderProps extends FlexProps {
   title: string;
+  isHovered?: boolean;
   action?: React.ReactNode;
 }
 
-export const CardHeader = (props: CardHeaderProps) => {
-  const { title, action, ...flexProps } = props;
+export const CardHeader = ({ title, action, isHovered, ...flexProps }: CardHeaderProps) => {
+
   return (
     <Flex justifyContent="space-between" alignItems="center" {...flexProps}>
-      <Heading size="lg" fontWeight="bold" letterSpacing="tight" marginEnd="6">
+      <Heading
+        size="md"
+        color='white'
+        fontWeight={isHovered ? '700' : '400'}
+        letterSpacing="tight"
+        marginEnd="6"
+        sx={{ 'text-wrap': 'nowrap' }}
+      >
         {title}
       </Heading>
       {action ? action : null}

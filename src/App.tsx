@@ -5,29 +5,30 @@ import { createUseStyles, DefaultTheme } from "react-jss";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import SuspenseFallback from "./components/Loaders/suspenseFallback";
 import AppContainer from "./components/AppContainer";
-import Footer from "./components/Footer";
 import SignInWrapper from "./components/LoginWrapper";
 import NavBar from "./components/NavBar";
 import { CurrentUser } from "./types";
 import Home from "./views/Home";
 import Login from "./views/Login";
 import { menApiAuthClient } from "./clients/mentumm";
-const ActionPlan = lazy(() => import('./views/ActionPlan'));
-const EditProfile = lazy(() => import('./views/Coach/EditProfile'));
-const EditUserProfile = lazy(() => import('./views/User/EditProfile'));
-const CoachBio = lazy(() => import('./views/CoachBio'));
-const CoachResults = lazy(() => import('./views/CoachResults'));
-const CoachSearch = lazy(() => import('./views/CoachSearch'));
-const GetStarted = lazy(() => import('./views/GetStarted'));
-const CoachingStyle = lazy(() => import('./views/GetStarted/CoachingStyle'));
-const Workshops = lazy(() => import('./views/Workshops'));
-const CoachExpertise = lazy(() => import('./views/CoachExpertise'));
-const ForgotPassword = lazy(() => import('./views/ForgotPassword'));
-const ResetPassword = lazy(() => import('./views/ResetPassword'));
-const WorkshopSlug = lazy(() => import('./views/WorkshopSlug'))
-const BookingConfirmation = lazy(() => import('./views/BookingConfirmation'))
-const Register = lazy(() => import('./views/Register'));
+import Dashboard from "./views/Dashboard";
+import CertificateProgram from "./views/CertificateProgram";
 
+const ActionPlan = lazy(() => import("./views/ActionPlan"));
+const EditProfile = lazy(() => import("./views/Coach/EditProfile"));
+const EditUserProfile = lazy(() => import("./views/User/EditProfile"));
+const CoachBio = lazy(() => import("./views/CoachBio"));
+const CoachResults = lazy(() => import("./views/CoachResults"));
+const CoachSearch = lazy(() => import("./views/CoachSearch"));
+const GetStarted = lazy(() => import("./views/GetStarted"));
+const CoachingStyle = lazy(() => import("./views/GetStarted/CoachingStyle"));
+const Workshops = lazy(() => import("./views/Workshops"));
+const CoachExpertise = lazy(() => import("./views/CoachExpertise"));
+const ForgotPassword = lazy(() => import("./views/ForgotPassword"));
+const ResetPassword = lazy(() => import("./views/ResetPassword"));
+const WorkshopSlug = lazy(() => import("./views/WorkshopSlug"));
+const BookingConfirmation = lazy(() => import("./views/BookingConfirmation"));
+const Register = lazy(() => import("./views/Register"));
 
 const useStyles = createUseStyles((theme: DefaultTheme) => ({
   root: {
@@ -137,7 +138,7 @@ function App() {
   return (
     <AppContainer>
       <div className={classes.root}>
-        <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />
+        {/* {currentUser && <NavBar currentUser={currentUser} setCurrentUser={setCurrentUser} />} */}
         <Routes>
           <Route
             path="/"
@@ -156,7 +157,10 @@ function App() {
             path="/home"
             element={
               <SignInWrapper currentUser={currentUser}>
-                <Home currentUser={currentUser} />
+                <Dashboard
+                  currentUser={currentUser}
+                  setCurrentUser={setCurrentUser}
+                />
               </SignInWrapper>
             }
           />
@@ -166,26 +170,6 @@ function App() {
               <SignInWrapper currentUser={currentUser}>
                 <Suspense fallback={<SuspenseFallback />}>
                   <CoachSearch currentUser={currentUser} />
-                </Suspense>
-              </SignInWrapper>
-            }
-          />
-          <Route
-            path="/coaches/:slug"
-            element={
-              <SignInWrapper currentUser={currentUser}>
-                <Suspense fallback={<SuspenseFallback />}>
-                  <CoachResults />
-                </Suspense>
-              </SignInWrapper>
-            }
-          />
-          <Route
-            path="/coach/:coachId"
-            element={
-              <SignInWrapper currentUser={currentUser}>
-                <Suspense fallback={<SuspenseFallback />}>
-                  <CoachBio currentUser={currentUser} />
                 </Suspense>
               </SignInWrapper>
             }
@@ -279,16 +263,6 @@ function App() {
             }
           />
           <Route
-            path="/action-plan"
-            element={
-              <SignInWrapper currentUser={currentUser}>
-                <Suspense fallback={<SuspenseFallback />}>
-                  <ActionPlan currentUser={currentUser} />
-                </Suspense>
-              </SignInWrapper>
-            }
-          />
-          <Route
             path="/workshops"
             element={
               <SignInWrapper currentUser={currentUser}>
@@ -338,8 +312,17 @@ function App() {
               </Suspense>
             }
           />
+          <Route
+            path="/certificate-program/:id"
+            element={
+              <SignInWrapper currentUser={currentUser}>
+                <Suspense fallback={<SuspenseFallback />}>
+                  <CertificateProgram />
+                </Suspense>
+              </SignInWrapper>
+            }
+          />
         </Routes>
-        <Footer />
       </div>
     </AppContainer>
   );

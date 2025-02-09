@@ -3,99 +3,24 @@ import { menApiAuthClient } from "../../../clients/mentumm";
 import { CoachType, Tag } from "../../../types";
 import {
   Button,
-  Checkbox,
-  Container,
   Flex,
   Heading,
-  Stack,
-  Text,
+  Image,
+  Box,
+  VStack,
   Spinner,
+  Center,
+  Text,
 } from "@chakra-ui/react";
-import { TagIcon } from "../../../components/TagIcon";
 import envConfig from "../../../envConfig";
 import { useNavigate } from "react-router";
 import { CurrentUser } from "../../../types";
 import { useCookies } from "react-cookie";
-import PageWrapper from "../../../components/Wrappers/PageWrapper";
+import { SvgLayer } from "../../../components/Waves/svgLayer";
+import BackButton from "../../../components/BackButton";
+import logo from "../../../assets/minimal-mentumm-logo.svg";
+import { ContentContainer } from "./components/ContentContainer";
 
-type TagOptionProps = {
-  tag: Tag;
-  checkedItems: Number[];
-  setCheckedItems: Function;
-};
-
-const TagOption: React.FC<TagOptionProps> = ({
-  tag,
-  checkedItems,
-  setCheckedItems,
-}) => {
-  const toggleTagChecked = (id: number) => {
-    if (checkedItems.includes(id)) {
-      return checkedItems.filter((item) => item !== id);
-    }
-
-    return [...checkedItems, id];
-  };
-
-  return (
-    <Checkbox
-      colorScheme="brand"
-      value={tag.id}
-      isChecked={checkedItems.includes(Number(tag.id))}
-      onChange={(e) =>
-        setCheckedItems(toggleTagChecked(Number(e.target.value)))
-      }
-      isDisabled={
-        !checkedItems.includes(Number(tag.id)) && checkedItems.length > 1
-      }
-      aria-label={tag.name}
-      display={"flex"}
-    >
-      <Flex
-        alignItems="center"
-        p={2}
-        align="stretch"
-        width={330}
-        backgroundColor={
-          checkedItems.includes(Number(tag.id)) ? "#C0E1FF" : "#EDF2F7"
-        }
-        borderRadius={4}
-        _hover={{ bg: checkedItems.length < 2 ? "#C0E1FF" : "" }}
-      >
-        <TagIcon icon={tag.icon} />
-        <Text textTransform="uppercase" fontWeight="bold" mr={1}>
-          {tag.name}
-        </Text>{" "}
-        <Text>- {tag.description}</Text>
-      </Flex>
-    </Checkbox>
-  );
-};
-
-type ContentContainerProps = {
-  tags: Tag[];
-  checkedItems: Number[];
-  setCheckedItems: Function;
-};
-
-const ContentContainer: React.FC<ContentContainerProps> = ({
-  tags,
-  checkedItems,
-  setCheckedItems,
-}) => {
-  return (
-    <Stack direction="column" spacing={3} align="stretch">
-      {tags.map((tag) => (
-        <TagOption
-          key={tag.id}
-          tag={tag}
-          checkedItems={checkedItems}
-          setCheckedItems={setCheckedItems}
-        />
-      ))}
-    </Stack>
-  );
-};
 
 type CoachingStyleProps = {
   isCoach?: boolean;
@@ -109,12 +34,15 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
   isCoach,
 }) => {
   const navigate = useNavigate();
+
   const [tags, setTags] = useState<Tag[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
-  const [checkedItems, setCheckedItems] = React.useState([]);
+  const [selectedItems, setSelectedItems] = React.useState([]);
   const [, setCookie] = useCookies(["growth_10_03142023"]);
   const [hasExpertiseTags, setHasExpertiseTags] = useState<Boolean>(false);
+
+  const bgImage = 'https://mentummportal.sfo3.digitaloceanspaces.com/mentumm-splash.jpeg';
 
   useEffect(() => {
     const getTags = async () => {
@@ -141,8 +69,6 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
     getTags();
   }, []);
 
-
-
   const handleContinue = async () => {
     if (saving) {
       return;
@@ -152,7 +78,7 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
 
     await menApiAuthClient()
       .post(`${envConfig.API_URL}/v1/user/tags`, {
-        tag_ids: checkedItems,
+        tag_ids: selectedItems,
         kind: "style",
         user_id: currentUser.id,
         clear: true,
@@ -186,51 +112,87 @@ const CoachingStyle: React.FC<CoachingStyleProps> = ({
   };
 
   return (
-    <PageWrapper>
-      <Container maxW={1270} pt={0} >
-        <Heading size="lg" textAlign="left" >
-          {isCoach
-            ? "Select Your Coaching Styles"
-            : "Select Your Desired Coaching Style"}
-        </Heading>
-
-        <Heading size="md" textAlign="left" mt={8}>
-          {isCoach
-            ? "Pick 2 coaching styles that describe you best"
-            : "Pick 2 coaching styles most conducive to your growth goals."}
-        </Heading>
-
-        {isCoach && (
-          <Heading size="sm">
-            These are used in guiding mentee-coach matches.
-          </Heading>
-        )}
-
-        <Text mt={4} mb={6}>
-          You can update this later in your profile.
-        </Text>
-
-        {loading ? (
-          <Spinner />
-        ) : (
-          <ContentContainer
-            checkedItems={checkedItems}
-            setCheckedItems={setCheckedItems}
-            tags={tags}
-          />
-        )}
-
-        <Button
-          mt={8}
-          padding={7}
-          fontWeight="bold"
-          isDisabled={checkedItems.length < 2 || saving}
-          onClick={handleContinue}
+    <Box>
+      <BackButton />
+      <Flex
+        direction="column"
+        align="center"
+        height="100vh"
+        bgImage={`url(${bgImage})`}
+        bgPos="center center"
+        bgSize="cover"
+      >
+        <VStack
+          position="relative"
+          my="3em"
+          textAlign="center"
         >
-          CONTINUE {saving && <Spinner ml={1} size="xs" />}
-        </Button>
-      </Container>
-    </PageWrapper>
+          <Image src={logo} boxSize="150px" />
+          <Heading zIndex={1} size="3xl" fontWeight="400" mb="2em !important" color="white">
+            <Text>Select Your <b>coaching style</b></Text>
+          </Heading>
+          <Heading zIndex={1} size="lg" color="white">
+            {isCoach
+              ? <Text fontWeight="400"><b style={{ color: "#2CBBBC" }}>Pick 2 coaching styles</b> that describe you best</Text>
+              : <Text fontWeight="400"><b style={{ color: "#2CBBBC" }}>Pick 2 coaching styles</b> most conducive to your growth goals...</Text>}
+          </Heading>
+        </VStack>
+        <Box>
+          <SvgLayer
+            vbHeight="825"
+          >
+            <path
+              d="M1440 55.0362V492H0V0C160.575 75.0766 406.2 180.288 710.55 182.008C1024.35 183.878 1277.1 131.234 1440 55.0362Z"
+              fill="#2CBBBC"
+            />
+          </SvgLayer>
+          <SvgLayer
+            vbHeight="825"
+          >
+            <path
+              d="M0 55.0362V825H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z"
+              fill="#0D1C31"
+            />
+          </SvgLayer>
+          <SvgLayer
+            vbHeight="230"
+          >
+            <path
+              d="M1440 55.0362V252H0V0C160.575 75.0766 406.2 180.288 710.55 182.008C1024.35 183.878 1277.1 131.234 1440 55.0362Z" fill="#2CBBBC" />
+          </SvgLayer>
+          <SvgLayer
+            vbHeight="230"
+          >
+            <path
+              d="M0 55.0362V550H1440V0C1279.43 75.0766 1033.8 180.288 729.45 182.008C415.65 183.878 162.9 131.234 0 55.0362Z" fill="#0D1C31" />
+          </SvgLayer>
+        </Box>
+        <Box>
+          {loading ? (
+            <Spinner />
+          ) : (
+            <ContentContainer
+              selectedItems={selectedItems}
+              setSelectedItems={setSelectedItems}
+              tags={tags}
+            />
+          )}
+          <Center mt="2em">
+            <Button
+              variant="onBlue"
+              w="lg"
+              mt={8}
+              padding={7}
+              fontWeight="bold"
+              isDisabled={selectedItems.length < 2 || saving}
+              onClick={handleContinue}
+            >
+              CONTINUE {saving && <Spinner ml={1} size="xs" />}
+            </Button>
+          </Center>
+        </Box>
+      </Flex>
+    </Box>
   );
 };
 

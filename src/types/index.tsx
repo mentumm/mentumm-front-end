@@ -231,3 +231,10 @@ export interface ActionPlanForm {
   leadership_process_field: string;
   key_action_items: string;
 }
+
+export interface CoachProfileDrawerProps {
+  currentUser: CurrentUser;
+  coachInfo: CoachType;
+  onClose: () => void;
+  isOpen: boolean;
+}

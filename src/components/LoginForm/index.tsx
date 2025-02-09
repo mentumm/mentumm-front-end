@@ -1,16 +1,15 @@
 import React, { useState } from "react";
 import {
   Button,
-  Checkbox,
   Container,
   FormControl,
   FormErrorMessage,
   FormLabel,
   Heading,
-  HStack,
+  Center,
   Input,
   Stack,
-  Text,
+  Flex,
 } from "@chakra-ui/react";
 import { CurrentUser, UserLoginProps } from "../../types";
 import axios from "axios";
@@ -155,27 +154,29 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
   };
 
   return (
-    <Container as="form" onSubmit={onSubmit} maxW="md">
-      <Stack spacing="8">
-        <Stack spacing="6">
-          <Stack spacing={{ base: "2", md: "3" }} textAlign="left">
-            <Heading size="lg" textAlign="left">
-              Registered Members
-            </Heading>
-            <HStack spacing="1" justify="left">
-              <Text>Book your next coaching session!</Text>
-            </HStack>
-          </Stack>
-        </Stack>
-        <Stack spacing="6">
-          <Stack spacing="-px">
+    <Container
+      display="flex"
+      justifyContent="center"
+      as="form"
+      onSubmit={onSubmit}
+      minW="md"
+      zIndex="1"
+      mb={2}
+    >
+      <Stack spacing="4" alignItems="center">
+        <Stack
+          position="absolute"
+          minW="md"
+          bottom="10rem"
+        >
+          <Stack spacing="2">
             <FormControl id="email" isInvalid={emailError}>
               <FormLabel srOnly>Email address</FormLabel>
               <Input
                 name="email"
                 type="email"
+                bgColor="white"
                 placeholder="Email"
-                roundedBottom="0"
                 onChange={handleEmailChange}
               />
               {!emailError ? null : (
@@ -189,8 +190,9 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
               <Input
                 name="password"
                 type="password"
+                size="sm"
+                bgColor="white"
                 placeholder="Password"
-                roundedTop="0"
                 onChange={handlePasswordChange}
               />
               {!passwordError ? null : (
@@ -198,20 +200,44 @@ const LoginForm: React.FC<UserLoginProps> = (props) => {
               )}
             </FormControl>
           </Stack>
-          <HStack justify="space-between">
-            <Checkbox defaultChecked>Remember me</Checkbox>
-            <Link to="/forgot-password">
-              <Button variant="link" size="sm">
-                Forgot password
-              </Button>
-            </Link>
-          </HStack>
-          <Stack spacing="4">
-            <Button type="submit" onClick={() => login(email, password)}>
+          <Stack spacing="1">
+            <Button
+              variant="onTeal"
+              type="submit"
+              mt="2"
+              size="sm"
+              onClick={() => login(email, password)}
+            >
               Sign In
             </Button>
+            <Link to="/forgot-password">
+              <Center>
+                <Button
+                  mt="1em"
+                  variant="link"
+                  size="xs"
+                  fontWeight="400"
+                  color="#002F6F"
+                  fontFamily="Montserrat"
+                >
+                  Forgot password?
+                </Button>
+              </Center>
+            </Link>
           </Stack>
         </Stack>
+        <Center>
+          <Flex position="absolute" bottom="2em">
+            <Heading size="lg" color="white" fontWeight="400">
+              New To mentumm?
+            </Heading>
+            <Link to="/sign-up">
+              <Heading size="lg" pl="0.5em" colorScheme="brand" color="brand.200">
+                Register Now!
+              </Heading>
+            </Link>
+          </Flex>
+        </Center>
       </Stack>
     </Container>
   );
